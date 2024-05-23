@@ -3,20 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package folder;
+package BlogController;
 
+import Models.Blog;
+import Models.CategoryBlog;
+import DAO.BlogDAO;
+import DAO.CategoryBlogDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
  * @author Acer
  */
-public class NewServlet extends HttpServlet {
+public class BlogDetailController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,10 +38,10 @@ public class NewServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NewServlet</title>");  
+            out.println("<title>Servlet BlogDetailController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet NewServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet BlogDetailController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -53,7 +58,16 @@ public class NewServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        int blogId = Integer.parseInt(request.getParameter("id"));
+        BlogDAO blogDAO = new BlogDAO();
+        Blog blog = blogDAO.getBlogById(blogId);
+        CategoryBlogDAO categoryBlogDAO = new CategoryBlogDAO();
+        List<CategoryBlog> categories = categoryBlogDAO.getAllCategories();
+
+        request.setAttribute("blog", blog);
+        request.setAttribute("categories", categories);
+        request.getRequestDispatcher("BlogDetails.jsp").forward(request, response);
+    
     } 
 
     /** 
