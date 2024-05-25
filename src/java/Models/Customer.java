@@ -10,12 +10,13 @@ package Models;
  */
 public class Customer {
 
-    String id, name, username, password, email, phone, address, gender, isDelete;
+    String id, name, username, password, email, phone, address, gender, customerType;
+
 
     public Customer() {
     }
 
-    public Customer(String id, String name, String username, String password, String email, String phone, String address, String gender, String isDelete) {
+    public Customer(String id, String name, String username, String password, String email, String phone, String address, String gender, String customerType) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -24,7 +25,7 @@ public class Customer {
         this.phone = phone;
         this.address = address;
         this.gender = gender;
-        this.isDelete = isDelete;
+        this.customerType = customerType;
     }
 
     public String getId() {
@@ -91,12 +92,20 @@ public class Customer {
         this.gender = gender;
     }
 
-    public String getIsDelete() {
-        return isDelete;
+    public String getCustomerType() {
+        return customerType;
     }
 
-    public void setIsDelete(String isDelete) {
-        this.isDelete = isDelete;
+    public void setCustomerType(String customerType) {
+        this.customerType = customerType;
     }
 
+    @Override
+    public String toString() {
+        return "Customer{" + "id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + ", email=" + email + ", phone=" + phone + ", address=" + address + ", gender=" + gender + ", customerType=" + customerType + '}';
+    }
+
+    
+
+    
 }
