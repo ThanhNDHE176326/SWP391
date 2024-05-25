@@ -10,10 +10,11 @@ package Models;
  */
 public class Slider {
 
-    String id, title, image, note, staff, startDate, endDate, isDelete;
+    String id, title, image, note, staff, startDate, endDate, isDelete ,status;
 
     public Slider() {
     }
+    
 
     public Slider(String id, String title, String image, String note, String staff, String startDate, String endDate, String isDelete) {
         this.id = id;
@@ -24,6 +25,18 @@ public class Slider {
         this.startDate = startDate;
         this.endDate = endDate;
         this.isDelete = isDelete;
+    }
+
+    public Slider(String id, String title, String image, String note, String staff, String startDate, String endDate, String isDelete, String status) {
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.note = note;
+        this.staff = staff;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.isDelete = isDelete;
+        this.status = status;
     }
 
     public String getId() {
@@ -88,6 +101,14 @@ public class Slider {
 
     public void setIsDelete(String isDelete) {
         this.isDelete = isDelete;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }
