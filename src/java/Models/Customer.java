@@ -10,11 +10,41 @@ package Models;
  */
 public class Customer {
 
-    String id, name, username, password, email, phone, address, gender, customerType;
+    String id, name, username, password, email, phone, address, gender, customerType, isDelete, code;
 
 
     public Customer() {
     }
+
+    public Customer(String username, String email, String code) {
+        this.username = username;
+        this.email = email;
+        this.code = code;
+    }
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Customer(String name, String username, String password, String isDelete) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.isDelete = isDelete;
+    }
+    
 
     public Customer(String id, String name, String username, String password, String email, String phone, String address, String gender, String customerType) {
         this.id = id;
