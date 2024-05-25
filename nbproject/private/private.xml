@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Models/Customer.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Models/CategoryBlog.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Controller/mkt/SearchControl.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/dal/DBContext.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/DAO/CategoryDAO.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Models/Role.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Controller/mkt/CustomerList.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/DAO/CategoryBlogDAO.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/DAO/ProductDAO.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Controller/mkt/StatusCustomer.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Models/Product.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/web/CustomerList.jsp</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Controller/mkt/UpdateCustomer.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/web/AddCustomer.jsp</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Controller/mkt/Pagination.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Controller/mkt/EditCustomer.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Models/Cart.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Controllers/ProductListMarketingController.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Models/Staff.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Models/Feedback.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/ControllerValidation/Validation.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Models/CartProduct.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Models/Slider.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Controller/mkt/AddCustomer.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Models/Category.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Models/Blog.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Models/OrderDetail.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/web/CustomerDetail.jsp</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Controllers/ChangeStatusProductController.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/dal/MaketingDAO.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Models/CustomerUpdateHistory.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/ProgramJavaWeb/SWP391/src/java/Models/Order.java</file>
+        </group>
+    </open-files>
+</project-private>
