@@ -4,7 +4,7 @@
  */
 package Controller.mkt;
 
-import Models.Customer;
+import Models.CustomerUpdateHistory;
 import dal.MaketingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author Admin
  */
-public class StatusCustomer extends HttpServlet {
+public class UpdateCustomerByMarketingController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,59 +32,18 @@ public class StatusCustomer extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        MaketingDAO dao = new MaketingDAO();
-        String statusFilter = request.getParameter("statusFilter");
-        List<Customer> customer;
-        String sort = request.getParameter("sort");
-        String order = request.getParameter("order");
-
-        String indexPage = request.getParameter("index");
-        if (indexPage == null) {
-            indexPage = "1";
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet UpdateCustomer</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet UpdateCustomer at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        int pageIndex = Integer.parseInt(indexPage);
-        int pageSize = 7; // Số lượng khách hàng mỗi trang
-
-        int count;
-        int endPage;
-
-// Kiểm tra và tính toán số lượng khách hàng và số trang dựa trên statusFilter
-        if (statusFilter == null || statusFilter.isEmpty()) {
-            count = dao.getTotalCustomer();
-            endPage = count / pageSize;
-            if (count % pageSize != 0) {
-                endPage++;
-            }
-        } else {
-            count = dao.countCustomerByStatus(statusFilter);
-            endPage = count / pageSize;
-            if (count % pageSize != 0) {
-                endPage++;
-            }
-        }
-
-        if (statusFilter == null || statusFilter.isEmpty()) {
-            // Nếu statusFilter là null hoặc rỗng, lấy dữ liệu phân trang cho tất cả khách hàng
-            if (sort != null && order != null) {
-                customer = dao.getSortedAllCustomers(pageIndex, sort, order);
-            } else {
-                customer = dao.pagingCustomer(pageIndex);
-            }
-        } else{
-            // Nếu statusFilter là "Đang sử dụng", lấy dữ liệu khách hàng đang sử dụng theo trạng thái và phân trang
-            if (sort != null && order != null) {
-                customer = dao.getSortedStatusCustomers(statusFilter, pageIndex, sort, order);
-            } else {
-                customer = dao.getSortedStatusCustomers(statusFilter, pageIndex, sort, order);
-            }
-        } 
-
-        request.setAttribute("customer", customer);
-        request.setAttribute("endP", endPage);
-        request.setAttribute("tag", pageIndex);
-        request.setAttribute("statusFilter", statusFilter);
-        request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -113,7 +72,31 @@ public class StatusCustomer extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+        String gender = request.getParameter("gender");
+        // Chuyển đổi giá trị gender từ chuỗi thành bit
+        int genderBit = "male".equals(gender) ? 1 : 0;
+
+// Chuyển đổi giá trị status từ chuỗi thành bit
+       
+        MaketingDAO dao = new MaketingDAO();
+        boolean updateSuccess = dao.updateCustomer(id, name, username, email, phone, address, genderBit);
+        if (updateSuccess) {
+            request.setAttribute("message", "Customer updated successfully!");
+        } else {
+            request.setAttribute("message", "Failed to update customer. Please try again.");
+        }
+        List<CustomerUpdateHistory> historyList = dao.getCustomerUpdateHistory();
+        request.setAttribute("historyList", historyList);
+
+        request.getRequestDispatcher("CustomerDetail.jsp").forward(request, response);
+
     }
 
     /**

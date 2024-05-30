@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author Admin
  */
-public class CustomerList extends HttpServlet {
+public class SearchControlByMarketingController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -31,11 +31,31 @@ public class CustomerList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        MaketingDAO dao = new MaketingDAO();
-        List<Customer> customer = dao.findAll();
-        request.setAttribute("customer", customer);
-        request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
-        
+        try {
+            String txtSearch = request.getParameter("txtSearch");
+            MaketingDAO dao = new MaketingDAO();
+            
+            String indexString = request.getParameter("index");
+            int index = Integer.parseInt(indexString);
+            if(txtSearch == null){
+            indexString = "1";
+        }
+            int count = dao.countCustomerBySearch(txtSearch);
+            int pageSize = 7;
+            int endPage = count/7;
+            endPage = count / pageSize;
+            if(count % pageSize != 0){
+                endPage++;
+            }
+            List<Customer> listSearch = dao.searchCustomer(txtSearch, index);
+           
+            request.setAttribute("endP", endPage);
+            request.setAttribute("customer", listSearch);
+            request.setAttribute("tag", index);
+            request.setAttribute("txtSearch", txtSearch);
+            request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
+        } catch (Exception e) {
+        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
