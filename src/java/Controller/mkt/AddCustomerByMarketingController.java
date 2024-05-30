@@ -4,7 +4,8 @@
  */
 package Controller.mkt;
 
-import Models.CustomerUpdateHistory;
+import ControllerValidation.Validation;
+import Models.Customer;
 import dal.MaketingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,13 +13,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author Admin
  */
-public class UpdateCustomer extends HttpServlet {
+public class AddCustomerByMarketingController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +39,10 @@ public class UpdateCustomer extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateCustomer</title>");
+            out.println("<title>Servlet addCustomer</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateCustomer at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet addCustomer at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -73,30 +75,63 @@ public class UpdateCustomer extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String username = request.getParameter("username");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-        String gender = request.getParameter("gender");
+
+        // Lấy thông tin từ request
+        String name = request.getParameter("Name");
+        String username = request.getParameter("Username");
+        String email = request.getParameter("Email");
+        String password = request.getParameter("Password");
+        String phone = request.getParameter("Phone");
+        String address = request.getParameter("Address");
+        String gender = request.getParameter("Gender");
+        String status = request.getParameter("isDelete");
+
         // Chuyển đổi giá trị gender từ chuỗi thành bit
         int genderBit = "male".equals(gender) ? 1 : 0;
 
-// Chuyển đổi giá trị status từ chuỗi thành bit
-       
+        // Chuyển đổi giá trị status từ chuỗi thành bit
+        int statusBit = "1".equals(status) ? 1 : 0;
+        Validation validation = new Validation();
+        // Kiểm tra tính hợp lệ của dữ liệu
+        List<String> errorMessages = new ArrayList<>();
         MaketingDAO dao = new MaketingDAO();
-        boolean updateSuccess = dao.updateCustomer(id, name, username, email, phone, address, genderBit);
-        if (updateSuccess) {
-            request.setAttribute("message", "Customer updated successfully!");
-        } else {
-            request.setAttribute("message", "Failed to update customer. Please try again.");
+        if (dao.checkIfUsernameExists(username)) {
+            errorMessages.add("Username already exists. Please choose another username.");
         }
-        List<CustomerUpdateHistory> historyList = dao.getCustomerUpdateHistory();
-        request.setAttribute("historyList", historyList);
+        // Kiểm tra mật khẩu
+        errorMessages.addAll(validation.validatePassword(password));
 
-        request.getRequestDispatcher("CustomerDetail.jsp").forward(request, response);
+        // Kiểm tra số điện thoại
+        errorMessages.addAll(validation.validatePhoneNumber(phone));
 
+        // Nếu có lỗi, hiển thị thông báo lỗi và không thêm khách hàng vào cơ sở dữ liệu
+        if (!errorMessages.isEmpty()) {
+            request.setAttribute("errorMessages", errorMessages);
+            // Thiết lập các thuộc tính để giữ lại dữ liệu người dùng đã nhập
+            request.setAttribute("name", name);
+            request.setAttribute("username", username);
+            request.setAttribute("email", email);
+            request.setAttribute("password", password);
+            request.setAttribute("phone", phone);
+            request.setAttribute("address", address);
+            request.setAttribute("gender", gender);
+            request.setAttribute("status", status);
+
+            // Forward hoặc redirect đến trang JSP để hiển thị thông báo lỗi
+            request.getRequestDispatcher("AddCustomer.jsp").forward(request, response);
+            return;
+        }
+
+        // Thêm khách hàng vào cơ sở dữ liệu
+        boolean addSuccess = dao.addCustomer(name, username, email, password, phone, address, genderBit, statusBit);
+
+        // Hiển thị thông báo kết quả
+        if (addSuccess) {
+            request.setAttribute("message", "Customer added successfully!");
+        } else {
+            request.setAttribute("message", "Failed to add customer. Please try again.");
+        }
+        request.getRequestDispatcher("AddCustomer.jsp").forward(request, response);
     }
 
     /**
