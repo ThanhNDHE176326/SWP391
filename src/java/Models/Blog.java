@@ -10,10 +10,32 @@ package Models;
  */
 public class Blog {
 
-    String id, staff, title, categoryBlog, image, updateDate, description, content, isDelete;
+    String id, staff, title, categoryBlog, image, updateDate, description, content, isDelete,status;
 
     public Blog() {
     }
+
+    public Blog(String id, String staff, String title, String categoryBlog, String image, String updateDate, String description, String content, String isDelete, String status) {
+        this.id = id;
+        this.staff = staff;
+        this.title = title;
+        this.categoryBlog = categoryBlog;
+        this.image = image;
+        this.updateDate = updateDate;
+        this.description = description;
+        this.content = content;
+        this.isDelete = isDelete;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
 
     public Blog(String id, String staff, String title, String categoryBlog, String image, String updateDate, String description, String content, String isDelete) {
         this.id = id;
