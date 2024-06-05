@@ -26,7 +26,7 @@ import javax.mail.internet.MimeMessage;
 public class CustomerDAO extends DBContext {
 
     //đăng kí
-    public Customer Login(String user) {
+    public Customer LoginCustomer(String user) {
         String sql = "SELECT * FROM Customers WHERE\n"
                 + "username= ?";
         try {
@@ -34,10 +34,10 @@ public class CustomerDAO extends DBContext {
             st.setString(1, user);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                String name = rs.getString(2);
-                String username = rs.getString(3);
-                String password = rs.getString(4);
-                String isDelete = rs.getString(9);
+                String name = rs.getString("name");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String isDelete = rs.getString("isDelete");
                 return new Customer(name, username, password, isDelete);
             }
         } catch (SQLException e) {
@@ -53,15 +53,15 @@ public class CustomerDAO extends DBContext {
             st.setString(1, user);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                String id = rs.getString(1);
-                String name = rs.getString(2);
-                String username = rs.getString(3);
-                String password = rs.getString(4);
-                String email = rs.getString(5);
-                String phone = rs.getString(6);
-                String address = rs.getString(7);
-                String gender = rs.getString(8);
-                String isDelete = rs.getString(9);
+                String id = rs.getString("id");
+                String name = rs.getString("name");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                String gender = rs.getString("gender");
+                String isDelete = rs.getString("isDelete");
                 return new Customer(id, name, username, password, email, phone, address, gender, isDelete);
             }
         } catch (SQLException e) {
@@ -71,7 +71,7 @@ public class CustomerDAO extends DBContext {
     }
 
     //hàm cho người dùng đăng kí
-    public void singUp(String name, String username, String password, String email, String phone, String address, String gender) {
+    public void singUpCustomer(String name, String username, String password, String email, String phone, String address, String gender) {
         String sql = "INSERT INTO [dbo].[Customers]\n"
                 + "           ([name]\n"
                 + "           ,[username]\n"
@@ -91,14 +91,13 @@ public class CustomerDAO extends DBContext {
             st.setString(4, email);
             st.setString(5, phone);
             st.setString(6, address);
-            st.setString(7, gender);
+            st.setInt(7, Integer.parseInt(gender));;
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
 
-    
 
     public Customer getInformationCustomer(String name) {
         String sql = "SELECT * FROM Customers WHERE username=?";
@@ -107,8 +106,15 @@ public class CustomerDAO extends DBContext {
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                return new Customer(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
-
+                return new Customer(rs.getString("id"),
+                        rs.getString("name"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getString("address"),
+                        rs.getString("gender"),
+                        rs.getString("isDelete"));
             }
         } catch (SQLException e) {
             System.out.println("getInformationCustomer: " + e.getMessage());
@@ -117,7 +123,7 @@ public class CustomerDAO extends DBContext {
 
     }
 
-    public void updatePersonalInformation(String username, String email, String name, String address, String phone, String gender) {
+    public void updateInformationCustomer(String username, String email, String name, String address, String phone, String gender) {
         String sql = "UPDATE [dbo].[Customers]\n"
                 + "SET [name] = ?,\n"
                 + "    [email] = ?,\n"
@@ -159,6 +165,18 @@ public class CustomerDAO extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, isDelete);
             ps.setString(2, username);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void resetPassword(String username, String email) {
+        String sql = "UPDATE Customers SET password = ? WHERE username = ? AND email=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, email);
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);

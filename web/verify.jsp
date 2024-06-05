@@ -28,10 +28,23 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+        <style>
+            .verify-code-form {
+                border: 1px solid #ccc;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            #form{
+                margin-bottom: 70px !important;
+                margin-top: 50px !important;
+                margin-left: 100px !important;
+            }
+        </style>
     </head><!--/head-->
 
     <body>
-         <jsp:include page="header.jsp"/>
+        <jsp:include page="header.jsp"/>
 
         <section id="form"><!--form-->
             <div class="container">
@@ -50,7 +63,7 @@
         </section><!--/form-->
 
 
-         <jsp:include page="footer.jsp"/>
+        <jsp:include page="footer.jsp"/>
 
 
 

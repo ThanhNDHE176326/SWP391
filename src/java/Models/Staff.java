@@ -10,7 +10,7 @@ package Models;
  */
 public class Staff {
 
-    String id, fullname, username, password, gender, phone, address, role, isDelete;
+    String id, fullname, username, password, email, gender, phone, address, role, isDelete, code;
 
     public Staff() {
     }
@@ -25,6 +25,33 @@ public class Staff {
         this.address = address;
         this.role = role;
         this.isDelete = isDelete;
+    }
+
+    public Staff(String fullname, String username, String password, String gender, String phone, String address, String role, String isDelete) {
+        this.fullname = fullname;
+        this.username = username;
+        this.password = password;
+        this.gender = gender;
+        this.phone = phone;
+        this.address = address;
+        this.role = role;
+        this.isDelete = isDelete;
+    }
+
+    public Staff(String fullname, String username, String password, String role, String isDelete) {
+        this.fullname = fullname;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.isDelete = isDelete;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getId() {
@@ -89,6 +116,14 @@ public class Staff {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getIsDelete() {

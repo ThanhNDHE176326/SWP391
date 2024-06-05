@@ -87,7 +87,7 @@ public class ConfirmSignUpCusController extends HttpServlet {
 
         if (code.equals(user.getCode())) {
             CustomerDAO dao = new CustomerDAO();
-            dao.singUp(name, username, password, email, phone, address, gender);
+            dao.singUpCustomer(name, username, password, email, phone, address, gender);
             request.setAttribute("messen", "Sign Up Success");
             request.getRequestDispatcher("signupcustomer.jsp").forward(request, response);
         } else {

@@ -30,48 +30,51 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
     </head><!--/head-->
-
+    
     <body>
         <jsp:include page="header.jsp"/>
 
 
-        <section id="form"><!--form-->
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-4 col-sm-offset-4"> <!-- Thay đổi col-sm-offset-4 để điều chỉnh vị trí -->
-                        <div class="signup-form"><!--profile form-->
-                            <h2>User Profile</h2>
-                            <!-- Form thông tin người dùng -->
-                            <form id="profileForm" action="updateuser" method="POST">
-                                <!-- Các trường hiển thị thông tin -->
-                                Username:<input name="username" type="text" placeholder="Username" value="${user.username}" readonly="readonly"/>
-                                Email:<input name="email" type="email" placeholder="Email" value="${user.email}" readonly="readonly" />
-                                Name:<input name="name" type="text" placeholder="Name" value="${user.name}" />
-                                Address:<input name="address" type="text" placeholder="Address" value="${user.address}" />
-                                Phone:<input name="phone" type="text" placeholder="Phone" value="${user.phone}"/>
-                                <select name="gender" required>
-                                    <option value="" disabled selected>Gender</option>
-                                    <option value="1" ${user.gender == 1 ? "selected" : ""}>Male</option>
-                                    <option value="0" ${user.gender == 0 ? "selected" : ""}>Female</option>
-                                </select>
-                                <!-- Thêm phần hiển thị thông báo lỗi -->
-                                <p style="color: red; font-style: italic;">${message}</p>
-                                <span id="phone-error" style="color: red; font-style: italic;"></span><br>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <button type="submit" class="btn btn-default btn-block">Edit Profile</button>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <a href="homepage.jsp" class="btn btn-default btn-block">Back to Home</a>
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div><!--/profile form-->
-                    </div>
+        <div class="account-info-container">
+            <h2>THÔNG TIN TÀI KHOẢN</h2>
+            <form id="profileForm" class="account-info-form" action="updateuser" method="POST">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" placeholder="Username" value="${user.username}" readonly="readonly">
                 </div>
-            </div>
-        </section><!--/form-->
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Email" value="${user.email}" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Name" value="${user.name}">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" placeholder="Address" value="${user.address}">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="text" id="phone" name="phone" placeholder="Phone" value="${user.phone}">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="" disabled selected>Gender</option>
+                        <option value="1" ${user.gender == 1 ? "selected" : ""}>Male</option>
+                        <option value="0" ${user.gender == 0 ? "selected" : ""}>Female</option>
+                    </select>
+                </div>
+                <!-- Thêm phần hiển thị thông báo lỗi -->
+                <p style="color: red; font-style: italic;">${message}</p>
+                <span id="phone-error" style="color: red; font-style: italic;"></span><br>
+                <div class="row">
+                    <button type="submit" class="btn btn-default btn-block" style="background-color: #FE980F; color: #fff;">Edit Profile</button>
+                    <a href="homepage.jsp" class="btn btn-default btn-block">Back to Home</a>
+                </div>
+            </form>
+        </div>
 
 
         <jsp:include page="footer.jsp"/>
@@ -108,3 +111,111 @@
         };
     </script>
 </html>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .account-info-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #e5e5e5;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .account-info-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .account-info-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group input[type="text"]:read-only,
+        .form-group input[type="email"]:read-only {
+            background-color: #e9e9e9;
+        }
+
+        .change-link {
+            color: #007bff;
+            text-decoration: none;
+            margin-top: 5px;
+        }
+
+        .change-link:hover {
+            text-decoration: underline;
+        }
+
+        .save-button {
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            align-self: center;
+        }
+
+        .save-button:hover {
+            background-color: #c82333;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            flex: 1;
+            margin: 5px;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .btn-default {
+            background-color: #6c757d;
+        }
+
+        .btn-default:hover {
+            background-color: #5a6268;
+        }
+    </style>

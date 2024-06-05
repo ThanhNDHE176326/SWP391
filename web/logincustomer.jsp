@@ -23,8 +23,7 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
-    </head><!--/head-->
-
+    </head>
     <body>
         <jsp:include page="header.jsp"/>
         <section id="form"><!--form-->
@@ -32,11 +31,11 @@
                 <div class="row">
                     <div class="col-sm-4 col-sm-offset-1">
                         <div class="login-form"><!--login form-->
-                            <h2>Login to your account</h2>
+                            <h2>Login Customer</h2>
                             <form action="logincustomer" method="POST">
                                 <input name="username" type="text" placeholder="Username" />
                                 <input name="password" type="password" placeholder="Password" />
-                                <a href="forgotpassword">Forgot Password?</a>
+                                <a href="forgetpassword.jsp">Forgot Password?</a>
                                 <button type="submit" class="btn btn-default">Login</button>
                                 <p style="color: #000000; font-weight: bold;">${error}</p>
                             </form>
@@ -47,14 +46,13 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="signup-form"><!--sign up form-->
-                            <h2>New User Signup!</h2>
+                            <h2>Register Customer</h2>
                             <a href="signupcustomer.jsp" class="btn btn-default">Signup</a>
                         </div><!--/sign up form-->
                     </div>
                 </div>
             </div>
         </section><!--/form-->
-
 
         <jsp:include page="footer.jsp"/>
 
@@ -65,4 +63,12 @@
         <script src="js/jquery.prettyPhoto.js"></script>
         <script src="js/main.js"></script>
     </body>
+    <style>
+        #form{
+            margin-bottom: 50px !important;
+            margin-top: -10px !important;
+            margin-left: 150px !important;
+        }
+
+    </style>
 </html>

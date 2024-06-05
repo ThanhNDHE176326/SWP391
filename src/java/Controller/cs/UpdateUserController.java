@@ -79,7 +79,7 @@ public class UpdateUserController extends HttpServlet {
         String gender = request.getParameter("gender");
         System.out.println(phone);
         CustomerDAO dao = new CustomerDAO();
-        dao.updatePersonalInformation(username, email, name, address, phone, gender);
+        dao.updateInformationCustomer(username, email, name, address, phone, gender);
         HttpSession session=request.getSession();
         session.setAttribute("mess", "Update successful");
         response.sendRedirect("informationuser");
