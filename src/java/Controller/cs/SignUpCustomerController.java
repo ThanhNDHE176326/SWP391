@@ -4,8 +4,8 @@
  */
 package controller.cs;
 
-import DAO.CustomerDAO;
 import DAO.SendMail;
+import DAO.CustomerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -93,33 +93,31 @@ public class SignUpCustomerController extends HttpServlet {
         session.setAttribute("phone", phone);
         session.setAttribute("gender", gender);
 
+        CustomerDAO dao = new CustomerDAO();
+        // Check if username already exists
+        Customer a = dao.checkCustomerAccountExits(username);
+        if (a == null) {
+            // Uncomment the following lines if you want to enable sign-up
+            // dao.singUp(name, username, password, email, phone, address, true, true);
+            // request.setAttribute("messen", "Sign Up Success");
+            // request.getRequestDispatcher("login.jsp").forward(request, response);
 
-            CustomerDAO dao = new CustomerDAO();
-            // Check if username already exists
-            Customer a = dao.checkCustomerAccountExits(username);
-            if (a == null) {
-                // Uncomment the following lines if you want to enable sign-up
-                // dao.singUp(name, username, password, email, phone, address, true, true);
-                // request.setAttribute("messen", "Sign Up Success");
-                // request.getRequestDispatcher("login.jsp").forward(request, response);
+            SendMail sm = new SendMail();
+            String code = sm.getRandom();
+            Customer user = new Customer(username, email, code);
 
-                SendMail sm = new SendMail();
-                String code = sm.getRandom();
-                Customer user = new Customer(username, email, code);
-
-                boolean test = sm.sendEmail(user);
-                if (test) {
-                    session.setAttribute("authcode", user);
-                    response.sendRedirect("verify.jsp");
-                }
-            } else {
-                request.setAttribute("messen", "Username exist");
-                // response.sendRedirect("Signup.jsp");
-                request.getRequestDispatcher("signupcustomer.jsp").forward(request, response);
+            boolean test = sm.sendEmail(user);
+            if (test) {
+                session.setAttribute("authcode", user);
+                response.sendRedirect("verify.jsp");
             }
-
+        } else {
+            request.setAttribute("messen", "Username exist");
+            // response.sendRedirect("Signup.jsp");
+            request.getRequestDispatcher("signupcustomer.jsp").forward(request, response);
         }
-    
+
+    }
 
     /**
      * Returns a short description of the servlet.

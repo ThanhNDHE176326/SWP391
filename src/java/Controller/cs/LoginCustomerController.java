@@ -76,7 +76,7 @@ public class LoginCustomerController extends HttpServlet {
         String password = request.getParameter("password");
 
         CustomerDAO dao = new CustomerDAO();
-        Customer a = dao.Login(username);
+        Customer a = dao.LoginCustomer(username);
 
         HttpSession session = request.getSession();
         Integer loginAttempts = (Integer) session.getAttribute("loginAttempts");
@@ -88,6 +88,7 @@ public class LoginCustomerController extends HttpServlet {
         if (loginAttempts >= 5) {
             // Change isDelete to 0 if login attempts exceed 5
             dao.updateIsDelete(username, 0);// Assuming updateIsDelete method exists
+            session.removeAttribute("loginAttempts");
             request.setAttribute("error", "You have exceeded the maximum number of login attempts. Your account has been locked.");
             request.getRequestDispatcher("logincustomer.jsp").forward(request, response);
             return; // Stop further execution
@@ -114,6 +115,7 @@ public class LoginCustomerController extends HttpServlet {
 
 // Reset login attempts on successful login
         session.removeAttribute("loginAttempts");
+        session.setAttribute("acc", a);
         session.setAttribute("username", username); // Set the username into session
         session.setAttribute("password", password); // Set the password into session
         session.setMaxInactiveInterval(1800); // 30'
