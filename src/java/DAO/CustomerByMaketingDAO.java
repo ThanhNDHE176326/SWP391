@@ -2,20 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dal;
+package DAO;
 
 import Models.CustomerUpdateHistory;
 import Models.Customer;
+import dal.DBContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
  * @author Admin
  */
-public class MaketingDAO extends DBContext {
+public class CustomerByMaketingDAO extends DBContext {
 
     PreparedStatement stm;
     ResultSet rs;
@@ -142,12 +143,12 @@ public class MaketingDAO extends DBContext {
             stm.setInt(1, customerId);
             // staff_id có thể lấy từ người đăng nhập hoặc một giá trị mặc định
             stm.setInt(2, 1); // Ví dụ, giá trị 1 là ID của nhân viên
-            stm.setTimestamp(3, new java.sql.Timestamp(System.currentTimeMillis()));
+            stm.setDate(3, new Date(System.currentTimeMillis()));
 
             // Lưu giá trị mới của các trường
             stm.setString(4, email); // email_new
             stm.setString(5, name); // name_new
-            stm.setString(6, gender == 1 ? "Nam" : "Nữ"); // gender_new
+            stm.setBoolean(6, gender == 1); // gender_new
             stm.setString(7, phone); // phone_new
             stm.setString(8, address); // address_new
 
@@ -165,7 +166,7 @@ public class MaketingDAO extends DBContext {
                     + "s.fullname AS updater_name "
                     + "FROM CustomerUpdateLogs cu "
                     + "JOIN Staffs s ON cu.staff_id = s.id "
-                    + "ORDER BY cu.update_date DESC";
+                    + "ORDER BY cu.id DESC";
             stm = connection.prepareStatement(sql);
             rs = stm.executeQuery();
             while (rs.next()) {
@@ -173,7 +174,8 @@ public class MaketingDAO extends DBContext {
                 Date updateDate = rs.getDate("update_date");
                 String emailNew = rs.getString("email_new");
                 String nameNew = rs.getString("name_new");
-                String genderNew = rs.getString("gender_new");
+                boolean genderNewBit = rs.getBoolean("gender_new");
+                String genderNew = genderNewBit ? "Nam" : "Nữ";
                 String phoneNew = rs.getString("phone_new");
                 String addressNew = rs.getString("address_new");
                 String updaterName = rs.getString("updater_name");
@@ -454,7 +456,7 @@ public class MaketingDAO extends DBContext {
 
     public static void main(String[] args) {
         // Khởi tạo đối tượng để truy cập cơ sở dữ liệu
-        MaketingDAO dao = new MaketingDAO();
+        CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
         // Gọi phương thức để lấy lịch sử cập nhật khách hàng
         String name = "John ";
         String username = "johndoe";

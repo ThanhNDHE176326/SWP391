@@ -3,10 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.mkt;
+package Controller.ProductPublic;
 
-import DAO.CustomerByMaketingDAO;
-import Models.Customer;
+import DAO.ProductDAOByPublic;
+import Models.Category;
+import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,8 +21,8 @@ import java.util.List;
  *
  * @author Admin
  */
-@WebServlet("/CustomerList")
-public class CustomerListByMarketingController extends HttpServlet {
+@WebServlet("/ProductListPublicByUpdateDate")
+public class ProductListPublicByUpdateDateController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,11 +34,24 @@ public class CustomerListByMarketingController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
-        List<Customer> customer = dao.findAll();
-        request.setAttribute("customer", customer);
-        request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
-        
+        ProductDAOByPublic dao = new ProductDAOByPublic();
+        String filter = request.getParameter("filter");
+        String indexString = request.getParameter("index");
+        int index = Integer.parseInt(indexString);
+        int count = dao.getTotalProduct();
+        int pageSize = 6;
+        int endPage = count / 6;
+        endPage = count / pageSize;
+        if (count % pageSize != 0) {
+            endPage++;
+        }
+        List<Product> product = dao.filterProductPublicByUpdateDate(filter, index);
+        List<Category> categories = dao.getCategory();
+        request.setAttribute("endP", endPage);
+        request.setAttribute("product", product);
+        request.setAttribute("tag", index);
+        request.setAttribute("categories", categories);
+        request.getRequestDispatcher("shop.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
