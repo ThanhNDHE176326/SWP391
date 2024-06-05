@@ -3,10 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.mkt;
+package Controller.ProductPublic;
 
-import DAO.CustomerByMaketingDAO;
-import Models.Customer;
+import DAO.ProductDAOByPublic;
+import Models.Category;
+import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,8 +21,8 @@ import java.util.List;
  *
  * @author Admin
  */
-@WebServlet("/CustomerList")
-public class CustomerListByMarketingController extends HttpServlet {
+@WebServlet("/ProductListPublic")
+public class ProductListByPublicController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,11 +34,27 @@ public class CustomerListByMarketingController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
-        List<Customer> customer = dao.findAll();
-        request.setAttribute("customer", customer);
-        request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
-        
+        String indexPage = request.getParameter("index");
+        if (indexPage == null) {
+            indexPage = "1";
+        }
+        int index = Integer.parseInt(indexPage);
+        ProductDAOByPublic dao = new ProductDAOByPublic();
+        int count = dao.getTotalProduct();
+        int endPage = count / 6;
+        if (count % 6 != 0) {
+            endPage++;
+        }
+
+        List<Product> product = dao.getAllProduct(index);
+       List<Category> category = dao.getCategory();
+        request.setAttribute("categories", category);
+        request.setAttribute("product", product);
+        request.setAttribute("endP", endPage);
+        request.setAttribute("tag", index);
+        request.getRequestDispatcher("shop.jsp").forward(request, response);
+    
+
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

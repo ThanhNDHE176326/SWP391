@@ -4,11 +4,12 @@
  */
 package Controller.mkt;
 
+import DAO.CustomerByMaketingDAO;
 import Models.Customer;
-import dal.MaketingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
+@WebServlet("/EditCustomer")
 public class EditCustomerByMarketingController extends HttpServlet {
 
     /**
@@ -76,7 +78,7 @@ public class EditCustomerByMarketingController extends HttpServlet {
         int customerId = Integer.parseInt(customerIdStr);
 
         // Tạo một đối tượng MaketingDAO để truy xuất dữ liệu từ cơ sở dữ liệu
-        MaketingDAO dao = new MaketingDAO();
+        CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
 
         // Lấy thông tin của khách hàng từ cơ sở dữ liệu
         Customer customer = dao.getCustomerById(customerId);

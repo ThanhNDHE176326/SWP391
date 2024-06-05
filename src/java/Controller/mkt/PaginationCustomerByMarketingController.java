@@ -5,11 +5,12 @@
 
 package Controller.mkt;
 
+import DAO.CustomerByMaketingDAO;
 import Models.Customer;
-import dal.MaketingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import java.util.List;
  *
  * @author Admin
  */
+@WebServlet("/Pagination")
 public class PaginationCustomerByMarketingController extends HttpServlet {
    
     /** 
@@ -39,7 +41,7 @@ public class PaginationCustomerByMarketingController extends HttpServlet {
         String sort = request.getParameter("sort");
         String order = request.getParameter("order");
 
-        MaketingDAO dao = new MaketingDAO();
+        CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
         int count = dao.getTotalCustomer();
         int endPage = count / 7;
         if (count % 7 != 0) {

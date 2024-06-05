@@ -5,11 +5,12 @@
 package Controller.mkt;
 
 import ControllerValidation.Validation;
+import DAO.CustomerByMaketingDAO;
 import Models.Customer;
-import dal.MaketingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import java.util.List;
  *
  * @author Admin
  */
+@WebServlet("/AddCustomer")
 public class AddCustomerByMarketingController extends HttpServlet {
 
     /**
@@ -94,7 +96,7 @@ public class AddCustomerByMarketingController extends HttpServlet {
         Validation validation = new Validation();
         // Kiểm tra tính hợp lệ của dữ liệu
         List<String> errorMessages = new ArrayList<>();
-        MaketingDAO dao = new MaketingDAO();
+        CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
         if (dao.checkIfUsernameExists(username)) {
             errorMessages.add("Username already exists. Please choose another username.");
         }

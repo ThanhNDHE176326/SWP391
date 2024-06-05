@@ -51,6 +51,14 @@ public class Product {
         this.status = status;
     }
 
+    public Product(String title, String image, String description, String originalPrice, String salePrice) {
+        this.title = title;
+        this.image = image;
+        this.description = description;
+        this.originalPrice = originalPrice;
+        this.salePrice = salePrice;
+    }
+    
     public String getId() {
         return id;
     }
@@ -155,4 +163,8 @@ public class Product {
         this.isDelete = isDelete;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" + "title=" + title + ", image=" + image + ", description=" + description + ", originalPrice=" + originalPrice + ", salePrice=" + salePrice + '}';
+    }
 }
