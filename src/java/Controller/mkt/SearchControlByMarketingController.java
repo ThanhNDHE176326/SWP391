@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author Admin
  */
-@WebServlet("/SearchControl")
+@WebServlet(name="SearchControlByMarketingController", urlPatterns={"/SearchControlCustomer"})
 public class SearchControlByMarketingController extends HttpServlet {
    
     /** 

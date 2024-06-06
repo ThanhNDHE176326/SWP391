@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author Admin
  */
-@WebServlet("/UpdateCustomer")
+@WebServlet(name = "UpdateCustomerByMarketingController", urlPatterns = {"/UpdateCustomer"})
 public class UpdateCustomerByMarketingController extends HttpServlet {
 
     /**
@@ -39,10 +39,10 @@ public class UpdateCustomerByMarketingController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateCustomer</title>");
+            out.println("<title>Servlet UpdateCustomerByMarketingController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateCustomer at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateCustomerByMarketingController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -86,7 +86,6 @@ public class UpdateCustomerByMarketingController extends HttpServlet {
         int genderBit = "male".equals(gender) ? 1 : 0;
 
 // Chuyển đổi giá trị status từ chuỗi thành bit
-       
         CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
         boolean updateSuccess = dao.updateCustomer(id, name, username, email, phone, address, genderBit);
         if (updateSuccess) {
@@ -98,7 +97,6 @@ public class UpdateCustomerByMarketingController extends HttpServlet {
         request.setAttribute("historyList", historyList);
 
         request.getRequestDispatcher("CustomerDetail.jsp").forward(request, response);
-
     }
 
     /**
