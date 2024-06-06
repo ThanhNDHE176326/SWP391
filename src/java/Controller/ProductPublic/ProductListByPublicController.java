@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author Admin
  */
-@WebServlet("/ProductListPublic")
+@WebServlet(name="ProductListByPublicController", urlPatterns={"/ProductListPublic"})
 public class ProductListByPublicController extends HttpServlet {
    
     /** 
@@ -53,8 +53,6 @@ public class ProductListByPublicController extends HttpServlet {
         request.setAttribute("endP", endPage);
         request.setAttribute("tag", index);
         request.getRequestDispatcher("shop.jsp").forward(request, response);
-    
-
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

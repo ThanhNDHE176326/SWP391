@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author Admin
  */
-@WebServlet("/Pagination")
+@WebServlet(name="PaginationCustomerByMarketingController", urlPatterns={"/PaginationCustomer"})
 public class PaginationCustomerByMarketingController extends HttpServlet {
    
     /** 

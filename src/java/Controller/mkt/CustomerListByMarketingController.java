@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author Admin
  */
-@WebServlet("/CustomerList")
+@WebServlet(name="CustomerListByMarketingController", urlPatterns={"/CustomerList"})
 public class CustomerListByMarketingController extends HttpServlet {
    
     /** 
@@ -37,7 +37,6 @@ public class CustomerListByMarketingController extends HttpServlet {
         List<Customer> customer = dao.findAll();
         request.setAttribute("customer", customer);
         request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
-        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

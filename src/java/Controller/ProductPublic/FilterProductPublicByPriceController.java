@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author Admin
  */
-@WebServlet("/ProductPublicByPrice")
+@WebServlet(name="FilterProductPublicByPriceController", urlPatterns={"/ProductPublicByPrice"})
 public class FilterProductPublicByPriceController extends HttpServlet {
    
     /** 

@@ -119,7 +119,7 @@
                         <span>Charts</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="Pagination">
+                    <a class="nav-link" href="PaginationCustomer">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Customers List</span></a>
                 </li>

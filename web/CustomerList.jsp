@@ -120,7 +120,7 @@
                         <span>Charts</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Pagination">
+                    <a class="nav-link" href="PaginationCustomer">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Customers List</span></a>
                 </li>
@@ -161,7 +161,7 @@
                                     <button type="submit">Chọn</button>
                                 </form>
 
-                                <form action="SearchControl?index=1" method="POST">
+                                <form action="SearchControlCustomer?index=1" method="POST">
                                     <label>Searching:</label>
                                     <input class="" type="text" name="txtSearch" size="15" value="${txtSearch}" >
                                     <input class="" type="submit" name="btnGo" value="Go">
