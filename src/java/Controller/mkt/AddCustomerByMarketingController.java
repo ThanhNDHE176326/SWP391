@@ -6,10 +6,10 @@ package Controller.mkt;
 
 import ControllerValidation.Validation;
 import DAO.CustomerByMaketingDAO;
+import Models.Customer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,7 +20,6 @@ import java.util.List;
  *
  * @author Admin
  */
-@WebServlet(name = "AddCustomerByMarketingController", urlPatterns = {"/AddCustomer"})
 public class AddCustomerByMarketingController extends HttpServlet {
 
     /**
@@ -40,10 +39,10 @@ public class AddCustomerByMarketingController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddCustomerByMarketingController</title>");
+            out.println("<title>Servlet addCustomer</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddCustomerByMarketingController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet addCustomer at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -77,7 +76,7 @@ public class AddCustomerByMarketingController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-// Lấy thông tin từ request
+        // Lấy thông tin từ request
         String name = request.getParameter("Name");
         String username = request.getParameter("Username");
         String email = request.getParameter("Email");

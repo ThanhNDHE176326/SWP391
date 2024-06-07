@@ -51,13 +51,29 @@ public class Product {
         this.status = status;
     }
 
-    public Product(String title, String image, String description, String originalPrice, String salePrice) {
+    public Product(String id, String title, String image, String description, String originalPrice, String salePrice) {
+        this.id = id;
         this.title = title;
         this.image = image;
         this.description = description;
         this.originalPrice = originalPrice;
         this.salePrice = salePrice;
     }
+
+    public Product(String id, String title, String image, String author, String quantity, String updateDate, String description, String category, String originalPrice, String salePrice) {
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.author = author;
+        this.quantity = quantity;
+        this.updateDate = updateDate;
+        this.description = description;
+        this.category = category;
+        this.originalPrice = originalPrice;
+        this.salePrice = salePrice;
+    }
+
+    
     
     public String getId() {
         return id;
@@ -165,6 +181,10 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" + "title=" + title + ", image=" + image + ", description=" + description + ", originalPrice=" + originalPrice + ", salePrice=" + salePrice + '}';
+        return "Product{" + "id=" + id + ", title=" + title + ", image=" + image + ", author=" + author + ", quantity=" + quantity + ", updateDate=" + updateDate + ", description=" + description + ", category=" + category + ", originalPrice=" + originalPrice + ", salePrice=" + salePrice + '}';
     }
+
+    
+
+    
 }

@@ -311,6 +311,9 @@
                                     text-align: center;
                                     text-transform: uppercase;
                                 }
+                                .product-item {
+                                    cursor: pointer;
+                                }
                             </style>
                             <c:if test="${not empty param.category}">
                                 <div class="alert alert-info">
@@ -341,11 +344,12 @@
                             <c:forEach var="product" items="${product}">
                                 <div class="col-sm-4">
                                     <div class="product-image-wrapper">
-                                        <div class="single-products">
+                                        <div class="single-products  product-item" data-id="${product.id}">
                                             <div class="productinfo text-center">
                                                 <img src="images/1984.jpg" alt="" />
                                                 <h2>${product.title}</h2>
                                                 <p>${product.description}</p>
+                                                <p style="display: none;">${product.id}</p>
                                                 <div class="button-container">
                                                     <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                     <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
@@ -387,7 +391,17 @@
                 </div>
             </div>
         </section>
-
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var productItems = document.querySelectorAll('.product-item');
+                productItems.forEach(function (item) {
+                    item.addEventListener('click', function () {
+                        var productId = this.getAttribute('data-id');
+                        window.location.href = 'ProductDetailPublic?productId=' + productId;
+                    });
+                });
+            });
+        </script>
         <footer id="footer"><!--Footer-->
             <div class="footer-top">
                 <div class="container">

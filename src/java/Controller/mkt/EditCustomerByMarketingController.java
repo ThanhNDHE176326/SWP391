@@ -9,7 +9,6 @@ import Models.Customer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,7 +17,6 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-@WebServlet(name = "EditCustomerByMarketingController", urlPatterns = {"/EditCustomer"})
 public class EditCustomerByMarketingController extends HttpServlet {
 
     /**
@@ -38,10 +36,10 @@ public class EditCustomerByMarketingController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditCustomerByMarketingController</title>");
+            out.println("<title>Servlet EditCustomer</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditCustomerByMarketingController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet EditCustomer at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -86,15 +84,16 @@ public class EditCustomerByMarketingController extends HttpServlet {
         // Chuyển hướng người dùng đến trang chỉnh sửa với thông tin khách hàng đã được tải
         request.setAttribute("customer", customer);
         request.getRequestDispatcher("CustomerDetail.jsp").forward(request, response);
-    }
+    
+}
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
+/**
+ * Returns a short description of the servlet.
+ *
+ * @return a String containing servlet description
+ */
+@Override
+public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
