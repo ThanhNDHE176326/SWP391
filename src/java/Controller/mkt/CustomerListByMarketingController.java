@@ -10,7 +10,6 @@ import Models.Customer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,7 +19,6 @@ import java.util.List;
  *
  * @author Admin
  */
-@WebServlet(name="CustomerListByMarketingController", urlPatterns={"/CustomerList"})
 public class CustomerListByMarketingController extends HttpServlet {
    
     /** 
@@ -37,6 +35,7 @@ public class CustomerListByMarketingController extends HttpServlet {
         List<Customer> customer = dao.findAll();
         request.setAttribute("customer", customer);
         request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
+        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
