@@ -7,63 +7,95 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class postDAO extends DBContext {
+
     private int noOfRecords;
-
+    
     public List<Blog> getFilteredAndSortedPosts(String searchTitle, String filterCategory, String filterStatus, String sortField, int page, int recordsPerPage) {
-        List<Blog> postList = new ArrayList<>();
+        List<Blog> posts = new ArrayList<>();
         int start = (page - 1) * recordsPerPage;
-        String query = "SELECT SQL_CALC_FOUND_ROWS * FROM Blogs WHERE 1=1";
         
-        if (searchTitle != null && !searchTitle.isEmpty()) {
-            query += " AND title LIKE '%" + searchTitle + "%'";
-        }
-        if (filterCategory != null && !filterCategory.isEmpty()) {
-            query += " AND categoryBlogId = '" + filterCategory + "'";
-        }
-        if (filterStatus != null && !filterStatus.isEmpty()) {
-            query += " AND isDelete = '" + filterStatus + "'";
-        }
-        if (sortField != null && !sortField.isEmpty()) {
-            query += " ORDER BY " + sortField;
-        } else {
-            query += " ORDER BY id";
-        }
-        query += " LIMIT " + start + ", " + recordsPerPage;
-
-        try {
-            PreparedStatement stm = connection.prepareStatement(query);
-            ResultSet rs = stm.executeQuery();
-
-            while (rs.next()) {
-                Blog blog = new Blog(
-                        rs.getString("id"),
-                        rs.getString("staffId"),
-                        rs.getString("title"),
-                        rs.getString("categoryBlogId"),
-                        rs.getString("image"),
-                        rs.getString("description"),
-                        rs.getString("content"),
-                        rs.getString("isDelete"),
-                        rs.getString("Status")
-                );
-                postList.add(blog);
-            }
-
-            rs = stm.executeQuery("SELECT FOUND_ROWS()");
-            if (rs.next()) {
-                this.noOfRecords = rs.getInt(1);
+        String query = "SELECT * FROM Blogs WHERE title LIKE ? AND category_blog_id LIKE ? AND isDelete LIKE ? ORDER BY "
+                + (sortField != null ? sortField : "id") + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, searchTitle != null ? "%" + searchTitle + "%" : "%");
+            ps.setString(2, filterCategory != null && !filterCategory.isEmpty() ? filterCategory : "%");
+            ps.setString(3, filterStatus != null && !filterStatus.isEmpty() ? filterStatus : "%");
+            ps.setInt(4, start);
+            ps.setInt(5, recordsPerPage);
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    posts.add(mapResultSetToBlog(rs));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return postList;
+        return posts;
     }
 
+    public List<Blog> getAllPosts(int pageNumber, int pageSize) {
+        List<Blog> posts = new ArrayList<>();
+        int offset = (pageNumber - 1) * pageSize;
+        try {
+            String query = "SELECT * FROM Blogs ORDER BY update_date DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+            try (PreparedStatement ps = connection.prepareStatement(query)) {
+                ps.setInt(1, offset);
+                ps.setInt(2, pageSize);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        posts.add(mapResultSetToBlog(rs));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return posts;
+    }
+    
+    public int getTotalPosts() {
+        String query = "SELECT COUNT(*) FROM Blogs WHERE isDelete = 0";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
     public int getNoOfRecords() {
+        String query = "SELECT COUNT(*) AS total FROM Blogs WHERE isDelete = 0";
+        try (PreparedStatement ps = connection.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                noOfRecords = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return noOfRecords;
     }
 
+    private Blog mapResultSetToBlog(ResultSet rs) throws SQLException {
+        Blog blog = new Blog();
+        blog.setId(rs.getString("id"));
+        blog.setStaff(rs.getString("staff_id"));
+        blog.setTitle(rs.getString("title"));
+        blog.setCategoryBlog(rs.getString("category_blog_id"));
+        blog.setImage(rs.getString("image"));
+        blog.setUpdateDate(rs.getString("update_date"));
+        blog.setDescription(rs.getString("description"));
+        blog.setContent(rs.getString("content"));
+        blog.setStatus(rs.getString("status"));
+        blog.setIsDelete(rs.getString("isDelete"));
+        return blog;
+    }
+    
     public void updatePostStatus(int id, boolean hide) {
         try {
             String query = "UPDATE Blogs SET isDelete = ? WHERE id = ?";
@@ -76,22 +108,20 @@ public class postDAO extends DBContext {
             e.printStackTrace();
         }
     }
+
     public void addPost(Blog post) {
-        String query = "INSERT INTO Blogs (staffId, title, categoryBlogId, image, publishDate, description, content, isDelete, featured) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try {
-            PreparedStatement stm = connection.prepareStatement(query);
-            stm.setString(1, post.getStaff());
-            stm.setString(2, post.getTitle());
-            stm.setString(3, post.getCategoryBlog());
-            stm.setString(4, post.getImage());
-//            stm.setTimestamp(5, post.getPublishDate());
-            stm.setString(6, post.getDescription());
-            stm.setString(7, post.getContent());
-            stm.setString(8, post.getIsDelete());
-//            stm.setString(9, post.getFeatured());
-            stm.executeUpdate();
+        String query = "INSERT INTO Blogs (image, title, category_blog_id,update_date, description, content ,staff_id, status, isDelete) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, post.getImage());
+            ps.setString(2, post.getTitle());
+            ps.setInt(3, Integer.parseInt(post.getCategoryBlog()));
+            ps.setString(4, post.getUpdateDate());
+            ps.setString(5, post.getDescription());
+            ps.setString(6, post.getContent());
+            ps.setInt(7, Integer.parseInt(post.getStaff()));
+            ps.setInt(8, Integer.parseInt(post.getStatus()));
+            ps.execute();
         } catch (SQLException e) {
-            System.out.println("Error creating post: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -100,36 +130,29 @@ public class postDAO extends DBContext {
     public Blog getPostById(int id) {
         Blog post = null;
         String query = "SELECT * FROM Blogs WHERE id = ?";
-        try {
-            PreparedStatement stm = connection.prepareStatement(query);
-            stm.setInt(1, id);
-            ResultSet rs = stm.executeQuery();
-
-            if (rs.next()) {
-                post = new Blog(
-                        rs.getString("id"),
-                        rs.getString("staffId"),
-                        rs.getString("title"),
-                        rs.getString("categoryBlogId"),
-                        rs.getString("image"),
-//                        rs.getTimestamp("publishDate"),
-                        rs.getString("description"),
-                        rs.getString("content"),
-                        rs.getString("isDelete"),
-                        rs.getString("status")
-                );
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    post = new Blog();
+                    post.setId(rs.getString("id"));
+                    post.setImage(rs.getString("image"));
+                    post.setTitle(rs.getString("title"));
+                    post.setCategoryBlog(rs.getString("category_blog_id"));
+                    post.setStaff(rs.getString("staffId"));
+                    post.setStatus(rs.getString("status"));
+                    post.setIsDelete(rs.getString("isDelete"));
+                }
             }
         } catch (SQLException e) {
-            System.out.println("Error retrieving post: " + e.getMessage());
             e.printStackTrace();
         }
-
         return post;
     }
 
     // Cập nhật bài viết
     public void updatePost(Blog post) {
-        String query = "UPDATE Blogs SET title = ?, categoryBlogId = ?, image = ?, description = ?, content = ?, featured = ? WHERE id = ?";
+        String query = "UPDATE Blogs SET title = ?, category_blog_id = ?, image = ?, description = ?, content = ?, status = ? WHERE id = ?";
         try {
             PreparedStatement stm = connection.prepareStatement(query);
             stm.setString(1, post.getTitle());
@@ -145,5 +168,16 @@ public class postDAO extends DBContext {
             e.printStackTrace();
         }
     }
-}
 
+    public boolean deletePost(int id) {
+        boolean rowDeleted = false;
+        String query = "UPDATE Blogs SET isDelete = 1 WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, id);
+            rowDeleted = ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowDeleted;
+    }
+}

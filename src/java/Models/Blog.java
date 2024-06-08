@@ -15,6 +15,28 @@ public class Blog {
     public Blog() {
     }
 
+    public Blog(String staff, String title, String categoryBlog, String image, String description, String content, String isDelete, String status) {
+        this.staff = staff;
+        this.title = title;
+        this.categoryBlog = categoryBlog;
+        this.image = image;
+        this.description = description;
+        this.content = content;
+        this.isDelete = isDelete;
+        this.status = status;
+    }
+    
+
+    public Blog(String id, String title, String categoryBlog, String image, String description, String content, String status) {
+        this.id = id;
+        this.title = title;
+        this.categoryBlog = categoryBlog;
+        this.image = image;
+        this.description = description;
+        this.content = content;
+        this.status = status;
+    }
+
     public Blog(String id, String staff, String title, String categoryBlog, String image, String updateDate, String description, String content, String isDelete, String status) {
         this.id = id;
         this.staff = staff;

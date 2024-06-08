@@ -6,6 +6,7 @@
 package PostController;
 
 import DAO.postDAO;
+import Models.Blog;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -57,16 +58,11 @@ public class UpdatePostController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int postId = Integer.parseInt(request.getParameter("id"));
-        String action = request.getParameter("action");
+           int id = Integer.parseInt(request.getParameter("id"));
         postDAO postDAO = new postDAO();
-        if ("hide".equalsIgnoreCase(action)) {
-            postDAO.updatePostStatus(postId, true);
-        } else if ("show".equalsIgnoreCase(action)) {
-            postDAO.updatePostStatus(postId, false);
-        }
-
-        response.sendRedirect("PostListController");
+        Blog post = postDAO.getPostById(id);
+        request.setAttribute("post", post);
+        request.getRequestDispatcher("/UpdatePost.jsp").forward(request, response);
         
     } 
 
@@ -80,18 +76,19 @@ public class UpdatePostController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-       int id = Integer.parseInt(request.getParameter("id"));
+      int id = Integer.parseInt(request.getParameter("id"));
         String title = request.getParameter("title");
-        String categoryBlogId = request.getParameter("categoryBlogId");
+        String categoryBlogId = request.getParameter("category_blog_id");
         String image = request.getParameter("image");
         String description = request.getParameter("description");
         String content = request.getParameter("content");
-        String featured = request.getParameter("featured");
+        String status = request.getParameter("status");
 
-       
-        postDAO.updatePost();
+        Blog updatedPost = new Blog("", title, categoryBlogId, image, description, content, status);
+        postDAO postDAO = new postDAO();
+        postDAO.updatePost(updatedPost);
 
-        response.sendRedirect("PostListController");
+        response.sendRedirect("postlist");
     }
 
     /** 
