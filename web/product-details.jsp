@@ -30,6 +30,11 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <!-- Font Awesome for icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     </head><!--/head-->
 
     <body>
@@ -289,29 +294,32 @@
                         <div class="product-details"><!--product-details-->
                             <div class="col-sm-5">
                                 <div class="view-product">
-                                    <img src="images/1984.jpg" alt="" />
-                                    <h3>ZOOM</h3>
+                                    <img src="images/${product.image}" alt="" />
                                 </div>
                                 <div id="similar-product" class="carousel slide" data-ride="carousel">
-
                                     <!-- Wrapper for slides -->
                                     <div class="carousel-inner">
                                         <div class="item active">
-                                            <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                            <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                            <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
+                                            <c:forEach var="listProduct" items="${listProduct}" varStatus="loop">
+                                                <c:if test="${loop.index == 0}">
+                                                    <a href=""><img src="images/${listProduct.image}" alt=""></a>
+                                                    </c:if>
+                                                </c:forEach>
                                         </div>
                                         <div class="item">
-                                            <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                            <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                            <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
+                                            <c:forEach var="listProduct" items="${listProduct}" varStatus="loop">
+                                                <c:if test="${loop.index == 1}">
+                                                    <a href=""><img src="images/${listProduct.image}" alt=""></a>
+                                                    </c:if>
+                                                </c:forEach>
                                         </div>
                                         <div class="item">
-                                            <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                            <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                            <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
+                                            <c:forEach var="listProduct" items="${listProduct}" varStatus="loop">
+                                                <c:if test="${loop.index == 2}">
+                                                    <a href=""><img src="images/${listProduct.image}" alt=""></a>
+                                                    </c:if>
+                                                </c:forEach>
                                         </div>
-
                                     </div>
 
                                     <!-- Controls -->
@@ -340,10 +348,10 @@
                                             Add to cart
                                         </button>
                                     </span>
-                                        <a href="#" class="btn btn-default buy-now">
-                                            <i class="fa fa-bolt"></i>
-                                            Buy
-                                        </a>
+                                    <a href="#" class="btn btn-default buy-now">
+                                        <i class="fa fa-bolt"></i>
+                                        Buy
+                                    </a>
                                     <p><b>Description:</b> ${product.description}</p>
                                     <p><b>Publication date:</b> ${product.updateDate}</p>
                                     <p><b>Original Price:</b> ${product.originalPrice} VNĐ</p>
@@ -355,258 +363,307 @@
                         <div class="category-tab shop-details-tab"><!--category-tab-->
                             <div class="col-sm-12">
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#reviews" data-toggle="tab">Reviews (5)</a></li>
+                                    <li class="active"><a href="#reviews" data-toggle="tab">Reviews (${count})</a></li>
                                 </ul>
                             </div>
-                            <div class="tab-content">
-                                <div class="tab-pane fade" id="details" >
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery1.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery2.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery3.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery4.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="companyprofile" >
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery1.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery3.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery2.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery4.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="tag" >
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery1.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery2.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery3.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery4.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                            <div class="tab-content">                                    
                                 <div class="tab-pane fade active in" id="reviews" >
-                                    <div class="col-sm-12">
-                                        <ul>
-                                            <li><a href=""><i class="fa fa-user"></i>EUGEN</a></li>
-                                            <li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
-                                            <li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
-                                        </ul>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                                                
-                                    </div>
+                                    <c:if test="${empty feedback}">
+                                        <div class="col-sm-12">
+                                            <p>There are no FeedBack for this product.</p>
+                                        </div>
+                                    </c:if>
+                                    <c:forEach var="feedback" items="${feedback}">
+                                        <div class="col-sm-12">
+                                            <ul>
+                                                <li><a href=""><i class="fa fa-user"></i>${feedback.customer}</a></li>
+                                                <li>
+                                                    <a >
+                                                        <i class="fa fa-clock-o"></i>
+                                                        <c:forEach begin="1" end="${feedback.ratedStar}" var="star">
+                                                            <i class="fa fa-star"></i>
+                                                        </c:forEach>
+                                                        <c:forEach begin="${feedback.ratedStar + 1}" end="5" var="star">
+                                                            <i class="fa fa-star-o"></i>
+                                                        </c:forEach>
+                                                    </a>
+                                                </li>
+                                                <li><a href=""><i class="fa fa-calendar-o"></i>${feedback.date}</a></li>
+                                            </ul>
+                                            <p>${feedback.comment}</p>
+                                        </div>
+                                    </c:forEach>
                                 </div>
-
                             </div>
-                        </div><!--/category-tab-->
 
+                        </div><!--/category-tab-->
+                        <ul class="pagination">
+                            <c:if test="${tag > 1}">
+                                <li><a href="?index=${tag - 1}">Previous</a></li>
+                                </c:if>
+                                <c:forEach begin="1" end="${endP}" var="i">
+                                <li class="${tag == i ? 'active' : ''}"><a class="pagination-link" href="?index=${i}">${i}</a></li>
+                                </c:forEach>
+                                <c:if test="${tag < endP}">
+                                <li><a href="?index=${tag + 1}">Next</a></li>
+                                </c:if>
+                        </ul>
+                        <style>
+                            .pagination {
+                                display: flex;
+                                justify-content: center;
+                                padding: 0;
+                                list-style: none;
+                            }
+
+                            .pagination li {
+                                display: inline;
+                                margin: 0 5px;
+                            }
+
+                            .pagination a {
+                                text-decoration: none;
+                                padding: 10px 15px;
+                                color: #007bff;
+                                border: 1px solid #dee2e6;
+                                border-radius: 4px;
+                            }
+
+                            .pagination .active a {
+                                background-color: #FE980F; /* Màu nền của trang được chọn */
+                                color: #000; /* Màu chữ của trang được chọn */
+                                border-color: yellow; /* Màu viền của trang được chọn */
+                            }
+                        </style>
                         <div class="recommended_items"><!--recommended_items-->
                             <h2 class="title text-center">recommended items</h2>
 
                             <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="item active">	
-                                        <div class="col-sm-4">
-                                            <div class="product-image-wrapper">
-                                                <div class="single-products">
-                                                    <div class="productinfo text-center">
-                                                        <img src="images/home/recommend1.jpg" alt="" />
-                                                        <h2>$56</h2>
-                                                        <p>Easy Polo Black Edition</p>
-                                                        <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        <c:forEach var="listProduct" items="${listProduct}" varStatus="loop">
+                                            <c:if test="${loop.index == 0}">
+                                                <div class="col-sm-4">
+                                                    <div class="product-image-wrapper">
+                                                        <div class="single-products  product-item" data-id="${listProduct.id}">
+                                                            <div class="productinfo text-center">
+                                                                <img src="images/${listProduct.image}" alt="" />
+                                                                <h2>${listProduct.title}</h2>
+                                                                <p>${listProduct.description}</p>
+                                                                <p style="display: none;">${listProduct.id}</p>
+                                                                <div class="button-container">
+                                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                    <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-overlay">
+                                                                <div class="overlay-content">
+                                                                    <h2>${listProduct.title}</h2>
+                                                                    <p>${listProduct.description}</p>
+                                                                    <div class="button-container">
+                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="choose">
+                                                            <ul class="nav nav-pills nav-justified">
+                                                                <li><a><i></i><span class="original-price">${listProduct.originalPrice} VNĐ</span></a></li>
+                                                                <li><a><i></i><span class="sale-price">${listProduct.salePrice} VNĐ</span></a></li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="product-image-wrapper">
-                                                <div class="single-products">
-                                                    <div class="productinfo text-center">
-                                                        <img src="images/home/recommend2.jpg" alt="" />
-                                                        <h2>$56</h2>
-                                                        <p>Easy Polo Black Edition</p>
-                                                        <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                            </c:if>
+                                        </c:forEach>
+
+                                        <c:forEach var="listProduct" items="${listProduct}" varStatus="loop">
+                                            <c:if test="${loop.index == 1}">
+                                                <div class="col-sm-4">
+                                                    <div class="product-image-wrapper">
+                                                        <div class="single-products  product-item" data-id="${listProduct.id}">
+                                                            <div class="productinfo text-center">
+                                                                <img src="images/${listProduct.image}" alt="" />
+                                                                <h2>${listProduct.title}</h2>
+                                                                <p>${listProduct.description}</p>
+                                                                <p style="display: none;">${listProduct.id}</p>
+                                                                <div class="button-container">
+                                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                    <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-overlay">
+                                                                <div class="overlay-content">
+                                                                    <h2>${listProduct.title}</h2>
+                                                                    <p>${listProduct.description}</p>
+                                                                    <div class="button-container">
+                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="choose">
+                                                            <ul class="nav nav-pills nav-justified">
+                                                                <li><a><i></i><span class="original-price">${listProduct.originalPrice} VNĐ</span></a></li>
+                                                                <li><a><i></i><span class="sale-price">${listProduct.salePrice} VNĐ</span></a></li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="product-image-wrapper">
-                                                <div class="single-products">
-                                                    <div class="productinfo text-center">
-                                                        <img src="images/home/recommend3.jpg" alt="" />
-                                                        <h2>$56</h2>
-                                                        <p>Easy Polo Black Edition</p>
-                                                        <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                            </c:if>
+                                        </c:forEach>
+
+                                        <c:forEach var="listProduct" items="${listProduct}" varStatus="loop">
+                                            <c:if test="${loop.index == 2}">
+                                                <div class="col-sm-4">
+                                                    <div class="product-image-wrapper">
+                                                        <div class="single-products  product-item" data-id="${listProduct.id}">
+                                                            <div class="productinfo text-center">
+                                                                <img src="images/${listProduct.image}" alt="" />
+                                                                <h2>${listProduct.title}</h2>
+                                                                <p>${listProduct.description}</p>
+                                                                <p style="display: none;">${listProduct.id}</p>
+                                                                <div class="button-container">
+                                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                    <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-overlay">
+                                                                <div class="overlay-content">
+                                                                    <h2>${listProduct.title}</h2>
+                                                                    <p>${listProduct.description}</p>
+                                                                    <div class="button-container">
+                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="choose">
+                                                            <ul class="nav nav-pills nav-justified">
+                                                                <li><a><i></i><span class="original-price">${listProduct.originalPrice} VNĐ</span></a></li>
+                                                                <li><a><i></i><span class="sale-price">${listProduct.salePrice} VNĐ</span></a></li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </c:if>
+                                        </c:forEach>
+
                                     </div>
                                     <div class="item">	
-                                        <div class="col-sm-4">
-                                            <div class="product-image-wrapper">
-                                                <div class="single-products">
-                                                    <div class="productinfo text-center">
-                                                        <img src="images/home/recommend1.jpg" alt="" />
-                                                        <h2>$56</h2>
-                                                        <p>Easy Polo Black Edition</p>
-                                                        <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        <c:forEach var="listProduct" items="${listProduct}" varStatus="loop">
+                                            <c:if test="${loop.index == 3}">
+                                                <div class="col-sm-4">
+                                                    <div class="product-image-wrapper">
+                                                        <div class="single-products  product-item" data-id="${listProduct.id}">
+                                                            <div class="productinfo text-center">
+                                                                <img src="images/${listProduct.image}" alt="" />
+                                                                <h2>${listProduct.title}</h2>
+                                                                <p>${listProduct.description}</p>
+                                                                <p style="display: none;">${listProduct.id}</p>
+                                                                <div class="button-container">
+                                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                    <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-overlay">
+                                                                <div class="overlay-content">
+                                                                    <h2>${listProduct.title}</h2>
+                                                                    <p>${listProduct.description}</p>
+                                                                    <div class="button-container">
+                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="choose">
+                                                            <ul class="nav nav-pills nav-justified">
+                                                                <li><a><i></i><span class="original-price">${listProduct.originalPrice} VNĐ</span></a></li>
+                                                                <li><a><i></i><span class="sale-price">${listProduct.salePrice} VNĐ</span></a></li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="product-image-wrapper">
-                                                <div class="single-products">
-                                                    <div class="productinfo text-center">
-                                                        <img src="images/home/recommend2.jpg" alt="" />
-                                                        <h2>$56</h2>
-                                                        <p>Easy Polo Black Edition</p>
-                                                        <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                            </c:if>
+                                        </c:forEach>
+
+                                        <c:forEach var="listProduct" items="${listProduct}" varStatus="loop">
+                                            <c:if test="${loop.index == 4}">
+                                                <div class="col-sm-4">
+                                                    <div class="product-image-wrapper">
+                                                        <div class="single-products  product-item" data-id="${listProduct.id}">
+                                                            <div class="productinfo text-center">
+                                                                <img src="images/${listProduct.image}" alt="" />
+                                                                <h2>${listProduct.title}</h2>
+                                                                <p>${listProduct.description}</p>
+                                                                <p style="display: none;">${listProduct.id}</p>
+                                                                <div class="button-container">
+                                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                    <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-overlay">
+                                                                <div class="overlay-content">
+                                                                    <h2>${listProduct.title}</h2>
+                                                                    <p>${listProduct.description}</p>
+                                                                    <div class="button-container">
+                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="choose">
+                                                            <ul class="nav nav-pills nav-justified">
+                                                                <li><a><i></i><span class="original-price">${listProduct.originalPrice} VNĐ</span></a></li>
+                                                                <li><a><i></i><span class="sale-price">${listProduct.salePrice} VNĐ</span></a></li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="product-image-wrapper">
-                                                <div class="single-products">
-                                                    <div class="productinfo text-center">
-                                                        <img src="images/home/recommend3.jpg" alt="" />
-                                                        <h2>$56</h2>
-                                                        <p>Easy Polo Black Edition</p>
-                                                        <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                            </c:if>
+                                        </c:forEach>
+
+                                        <c:forEach var="listProduct" items="${listProduct}" varStatus="loop">
+                                            <c:if test="${loop.index == 5}">
+                                                <div class="col-sm-4">
+                                                    <div class="product-image-wrapper">
+                                                        <div class="single-products  product-item" data-id="${listProduct.id}">
+                                                            <div class="productinfo text-center">
+                                                                <img src="images/${listProduct.image}" alt="" />
+                                                                <h2>${listProduct.title}</h2>
+                                                                <p>${listProduct.description}</p>
+                                                                <p style="display: none;">${listProduct.id}</p>
+                                                                <div class="button-container">
+                                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                    <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-overlay">
+                                                                <div class="overlay-content">
+                                                                    <h2>${listProduct.title}</h2>
+                                                                    <p>${listProduct.description}</p>
+                                                                    <div class="button-container">
+                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="choose">
+                                                            <ul class="nav nav-pills nav-justified">
+                                                                <li><a><i></i><span class="original-price">${listProduct.originalPrice} VNĐ</span></a></li>
+                                                                <li><a><i></i><span class="sale-price">${listProduct.salePrice} VNĐ</span></a></li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </c:if>
+                                        </c:forEach>
                                     </div>
                                 </div>
                                 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
@@ -622,7 +679,17 @@
                 </div>
             </div>
         </section>
-
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var productItems = document.querySelectorAll('.product-item');
+                productItems.forEach(function (item) {
+                    item.addEventListener('click', function () {
+                        var productId = this.getAttribute('data-id');
+                        window.location.href = 'ProductDetailPublic?index=1&productId=' + productId;
+                    });
+                });
+            });
+        </script>
         <footer id="footer"><!--Footer-->
             <div class="footer-top">
                 <div class="container">
@@ -789,5 +856,8 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.prettyPhoto.js"></script>
         <script src="js/main.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     </body>
 </html>

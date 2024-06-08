@@ -315,39 +315,83 @@ public class ProductDAOByPublic extends DBContext {
         return product;
     }
 
-    /*public List<Feedback> getFeedbackByIdProduct(int indexId) {
+    public List<Feedback> getFeedbackByIdProduct(int indexId, int index) {
         List<Feedback> listFound = new ArrayList<>();
         connection = connection;
-        String sql = "SELECT c.[name] AS customer_name, f.[date] AS date, f.rated_star, f.comment\n"
+        String sql = "SELECT c.[name] AS customer, f.[date] AS date, f.rated_star, f.comment\n"
                 + "FROM Feedbacks f INNER JOIN Customers c ON f.customer_id = c.id\n"
-                + "WHERE f.product_id = ?;";
+                + "WHERE f.product_id = ? ORDER BY f.[date] DESC OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY;";
+
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, indexId);
+            stm.setInt(2, (index - 1) * 5);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String customer = rs.getString("customer");
+                String comment = rs.getString("comment");
+                String ratedStar = String.valueOf(rs.getInt("rated_star"));
+                String date = String.valueOf(rs.getDate("date"));
+                Feedback feedback = new Feedback(customer, date, ratedStar, comment);
+                listFound.add(feedback);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return listFound;
+    }
+
+    public int countFeedbackOfAProduct(int indexId) {
+        connection = connection;
+        String sql = "SELECT COUNT(*) AS feedback_count FROM Feedbacks\n"
+                + "WHERE product_id = ? AND isDelete = 1;";
 
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, indexId);
             rs = stm.executeQuery();
+
             while (rs.next()) {
-                String id = String.valueOf(rs.getInt("id"));
-                String title = rs.getString("title");
-                String image = rs.getString("image");
-                String author = rs.getString("author");
-                String quantity = String.valueOf(rs.getInt("quantity"));
-                String update_date = String.valueOf(rs.getDate("update_date"));
-                String description = rs.getString("description");
-                String originalPrice = String.valueOf(rs.getInt("original_price"));
-                String salePrice = String.valueOf(rs.getInt("sale_price"));
-                String category = rs.getString("category");
-                Feedback feedback = new ;
+                return rs.getInt(1);
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        return product;
-    }*/
+        return 0;
+    }
+
+    public List<Product> getTop6ProductNew() {
+        List<Product> listFound = new ArrayList<>();
+        //- connect with DB
+        connection = connection;
+        //- chuẩn bị câu lệnh SQL
+        String sql = "SELECT TOP 6 id,title,image,description,original_price,sale_price\n"
+                + "FROM Products ORDER BY update_date DESC;";
+
+        try {
+            stm = connection.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String id = String.valueOf(rs.getInt("id"));
+                String title = rs.getString("title");
+                String image = rs.getString("image");
+                String description = rs.getString("description");
+                String originalPrice = String.valueOf(rs.getInt("original_price"));
+                String salePrice = String.valueOf(rs.getInt("sale_price"));
+                Product product = new Product(id, title, image, description, originalPrice, salePrice);
+                listFound.add(product);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return listFound;
+    }
 
     public static void main(String[] args) {
         ProductDAOByPublic dao = new ProductDAOByPublic();
-        Product product = dao.getProductPublicDetail(1);
-        System.out.println(product);
+        List<Product> product = dao.getAllProduct(1);
+        for (Product product1 : product) {
+            System.out.println(product1);
+        }
     }
 }

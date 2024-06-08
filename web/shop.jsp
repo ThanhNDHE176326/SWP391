@@ -346,7 +346,7 @@
                                     <div class="product-image-wrapper">
                                         <div class="single-products  product-item" data-id="${product.id}">
                                             <div class="productinfo text-center">
-                                                <img src="images/1984.jpg" alt="" />
+                                                <img src="images/${product.image}" alt="" />
                                                 <h2>${product.title}</h2>
                                                 <p>${product.description}</p>
                                                 <p style="display: none;">${product.id}</p>
@@ -397,7 +397,7 @@
                 productItems.forEach(function (item) {
                     item.addEventListener('click', function () {
                         var productId = this.getAttribute('data-id');
-                        window.location.href = 'ProductDetailPublic?productId=' + productId;
+                        window.location.href = 'ProductDetailPublic?index=1&productId=' + productId;
                     });
                 });
             });

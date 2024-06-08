@@ -25,6 +25,13 @@ public class Feedback {
         this.isDelete = isDelete;
     }
 
+    public Feedback(String customer, String date, String ratedStar, String comment) {
+        this.customer = customer;
+        this.date = date;
+        this.ratedStar = ratedStar;
+        this.comment = comment;
+    }
+
     public String getId() {
         return id;
     }
@@ -81,4 +88,10 @@ public class Feedback {
         this.isDelete = isDelete;
     }
 
+    @Override
+    public String toString() {
+        return "Feedback{" + "customer=" + customer + ", date=" + date + ", ratedStar=" + ratedStar + ", comment=" + comment + '}';
+    }
+
+    
 }

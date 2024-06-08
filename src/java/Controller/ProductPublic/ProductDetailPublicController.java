@@ -6,6 +6,7 @@ package Controller.ProductPublic;
 
 import DAO.ProductDAOByPublic;
 import Models.Category;
+import Models.Feedback;
 import Models.Product;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -37,8 +38,14 @@ public class ProductDetailPublicController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String productId = request.getParameter("productId");
+        String indexPage = request.getParameter("index");
 
+        if (indexPage == null) {
+            indexPage = "1";
+        }
+        int index = Integer.parseInt(indexPage);
         int indexId;
+
         try {
             if (productId != null && !productId.isEmpty()) {
                 indexId = Integer.parseInt(productId);
@@ -48,12 +55,23 @@ public class ProductDetailPublicController extends HttpServlet {
             }
 
             ProductDAOByPublic dao = new ProductDAOByPublic();
+            int count = dao.countFeedbackOfAProduct(indexId);
+            int endPage = count / 5;
+            if (count % 5 != 0) {
+                endPage++;
+            }
+
             Product product = dao.getProductPublicDetail(indexId);
             List<Category> categories = dao.getCategory();
-
+            List<Feedback> feedback = dao.getFeedbackByIdProduct(indexId, index);
+            List<Product> listProduct = dao.getTop6ProductNew();
             request.setAttribute("categories", categories);
             request.setAttribute("product", product);
-
+            request.setAttribute("feedback", feedback);
+            request.setAttribute("endP", endPage);
+            request.setAttribute("tag", index);
+            request.setAttribute("count", count);
+            request.setAttribute("listProduct", listProduct);
             RequestDispatcher dispatcher = request.getRequestDispatcher("product-details.jsp");
             dispatcher.forward(request, response);
 
