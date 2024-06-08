@@ -39,4 +39,18 @@ public class CategoryDAO extends DBContext {
     }
 
 //    
+
+    public int getTotalCategory() {
+        String sql = "SELECT COUNT(*) FROM Categories";
+        try {
+            stm=connection.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {                
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("getTotalCategory: " + e.getMessage());
+        }
+        return 0;
+    }
 }

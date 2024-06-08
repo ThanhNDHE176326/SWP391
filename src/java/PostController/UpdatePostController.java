@@ -89,7 +89,7 @@ public class UpdatePostController extends HttpServlet {
         String featured = request.getParameter("featured");
 
        
-        postDAO.updatePost();
+//        postDAO.updatePost();
 
         response.sendRedirect("PostListController");
     }

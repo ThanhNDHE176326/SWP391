@@ -32,5 +32,19 @@ public class CategoryBlogDAO extends DBContext {
         }
         return categories;
     }
+
+    public int getTotalCategoryPost() {
+        String sql = "SELECT COUNT(*) FROM Blogs";
+        try {
+            stm=connection.prepareStatement(sql);
+            rs=stm.executeQuery();
+            while (rs.next()) {                
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("getTotalCategoryPost: " + e.getMessage());
+        }
+        return 0;
+    }
 }
 

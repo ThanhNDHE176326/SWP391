@@ -70,11 +70,11 @@ public class PostListController extends HttpServlet {
             page = Integer.parseInt(request.getParameter("page"));
         }
 
-        List<Blog> list = postDAO.getPosts((page - 1) * recordsPerPage, recordsPerPage, searchTitle, filterCategory, filterStatus, sortField);
+//        List<Blog> list = postDAO.getPosts((page - 1) * recordsPerPage, recordsPerPage, searchTitle, filterCategory, filterStatus, sortField);
         int noOfRecords = postDAO.getNoOfRecords();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
-        request.setAttribute("postList", list);
+//        request.setAttribute("postList", list);
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
 

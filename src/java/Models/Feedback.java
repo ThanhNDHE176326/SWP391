@@ -10,12 +10,37 @@ package Models;
  */
 public class Feedback {
 
-    String id, customer, product, date, ratedStar, comment, isDelete;
+    String id, customer, product, date, ratedStar, comment, isDelete, status;
 
     public Feedback() {
     }
+    public Feedback(String customer, String date, String ratedStar, String comment){
+        this.customer = comment;
+        this.date = date;
+        this.ratedStar = ratedStar;
+        this.comment = comment;
+    }
+    public Feedback(String id, String customer, String product, String ratedStar, String comment) {
+        this.id = id;
+        this.customer = customer;
+        this.product = product;
+        this.ratedStar = ratedStar;
+        this.comment = comment;
+    }
 
-    public Feedback(String id, String customer, String product, String date, String ratedStar, String comment, String isDelete) {
+    public Feedback(String id, String customer, String product, String date, String ratedStar, String comment, String status) {
+        this.id = id;
+        this.customer = customer;
+        this.product = product;
+        this.date = date;
+        this.ratedStar = ratedStar;
+        this.comment = comment;
+        this.status = status;
+    }
+    
+    
+
+    public Feedback(String id, String customer, String product, String date, String ratedStar, String comment, String isDelete, String status) {
         this.id = id;
         this.customer = customer;
         this.product = product;
@@ -23,13 +48,7 @@ public class Feedback {
         this.ratedStar = ratedStar;
         this.comment = comment;
         this.isDelete = isDelete;
-    }
-
-    public Feedback(String customer, String date, String ratedStar, String comment) {
-        this.customer = customer;
-        this.date = date;
-        this.ratedStar = ratedStar;
-        this.comment = comment;
+        this.status = status;
     }
 
     public String getId() {
@@ -88,10 +107,17 @@ public class Feedback {
         this.isDelete = isDelete;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     @Override
     public String toString() {
         return "Feedback{" + "customer=" + customer + ", date=" + date + ", ratedStar=" + ratedStar + ", comment=" + comment + '}';
     }
 
-    
 }

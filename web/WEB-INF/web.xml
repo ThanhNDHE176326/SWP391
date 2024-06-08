@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 
-<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
-	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
-	 version="6.0">
-
-     <!-- Khai báo servlet -->
+    <!-- Khai báo servlet -->
     <servlet>
         <servlet-name>SignUpCustomerController</servlet-name>
         <servlet-class>Controller.cs.SignUpCustomerController</servlet-class>
@@ -222,55 +220,5 @@
     </servlet-mapping>
     <!-- Khai báo welcome file -->
     
-    <servlet>
-        <servlet-name>ProductListByPublicController</servlet-name>
-        <servlet-class>Controller.ProductPublic.ProductListByPublicController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SearchProductByPublicController</servlet-name>
-        <servlet-class>Controller.ProductPublic.SearchProductByPublicController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>FilterProductPublicByCategoryController</servlet-name>
-        <servlet-class>Controller.ProductPublic.FilterProductPublicByCategoryController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SeachPopularProductByPublicController</servlet-name>
-        <servlet-class>Controller.ProductPublic.SeachPopularProductByPublicController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>FilterProductPublicByPriceController</servlet-name>
-        <servlet-class>Controller.ProductPublic.FilterProductPublicByPriceController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ProductListPublicByUpdateDateController</servlet-name>
-        <servlet-class>Controller.ProductPublic.ProductListPublicByUpdateDateController</servlet-class>
-    </servlet>
-<servlet-mapping>
-        <servlet-name>ProductListByPublicController</servlet-name>
-        <url-pattern>/ProductListPublic</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchProductByPublicController</servlet-name>
-        <url-pattern>/SearchProductPulbic</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>FilterProductPublicByCategoryController</servlet-name>
-        <url-pattern>/ProductPublicByCategory</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SeachPopularProductByPublicController</servlet-name>
-        <url-pattern>/SeachPopularProductPublic</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>FilterProductPublicByPriceController</servlet-name>
-        <url-pattern>/ProductPublicByPrice</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ProductListPublicByUpdateDateController</servlet-name>
-        <url-pattern>/ProductListPublicByUpdateDate</url-pattern>
-    </servlet-mapping>
-    
-    
-    
+
 </web-app>
