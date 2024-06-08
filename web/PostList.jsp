@@ -1,54 +1,88 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Post List</title>
+    <link rel="stylesheet" type="text/css" href="css/bloglist.css">
 </head>
 <body>
-    <h1>Post List</h1>
-    <form method="get" action="PostListController">
-        <input type="text" name="searchTitle" placeholder="Search by title">
-        <select name="filterCategory">
-            <option value="">All Categories</option>
-            <!-- Add category options here -->
-        </select>
-        <select name="filterStatus">
-            <option value="">All Statuses</option>
-            <option value="0">Visible</option>
-            <option value="1">Hidden</option>
-        </select>
-        <button type="submit">Filter</button>
-    </form>
-    <a href="CreatePostController">Add New Post</a>
-    <table border="1">
-        <tr>
-            <th><a href="?sortField=title">Title</a></th>
-            <th><a href="?sortField=categoryBlogId">Category</a></th>
-            <th><a href="?sortField=featured">Featured</a></th>
-            <th><a href="?sortField=isDelete">Status</a></th>
-            <th>Actions</th>
-        </tr>
-        <c:forEach var="post" items="${postList}">
-            <tr>
-                <td>${post.title}</td>
-                <td>${post.categoryBlogId}</td>
-                <td>${post.featured == '1' ? 'Yes' : 'No'}</td>
-                <td>${post.isDelete == '1' ? 'Hidden' : 'Visible'}</td>
-                <td>
-                    <a href="EditPostController?id=${post.id}">Edit</a>
-                    <a href="UpdatePostStatusController?id=${post.id}&action=${post.isDelete == '1' ? 'show' : 'hide'}">
-                        ${post.isDelete == '1' ? 'Show' : 'Hide'}
-                    </a>
-                    <a href="ViewPostController?id=${post.id}">View</a>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
-    <c:forEach var="i" begin="1" end="${noOfPages}">
-        <a href="PostListController?page=${i}">${i}</a>
-    </c:forEach>
+    <header>
+        <h1>Post List</h1>
+    </header>
+    <div class="container">
+        <div class="main-content">
+            <!-- Search bar -->
+            <div class="search-bar">
+                <form action="postlist" method="get">
+                    <input type="text" name="searchTitle" placeholder="Search by title" value="${param.searchTitle}">
+                    <input type="text" name="filterCategory" placeholder="Filter by category" value="${param.filterCategory}">
+                    <select name="filterStatus">
+                        <option value="">Filter by status</option>
+                        <option value="true" ${param.filterStatus == 'true' ? 'selected' : ''}>Show</option>
+                        <option value="false" ${param.filterStatus == 'false' ? 'selected' : ''}>Hide</option>
+                    </select>
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+                    
+                    <a href="CreatePost">Create New Post</a>
+
+            <!-- Post list -->
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Staff</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                        <th>Content</th>
+                        <th>Update Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="post" items="${posts}">
+                        <tr>
+                            <td>${post.id}</td>
+                            <td><img src="${post.image}" alt="${post.title}" width="50"></td>
+                            <td>${post.title}</td>
+                            <td>${post.categoryBlog}</td>
+                            <td>${post.staff}</td>
+                            <td>${post.status == '0' ? 'Show' : 'Hide'}</td>
+                            <td>${post.description}</td>
+                            <td>${post.content}</td>
+                            <td>${post.updateDate}</td>
+                            <td>
+                                <a href="viewPost?id=${post.id}">View</a>
+                                <a href="updatepost?id=${post.id}">Edit</a>
+                                <a href="deletePost?id=${post.id}">Delete</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <c:forEach begin="1" end="${noOfPages}" var="pageNum">
+                    <a href="postlist?page=${pageNum}" ${currentPage == pageNum ? 'class="active"' : ''}>${pageNum}</a>
+                </c:forEach>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside>
+            <h2>Categories</h2>
+            <ul>
+                <c:forEach var="category" items="${categories}">
+                    <li>${category.name}</li>
+                </c:forEach>
+            </ul>
+        </aside>
+    </div>
 </body>
 </html>
-
