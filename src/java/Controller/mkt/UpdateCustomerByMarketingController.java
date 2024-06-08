@@ -4,8 +4,8 @@
  */
 package Controller.mkt;
 
+import DAO.CustomerByMaketingDAO;
 import Models.CustomerUpdateHistory;
-import dal.MaketingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -85,7 +85,7 @@ public class UpdateCustomerByMarketingController extends HttpServlet {
 
 // Chuyển đổi giá trị status từ chuỗi thành bit
        
-        MaketingDAO dao = new MaketingDAO();
+        CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
         boolean updateSuccess = dao.updateCustomer(id, name, username, email, phone, address, genderBit);
         if (updateSuccess) {
             request.setAttribute("message", "Customer updated successfully!");

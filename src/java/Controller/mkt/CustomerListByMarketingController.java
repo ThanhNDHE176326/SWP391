@@ -5,8 +5,8 @@
 
 package Controller.mkt;
 
+import DAO.CustomerByMaketingDAO;
 import Models.Customer;
-import dal.MaketingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -31,7 +31,7 @@ public class CustomerListByMarketingController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        MaketingDAO dao = new MaketingDAO();
+        CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
         List<Customer> customer = dao.findAll();
         request.setAttribute("customer", customer);
         request.getRequestDispatcher("CustomerList.jsp").forward(request, response);

@@ -11,17 +11,18 @@ import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author admin
  */
-public class ProductMarketingSearchByTitleController extends HttpServlet {
+@WebServlet(name = "UpdateProductDetailMarketingController", urlPatterns = {"/updateProductDetailMarketing"})
+public class UpdateProductDetailMarketingController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +41,10 @@ public class ProductMarketingSearchByTitleController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProductMarketingSearchByTitle</title>");
+            out.println("<title>Servlet UpdateProductDetailMarketingController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ProductMarketingSearchByTitle at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateProductDetailMarketingController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,37 +64,13 @@ public class ProductMarketingSearchByTitleController extends HttpServlet {
             throws ServletException, IOException {
         ProductDAO productDAO = new ProductDAO();
         CategoryDAO categoryDAO = new CategoryDAO();
-
-        //list category in select
         List<Category> listCategory = categoryDAO.getCategorys();
         request.setAttribute("listCategory", listCategory);
-        
-        String search = request.getParameter("search");
-        
-        String indexString = request.getParameter("index");
-        if(indexString == null) indexString = "1";
-        int index = Integer.parseInt(indexString);
-        
-        int totalRecordProduct = productDAO.getTotalProductBySearch(search);
-        int recordPerPage = 10;
-        int endPage = totalRecordProduct / recordPerPage;
-        if (totalRecordProduct % recordPerPage != 0) {
-            endPage++;
-        }
-        
-        List<Product> listProductByTitle = new ArrayList<>();
-        listProductByTitle = productDAO.getProductPagingBySearch(search, index);
-        String error = "";
-        if(listProductByTitle.isEmpty()) error="The product does not exist or there is a search error!";
-        
-        request.setAttribute("urlServlet", "productListMarketing");
-        request.setAttribute("endPage", endPage);
-        request.setAttribute("listTypeFromServlet", "productByTitle");
-        request.setAttribute("error", error);
-        request.setAttribute("titleSearch", search);
-        request.setAttribute("listProduct", listProductByTitle);
-        request.setAttribute("mode", "asc");
-        request.getRequestDispatcher("view/marketing/product-list-marketing.jsp").forward(request, response);
+        String idString = request.getParameter("productID");
+        int productID = Integer.parseInt(idString);
+        Product productDetail = productDAO.getProductDetailByID(productID);
+        request.setAttribute("product", productDetail);
+        request.getRequestDispatcher("view/marketing/update-product-detail-marketing.jsp").forward(request, response);
     }
 
     /**
@@ -107,7 +84,14 @@ public class ProductMarketingSearchByTitleController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int id = Integer.parseInt(request.getParameter("id"));
+        String title = request.getParameter("title");
+        String author = request.getParameter("author");
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        String description = request.getParameter("description");
+        int categoryID = Integer.parseInt(request.getParameter("category"));
+        String originalPrice = request.getParameter("originalPrice");
+        String salePrice = request.getParameter("salePrice");
     }
 
     /**

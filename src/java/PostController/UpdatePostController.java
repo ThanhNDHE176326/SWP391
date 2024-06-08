@@ -83,10 +83,10 @@ public class UpdatePostController extends HttpServlet {
         String description = request.getParameter("description");
         String content = request.getParameter("content");
         String status = request.getParameter("status");
-
         Blog updatedPost = new Blog("", title, categoryBlogId, image, description, content, status);
         postDAO postDAO = new postDAO();
         postDAO.updatePost(updatedPost);
+
 
         response.sendRedirect("postlist");
     }

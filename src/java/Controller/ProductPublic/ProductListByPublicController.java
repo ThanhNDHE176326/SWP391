@@ -3,13 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.mkt;
+package Controller.ProductPublic;
 
-import DAO.CustomerByMaketingDAO;
-import Models.Customer;
+import DAO.ProductDAOByPublic;
+import Models.Category;
+import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,7 +21,8 @@ import java.util.List;
  *
  * @author Admin
  */
-public class PaginationCustomerByMarketingController extends HttpServlet {
+@WebServlet(name="ProductListByPublicController", urlPatterns={"/ProductListPublic"})
+public class ProductListByPublicController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -31,33 +34,25 @@ public class PaginationCustomerByMarketingController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String indexPage = request.getParameter("index");
+        String indexPage = request.getParameter("index");
         if (indexPage == null) {
             indexPage = "1";
         }
         int index = Integer.parseInt(indexPage);
-        String sort = request.getParameter("sort");
-        String order = request.getParameter("order");
-
-        CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
-        int count = dao.getTotalCustomer();
-        int endPage = count / 7;
-        if (count % 7 != 0) {
+        ProductDAOByPublic dao = new ProductDAOByPublic();
+        int count = dao.getTotalProduct();
+        int endPage = count / 6;
+        if (count % 6 != 0) {
             endPage++;
         }
 
-        List<Customer> customer;
-        if (sort != null && order != null) {
-            customer = dao.getSortedAllCustomers(index, sort, order);
-        } else {
-            customer = dao.pagingCustomer(index);
-        }
-
-        
-        request.setAttribute("customer", customer);
+        List<Product> product = dao.getAllProduct(index);
+       List<Category> category = dao.getCategory();
+        request.setAttribute("categories", category);
+        request.setAttribute("product", product);
         request.setAttribute("endP", endPage);
         request.setAttribute("tag", index);
-        request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
+        request.getRequestDispatcher("shop.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

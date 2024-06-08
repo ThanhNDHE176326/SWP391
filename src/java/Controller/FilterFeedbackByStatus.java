@@ -2,26 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controllers;
+package Controller;
 
-import DAO.CategoryDAO;
-import DAO.ProductDAO;
-import Models.Category;
-import Models.Product;
+import DAO.FeedbackDAO;
+import Models.Feedback;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
- * @author admin
+ * @author dat ngo huy
  */
-public class ProductMarketingSearchByTitleController extends HttpServlet {
+@WebServlet(name = "FilterFeedbackByStatus", urlPatterns = {"/FilterFeedbackByStatus"})
+public class FilterFeedbackByStatus extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +39,10 @@ public class ProductMarketingSearchByTitleController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProductMarketingSearchByTitle</title>");
+            out.println("<title>Servlet FilterFeedbackByStatus</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ProductMarketingSearchByTitle at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet FilterFeedbackByStatus at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,39 +60,40 @@ public class ProductMarketingSearchByTitleController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductDAO productDAO = new ProductDAO();
-        CategoryDAO categoryDAO = new CategoryDAO();
 
-        //list category in select
-        List<Category> listCategory = categoryDAO.getCategorys();
-        request.setAttribute("listCategory", listCategory);
-        
-        String search = request.getParameter("search");
-        
-        String indexString = request.getParameter("index");
-        if(indexString == null) indexString = "1";
-        int index = Integer.parseInt(indexString);
-        
-        int totalRecordProduct = productDAO.getTotalProductBySearch(search);
-        int recordPerPage = 10;
-        int endPage = totalRecordProduct / recordPerPage;
-        if (totalRecordProduct % recordPerPage != 0) {
-            endPage++;
+        FeedbackDAO da = new FeedbackDAO();
+        String statusSearch = request.getParameter("statusSearch");
+        String statusModeFromServlet = "";
+        request.setAttribute("statusSearch", statusSearch);
+        if (statusSearch.equals("show")) {
+            ArrayList<Feedback> listFeedbackByStatus = da.getFeedBackByShowStatus();
+            statusModeFromServlet = "show";
+            request.setAttribute("allfeedback", listFeedbackByStatus);
+            request.setAttribute("statusSearch", statusSearch);
+
+            request.getRequestDispatcher("ListFeedback.jsp").forward(request, response);
+        } else if (statusSearch.equals("hide")) {
+            ArrayList<Feedback> listFeedbackByStatus = da.getFeedBackByHideStatus();
+            statusModeFromServlet = "hide";
+            request.setAttribute("allfeedback", listFeedbackByStatus);
+            request.setAttribute("statusSearch", statusSearch);
+
+            request.getRequestDispatcher("ListFeedback.jsp").forward(request, response);
+        } else if (statusSearch.equals("all")) {
+            ArrayList<Feedback> listFeedbackByStatus = da.getAllFeedback();
+            statusModeFromServlet = "all";
+            request.setAttribute("allfeedback", listFeedbackByStatus);
+            request.setAttribute("statusSearch", statusSearch);
+
+            request.getRequestDispatcher("ListFeedback.jsp").forward(request, response);
         }
-        
-        List<Product> listProductByTitle = new ArrayList<>();
-        listProductByTitle = productDAO.getProductPagingBySearch(search, index);
-        String error = "";
-        if(listProductByTitle.isEmpty()) error="The product does not exist or there is a search error!";
-        
-        request.setAttribute("urlServlet", "productListMarketing");
-        request.setAttribute("endPage", endPage);
-        request.setAttribute("listTypeFromServlet", "productByTitle");
-        request.setAttribute("error", error);
-        request.setAttribute("titleSearch", search);
-        request.setAttribute("listProduct", listProductByTitle);
-        request.setAttribute("mode", "asc");
-        request.getRequestDispatcher("view/marketing/product-list-marketing.jsp").forward(request, response);
+
+        request.setAttribute("statusModeFromServlet", statusModeFromServlet);
+        request.setAttribute("listTypeFromServlet", "productByStatus");   
+        request.setAttribute("statusSearch", statusSearch);
+      
+        request.getRequestDispatcher("ListFeedback.jsp").forward(request, response);
+
     }
 
     /**

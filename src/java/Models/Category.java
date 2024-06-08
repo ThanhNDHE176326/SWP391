@@ -20,6 +20,10 @@ public class Category {
         this.name = name;
     }
 
+    public Category(String name) {
+        this.name = name;
+    }
+    
     public String getId() {
         return id;
     }
@@ -36,4 +40,8 @@ public class Category {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "Category{" + "name=" + name + '}';
+    }
 }

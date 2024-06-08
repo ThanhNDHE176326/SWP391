@@ -3,23 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.mkt;
+package Controller;
 
-import DAO.CustomerByMaketingDAO;
-import Models.Customer;
+import DAO.FeedbackDAO;
+import Models.Feedback;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
- * @author Admin
+ * @author dat ngo huy
  */
-public class PaginationCustomerByMarketingController extends HttpServlet {
+@WebServlet(name="SearchFeedBackController", urlPatterns={"/searchfeedback"})
+public class SearchFeedBackController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -31,33 +33,32 @@ public class PaginationCustomerByMarketingController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String indexPage = request.getParameter("index");
-        if (indexPage == null) {
-            indexPage = "1";
-        }
-        int index = Integer.parseInt(indexPage);
-        String sort = request.getParameter("sort");
-        String order = request.getParameter("order");
-
-        CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
-        int count = dao.getTotalCustomer();
-        int endPage = count / 7;
-        if (count % 7 != 0) {
-            endPage++;
-        }
-
-        List<Customer> customer;
-        if (sort != null && order != null) {
-            customer = dao.getSortedAllCustomers(index, sort, order);
-        } else {
-            customer = dao.pagingCustomer(index);
-        }
-
+        try{
+           String txtSearch = request.getParameter("txtSearch");
+           String indexString = request.getParameter("index");
+           int index = Integer.parseInt(indexString);
+           
+           FeedbackDAO da = new FeedbackDAO();
+           int count = da.count(txtSearch);
+           int pageSize = 3;
+           int endPage = 0;
+           endPage = count / pageSize;
+           if(count % pageSize !=0){
+               endPage++;
+           }
+           
+           ArrayList<Feedback> list = da.Search(txtSearch, index, pageSize);
+           request.setAttribute("list", list);
+           request.setAttribute("end", endPage);
+           request.setAttribute("index", index);
+           request.setAttribute("txtSearch", txtSearch);
+           
+           request.getRequestDispatcher("SearchFeedback.jsp").forward(request, response);
         
-        request.setAttribute("customer", customer);
-        request.setAttribute("endP", endPage);
-        request.setAttribute("tag", index);
-        request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
+           
+       }catch(Exception e){
+            
+        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

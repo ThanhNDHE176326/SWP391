@@ -2,13 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.mkt;
+package Controller.ProductPublic;
 
-import DAO.CustomerByMaketingDAO;
-import Models.Customer;
+import DAO.ProductDAOByPublic;
+import Models.Category;
+import Models.Feedback;
+import Models.Product;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,7 +22,8 @@ import java.util.List;
  *
  * @author Admin
  */
-public class FifterStatusCustomerByMarketingController extends HttpServlet {
+@WebServlet(name = "ProductDetailPublicController", urlPatterns = {"/ProductDetailPublic"})
+public class ProductDetailPublicController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,59 +37,53 @@ public class FifterStatusCustomerByMarketingController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
-        String statusFilter = request.getParameter("statusFilter");
-        List<Customer> customer;
-        String sort = request.getParameter("sort");
-        String order = request.getParameter("order");
-
+        String productId = request.getParameter("productId");
         String indexPage = request.getParameter("index");
+
         if (indexPage == null) {
             indexPage = "1";
         }
-        int pageIndex = Integer.parseInt(indexPage);
-        int pageSize = 7; // Số lượng khách hàng mỗi trang
+        int index = Integer.parseInt(indexPage);
+        int indexId;
 
-        int count;
-        int endPage;
+        try {
+            if (productId != null && !productId.isEmpty()) {
+                indexId = Integer.parseInt(productId);
+            } else {
+                // Xử lý lỗi nếu không có id được gửi từ request
+                indexId = 1; // Sử dụng giá trị mặc định
+            }
 
-// Kiểm tra và tính toán số lượng khách hàng và số trang dựa trên statusFilter
-        if (statusFilter == null || statusFilter.isEmpty()) {
-            count = dao.getTotalCustomer();
-            endPage = count / pageSize;
-            if (count % pageSize != 0) {
+            ProductDAOByPublic dao = new ProductDAOByPublic();
+            int count = dao.countFeedbackOfAProduct(indexId);
+            int endPage = count / 5;
+            if (count % 5 != 0) {
                 endPage++;
             }
-        } else {
-            count = dao.countCustomerByStatus(statusFilter);
-            endPage = count / pageSize;
-            if (count % pageSize != 0) {
-                endPage++;
-            }
+
+            Product product = dao.getProductPublicDetail(indexId);
+            List<Category> categories = dao.getCategory();
+            List<Feedback> feedback = dao.getFeedbackByIdProduct(indexId, index);
+            List<Product> listProduct = dao.getTop6ProductNew();
+            request.setAttribute("categories", categories);
+            request.setAttribute("product", product);
+            request.setAttribute("feedback", feedback);
+            request.setAttribute("endP", endPage);
+            request.setAttribute("tag", index);
+            request.setAttribute("count", count);
+            request.setAttribute("listProduct", listProduct);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("product-details.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (NumberFormatException e) {
+            // Xử lý lỗi nếu id không phải là một số nguyên
+            e.printStackTrace();
+            response.sendRedirect("404.jsp");
+        } catch (Exception e) {
+            // Xử lý lỗi chung khác
+            e.printStackTrace();
+            response.sendRedirect("404.jsp");
         }
-
-        if (statusFilter == null || statusFilter.isEmpty()) {
-            // Nếu statusFilter là null hoặc rỗng, lấy dữ liệu phân trang cho tất cả khách hàng
-            if (sort != null && order != null) {
-                customer = dao.getSortedAllCustomers(pageIndex, sort, order);
-            } else {
-                customer = dao.pagingCustomer(pageIndex);
-            }
-        } else{
-            // Nếu statusFilter là "Đang sử dụng", lấy dữ liệu khách hàng đang sử dụng theo trạng thái và phân trang
-            if (sort != null && order != null) {
-                customer = dao.getSortedStatusCustomers(statusFilter, pageIndex, sort, order);
-            } else {
-                customer = dao.getSortedStatusCustomers(statusFilter, pageIndex, sort, order);
-            }
-        } 
-
-        request.setAttribute("customer", customer);
-        request.setAttribute("endP", endPage);
-        request.setAttribute("tag", pageIndex);
-        request.setAttribute("statusFilter", statusFilter);
-        request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

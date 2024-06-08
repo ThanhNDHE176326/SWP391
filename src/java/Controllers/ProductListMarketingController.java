@@ -63,17 +63,30 @@ public class ProductListMarketingController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        ProductDAO productDAO = new ProductDAO();
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Category> listCategory = categoryDAO.getCategorys();
         request.setAttribute("listCategory", listCategory);
 
-        ProductDAO productDAO = new ProductDAO();
-        List<Product> listProduct = productDAO.getProducts();
+        String indexString = request.getParameter("index");
+        if(indexString == null) indexString = "1";
+        int index = Integer.parseInt(indexString);
+        
+        int totalRecordProduct = productDAO.getTotalProduct();
+        int recordPerPage = 10;
+        int endPage = totalRecordProduct / recordPerPage;
+        if (totalRecordProduct % recordPerPage != 0) {
+            endPage++;
+        }
+
+        List<Product> listProduct = productDAO.getProductsByPaging(index);
+        
+        request.setAttribute("urlServlet", "productListMarketing");
+        request.setAttribute("endPage", endPage);
         request.setAttribute("listProduct", listProduct);
         request.setAttribute("listTypeFromServlet", "listProduct");
         request.setAttribute("mode", "asc");
-        request.getRequestDispatcher("view/ProductListMarketing.jsp").forward(request, response);
+        request.getRequestDispatcher("view/marketing/product-list-marketing.jsp").forward(request, response);
     }
 
     /**

@@ -70,6 +70,7 @@ public class PostListController extends HttpServlet {
             page = Integer.parseInt(request.getParameter("page"));
         }
 
+
         List<Blog> posts;
         int totalPosts;
 

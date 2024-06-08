@@ -5,8 +5,8 @@
 
 package Controller.mkt;
 
+import DAO.CustomerByMaketingDAO;
 import Models.Customer;
-import dal.MaketingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -33,7 +33,7 @@ public class SearchControlByMarketingController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             String txtSearch = request.getParameter("txtSearch");
-            MaketingDAO dao = new MaketingDAO();
+            CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
             
             String indexString = request.getParameter("index");
             int index = Integer.parseInt(indexString);

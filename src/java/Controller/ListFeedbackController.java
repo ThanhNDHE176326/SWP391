@@ -1,25 +1,27 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.mkt;
+package Controller;
 
-import DAO.CustomerByMaketingDAO;
-import Models.Customer;
+import DAO.FeedbackDAO;
+import Models.Feedback;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
- * @author Admin
+ * @author dat ngo huy
  */
-public class PaginationCustomerByMarketingController extends HttpServlet {
+@WebServlet(name="ListFeedbackController", urlPatterns={"/listfeedback"})
+public class ListFeedbackController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -31,33 +33,18 @@ public class PaginationCustomerByMarketingController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String indexPage = request.getParameter("index");
-        if (indexPage == null) {
-            indexPage = "1";
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ListFeedbackController</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ListFeedbackController at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        int index = Integer.parseInt(indexPage);
-        String sort = request.getParameter("sort");
-        String order = request.getParameter("order");
-
-        CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
-        int count = dao.getTotalCustomer();
-        int endPage = count / 7;
-        if (count % 7 != 0) {
-            endPage++;
-        }
-
-        List<Customer> customer;
-        if (sort != null && order != null) {
-            customer = dao.getSortedAllCustomers(index, sort, order);
-        } else {
-            customer = dao.pagingCustomer(index);
-        }
-
-        
-        request.setAttribute("customer", customer);
-        request.setAttribute("endP", endPage);
-        request.setAttribute("tag", index);
-        request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -71,7 +58,19 @@ public class PaginationCustomerByMarketingController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        FeedbackDAO da = new FeedbackDAO();
+        ArrayList<Feedback> allfeedback = da.getAllFeedback();
+        
+        if (request.getParameter("mode") != null && request.getParameter("mode").equals("4")) {
+            String id = request.getParameter("id");
+             ArrayList<Feedback> feedbackdetail = da.getFeedbackDetailById(id);
+             request.setAttribute("feedbackdetail", feedbackdetail);
+            request.getRequestDispatcher("FeedbackDetail.jsp").forward(request, response);
+        }
+        
+        request.setAttribute("allfeedback", allfeedback);
+        request.getRequestDispatcher("ListFeedback.jsp").forward(request, response);
+        
     } 
 
     /** 

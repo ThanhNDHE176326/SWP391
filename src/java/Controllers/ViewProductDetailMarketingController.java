@@ -3,23 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.mkt;
+package Controllers;
 
-import DAO.CustomerByMaketingDAO;
-import Models.Customer;
+import DAO.ProductDAO;
+import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
- * @author Admin
+ * @author admin
  */
-public class PaginationCustomerByMarketingController extends HttpServlet {
+@WebServlet(name="ViewProductDetailMarketingController", urlPatterns={"/viewProductDetailMarketing"})
+public class ViewProductDetailMarketingController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -31,33 +32,18 @@ public class PaginationCustomerByMarketingController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String indexPage = request.getParameter("index");
-        if (indexPage == null) {
-            indexPage = "1";
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ViewProductDetailMarketingController</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ViewProductDetailMarketingController at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        int index = Integer.parseInt(indexPage);
-        String sort = request.getParameter("sort");
-        String order = request.getParameter("order");
-
-        CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
-        int count = dao.getTotalCustomer();
-        int endPage = count / 7;
-        if (count % 7 != 0) {
-            endPage++;
-        }
-
-        List<Customer> customer;
-        if (sort != null && order != null) {
-            customer = dao.getSortedAllCustomers(index, sort, order);
-        } else {
-            customer = dao.pagingCustomer(index);
-        }
-
-        
-        request.setAttribute("customer", customer);
-        request.setAttribute("endP", endPage);
-        request.setAttribute("tag", index);
-        request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -71,7 +57,12 @@ public class PaginationCustomerByMarketingController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        ProductDAO productDAO = new ProductDAO();
+        String idString = request.getParameter("id");
+        int productID = Integer.parseInt(idString);
+        Product productDetail = productDAO.getProductDetailByID(productID);
+        request.setAttribute("product", productDetail);
+        request.getRequestDispatcher("view/marketing/product-detail-marketing.jsp").forward(request, response);
     } 
 
     /** 
