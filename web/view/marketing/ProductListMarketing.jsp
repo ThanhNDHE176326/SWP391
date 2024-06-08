@@ -96,7 +96,7 @@
         <div class="container">
             Search Products:
             <form class="form-inline" action="productMarketingSearchByTitle">
-                <input type="text" name="titleSearch" placeholder="search by title" value="${titleSearch}"> 
+                <input type="text" name="search" placeholder="search" value="${search}"> 
                 <input type="submit" value="SEARCH"> 
             </form>
             <form class="form-inline" action="productMarketingSearchByBriefInfo">
@@ -145,6 +145,7 @@
                         <th>Stock</th>
                         <th>Brief Info</th>
                         <th><a href="sortList?listType=${listTypeFromServlet}&field=status&mode=${mode}&statusMode=${statusModeFromServlet}">Status</a></th>
+                        <th>Action</th>
                     </tr>
                     <c:forEach items="${listProduct}" var="product">
                         <tr>
@@ -170,15 +171,7 @@
                             <c:if test="${product.status == 0}">
                                 <td style="color: red">Hide</td>
                             </c:if>
-                            <td>
-
-                                <select name="status" onchange="document.getElementById('product').submit();">
-                                    <option value="1" ${product.status == 1 ? "selected" : ""}>Show</option>
-                                    <option value="0" ${product.status == 0 ? "selected" : ""}>Hide</option>
-                                </select>
-
-
-                            </td>
+                            
                         </tr>
                     </c:forEach>
 

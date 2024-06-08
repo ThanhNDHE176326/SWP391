@@ -70,24 +70,65 @@ public class ProductMarketingFilterByStatusController extends HttpServlet {
 
         String statusSearch = request.getParameter("statusSearch");
         List<Product> listProductByStatus = new ArrayList<>();
-        String statusModeFromServlet ="";
+        int endPage = 0;
+        String statusModeFromServlet = "";
         request.setAttribute("statusSearch", statusSearch);
+        
+        
         if (statusSearch.equals("show")) {
-            listProductByStatus = productDAO.getProductByShowStatus();
-            statusModeFromServlet="show";
+            String indexString = request.getParameter("index");
+            if (indexString == null) {
+                indexString = "1";
+            }
+            int index = Integer.parseInt(indexString);
+
+            int totalRecordProduct = productDAO.getTotalProductByShowStatus();
+            int recordPerPage = 10;
+            endPage = totalRecordProduct / recordPerPage;
+            if (totalRecordProduct % recordPerPage != 0) {
+                endPage++;
+            }
+            listProductByStatus = productDAO.getProductPagingByShowStatus(index);
+            statusModeFromServlet = "show";
         } else if (statusSearch.equals("hide")) {
-            listProductByStatus = productDAO.getProductByHideStatus();
-            statusModeFromServlet="hide";
+            String indexString = request.getParameter("index");
+            if (indexString == null) {
+                indexString = "1";
+            }
+            int index = Integer.parseInt(indexString);
+
+            int totalRecordProduct = productDAO.getTotalProductByHideStatus();
+            int recordPerPage = 10;
+            endPage = totalRecordProduct / recordPerPage;
+            if (totalRecordProduct % recordPerPage != 0) {
+                endPage++;
+            }
+            listProductByStatus = productDAO.getProductPagingByHideStatus(index);
+            statusModeFromServlet = "hide";
         } else if (statusSearch.equals("all")) {
-            listProductByStatus = productDAO.getProducts();
-            statusModeFromServlet="all";
+            String indexString = request.getParameter("index");
+            if (indexString == null) {
+                indexString = "1";
+            }
+            int index = Integer.parseInt(indexString);
+
+            int totalRecordProduct = productDAO.getTotalProduct();
+            int recordPerPage = 10;
+            endPage = totalRecordProduct / recordPerPage;
+            if (totalRecordProduct % recordPerPage != 0) {
+                endPage++;
+            }
+            listProductByStatus = productDAO.getProductsByPaging(index);
+            statusModeFromServlet = "all";
         }
+        request.setAttribute("urlServlet", "productMarketingFilterByStatus");
+        request.setAttribute("endPage", endPage);
         request.setAttribute("statusModeFromServlet", statusModeFromServlet);
         request.setAttribute("listTypeFromServlet", "productByStatus");
         request.setAttribute("listProduct", listProductByStatus);
         request.setAttribute("statusSearch", statusSearch);
         request.setAttribute("mode", "asc");
-        request.getRequestDispatcher("view/ProductListMarketing.jsp").forward(request, response);
+        request.getRequestDispatcher("view/marketing/product-list-marketing.jsp").forward(request, response);
 
     }
 

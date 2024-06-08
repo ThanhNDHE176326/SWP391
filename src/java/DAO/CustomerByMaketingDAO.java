@@ -454,23 +454,23 @@ public class CustomerByMaketingDAO extends DBContext {
         return false; // Trả về false nếu có lỗi xảy ra
     }
 
-    public static void main(String[] args) {
-        // Khởi tạo đối tượng để truy cập cơ sở dữ liệu
-        CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
-        // Gọi phương thức để lấy lịch sử cập nhật khách hàng
-        String name = "John ";
-        String username = "johndoe";
-        String email = "johndoe@example.com";
-        String password = "password123";
-        String phone = "1234567890";
-        String address = "123 Main St, City, Country";
-        int gender = 1; // Đặt giá trị tương ứng với giới tính (ví dụ: 1 cho Nam, 2 cho Nữ)
-        int status = 0; 
-         boolean result = dao.addCustomer(name, username, email, password, phone, address, gender, status);
-            if (result) {
-                System.out.println("Thêm khách hàng thành công!");
-            } else {
-                System.out.println("Thêm khách hàng thất bại!");
-            }
-    }
+//    public static void main(String[] args) {
+//        // Khởi tạo đối tượng để truy cập cơ sở dữ liệu
+//        CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
+//        // Gọi phương thức để lấy lịch sử cập nhật khách hàng
+//        String name = "John ";
+//        String username = "johndoe";
+//        String email = "johndoe@example.com";
+//        String password = "password123";
+//        String phone = "1234567890";
+//        String address = "123 Main St, City, Country";
+//        int gender = 1; // Đặt giá trị tương ứng với giới tính (ví dụ: 1 cho Nam, 2 cho Nữ)
+//        int status = 0; 
+//         boolean result = dao.addCustomer(name, username, email, password, phone, address, gender, status);
+//            if (result) {
+//                System.out.println("Thêm khách hàng thành công!");
+//            } else {
+//                System.out.println("Thêm khách hàng thất bại!");
+//            }
+//    }
 }

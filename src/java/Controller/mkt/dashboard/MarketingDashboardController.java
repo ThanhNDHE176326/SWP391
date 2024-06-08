@@ -2,26 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controllers;
+package Controller.mkt.dashboard;
 
+import DAO.BlogDAO;
+import DAO.CategoryBlogDAO;
 import DAO.CategoryDAO;
+import DAO.CustomerDAO;
+import DAO.FeedbackMKTDAO;
 import DAO.ProductDAO;
-import Models.Category;
-import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  * @author admin
  */
-public class ProductMarketingSearchByTitleController extends HttpServlet {
+@WebServlet(name = "MarketingDashboardController", urlPatterns = {"/marketingDashboard"})
+public class MarketingDashboardController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +42,10 @@ public class ProductMarketingSearchByTitleController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProductMarketingSearchByTitle</title>");
+            out.println("<title>Servlet MarketingDashboardController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ProductMarketingSearchByTitle at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet MarketingDashboardController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,39 +63,41 @@ public class ProductMarketingSearchByTitleController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        BlogDAO blogDAO = new BlogDAO();
+        CategoryBlogDAO categoryBlogDAO = new CategoryBlogDAO();
         ProductDAO productDAO = new ProductDAO();
         CategoryDAO categoryDAO = new CategoryDAO();
+        CustomerDAO customerDAO = new CustomerDAO();
+        FeedbackMKTDAO feedbackDAO = new FeedbackMKTDAO();
 
-        //list category in select
-        List<Category> listCategory = categoryDAO.getCategorys();
-        request.setAttribute("listCategory", listCategory);
+        //Post
+        int totalPost = blogDAO.getTotalNumberOfBlogs();
+        int totalCategoryPost = categoryBlogDAO.getTotalCategoryPost();
+
+        //Product
+        int totalProduct = productDAO.getTotalProduct();
+        int totalCategory = categoryDAO.getTotalCategory();
+        int totalQuantityOfProduct = productDAO.getTotalQuantity();
+
+        //Customer
+//        int totalCustomer = customerDAO.getTotalCustomer();
+
+        //Feedback
+        int totalFeedback = feedbackDAO.getTotalFeedback();
+
+        //set Attribute Post
+        request.setAttribute("totalPost", totalPost);
+        request.setAttribute("totalCategoryPost", totalCategoryPost);
         
-        String search = request.getParameter("search");
-        
-        String indexString = request.getParameter("index");
-        if(indexString == null) indexString = "1";
-        int index = Integer.parseInt(indexString);
-        
-        int totalRecordProduct = productDAO.getTotalProductBySearch(search);
-        int recordPerPage = 10;
-        int endPage = totalRecordProduct / recordPerPage;
-        if (totalRecordProduct % recordPerPage != 0) {
-            endPage++;
-        }
-        
-        List<Product> listProductByTitle = new ArrayList<>();
-        listProductByTitle = productDAO.getProductPagingBySearch(search, index);
-        String error = "";
-        if(listProductByTitle.isEmpty()) error="The product does not exist or there is a search error!";
-        
-        request.setAttribute("urlServlet", "productListMarketing");
-        request.setAttribute("endPage", endPage);
-        request.setAttribute("listTypeFromServlet", "productByTitle");
-        request.setAttribute("error", error);
-        request.setAttribute("titleSearch", search);
-        request.setAttribute("listProduct", listProductByTitle);
-        request.setAttribute("mode", "asc");
-        request.getRequestDispatcher("view/marketing/product-list-marketing.jsp").forward(request, response);
+        //set Attribute Product
+        request.setAttribute("totalProduct", totalProduct);
+        request.setAttribute("totalCategory", totalCategory);
+        request.setAttribute("totalQuantityOfProduct", totalQuantityOfProduct);
+        //set Attribute Customer
+//        request.setAttribute("totalCustomer", totalCustomer);
+        //set Attribute Feedback
+        request.setAttribute("totalFeedback", totalFeedback);
+        request.getRequestDispatcher("view/marketing/dashboard.jsp").forward(request, response);
     }
 
     /**

@@ -68,6 +68,17 @@ public class ProductMarketingFilterByCategoryController extends HttpServlet {
         List<Category> listCategory = categoryDAO.getCategorys();
         request.setAttribute("listCategory", listCategory);
 
+//        String indexString = request.getParameter("index");
+//        if(indexString == null) indexString = "1";
+//        int index = Integer.parseInt(indexString);
+//        
+//        int totalRecordProduct = productDAO.getTotalProductByCategoryID(int ca);
+//        int recordPerPage = 10;
+//        int endPage = totalRecordProduct / recordPerPage;
+//        if (totalRecordProduct % recordPerPage != 0) {
+//            endPage++;
+//        }
+        int endPage = 0;
         //get value from formSearch form
         String categorySearchID_String = request.getParameter("categorySearch");
         if (categorySearchID_String == null) {
@@ -75,16 +86,47 @@ public class ProductMarketingFilterByCategoryController extends HttpServlet {
         }
         List<Product> listProductByCategoryID = new ArrayList<>();
         if (categorySearchID_String.equals("0")) {
-            listProductByCategoryID = productDAO.getProducts();
+            
+            String indexString = request.getParameter("index");
+            if (indexString == null) {
+                indexString = "1";
+            }
+            int index = Integer.parseInt(indexString);
+
+            int totalRecordProduct = productDAO.getTotalProduct();
+            int recordPerPage = 10;
+            endPage = totalRecordProduct / recordPerPage;
+            if (totalRecordProduct % recordPerPage != 0) {
+                endPage++;
+            }
+            listProductByCategoryID = productDAO.getProductsByPaging(index);
+
         } else {
             int categorySearchID = Integer.parseInt(categorySearchID_String);
-            listProductByCategoryID = productDAO.getProductByCategoryID(categorySearchID);
+            
+            String indexString = request.getParameter("index");
+            if (indexString == null) {
+                indexString = "1";
+            }
+            int index = Integer.parseInt(indexString);
+
+            int totalRecordProduct = productDAO.getTotalProductByCategoryID(categorySearchID);
+            int recordPerPage = 10;
+            endPage = totalRecordProduct / recordPerPage;
+            if (totalRecordProduct % recordPerPage != 0) {
+                endPage++;
+            }
+//            int categorySearchID = Integer.parseInt(categorySearchID_String);
+            listProductByCategoryID = productDAO.getProductPagingByCategoryID(categorySearchID, index);
         }
+
+        request.setAttribute("urlServlet", "productMarketingFilterByCategory");
+        request.setAttribute("endPage", endPage);
         request.setAttribute("listTypeFromServlet", "productByCategory");
         request.setAttribute("categorySearch", categorySearchID_String);
         request.setAttribute("listProduct", listProductByCategoryID);
         request.setAttribute("mode", "asc");
-        request.getRequestDispatcher("view/ProductListMarketing.jsp").forward(request, response);
+        request.getRequestDispatcher("view/marketing/product-list-marketing.jsp").forward(request, response);
     }
 
     /**
