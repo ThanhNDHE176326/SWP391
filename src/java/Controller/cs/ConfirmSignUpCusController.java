@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.cs;
+package Controller.cs;
 
 import DAO.CustomerDAO;
 import java.io.IOException;
@@ -89,9 +89,10 @@ public class ConfirmSignUpCusController extends HttpServlet {
             CustomerDAO dao = new CustomerDAO();
             dao.singUpCustomer(name, username, password, email, phone, address, gender);
             request.setAttribute("messen", "Sign Up Success");
-            request.getRequestDispatcher("signupcustomer.jsp").forward(request, response);
+            request.getRequestDispatcher("view/customer/signupcustomer.jsp").forward(request, response);
         } else {
-            out.println("Incorrect verification code");
+            request.setAttribute("error", "Incorrect verification code");
+            request.getRequestDispatcher("view/customer/verifysignupcustomer.jsp").forward(request, response);
         }
     }
 

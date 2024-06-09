@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.cs;
+package Controller.cs;
 
 import Models.Customer;
 import DAO.CustomerDAO;
@@ -63,7 +63,7 @@ public class InformationUserController extends HttpServlet {
         Customer user = dao.getInformationCustomer(username);
         request.setAttribute("user", user);
         request.setAttribute("message", session.getAttribute("mess"));
-        request.getRequestDispatcher("userinformation.jsp").forward(request, response);
+        request.getRequestDispatcher("view/customer/profilecustomer.jsp").forward(request, response);
     } 
 
     /** 

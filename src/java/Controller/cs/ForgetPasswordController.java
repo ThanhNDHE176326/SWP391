@@ -82,7 +82,7 @@ public class ForgetPasswordController extends HttpServlet {
 
         if (c == null || !c.getEmail().equals(email)) {
             request.setAttribute("error", "Account does not exist");
-            request.getRequestDispatcher("forgetpassword.jsp").forward(request, response);
+            request.getRequestDispatcher("view/customer/forgetpasswordcustomer.jsp").forward(request, response);
             return;
         }
 
@@ -95,7 +95,7 @@ public class ForgetPasswordController extends HttpServlet {
         boolean test = sm.sendEmail(user);
         if (test) {
             session.setAttribute("authcode", user);
-            response.sendRedirect("VerifyResetPasswordCustomer.jsp");
+            response.sendRedirect("view/customer/verifyresetpasswordcustomer.jsp");
         }
 
     }

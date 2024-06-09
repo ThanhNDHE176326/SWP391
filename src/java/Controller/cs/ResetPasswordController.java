@@ -10,6 +10,7 @@ import DAO.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author HP
  */
+@WebServlet(name = "ResetPasswordController", urlPatterns = {"/resetpassword"})
 public class ResetPasswordController extends HttpServlet {
    
     /** 
@@ -75,8 +77,8 @@ public class ResetPasswordController extends HttpServlet {
         String confirmpassword=request.getParameter("confirmPassword");
          CustomerDAO dao = new CustomerDAO();
         dao.changePassword(newpassword, username);
-        request.setAttribute("error", "success");
-        request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+        request.setAttribute("error", "Password changed successfully");
+        request.getRequestDispatcher("view/customer/resetpasswordcustomer.jsp").forward(request, response);
     }
 
     /** 
