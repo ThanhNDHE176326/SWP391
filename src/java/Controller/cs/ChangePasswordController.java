@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.cs;
+package Controller.cs;
 
 import DAO.CustomerDAO;
 import java.io.IOException;
@@ -79,19 +79,19 @@ public class ChangePasswordController extends HttpServlet {
 
         if (!oldpassword.equals((String) session.getAttribute("password"))) {
             request.setAttribute("error", "Incorrect old password.");
-            request.getRequestDispatcher("changepassword.jsp").forward(request, response);
+            request.getRequestDispatcher("view/customer/changepasswordcustomer.jsp").forward(request, response);
             return;
         }
         if (!newpassword.equals(confirmpassword)) {
             request.setAttribute("error", "New password and confirm new password must match.");
-            request.getRequestDispatcher("changepassword.jsp").forward(request, response);
+            request.getRequestDispatcher("view/customer/changepasswordcustomer.jsp").forward(request, response);
             return;
         }
         CustomerDAO dao = new CustomerDAO();
         dao.changePassword(newpassword, username);
         session.setAttribute("password", newpassword);
-        request.setAttribute("error", "success");
-        request.getRequestDispatcher("changepassword.jsp").forward(request, response);
+        request.setAttribute("error", "Password changed successfully");
+        request.getRequestDispatcher("view/customer/changepasswordcustomer.jsp").forward(request, response);
     }
 
     /**

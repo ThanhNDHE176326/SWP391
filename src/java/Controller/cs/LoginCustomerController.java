@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.cs;
+package Controller.cs;
 
 import DAO.CustomerDAO;
 import java.io.IOException;
@@ -76,7 +76,7 @@ public class LoginCustomerController extends HttpServlet {
         String password = request.getParameter("password");
 
         CustomerDAO dao = new CustomerDAO();
-        Customer a = dao.LoginCustomer(username);
+        Customer c = dao.LoginCustomer(username);
 
         HttpSession session = request.getSession();
         Integer loginAttempts = (Integer) session.getAttribute("loginAttempts");
@@ -90,36 +90,36 @@ public class LoginCustomerController extends HttpServlet {
             dao.updateIsDelete(username, 0);// Assuming updateIsDelete method exists
             session.removeAttribute("loginAttempts");
             request.setAttribute("error", "You have exceeded the maximum number of login attempts. Your account has been locked.");
-            request.getRequestDispatcher("logincustomer.jsp").forward(request, response);
+            request.getRequestDispatcher("view/customer/logincustomer.jsp").forward(request, response);
             return; // Stop further execution
         }
 
-        if (a == null) {
+        if (c == null) {
             request.setAttribute("error", "Username or Password invalid");
-            request.getRequestDispatcher("logincustomer.jsp").forward(request, response);
+            request.getRequestDispatcher("view/customer/logincustomer.jsp").forward(request, response);
             return; // Stop further execution
         }
-        if (!"1".equals(a.getIsDelete())) {
+        if (!"1".equals(c.getIsDelete())) {
             request.setAttribute("error", "Your account has been locked.");
-            request.getRequestDispatcher("logincustomer.jsp").forward(request, response);
+            request.getRequestDispatcher("view/customer/logincustomer.jsp").forward(request, response);
             return;
         }
 
-        if (!a.getPassword().equals(password)) {
+        if (!c.getPassword().equals(password)) {
             loginAttempts++;
             session.setAttribute("loginAttempts", loginAttempts);
             request.setAttribute("error", "You have entered the wrong password " + loginAttempts + " times");
-            request.getRequestDispatcher("logincustomer.jsp").forward(request, response);
+            request.getRequestDispatcher("view/customer/logincustomer.jsp").forward(request, response);
             return; // Stop further execution
         }
 
 // Reset login attempts on successful login
         session.removeAttribute("loginAttempts");
-        session.setAttribute("acc", a);
+        session.setAttribute("acc", c);
         session.setAttribute("username", username); // Set the username into session
         session.setAttribute("password", password); // Set the password into session
         session.setMaxInactiveInterval(1800); // 30'
-        response.sendRedirect("homepage.jsp");
+        response.sendRedirect("view/customer/homepage.jsp");
 
     }
 

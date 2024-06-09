@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.cs;
+package Controller.cs;
 
 import DAO.SendMail;
 import DAO.CustomerDAO;
@@ -109,12 +109,12 @@ public class SignUpCustomerController extends HttpServlet {
             boolean test = sm.sendEmail(user);
             if (test) {
                 session.setAttribute("authcode", user);
-                response.sendRedirect("verify.jsp");
+                response.sendRedirect("view/customer/verifysignupcustomer.jsp");
             }
         } else {
             request.setAttribute("messen", "Username exist");
             // response.sendRedirect("Signup.jsp");
-            request.getRequestDispatcher("signupcustomer.jsp").forward(request, response);
+            request.getRequestDispatcher("view/customer/signupcustomer.jsp").forward(request, response);
         }
 
     }

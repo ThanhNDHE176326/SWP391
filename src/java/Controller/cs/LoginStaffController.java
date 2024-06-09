@@ -92,18 +92,18 @@ public class LoginStaffController extends HttpServlet {
             dao.updateIsDeleteStaff(username, 0);// Assuming updateIsDelete method exists
             session.removeAttribute("loginAttempts");
             request.setAttribute("error", "You have exceeded the maximum number of login attempts. Your account has been locked.");
-            request.getRequestDispatcher("loginstaff.jsp").forward(request, response);
+            request.getRequestDispatcher("view/staff/loginstaff.jsp").forward(request, response);
             return; // Stop further execution
         }
 
         if (s == null) {
             request.setAttribute("error", "Username or Password invalid");
-            request.getRequestDispatcher("loginstaff.jsp").forward(request, response);
+            request.getRequestDispatcher("view/staff/loginstaff.jsp").forward(request, response);
             return; // Stop further execution
         }
         if (!"1".equals(s.getIsDelete())) {
             request.setAttribute("error", "Your account has been locked.");
-            request.getRequestDispatcher("loginstaff.jsp").forward(request, response);
+            request.getRequestDispatcher("view/staff/loginstaff.jsp").forward(request, response);
             return;
         }
 
@@ -111,7 +111,7 @@ public class LoginStaffController extends HttpServlet {
             loginAttempts++;
             session.setAttribute("loginAttempts", loginAttempts);
             request.setAttribute("error", "You have entered the wrong password " + loginAttempts + " times");
-            request.getRequestDispatcher("loginstaff.jsp").forward(request, response);
+            request.getRequestDispatcher("view/staff/loginstaff.jsp").forward(request, response);
             return; // Stop further execution
         }
 

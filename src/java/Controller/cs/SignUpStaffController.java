@@ -78,7 +78,7 @@ public class SignUpStaffController extends HttpServlet {
         String password = request.getParameter("password");
         String repassword = request.getParameter("repassword");
         String email = request.getParameter("email");
-        String address = request.getParameter("address"); // Corrected variable name from re_password to address
+        String address = request.getParameter("address");
         String phone = request.getParameter("phone");
         String gender = request.getParameter("gender");
         String role = request.getParameter("role");;
@@ -90,13 +90,13 @@ public class SignUpStaffController extends HttpServlet {
         Staff a = dao.checkStaffAccountExits(username);
         if (a == null) {
             dao.singUpStaff(fullname, username, password, email, phone, address, gender, role);
-            request.setAttribute("messen", "Sign Up Success");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.setAttribute("mess", "Sign Up Success");
+            request.getRequestDispatcher("view/admin/signupstaff.jsp").forward(request, response);
 
         } else {
-            request.setAttribute("messen", "Username exist");
+            request.setAttribute("mess", "Username exist");
             // response.sendRedirect("Signup.jsp");
-            request.getRequestDispatcher("signupcustomer.jsp").forward(request, response);
+            request.getRequestDispatcher("view/admin/signupstaff.jsp").forward(request, response);
         }
 
     }

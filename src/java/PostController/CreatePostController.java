@@ -91,7 +91,7 @@ public class CreatePostController extends HttpServlet {
         response.sendRedirect("postlist");
 
 
-
+    }
     /**
      * Returns a short description of the servlet.
      *
