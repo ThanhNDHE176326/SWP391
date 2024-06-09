@@ -62,28 +62,9 @@
             <li class="nav-item active">
                 <a class="nav-link" href="Pagination">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Customers List</span></a>
+                    <span>SignUp Staff</span></a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Product List</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Post</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Slider</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Feedback</span></a>
-            </li>
+            
         </ul>
     </body>
 </html>
