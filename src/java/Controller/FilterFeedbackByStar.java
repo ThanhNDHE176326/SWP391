@@ -1,4 +1,4 @@
-    /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
@@ -20,8 +20,8 @@ import java.util.ArrayList;
  *
  * @author dat ngo huy
  */
-@WebServlet(name="ListFeedbackController", urlPatterns={"/listfeedback"})
-public class ListFeedbackController extends HttpServlet {
+@WebServlet(name="FilterFeedbackByStar", urlPatterns={"/FilterFeedbackByStar"})
+public class FilterFeedbackByStar extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +38,10 @@ public class ListFeedbackController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ListFeedbackController</title>");  
+            out.println("<title>Servlet FilterFeedbackByStar</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ListFeedbackController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet FilterFeedbackByStar at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,19 +59,51 @@ public class ListFeedbackController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         FeedbackDAO da = new FeedbackDAO();
-        ArrayList<Feedback> allfeedback = da.getAllFeedback();
+        String starSearch = request.getParameter("starSearch");
         
-        if (request.getParameter("mode") != null && request.getParameter("mode").equals("4")) {
-            String id = request.getParameter("id");
-             ArrayList<Feedback> feedbackdetail = da.getFeedbackDetailById(id);
-             request.setAttribute("feedbackdetail", feedbackdetail);
-            request.getRequestDispatcher("view/marketing/feedbackdetail.jsp").forward(request, response);
+        request.setAttribute("starSearch", starSearch);
+        if (starSearch.equals("1")) {
+            ArrayList<Feedback> listFeedbackByStar = da.getFeedBackBy1Star();
+            
+            request.setAttribute("allfeedback", listFeedbackByStar);
+            request.setAttribute("starSearch", starSearch);
+
+            request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
+        } else if (starSearch.equals("2")) {
+            ArrayList<Feedback> listFeedbackByStar = da.getFeedBackBy2Star();
+            
+           
+            request.setAttribute("allfeedback", listFeedbackByStar);
+            request.setAttribute("starSearch", starSearch);
+            request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
+        } else if (starSearch.equals("3")) {
+            ArrayList<Feedback> listFeedbackByStar = da.getFeedBackBy3Star();                                          
+            
+           request.setAttribute("allfeedback", listFeedbackByStar);
+            request.setAttribute("starSearch", starSearch);
+           request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
+        }else if (starSearch.equals("4")) {
+            ArrayList<Feedback> listFeedbackByStar = da.getFeedBackBy4Star();                                          
+            
+           request.setAttribute("allfeedback", listFeedbackByStar);
+            request.setAttribute("starSearch", starSearch);
+           request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
+        }else if (starSearch.equals("5")) {
+            ArrayList<Feedback> listFeedbackByStar = da.getFeedBackBy5Star();                                          
+             
+            request.setAttribute("allfeedback", listFeedbackByStar);
+            request.setAttribute("starSearch", starSearch);
+            request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
         }
-        
-        request.setAttribute("allfeedback", allfeedback);
+
+      
+              
+        request.setAttribute("starSearch", starSearch);     
         request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
-        
-    } 
+
+    }
+
+    
 
     /** 
      * Handles the HTTP <code>POST</code> method.

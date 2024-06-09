@@ -53,7 +53,7 @@ public class SearchFeedBackController extends HttpServlet {
            request.setAttribute("index", index);
            request.setAttribute("txtSearch", txtSearch);
            
-           request.getRequestDispatcher("SearchFeedback.jsp").forward(request, response);
+           request.getRequestDispatcher("view/marketing/searchfeedback.jsp").forward(request, response);
         
            
        }catch(Exception e){
