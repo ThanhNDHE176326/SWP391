@@ -57,7 +57,7 @@ public class PaginationCustomerByMarketingController extends HttpServlet {
         request.setAttribute("customer", customer);
         request.setAttribute("endP", endPage);
         request.setAttribute("tag", index);
-        request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
+        request.getRequestDispatcher("view/marketing/customerlist.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

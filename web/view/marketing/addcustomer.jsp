@@ -45,7 +45,7 @@
 
                     <!-- Customer Registration Form -->
                     <h2 class="text-center">Add New Customer</h2>
-                    <form action="AddCustomer" method="post">
+                    <form action="${pageContext.request.contextPath}/AddCustomer" method="post">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

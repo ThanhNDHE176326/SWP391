@@ -83,7 +83,7 @@ public class FifterStatusCustomerByMarketingController extends HttpServlet {
         request.setAttribute("endP", endPage);
         request.setAttribute("tag", pageIndex);
         request.setAttribute("statusFilter", statusFilter);
-        request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
+        request.getRequestDispatcher("view/marketing/customerlist.jsp").forward(request, response);
 
     }
 

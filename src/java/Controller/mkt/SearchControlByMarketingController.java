@@ -53,7 +53,7 @@ public class SearchControlByMarketingController extends HttpServlet {
             request.setAttribute("customer", listSearch);
             request.setAttribute("tag", index);
             request.setAttribute("txtSearch", txtSearch);
-            request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
+            request.getRequestDispatcher("view/marketing/customerlist.jsp").forward(request, response);
         } catch (Exception e) {
         }
     } 

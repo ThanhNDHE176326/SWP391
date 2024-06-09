@@ -51,12 +51,12 @@
                         <div class="card-header" >
                             <i class="fas fa-table"></i>
                             CUSTOMERS LIST
-                            <a href="AddCustomer.jsp" class="btn btn-success" style="float: right; margin-right: 10px;">Add New Customer</a>
+                            <a href="${pageContext.request.contextPath}/view/marketing/addcustomer.jsp" class="btn btn-success" style="float: right; margin-right: 10px;">Add New Customer</a>
                         </div>
 
                         <body>
                             <div class="form-container">
-                                <form action="StatusCustomer?index=1" method="get">
+                                <form action="${pageContext.request.contextPath}/StatusCustomer?index=1" method="get">
                                     <label>Filter by Status:</label>
                                     <input type="radio" id="allFilter" name="statusFilter" value="" <% if (request.getParameter("statusFilter") == null || request.getParameter("statusFilter").isEmpty()) { %> checked <% } %>>
                                     <label for="allFilter">ALL</label>
@@ -69,7 +69,7 @@
                                     <button type="submit">Chọn</button>
                                 </form>
 
-                                <form action="SearchControl?index=1" method="POST">
+                                <form action="${pageContext.request.contextPath}/SearchControl?index=1" method="POST">
                                     <label>Searching:</label>
                                     <input class="" type="text" name="txtSearch" size="15" value="${txtSearch}" >
                                     <input class="" type="submit" name="btnGo" value="Go">
@@ -78,7 +78,7 @@
 
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -128,7 +128,7 @@
                                                     <td>${customer.gender ? 'Nam' : 'Nữ'}</td>
                                                     <td>${customer.customerType}</td>
                                                     <td>
-                                                        <form action="EditCustomer" method="POST">
+                                                        <form action="${pageContext.request.contextPath}/EditCustomer" method="POST">
                                                             <input type="hidden" name="id" value="${customer.id}">
                                                             <button type="submit" class="btn btn-primary">Edit</button>
                                                         </form>

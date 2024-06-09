@@ -47,7 +47,7 @@
     <body>
         <jsp:include page="header.jsp"/>
 
-        <section>
+<section>
             <div class="container">
                 <div class="row">
                     <div class="col-sm-3">
@@ -193,21 +193,21 @@
                                         <div class="item active">
                                             <c:forEach var="listProduct" items="${listProduct}" varStatus="loop">
                                                 <c:if test="${loop.index == 0}">
-                                                    <a href=""><img src="images/${listProduct.image}" alt=""></a>
+                                                    <a href="ProductDetailPublic?index=1&productId=${listProduct.id}"><img src="images/${listProduct.image}" alt=""></a>
                                                     </c:if>
                                                 </c:forEach>
                                         </div>
                                         <div class="item">
                                             <c:forEach var="listProduct" items="${listProduct}" varStatus="loop">
                                                 <c:if test="${loop.index == 1}">
-                                                    <a href=""><img src="images/${listProduct.image}" alt=""></a>
+                                                    <a href="ProductDetailPublic?index=1&productId=${listProduct.id}"><img src="images/${listProduct.image}" alt=""></a>
                                                     </c:if>
                                                 </c:forEach>
                                         </div>
                                         <div class="item">
                                             <c:forEach var="listProduct" items="${listProduct}" varStatus="loop">
                                                 <c:if test="${loop.index == 2}">
-                                                    <a href=""><img src="images/${listProduct.image}" alt=""></a>
+                                                    <a href="ProductDetailPublic?index=1&productId=${listProduct.id}"><img src="images/${listProduct.image}" alt=""></a>
                                                     </c:if>
                                                 </c:forEach>
                                         </div>
@@ -234,15 +234,20 @@
                                         <span>${product.salePrice} VNĐ</span>
                                         <label>Quantity:</label>
                                         <input type="text" value="${product.quantity}" />
-                                        <button type="button" class="btn btn-fefault cart">
+
+                                    </span>
+                                    <div>
+                                        <button type="button" class="btn btn-fefault cart add-to-cart" style="background-color: #007bff; color: #fff; margin-bottom: 20px;">
                                             <i class="fa fa-shopping-cart"></i>
                                             Add to cart
                                         </button>
-                                    </span>
-                                    <a href="#" class="btn btn-default buy-now">
-                                        <i class="fa fa-bolt"></i>
-                                        Buy
-                                    </a>
+
+                                        <button type="button" class="btn btn-fefault cart buy" style="background-color: #28a745; color: #fff; margin-bottom: 20px;">
+                                            <i class="fa fa-shopping-cart"></i>
+                                            Buy
+                                        </button>
+                                    </div>
+
                                     <p><b>Description:</b> ${product.description}</p>
                                     <p><b>Publication date:</b> ${product.updateDate}</p>
                                     <p><b>Original Price:</b> ${product.originalPrice} VNĐ</p>
@@ -290,15 +295,18 @@
                         </div><!--/category-tab-->
                         <ul class="pagination">
                             <c:if test="${tag > 1}">
-                                <li><a href="?index=${tag - 1}">Previous</a></li>
+                                <li><a href="?index=${tag - 1}&productId=${param.productId}">Previous</a></li>
                                 </c:if>
                                 <c:forEach begin="1" end="${endP}" var="i">
-                                <li class="${tag == i ? 'active' : ''}"><a class="pagination-link" href="?index=${i}">${i}</a></li>
-                                </c:forEach>
-                                <c:if test="${tag < endP}">
-                                <li><a href="?index=${tag + 1}">Next</a></li>
+                                <li class="${tag == i ? 'active' : ''}">
+                                    <a class="pagination-link" href="?index=${i}&productId=${param.productId}">${i}</a>
+                                </li>
+                            </c:forEach>
+                            <c:if test="${tag < endP}">
+                                <li><a href="?index=${tag + 1}&productId=${param.productId}">Next</a></li>
                                 </c:if>
                         </ul>
+
                         <style>
                             .pagination {
                                 display: flex;
@@ -576,7 +584,7 @@
                 productItems.forEach(function (item) {
                     item.addEventListener('click', function () {
                         var productId = this.getAttribute('data-id');
-                        window.location.href = 'ProductDetailPublic?index=1&productId=' + productId;
+                        window.location.href = '${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=' + productId;
                     });
                 });
             });
