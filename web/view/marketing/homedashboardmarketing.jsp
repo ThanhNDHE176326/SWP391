@@ -63,17 +63,12 @@
                                     </div>
                                     <div class="mr-5">
                                         <strong>Post</strong><br/>
-                                        Total Post: ${totalPost}<br/>
-                                        Total Post Category: ${totalCategoryPost}<br/>
+                                        Total post ${totalPost}<br/>
+                                        Total post category: ${totalCategoryPost}<br/>
 
                                     </div>
                                 </div>
-                                <a class="card-footer text-white clearfix small z-1" href="#">
-                                    <span class="float-left">View Details</span>
-                                    <span class="float-right">
-                                        <i class="fas fa-angle-right"></i>
-                                    </span>
-                                </a>
+
                             </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 mb-3">
@@ -84,15 +79,12 @@
                                     </div>
                                     <div class="mr-5">
                                         <strong>Product</strong><br/>
-
+                                        Total number product ${totalProduct}<br/>
+                                        Total category: ${totalCategory}<br/>
+                                        Total quantity of product: ${totalQuantityOfProduct}<br/>
                                     </div>
                                 </div>
-                                <a class="card-footer text-white clearfix small z-1" href="#">
-                                    <span class="float-left">View Details</span>
-                                    <span class="float-right">
-                                        <i class="fas fa-angle-right"></i>
-                                    </span>
-                                </a>
+
                             </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 mb-3">
@@ -102,15 +94,12 @@
                                         <i class="fas fa-fw fa-shopping-cart"></i>
                                     </div>
                                     <div class="mr-5">
-                                        <strong>Customer</strong>
+                                        <strong>Customer</strong><br/>
+                                        Total customer: ${totalCustomer}<br/>
+
                                     </div>
                                 </div>
-                                <a class="card-footer text-white clearfix small z-1" href="#">
-                                    <span class="float-left">View Details</span>
-                                    <span class="float-right">
-                                        <i class="fas fa-angle-right"></i>
-                                    </span>
-                                </a>
+
                             </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 mb-3">
@@ -119,14 +108,12 @@
                                     <div class="card-body-icon">
                                         <i class="fas fa-fw fa-life-ring"></i>
                                     </div>
-                                    <div class="mr-5"><strong>Feedback</strong></div>
+                                    <div class="mr-5">
+                                        <strong>Feedback</strong><br/>
+                                        Total feedback: ${totalFeedback}
+                                    </div>
                                 </div>
-                                <a class="card-footer text-white clearfix small z-1" href="#">
-                                    <span class="float-left">View Details</span>
-                                    <span class="float-right">
-                                        <i class="fas fa-angle-right"></i>
-                                    </span>
-                                </a>
+
                             </div>
                         </div>
                     </div>
@@ -135,11 +122,23 @@
                     <div class="card mb-3">
                         <div class="card-header">
                             <i class="fas fa-chart-area"></i>
-                            Area Chart Example
+                            <h3><strong>Trend of customers </strong></h3>
                         </div>
-                        <!-- <div class="card-body">
-                          <canvas id="myAreaChart" width="100%" height="30"></canvas>
-                        </div> -->
+
+                        <div class="card-body">
+                            <form action="marketingDashboard">
+                                Start Date: <input type="date" name="startDate" value="${startDate}">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                End Date: <input type="date" name="endDate" value="${endDate}">
+                                <input type="submit" value="CONFIRM">
+                            </form>
+                            <!--<canvas id="myAreaChart" width="100%" height="30"></canvas>-->
+                            <img src="${trendProduct.image}" alt="Image of Trend Product" width="500px" height="500px"/><br/>
+                            Title: <strong>${trendProduct.title}</strong><br/>
+                            Author: ${trendProduct.author}<br/>
+                            Number of customer have order: ${trendProduct.customer}<br/>
+                            Number order of customer: ${trendProduct.order}<br/>
+                        </div> 
                         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                     </div>
 

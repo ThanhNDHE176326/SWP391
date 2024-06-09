@@ -9,7 +9,9 @@ import DAO.CategoryBlogDAO;
 import DAO.CategoryDAO;
 import DAO.CustomerDAO;
 import DAO.FeedbackMKTDAO;
+import DAO.OrderDAO;
 import DAO.ProductDAO;
+import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,6 +19,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
@@ -69,6 +74,7 @@ public class MarketingDashboardController extends HttpServlet {
         CategoryDAO categoryDAO = new CategoryDAO();
         CustomerDAO customerDAO = new CustomerDAO();
         FeedbackMKTDAO feedbackDAO = new FeedbackMKTDAO();
+        OrderDAO orderDAO = new OrderDAO();
 
         //Post
         int totalPost = blogDAO.getTotalNumberOfBlogs();
@@ -80,23 +86,36 @@ public class MarketingDashboardController extends HttpServlet {
         int totalQuantityOfProduct = productDAO.getTotalQuantity();
 
         //Customer
-//        int totalCustomer = customerDAO.getTotalCustomer();
+        int totalCustomer = customerDAO.getTotalCustomer();
 
         //Feedback
         int totalFeedback = feedbackDAO.getTotalFeedback();
 
+        //trend of Customer
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+        if (startDate == null && endDate == null) {
+            startDate = orderDAO.getDateMinInOrder();
+            endDate = orderDAO.getDateMaxInOrder();
+        }
+        Product trendProduct = productDAO.getMostOrderedProductBetweenDates(startDate, endDate);
         //set Attribute Post
         request.setAttribute("totalPost", totalPost);
         request.setAttribute("totalCategoryPost", totalCategoryPost);
-        
+
         //set Attribute Product
         request.setAttribute("totalProduct", totalProduct);
         request.setAttribute("totalCategory", totalCategory);
         request.setAttribute("totalQuantityOfProduct", totalQuantityOfProduct);
         //set Attribute Customer
-//        request.setAttribute("totalCustomer", totalCustomer);
+        request.setAttribute("totalCustomer", totalCustomer);
         //set Attribute Feedback
         request.setAttribute("totalFeedback", totalFeedback);
+        //set Attribute trend
+        request.setAttribute("trendProduct", trendProduct);
+        request.setAttribute("startDate", startDate);
+        request.setAttribute("endDate", endDate);
+        
         request.getRequestDispatcher("view/marketing/dashboard.jsp").forward(request, response);
     }
 
