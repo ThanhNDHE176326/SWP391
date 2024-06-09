@@ -28,7 +28,6 @@ public class ProductDAO extends DBContext {
 //        List<Product> list = dao.getProductPagingByCategoryID(4, 2);
 ////        System.out.println("list size = " + list.size());
 //    }
-
     //dem so luong product trong db
     public int getTotalProduct() {
         String sql = "SELECT COUNT(*) FROM Products";
@@ -598,10 +597,10 @@ public class ProductDAO extends DBContext {
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
                 + "WHERE p.id = ? AND p.isDelete = 1";
         try {
-            stm=connection.prepareStatement(sql);
+            stm = connection.prepareStatement(sql);
             stm.setInt(1, productID);
-            rs=stm.executeQuery();
-            while (rs.next()) {                
+            rs = stm.executeQuery();
+            while (rs.next()) {
                 String id = String.valueOf(rs.getInt("id"));
                 String title = rs.getString("title");
                 String image = rs.getString("image");
@@ -630,9 +629,9 @@ public class ProductDAO extends DBContext {
         int totalQuantity = 0;
         String sql = "SELECT * FROM Products";
         try {
-            stm=connection.prepareStatement(sql);
-            rs=stm.executeQuery();
-            while (rs.next()) {                
+            stm = connection.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
                 int quantity = rs.getInt("quantity");
                 totalQuantity += quantity;
             }
@@ -640,5 +639,55 @@ public class ProductDAO extends DBContext {
             System.out.println("getTotalQuantity; " + e.getMessage());
         }
         return totalQuantity;
+    }
+
+//    public static void main(String[] args) {
+//        ProductDAO dao = new ProductDAO();
+//        System.out.println(dao.getTotalQuantity());
+//    }
+    public Product getMostOrderedProductBetweenDates(String startDate, String endDate) {
+        String sql = "SELECT \n"
+                + "    P.id, P.title,p.author,P.image,P.description,\n"
+                + "    COUNT(DISTINCT O.customer_id) AS numberOfCustomer,\n"
+                + "    COUNT(OD.order_id) AS numberOfOrder\n"
+                + "FROM \n"
+                + "    Products P\n"
+                + "JOIN \n"
+                + "    OrderDetails OD ON P.id = OD.product_id\n"
+                + "JOIN \n"
+                + "    Orders O ON OD.order_id = O.id\n"
+                + "JOIN \n"
+                + "    Customers C ON O.customer_id = C.id\n"
+                + "WHERE\n"
+                + "    OD.isDelete = 0 AND\n"
+                + "    O.isDelete = 0 \n"
+                + "	AND\n"
+                + "    O.order_date BETWEEN ? AND ?\n"
+                + "GROUP BY \n"
+                + "    P.id, P.title, P.image, P.author, P.quantity, P.update_date, \n"
+                + "    P.description, P.category_id, P.original_price, P.sale_price, \n"
+                + "    P.staff_id, P.status\n"
+                + "ORDER BY \n"
+                + "    COUNT(DISTINCT O.customer_id) DESC;";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, startDate);
+            stm.setString(2, endDate);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String id = String.valueOf(rs.getInt("id"));
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                String image = rs.getString("image");
+                String description = rs.getString("description");
+                String customer = String.valueOf(rs.getInt("numberOfCustomer"));
+                String order = String.valueOf(rs.getInt("numberOfOrder"));
+                Product product = new Product(id, title, author, image, description, customer, order);
+                return product;
+            }
+        } catch (SQLException e) {
+            System.out.println("getMostOrderedProductBetweenDates: " + e.getMessage());
+        }
+        return null;
     }
 }

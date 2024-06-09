@@ -11,7 +11,7 @@ package Models;
 public class Product {
 
     String id, title, image, author, quantity, updateDate,
-            description, category, originalPrice, salePrice, staff, status, isDelete;
+            description, category, originalPrice, salePrice, staff, status, isDelete, customer, order;
 
     public Product() {
     }
@@ -73,8 +73,16 @@ public class Product {
         this.salePrice = salePrice;
     }
 
-    
-    
+    public Product(String id, String title, String author, String image,String description, String customer, String order) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.image = image;
+        this.description = description;
+        this.customer = customer;
+        this.order = order;
+    }
+
     public String getId() {
         return id;
     }
@@ -179,12 +187,25 @@ public class Product {
         this.isDelete = isDelete;
     }
 
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
     @Override
     public String toString() {
         return "Product{" + "id=" + id + ", title=" + title + ", image=" + image + ", author=" + author + ", quantity=" + quantity + ", updateDate=" + updateDate + ", description=" + description + ", category=" + category + ", originalPrice=" + originalPrice + ", salePrice=" + salePrice + '}';
     }
 
-    
-
-    
 }

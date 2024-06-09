@@ -24,7 +24,8 @@ import javax.mail.internet.MimeMessage;
  * @author HP
  */
 public class CustomerDAO extends DBContext {
-
+    PreparedStatement stm; 
+    ResultSet resultSET;
     //đăng kí
     public Customer LoginCustomer(String user) {
         String sql = "SELECT * FROM Customers WHERE\n"
@@ -183,4 +184,21 @@ public class CustomerDAO extends DBContext {
         }
     }
 
+    public int getTotalCustomer() {
+        String sql= "SELECT COUNT(*) FROM Customers";
+        try {
+            stm=connection.prepareStatement(sql);
+            resultSET = stm.executeQuery();
+            while (resultSET.next()) {                
+                return resultSET.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("getTotalCustomer: " + e.getMessage());
+        }
+        return 0;
+    }
+    public static void main(String[] args) {
+        CustomerDAO dao = new CustomerDAO();
+        System.out.println(dao.getTotalCustomer());
+    }
 }
