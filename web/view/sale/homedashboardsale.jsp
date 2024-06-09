@@ -1,0 +1,215 @@
+<%-- 
+    Document   : dashboard
+    Created on : Jun 8, 2024, 6:08:29 PM
+    Author     : admin
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Saler - Dashboard</title>
+
+        <!-- Custom fonts for this template-->
+        <link href="<c:url value='/vendor/fontawesome-free/css/all.min.css'/>" rel="stylesheet" type="text/css">
+
+        <!-- Page level plugin CSS-->
+        <link href="<c:url value='/vendor/datatables/dataTables.bootstrap4.css'/>" rel="stylesheet">
+
+        <!-- Custom styles for this template-->
+        <link href="<c:url value='/css/sb-admin.css'/>" rel="stylesheet">
+
+        <link rel="stylesheet" href="<c:url value='/css/colReorder-bootstrap4.css'/>">
+
+    </head>
+
+    <body id="page-top">
+
+        <jsp:include page="headersale.jsp"/>
+
+        <div id="wrapper">
+
+            <!-- Sidebar -->
+            <jsp:include page="navbarsale.jsp"/>
+
+            <div id="content-wrapper">
+
+                <div class="container-fluid">
+
+                    <!-- Breadcrumbs-->
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="#">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">Overview</li>
+                    </ol>
+
+                    <!-- Icon Cards-->
+                    <div class="row">
+                        <div class="col-xl-3 col-sm-6 mb-3">
+                            <div class="card text-white bg-primary o-hidden h-100">
+                                <div class="card-body">
+                                    <div class="card-body-icon">
+                                        <i class="fas fa-fw fa-comments"></i>
+                                    </div>
+                                    <div class="mr-5">
+                                        <strong>Post</strong><br/>
+                                        Total post ${totalPost}<br/>
+                                        Total post category: ${totalCategoryPost}<br/>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 mb-3">
+                            <div class="card text-white bg-warning o-hidden h-100">
+                                <div class="card-body">
+                                    <div class="card-body-icon">
+                                        <i class="fas fa-fw fa-list"></i>
+                                    </div>
+                                    <div class="mr-5">
+                                        <strong>Product</strong><br/>
+                                        Total number product ${totalProduct}<br/>
+                                        Total category: ${totalCategory}<br/>
+                                        Total quantity of product: ${totalQuantityOfProduct}<br/>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 mb-3">
+                            <div class="card text-white bg-success o-hidden h-100">
+                                <div class="card-body">
+                                    <div class="card-body-icon">
+                                        <i class="fas fa-fw fa-shopping-cart"></i>
+                                    </div>
+                                    <div class="mr-5">
+                                        <strong>Customer</strong><br/>
+                                        Total customer: ${totalCustomer}<br/>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 mb-3">
+                            <div class="card text-white bg-danger o-hidden h-100">
+                                <div class="card-body">
+                                    <div class="card-body-icon">
+                                        <i class="fas fa-fw fa-life-ring"></i>
+                                    </div>
+                                    <div class="mr-5">
+                                        <strong>Feedback</strong><br/>
+                                        Total feedback: ${totalFeedback}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Area Chart Example-->
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <i class="fas fa-chart-area"></i>
+                            <h3><strong>Trend of customers </strong></h3>
+                        </div>
+
+                        <div class="card-body">
+                            <form action="marketingDashboard">
+                                Start Date: <input type="date" name="startDate" value="${startDate}">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                End Date: <input type="date" name="endDate" value="${endDate}">
+                                <input type="submit" value="CONFIRM">
+                            </form>
+                            <!--<canvas id="myAreaChart" width="100%" height="30"></canvas>-->
+                            <img src="${trendProduct.image}" alt="Image of Trend Product" width="500px" height="500px"/><br/>
+                            Title: <strong>${trendProduct.title}</strong><br/>
+                            Author: ${trendProduct.author}<br/>
+                            Number of customer have order: ${trendProduct.customer}<br/>
+                            Number order of customer: ${trendProduct.order}<br/>
+                        </div> 
+                        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                    </div>
+
+                    <!-- DataTables Example -->
+
+                </div>
+                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+        <!-- Sticky Footer -->
+        <footer class="sticky-footer">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright © Your Website 2019</span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="<c:url value='/vendor/jquery/jquery.min.js'/>"></script>
+<script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js'/>"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="<c:url value='/vendor/jquery-easing/jquery.easing.min.js'/>"></script>
+
+<!-- Page level plugin JavaScript-->
+<script src="<c:url value='/vendor/datatables/jquery.dataTables.js'/>"></script>
+<script src="<c:url value='/vendor/datatables/dataTables.bootstrap4.js'/>"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="<c:url value='/js/sb-admin.min.js'/>"></script>
+
+<!-- Demo scripts for this page-->
+<script src="<c:url value='/js/demo/datatables-demo.js'/>"></script>
+
+
+
+</body>
+
+</html>

@@ -4,7 +4,6 @@ package Controller.cs;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 import Models.Staff;
 import DAO.StaffDAO;
 import java.io.IOException;
@@ -114,17 +113,26 @@ public class LoginStaffController extends HttpServlet {
             request.getRequestDispatcher("view/staff/loginstaff.jsp").forward(request, response);
             return; // Stop further execution
         }
-
 // Reset login attempts on successful login
         session.removeAttribute("loginAttempts");
         session.setAttribute("acc", s);
         session.setAttribute("username", username); // Set the username into session
         session.setAttribute("password", password); // Set the password into session
         session.setMaxInactiveInterval(1800); // 30'
-        response.sendRedirect("homepage.jsp");
+        if (s.getRole().equals("1")) {
+            response.sendRedirect("view/admin/homedashboardadmin.jsp");
+        }
+        if (s.getRole().equals("2")) {
+            response.sendRedirect("view/sale/homedashboardsale.jsp");
+        }
+        if (s.getRole().equals("3")) {
+            response.sendRedirect("view/sale/homedashboardsale.jsp");
+        }
+        if (s.getRole().equals("4")) {
+            response.sendRedirect("view/marketing/homedashboardmarketing.jsp");
+        }
 
     }
-    
 
     /**
      * Returns a short description of the servlet.
