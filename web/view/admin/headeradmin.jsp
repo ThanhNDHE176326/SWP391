@@ -15,7 +15,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>SB Admin - Dashboard</title>
+        <title>Admin - Dashboard</title>
 
         <!-- Custom fonts for this template-->
         <link href="<c:url value='/vendor/fontawesome-free/css/all.min.css' />" rel="stylesheet" type="text/css">
@@ -32,7 +32,7 @@
 
         <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-            <a class="navbar-brand mr-1" href="homedashboard.jsp">MARKETING</a>
+            <a class="navbar-brand mr-1" href="homedashboard.jsp">Admin</a>
 
             <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
                 <i class="fas fa-bars"></i>

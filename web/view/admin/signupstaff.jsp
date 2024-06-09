@@ -17,7 +17,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6 text-center mb-5">
-                        <h2 class="heading-section">Sign Up</h2>
+
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -77,8 +77,11 @@
                                     <div class="ml-md-2 mb-3 flex-grow-1">
                                         <label class="label" for="role">Role</label>
                                         <select name="role" class="form-control" required>
-                                            <option value="1">User</option>
-                                            <option value="2">Admin</option>
+                                            <option value="1">Admin</option>
+                                            <option value="2">Sale</option>
+                                            <option value="3">Sale Manager</option>
+                                            <option value="4">Marketing</option>
+                                            <option value="5">Delive</option>
                                         </select>
                                     </div>
                                 </div>
@@ -159,4 +162,11 @@
             });
         };
     </script>
+    <style>
+        #form{
+            margin-top: -830px !important;
+            margin-left: 300px !important;
+        }
+
+    </style>
 </html>

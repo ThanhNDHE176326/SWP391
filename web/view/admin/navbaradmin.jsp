@@ -60,7 +60,7 @@
                     <span>Charts</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="Pagination">
+                <a class="nav-link" href="${pageContext.request.contextPath}/view/admin/signupstaff.jsp">
                     <i class="fas fa-fw fa-table"></i>
                     <span>SignUp Staff</span></a>
             </li>
