@@ -96,7 +96,7 @@ public class PostListController extends HttpServlet {
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
 
-        request.getRequestDispatcher("/PostList.jsp").forward(request, response);
+        request.getRequestDispatcher("view/marketing/postlist.jsp").forward(request, response);
     }
 
     @Override
