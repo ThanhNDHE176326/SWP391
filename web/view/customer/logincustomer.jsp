@@ -51,7 +51,7 @@
                     <div class="col-sm-4">
                         <div class="signup-form"><!--sign up form-->
                             <h2>Register Customer</h2>
-                            <a href="signupcustomer.jsp" class="btn btn-default">Signup</a>
+                            <a href="${pageContext.request.contextPath}/view/customer/signupcustomer.jsp" class="btn btn-default">Signup</a>
                         </div><!--/sign up form-->
                     </div>
                 </div>
