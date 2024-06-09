@@ -15,7 +15,7 @@ public class Feedback {
     public Feedback() {
     }
     public Feedback(String customer, String date, String ratedStar, String comment){
-        this.customer = comment;
+        this.customer = customer;
         this.date = date;
         this.ratedStar = ratedStar;
         this.comment = comment;

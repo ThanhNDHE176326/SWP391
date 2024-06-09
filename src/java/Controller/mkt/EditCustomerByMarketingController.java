@@ -83,7 +83,7 @@ public class EditCustomerByMarketingController extends HttpServlet {
 
         // Chuyển hướng người dùng đến trang chỉnh sửa với thông tin khách hàng đã được tải
         request.setAttribute("customer", customer);
-        request.getRequestDispatcher("CustomerDetail.jsp").forward(request, response);
+        request.getRequestDispatcher("view/marketing/customerdetail.jsp").forward(request, response);
     
 }
 

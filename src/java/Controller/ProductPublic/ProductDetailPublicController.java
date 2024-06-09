@@ -72,7 +72,7 @@ public class ProductDetailPublicController extends HttpServlet {
             request.setAttribute("tag", index);
             request.setAttribute("count", count);
             request.setAttribute("listProduct", listProduct);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("product-details.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("view/customer/product-details.jsp");
             dispatcher.forward(request, response);
 
         } catch (NumberFormatException e) {

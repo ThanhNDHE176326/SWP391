@@ -51,7 +51,7 @@ public class ProductListPublicByUpdateDateController extends HttpServlet {
         request.setAttribute("product", product);
         request.setAttribute("tag", index);
         request.setAttribute("categories", categories);
-        request.getRequestDispatcher("shop.jsp").forward(request, response);
+        request.getRequestDispatcher("view/customer/shop.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

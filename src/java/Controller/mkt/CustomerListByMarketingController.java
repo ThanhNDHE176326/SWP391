@@ -34,7 +34,7 @@ public class CustomerListByMarketingController extends HttpServlet {
         CustomerByMaketingDAO dao = new CustomerByMaketingDAO();
         List<Customer> customer = dao.findAll();
         request.setAttribute("customer", customer);
-        request.getRequestDispatcher("CustomerList.jsp").forward(request, response);
+        request.getRequestDispatcher("view/marketing/customerlist.jsp").forward(request, response);
         
     } 
 

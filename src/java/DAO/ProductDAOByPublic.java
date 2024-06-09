@@ -389,9 +389,9 @@ public class ProductDAOByPublic extends DBContext {
 
     public static void main(String[] args) {
         ProductDAOByPublic dao = new ProductDAOByPublic();
-        List<Product> product = dao.getAllProduct(1);
-        for (Product product1 : product) {
-            System.out.println(product1);
+        List<Feedback> feedback = dao.getFeedbackByIdProduct(18, 1);
+        for (Feedback feedback1 : feedback) {
+            System.out.println(feedback1);
         }
     }
 }

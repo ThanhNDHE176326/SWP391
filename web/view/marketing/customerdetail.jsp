@@ -55,7 +55,7 @@
                                         Customer Detail
                                     </div>
                                     <div class="card-body">
-                                        <form id="customerForm" action="UpdateCustomer" method="post">
+                                        <form id="customerForm" action="${pageContext.request.contextPath}/UpdateCustomer" method="post">
                                             <!-- Trường ẩn để lưu ID của khách hàng -->
                                             <input type="hidden" name="id" value="${customer.id}">
                                             <div class="form-group row">

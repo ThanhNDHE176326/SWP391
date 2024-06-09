@@ -95,7 +95,7 @@ public class UpdateCustomerByMarketingController extends HttpServlet {
         List<CustomerUpdateHistory> historyList = dao.getCustomerUpdateHistory();
         request.setAttribute("historyList", historyList);
 
-        request.getRequestDispatcher("CustomerDetail.jsp").forward(request, response);
+        request.getRequestDispatcher("view/marketing/customerdetail.jsp").forward(request, response);
 
     }
 

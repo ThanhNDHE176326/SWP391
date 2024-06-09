@@ -58,7 +58,7 @@
                         <div class="left-sidebar">
                             <h2>Search Product</h2>
                             <div class="well">
-                                <form action="SearchProductPulbic?index=1" method="POST" class="form-inline">
+                                <form action="${pageContext.request.contextPath}/SearchProductPulbic?index=1" method="POST" class="form-inline">
                                     <div class="form-group">
                                         <label for="txtSearch" class="sr-only">Search</label>
                                         <input type="text" class="form-control" id="txtSearch" name="txtSearch" value="${txtSearch}" placeholder="Search...">
@@ -71,7 +71,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a href="ProductListPublic?index=1">
+                                            <a href="${pageContext.request.contextPath}/ProductListPublic?index=1">
                                                 All Category
                                             </a>
                                         </h4>
@@ -81,7 +81,7 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
-                                                <a href="ProductPublicByCategory?category=${category.name}&index=1" 
+                                                <a href="${pageContext.request.contextPath}/ProductPublicByCategory?category=${category.name}&index=1" 
                                                    class="${category.name == param.category ? 'selected-category' : ''}">
                                                     <c:out value="${category.name}" />
                                                 </a>
@@ -94,14 +94,14 @@
                                 <h2>SEARCH FILTER</h2>
                                 <div class="brands-name">
                                     <ul class="nav nav-pills nav-stacked">
-                                        <li><a href="ProductListPublicByUpdateDate?index=1&filter=desc">Top New Product</a></li>
-                                        <li><a href="ProductListPublicByUpdateDate?index=1&filter=asc">Top Oldest Products</a></li>
-                                        <li><a href="SeachPopularProductPublic?index=1" method="GET">Popular products</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/ProductListPublicByUpdateDate?index=1&filter=desc">Top New Product</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/ProductListPublicByUpdateDate?index=1&filter=asc">Top Oldest Products</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/SeachPopularProductPublic?index=1" method="GET">Popular products</a></li>
                                         <li class="dropdown">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Price<span class="caret"></span></a>
                                             <ul class="dropdown-menu" role="menu">
-                                                <li><a href="ProductPublicByPrice?index=1&sort=desc">Prices decrease</a></li>
-                                                <li><a href="ProductPublicByPrice?index=1&sort=asc">Prices increase</a></li>
+                                                <li><a href="${pageContext.request.contextPath}/ProductPublicByPrice?index=1&sort=desc">Prices decrease</a></li>
+                                                <li><a href="${pageContext.request.contextPath}/ProductPublicByPrice?index=1&sort=asc">Prices increase</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -173,8 +173,8 @@
                                     });
 
                                     // Đảm bảo "Popular products" được đánh dấu khi chuyển trang
-                                    if (currentUrl.includes('SeachPopularProductPublic')) {
-                                        const popularLink = Array.from(links).find(link => link.textContent.includes('Popular products'));
+                                    if (currentUrl.includes('${pageContext.request.contextPath}/SeachPopularProductPublic')) {
+                                        const popularLink = Array.from(links).find(link => link.textContent.includes('${pageContext.request.contextPath}/Popular products'));
                                         if (popularLink) {
                                             setActiveLink(popularLink);
                                         }
@@ -284,7 +284,7 @@
                 productItems.forEach(function (item) {
                     item.addEventListener('click', function () {
                         var productId = this.getAttribute('data-id');
-                        window.location.href = 'ProductDetailPublic?index=1&productId=' + productId;
+                        window.location.href = '${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=' + productId;
                     });
                 });
             });

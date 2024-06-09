@@ -118,7 +118,7 @@ public class AddCustomerByMarketingController extends HttpServlet {
             request.setAttribute("status", status);
 
             // Forward hoặc redirect đến trang JSP để hiển thị thông báo lỗi
-            request.getRequestDispatcher("AddCustomer.jsp").forward(request, response);
+            request.getRequestDispatcher("view/marketing/addcustomer.jsp").forward(request, response);
             return;
         }
 
@@ -131,7 +131,7 @@ public class AddCustomerByMarketingController extends HttpServlet {
         } else {
             request.setAttribute("message", "Failed to add customer. Please try again.");
         }
-        request.getRequestDispatcher("AddCustomer.jsp").forward(request, response);
+        request.getRequestDispatcher("view/marketing/addcustomer.jsp").forward(request, response);
     }
 
     /**
