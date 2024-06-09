@@ -62,7 +62,7 @@ public class UpdatePostController extends HttpServlet {
         postDAO postDAO = new postDAO();
         Blog post = postDAO.getPostById(id);
         request.setAttribute("post", post);
-        request.getRequestDispatcher("/UpdatePost.jsp").forward(request, response);
+        request.getRequestDispatcher("view/marketing/updatepost.jsp").forward(request, response);
         
     } 
 

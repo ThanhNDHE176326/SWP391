@@ -61,7 +61,7 @@ public class ViewPostController extends HttpServlet {
         postDAO postDAO = new postDAO();
         Blog post = postDAO.getPostById(id);
         request.setAttribute("post", post);
-        request.getRequestDispatcher("/viewPost.jsp").forward(request, response);
+        request.getRequestDispatcher("view/marketing/viewpost.jsp").forward(request, response);
     } 
 
     /** 
