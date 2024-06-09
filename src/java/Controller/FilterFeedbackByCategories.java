@@ -5,6 +5,7 @@
 package Controller;
 
 import DAO.FeedbackDAO;
+import Models.Category;
 import Models.Feedback;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,8 +20,8 @@ import java.util.ArrayList;
  *
  * @author dat ngo huy
  */
-@WebServlet(name = "FilterFeedbackByStatus", urlPatterns = {"/FilterFeedbackByStatus"})
-public class FilterFeedbackByStatus extends HttpServlet {
+@WebServlet(name = "FilterFeedbackByCategories", urlPatterns = {"/FilterFeedbackByCategories"})
+public class FilterFeedbackByCategories extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +40,10 @@ public class FilterFeedbackByStatus extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet FilterFeedbackByStatus</title>");
+            out.println("<title>Servlet FilterFeedbackByCategories</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet FilterFeedbackByStatus at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet FilterFeedbackByCategories at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,40 +61,42 @@ public class FilterFeedbackByStatus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+//        String id = request.getParameter("id");
+        String CategorySearch = request.getParameter("CategorySearch");
+//        System.out.println("id ======= " + id);
+//        System.out.println("category ===== " + CategorySearch);
         FeedbackDAO da = new FeedbackDAO();
-        String statusSearch = request.getParameter("statusSearch");
-        String statusModeFromServlet = "";
-        request.setAttribute("statusSearch", statusSearch);
-        if (statusSearch.equals("show")) {
-            ArrayList<Feedback> listFeedbackByStatus = da.getFeedBackByShowStatus();
-            statusModeFromServlet = "show";
-            request.setAttribute("allfeedback", listFeedbackByStatus);
-            request.setAttribute("statusSearch", statusSearch);
+        if (CategorySearch.equals("1")) {
+            ArrayList<Feedback> listFeedbackByCategories = da.getFeedBackByCategories1();
 
-            request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
-        } else if (statusSearch.equals("hide")) {
-            ArrayList<Feedback> listFeedbackByStatus = da.getFeedBackByHideStatus();
-            statusModeFromServlet = "hide";
-            request.setAttribute("allfeedback", listFeedbackByStatus);
-            request.setAttribute("statusSearch", statusSearch);
+            request.setAttribute("allfeedback", listFeedbackByCategories);
+            request.setAttribute("CategorySearch", CategorySearch);
+           request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
 
-            request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
-        } else if (statusSearch.equals("all")) {
-            ArrayList<Feedback> listFeedbackByStatus = da.getAllFeedback();
-            statusModeFromServlet = "all";
-            request.setAttribute("allfeedback", listFeedbackByStatus);
-            request.setAttribute("statusSearch", statusSearch);
+        } else if (CategorySearch.equals("2")) {
+            ArrayList<Feedback> listFeedbackByCategories = da.getFeedBackByCategories2();
 
+            request.setAttribute("allfeedback", listFeedbackByCategories);
+            request.setAttribute("CategorySearch", CategorySearch);
             request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
+
+        } else if (CategorySearch.equals("3")) {
+            ArrayList<Feedback> listFeedbackByCategories = da.getFeedBackByCategories3();
+
+            request.setAttribute("allfeedback", listFeedbackByCategories);
+            request.setAttribute("CategorySearch", CategorySearch);
+          request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
+
+        } else if (CategorySearch.equals("4")) {
+            ArrayList<Feedback> listFeedbackByCategories = da.getFeedBackByCategories4();
+
+            request.setAttribute("allfeedback", listFeedbackByCategories);
+            request.setAttribute("CategorySearch", CategorySearch);
+          request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
+
         }
-
-        request.setAttribute("statusModeFromServlet", statusModeFromServlet);
-        request.setAttribute("listTypeFromServlet", "productByStatus");   
-        request.setAttribute("statusSearch", statusSearch);
-      
-        request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
-
+        request.setAttribute("CategorySearch", CategorySearch);
+      request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
     }
 
     /**

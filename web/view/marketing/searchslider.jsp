@@ -10,58 +10,40 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Search Slider</title>
     </head>
     <body>
-        <form action="search?index=1" method="post" >
-            <input type="text" name="txtSearch" size="15" required>
-            <input type="submit" name="button" value="Search" >
-
-        </form>   
-        <table border="1">
-            <thead>
-                <tr>
-                   
-                    <th>Title</th>
-                    <th>Image</th>
-                    <th>Notes</th>
-                   
-                    <th>StartDate</th>
-                    <th>EndDate</th>                              
-                    
-                    <th>Action</th>
-
-                </tr>
-            </thead>
-
-            <tbody>
+        <header class="container">
+            <h1>Search Sliders</h1>
+            <form action="search?index=1" method="post">
+                <input type="text" name="txtSearch" size="15" placeholder="Search..." required>
+                <input type="submit" name="button" value="Search">
+            </form>
+        </header>
+        <div class="container">
+            <div class="cards">
                 <c:forEach items="${list}" var="q">
-                    <tr>
-                       
-                        <td>${q.getTitle()}</td>
-                        <td>${q.getImage()}</td>
-                        <td>${q.getNote()}</td>
-                        
-                        <td>${q.getStartDate()}</td>                   
-                        <td>${q.getEndDate()}</td>                                                        
-                                          
-                        <td>
-                            <a href="edit?mode=1&id=${q.id}">Edit</a>      
-                            <span> | </span>
+                    <div class="card">
+                        <img src="${q.getImage()}" alt="${q.getTitle()}">
+                        <h2>${q.getTitle()}</h2>
+                        <p><strong>Notes:</strong> ${q.getNote()}</p>
+                        <p><strong>Start Date:</strong> ${q.getStartDate()}</p>
+                        <p><strong>End Date:</strong> ${q.getEndDate()}</p>
+                        <div class="card-actions">
+                            <a href="edit?mode=1&id=${q.id}">Edit</a>
                             <a href="detail?mode=2&id=${q.getId()}">View Detail</a>
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 </c:forEach>
-            </tbody>
-        </table>
-
-
-        <div>
-            <c:forEach begin="1" end="${end}" var="i">
-                <a id="${i}" href="search?index=${i}&txtSearch=${txtSearch}"> 
-                    ${i}</a>
+            </div>
+            <div class="pagination">
+                <c:forEach begin="1" end="${end}" var="i">
+                    <a id="${i}" href="search?index=${i}&txtSearch=${txtSearch}">${i}</a>
                 </c:forEach>
+            </div>
         </div>
-
+        <script>
+            document.getElementById('${index}').style.color = "red";
+        </script>
     </body>
 </html>

@@ -40,7 +40,7 @@ public class UpdateFeedbackController extends HttpServlet {
         da.update(status);
         ArrayList<Feedback> feedbackdetail = da.getFeedbackDetailById(id);
         request.setAttribute("feedbackdetail", feedbackdetail);
-        request.getRequestDispatcher("FeedbackDetail.jsp").forward(request, response);
+        request.getRequestDispatcher("view/marketing/feedbackdetail.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
