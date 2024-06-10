@@ -33,7 +33,7 @@
         <!-- Sidebar -->
         <ul class="sidebar navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="${pageContext.request.contextPath}/marketingDashboard">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
@@ -60,17 +60,17 @@
                     <span>Charts</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="Pagination">
+                <a class="nav-link" href="${pageContext.request.contextPath}/Pagination">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Customers List</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="${pageContext.request.contextPath}/productListMarketing">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Product List</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="${pageContext.request.contextPath}/postlist">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Post</span></a>
             </li>
@@ -80,7 +80,7 @@
                     <span>Slider</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="${pageContext.request.contextPath}/listfeedback">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Feedback</span></a>
             </li>

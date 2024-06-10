@@ -116,7 +116,7 @@ public class MarketingDashboardController extends HttpServlet {
         request.setAttribute("startDate", startDate);
         request.setAttribute("endDate", endDate);
         
-        request.getRequestDispatcher("view/marketing/dashboard.jsp").forward(request, response);
+        request.getRequestDispatcher("view/marketing/homedashboardmarketing.jsp").forward(request, response);
     }
 
     /**

@@ -29,7 +29,7 @@
                 padding: 0;
             }
             .container {
-                max-width: 1200px;
+                max-width: 1800px;
                 margin: 20px auto;
                 padding: 20px;
                 background-color: #fff;
@@ -82,7 +82,7 @@
                 color: white;
             }
             table td img {
-                width: 50px;
+                width: 250px;
                 height: auto;
             }
             .pagination {
@@ -137,6 +137,7 @@
             .scroll-to-top:hover {
                 background-color: #2e59d9;
             }
+
         </style>
     </head>
 
@@ -149,140 +150,151 @@
             <!-- Sidebar -->
             <jsp:include page="navbarmarketing.jsp"/>
 
-            <div class="container">
-                <header>
-                    <h1>Post List</h1>
-                </header>
-                
-                <div class="main-content">
-                    <!-- Search bar -->
-                    <div class="search-bar">
-                        <form action="postlist" method="get">
-                            <input type="text" name="searchTitle" placeholder="Search by title" value="${param.searchTitle}">
-                            <input type="text" name="filterCategory" placeholder="Filter by category" value="${param.filterCategory}">
-                            <select name="filterStatus">
-                                <option value="">Filter by status</option>
-                                <option value="true" ${param.filterStatus == 'true' ? 'selected' : ''}>Show</option>
-                                <option value="false" ${param.filterStatus == 'false' ? 'selected' : ''}>Hide</option>
-                            </select>
-                            <button type="submit">Search</button>
-                        </form>
+            <div id="content-wrapper">
+                <div class="container-fluid">
+                    <!-- Breadcrumbs-->
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="homedashboard.jsp">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">Post List</li>
+                    </ol>
+
+                    <!-- DataTables Example -->
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <i class="fas fa-table"></i>
+                            Data Post List
+                        </div>
+                        <div class="main-content">
+                            <!-- Search bar -->
+                            <div class="search-bar">
+                                <form action="postlist" method="get">
+                                    <input type="text" name="searchTitle" placeholder="Search by title" value="${param.searchTitle}">
+                                    <input type="text" name="filterCategory" placeholder="Filter by category" value="${param.filterCategory}">
+                                    <select name="filterStatus">
+                                        <option value="">Filter by status</option>
+                                        <option value="true" ${param.filterStatus == 'true' ? 'selected' : ''}>Show</option>
+                                        <option value="false" ${param.filterStatus == 'false' ? 'selected' : ''}>Hide</option>
+                                    </select>
+                                    <button type="submit">Search</button>
+                                </form>
+                            </div>
+
+                            <a href="${pageContext.request.contextPath}/CreatePost" class="btn btn-primary">Create New Post</a>
+
+                            <aside>
+                                <h2>Categories</h2>
+                                <ul>
+                                    <c:forEach var="category" items="${categories}">
+                                        <li>${category.name}</li>
+                                        </c:forEach>
+                                </ul>
+                            </aside>
+
+                            <!-- Post list -->
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Image</th>
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                        <th>Staff</th>
+                                        <th>Status</th>
+                                        <th>Description</th>
+                                        <th>Content</th>
+                                        <th>Update Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="post" items="${posts}">
+                                        <tr>
+                                            <td>${post.id}</td>
+                                            <td><img src="images/${post.image}" alt="${post.title}"></td>
+                                            <td>${post.title}</td>
+                                            <td>${post.categoryBlog}</td>
+                                            <td>${post.staff}</td>
+                                            <td>${post.status == '0' ? 'Show' : 'Hide'}</td>
+                                            <td>${post.description}</td>
+                                            <td>${post.content}</td>
+                                            <td>${post.updateDate}</td>
+                                            <td>
+                                                <a href="viewPost?id=${post.id}">View</a>
+                                                <a href="updatepost?id=${post.id}">Edit</a>
+                                                <a href="deletePost?id=${post.id}">Delete</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+
+                            <!-- Pagination -->
+                            <div class="pagination">
+                                <c:forEach begin="1" end="${noOfPages}" var="pageNum">
+                                    <a href="postlist?page=${pageNum}" ${currentPage == pageNum ? 'class="active"' : ''}>${pageNum}</a>
+                                </c:forEach>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar -->
+
                     </div>
-                    
-                    <a href="${pageContext.request.contextPath}/CreatePost" class="btn btn-primary">Create New Post</a>
-                    
-                    <aside>
-                    <h2>Categories</h2>
-                    <ul>
-                        <c:forEach var="category" items="${categories}">
-                            <li>${category.name}</li>
-                        </c:forEach>
-                    </ul>
-                </aside>
 
-                    <!-- Post list -->
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Image</th>
-                                <th>Title</th>
-                                <th>Category</th>
-                                <th>Staff</th>
-                                <th>Status</th>
-                                <th>Description</th>
-                                <th>Content</th>
-                                <th>Update Date</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="post" items="${posts}">
-                                <tr>
-                                    <td>${post.id}</td>
-                                    <td><img src="${post.image}" alt="${post.title}"></td>
-                                    <td>${post.title}</td>
-                                    <td>${post.categoryBlog}</td>
-                                    <td>${post.staff}</td>
-                                    <td>${post.status == '0' ? 'Show' : 'Hide'}</td>
-                                    <td>${post.description}</td>
-                                    <td>${post.content}</td>
-                                    <td>${post.updateDate}</td>
-                                    <td>
-                                        <a href="viewPost?id=${post.id}">View</a>
-                                        <a href="updatepost?id=${post.id}">Edit</a>
-                                        <a href="deletePost?id=${post.id}">Delete</a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+                    <!-- Sticky Footer -->
+                    <footer class="sticky-footer">
+                        <div class="container my-auto">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright © Your Website 2024</span>
+                            </div>
+                        </div>
+                    </footer>
 
-                    <!-- Pagination -->
-                    <div class="pagination">
-                        <c:forEach begin="1" end="${noOfPages}" var="pageNum">
-                            <a href="postlist?page=${pageNum}" ${currentPage == pageNum ? 'class="active"' : ''}>${pageNum}</a>
-                        </c:forEach>
+                </div>
+                <!-- /.content-wrapper -->
+
+                <!-- Scroll to Top Button-->
+                <a class="scroll-to-top rounded" href="#page-top">
+                    <i class="fas fa-angle-up"></i>
+                </a>
+
+                <!-- Logout Modal-->
+                <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                <a class="btn btn-primary" href="login.html">Logout</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Sidebar -->
-                
-            </div>
+                <!-- Bootstrap core JavaScript-->
+                <script src="<c:url value='/vendor/jquery/jquery.min.js'/>"></script>
+                <script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js'/>"></script>
 
-            <!-- Sticky Footer -->
-            <footer class="sticky-footer">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright © Your Website 2024</span>
-                    </div>
-                </div>
-            </footer>
+                <!-- Core plugin JavaScript-->
+                <script src="<c:url value='/vendor/jquery-easing/jquery.easing.min.js'/>"></script>
 
-        </div>
-        <!-- /.content-wrapper -->
+                <!-- Page level plugin JavaScript-->
+                <script src="<c:url value='/vendor/datatables/jquery.dataTables.js'/>"></script>
+                <script src="<c:url value='/vendor/datatables/dataTables.bootstrap4.js'/>"></script>
 
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
+                <!-- Custom scripts for all pages-->
+                <script src="<c:url value='/js/sb-admin.min.js'/>"></script>
 
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+                <!-- Demo scripts for this page-->
+                <script src="<c:url value='/js/demo/datatables-demo.js'/>"></script>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="<c:url value='/vendor/jquery/jquery.min.js'/>"></script>
-        <script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js'/>"></script>
+                </body>
 
-        <!-- Core plugin JavaScript-->
-        <script src="<c:url value='/vendor/jquery-easing/jquery.easing.min.js'/>"></script>
-
-        <!-- Page level plugin JavaScript-->
-        <script src="<c:url value='/vendor/datatables/jquery.dataTables.js'/>"></script>
-        <script src="<c:url value='/vendor/datatables/dataTables.bootstrap4.js'/>"></script>
-
-        <!-- Custom scripts for all pages-->
-        <script src="<c:url value='/js/sb-admin.min.js'/>"></script>
-
-        <!-- Demo scripts for this page-->
-        <script src="<c:url value='/js/demo/datatables-demo.js'/>"></script>
-
-    </body>
-
-</html>
+                </html>

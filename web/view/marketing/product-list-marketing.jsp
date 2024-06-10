@@ -104,7 +104,7 @@
                             <div class="table-responsive">
                                 <table
                                     class="table table-bordered"
-                                    id="dataTable"
+                                    
                                     width="100%"
                                     cellspacing="0"
                                     >
@@ -145,7 +145,7 @@
                                                 <td><input type="text" name="productID" readonly="" value="${product.id}"></td>
                                                 <td>${product.title}</td>
                                                 <td>${product.author}</td>
-                                                <td><img src="${product.image}" width="125px" height="125px"/></td>
+                                                <td><img src="images/${product.image}" width="125px" height="125px"/></td>
                                                 <td>${product.category}</td>
                                                 <td>${product.originalPrice}</td>
                                                 <td>${product.salePrice}</td>

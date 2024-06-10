@@ -48,7 +48,7 @@
                     <article>
                         <p class="update-date">Ngày cập nhật: ${blog.updateDate}</p>
                         <p class="category">Danh mục: ${blog.categoryBlog}</p>
-                        <img src="${blog.image}" alt="${blog.title}" class="blog-image" />
+                        <img src="images/${blog.image}" alt="${blog.title}" class="blog-image" />
                         <div class="blog-description">${blog.description}</div>
                         <div class="blog-content">${blog.content}</div>
                     </article>

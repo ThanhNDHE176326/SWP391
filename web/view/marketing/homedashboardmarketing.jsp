@@ -124,20 +124,21 @@
                             <i class="fas fa-chart-area"></i>
                             <h3><strong>Trend of customers </strong></h3>
                         </div>
-
                         <div class="card-body">
-                            <form action="marketingDashboard">
+                            <form action="${pageContext.request.contextPath}/marketingDashboard">
                                 Start Date: <input type="date" name="startDate" value="${startDate}">
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 End Date: <input type="date" name="endDate" value="${endDate}">
                                 <input type="submit" value="CONFIRM">
                             </form>
                             <!--<canvas id="myAreaChart" width="100%" height="30"></canvas>-->
-                            <img src="${trendProduct.image}" alt="Image of Trend Product" width="500px" height="500px"/><br/>
+                            <div style="padding-top: 20px">
+                            <img src="images/${trendProduct.image}" alt="Image of Trend Product" width="400px" height="200px" /><br/>
                             Title: <strong>${trendProduct.title}</strong><br/>
                             Author: ${trendProduct.author}<br/>
                             Number of customer have order: ${trendProduct.customer}<br/>
                             Number order of customer: ${trendProduct.order}<br/>
+                            </div>
                         </div> 
                         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                     </div>

@@ -65,7 +65,7 @@
             </div>
             <table>
                 <tr>
-                    <td><img src="${product.image}" width="400px" height="400px" alt="image of ${product.title}"/></td>
+                    <td><img src="images/${product.image}" width="400px" height="400px" alt="image of ${product.title}"/></td>
                     <td class="product-info">
                         <div><strong>Title:</strong> ${product.title}</div>
                         <div><strong>Author:</strong> ${product.author}</div>
