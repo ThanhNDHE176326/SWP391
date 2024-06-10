@@ -61,39 +61,38 @@ public class FilterFeedbackByStatus extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        FeedbackDAO da = new FeedbackDAO();
+         FeedbackDAO da = new FeedbackDAO();
         String statusSearch = request.getParameter("statusSearch");
         String statusModeFromServlet = "";
-        request.setAttribute("statusSearch", statusSearch);
-        if (statusSearch.equals("show")) {
-            ArrayList<Feedback> listFeedbackByStatus = da.getFeedBackByShowStatus();
-            statusModeFromServlet = "show";
-            request.setAttribute("allfeedback", listFeedbackByStatus);
-            request.setAttribute("statusSearch", statusSearch);
+        ArrayList<Feedback> listFeedbackByStatus = new ArrayList<>();
 
-            request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
-        } else if (statusSearch.equals("hide")) {
-            ArrayList<Feedback> listFeedbackByStatus = da.getFeedBackByHideStatus();
-            statusModeFromServlet = "hide";
-            request.setAttribute("allfeedback", listFeedbackByStatus);
-            request.setAttribute("statusSearch", statusSearch);
-
-            request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
-        } else if (statusSearch.equals("all")) {
-            ArrayList<Feedback> listFeedbackByStatus = da.getAllFeedback();
-            statusModeFromServlet = "all";
-            request.setAttribute("allfeedback", listFeedbackByStatus);
-            request.setAttribute("statusSearch", statusSearch);
-
-            request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
+        if (statusSearch != null) {
+            switch (statusSearch) {
+                case "show":
+                    listFeedbackByStatus = da.getFeedBackByShowStatus();
+                    statusModeFromServlet = "show";
+                    break;
+                case "hide":
+                    listFeedbackByStatus = da.getFeedBackByHideStatus();
+                    statusModeFromServlet = "hide";
+                    break;
+                case "all":
+                    listFeedbackByStatus = da.getAllFeedback();
+                    statusModeFromServlet = "all";
+                    break;
+                default:
+                    // Xử lý các giá trị không mong muốn nếu cần
+                    break;
+            }
         }
 
-        request.setAttribute("statusModeFromServlet", statusModeFromServlet);
-        request.setAttribute("listTypeFromServlet", "productByStatus");   
+        request.setAttribute("allfeedback", listFeedbackByStatus);
         request.setAttribute("statusSearch", statusSearch);
-      
-        request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
+        request.setAttribute("statusModeFromServlet", statusModeFromServlet);
+        request.setAttribute("listTypeFromServlet", "productByStatus");
 
+        request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
+    
     }
 
     /**

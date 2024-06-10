@@ -1,5 +1,5 @@
 <%-- 
-    Document   : List SLider
+    Document   : List Feedback
     Created on : 30 May 2024, 5:55:44 pm
     Author     : dat ngo huy
 --%>
@@ -87,7 +87,7 @@
                             </form>
 
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered"  width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>ID</th>

@@ -60,48 +60,36 @@ public class FilterFeedbackByStar extends HttpServlet {
     throws ServletException, IOException {
         FeedbackDAO da = new FeedbackDAO();
         String starSearch = request.getParameter("starSearch");
-        
-        request.setAttribute("starSearch", starSearch);
-        if (starSearch.equals("1")) {
-            ArrayList<Feedback> listFeedbackByStar = da.getFeedBackBy1Star();
-            
-            request.setAttribute("allfeedback", listFeedbackByStar);
-            request.setAttribute("starSearch", starSearch);
+        ArrayList<Feedback> listFeedbackByStar = new ArrayList<>();
 
-            request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
-        } else if (starSearch.equals("2")) {
-            ArrayList<Feedback> listFeedbackByStar = da.getFeedBackBy2Star();
-            
-           
-            request.setAttribute("allfeedback", listFeedbackByStar);
-            request.setAttribute("starSearch", starSearch);
-            request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
-        } else if (starSearch.equals("3")) {
-            ArrayList<Feedback> listFeedbackByStar = da.getFeedBackBy3Star();                                          
-            
-           request.setAttribute("allfeedback", listFeedbackByStar);
-            request.setAttribute("starSearch", starSearch);
-           request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
-        }else if (starSearch.equals("4")) {
-            ArrayList<Feedback> listFeedbackByStar = da.getFeedBackBy4Star();                                          
-            
-           request.setAttribute("allfeedback", listFeedbackByStar);
-            request.setAttribute("starSearch", starSearch);
-           request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
-        }else if (starSearch.equals("5")) {
-            ArrayList<Feedback> listFeedbackByStar = da.getFeedBackBy5Star();                                          
-             
-            request.setAttribute("allfeedback", listFeedbackByStar);
-            request.setAttribute("starSearch", starSearch);
-            request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
+        if (starSearch != null) {
+            switch (starSearch) {
+                case "1":
+                    listFeedbackByStar = da.getFeedBackBy1Star();
+                    break;
+                case "2":
+                    listFeedbackByStar = da.getFeedBackBy2Star();
+                    break;
+                case "3":
+                    listFeedbackByStar = da.getFeedBackBy3Star();
+                    break;
+                case "4":
+                    listFeedbackByStar = da.getFeedBackBy4Star();
+                    break;
+                case "5":
+                    listFeedbackByStar = da.getFeedBackBy5Star();
+                    break;
+                default:
+                    // Xử lý các giá trị không mong muốn nếu cần
+                    break;
+            }
         }
 
-      
-              
-        request.setAttribute("starSearch", starSearch);     
+        request.setAttribute("allfeedback", listFeedbackByStar);
+        request.setAttribute("starSearch", starSearch);
         request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
-
     }
+
 
     
 
