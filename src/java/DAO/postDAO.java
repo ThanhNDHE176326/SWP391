@@ -139,7 +139,9 @@ public class postDAO extends DBContext {
                     post.setImage(rs.getString("image"));
                     post.setTitle(rs.getString("title"));
                     post.setCategoryBlog(rs.getString("category_blog_id"));
-                    post.setStaff(rs.getString("staffId"));
+                    post.setStaff(rs.getString("staff_id"));
+                    post.setDescription(rs.getString("description"));
+                    post.setContent(rs.getString("content"));
                     post.setStatus(rs.getString("status"));
                     post.setIsDelete(rs.getString("isDelete"));
                 }
@@ -179,5 +181,11 @@ public class postDAO extends DBContext {
             e.printStackTrace();
         }
         return rowDeleted;
+    }
+    public static void main(String[] args) {
+        postDAO dao = new postDAO();
+        Blog blog = dao.getPostById(3);
+        System.out.println(blog);
+        
     }
 }

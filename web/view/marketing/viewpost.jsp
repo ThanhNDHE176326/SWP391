@@ -95,13 +95,13 @@
         <div class="container">
     <div class="product-details">
         <div class="product-thumbnail">
-            <img src="${post.image}" alt="Product Image">
+            <img src="images/${post.image}" alt="Product Image">
         </div>
         <div class="product-info">
             <h2>${post.title}</h2>
             <p><strong>Category:</strong> ${post.categoryBlog}</p>
             <p><strong>Description:</strong> ${post.description}</p>
-            <p><strong>Status:</strong> ${post.status ? 'Show' : 'Hide'}</p>
+            <p><strong>Status:</strong> ${post.status ? 'Hide' : 'Show'}</p>
             <p><strong>Content:</strong></p>
             <p>${post.content}</p>
             <!-- Edit Post Button -->

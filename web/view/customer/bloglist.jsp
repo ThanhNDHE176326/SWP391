@@ -48,7 +48,7 @@
                                         </ul>
                                     </div>
                                     <a href="">
-                                        <img src="${blog.image}" alt="">
+                                        <img src="images/${blog.image}" alt="">
                                     </a>
                                     <p>${blog.description}</p>
                                     <a  href="blogdetail?id=${blog.id}" class="btn btn-primary">Read More</a>

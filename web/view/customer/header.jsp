@@ -89,19 +89,16 @@
                         <div class="col-sm-9">
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="homepage.jsp" class="active">Home</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/view/customer/homepage.jsp" class="active">Home</a></li>
 
                                     <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
-                                            <li><a href="shop.jsp">Products</a></li>
-                                            <li><a href="product-details.jsp">Product Details</a></li>
+                                            <li><a href="${pageContext.request.contextPath}/ProductListPublic">Products</a></li>
+                                            <li><a href="${pageContext.request.contextPath}/ProductDetailPublic">Product Details</a></li>
                                         </ul>
                                     </li>
-                                    <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                        <ul role="menu" class="sub-menu">
-                                            <li><a href="bloglist.jsp">Blog List</a></li>
-                                            <li><a href="blog-single.jsp">Blog Single</a></li>
-                                        </ul>
+                                    <li class=""><a href="${pageContext.request.contextPath}/bloglist">Blog List<i></i></a>
+
                                     </li> 
                                 </ul>
                             </div>

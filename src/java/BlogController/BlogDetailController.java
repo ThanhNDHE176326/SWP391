@@ -66,7 +66,7 @@ public class BlogDetailController extends HttpServlet {
 
         request.setAttribute("blog", blog);
         request.setAttribute("categories", categories);
-        request.getRequestDispatcher("BlogDetails.jsp").forward(request, response);
+        request.getRequestDispatcher("view/customer/blogdetails.jsp").forward(request, response);
     
     } 
 

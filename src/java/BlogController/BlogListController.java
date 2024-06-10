@@ -103,7 +103,7 @@ public class BlogListController extends HttpServlet {
         request.setAttribute("query", query);
         request.setAttribute("category", categoryParam);
 
-        request.getRequestDispatcher("BlogList.jsp").forward(request, response);
+        request.getRequestDispatcher("view/customer/bloglist.jsp").forward(request, response);
     }
 
     /**

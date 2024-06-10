@@ -659,8 +659,8 @@ public class ProductDAO extends DBContext {
                 + "JOIN \n"
                 + "    Customers C ON O.customer_id = C.id\n"
                 + "WHERE\n"
-                + "    OD.isDelete = 0 AND\n"
-                + "    O.isDelete = 0 \n"
+                + "    OD.isDelete = 1 AND\n"
+                + "    O.isDelete = 1 \n"
                 + "	AND\n"
                 + "    O.order_date BETWEEN ? AND ?\n"
                 + "GROUP BY \n"
@@ -689,5 +689,10 @@ public class ProductDAO extends DBContext {
             System.out.println("getMostOrderedProductBetweenDates: " + e.getMessage());
         }
         return null;
+    }
+    public static void main(String[] args) {
+        ProductDAO dao = new ProductDAO();
+        Product product = dao.getMostOrderedProductBetweenDates("2024-05-01", "2024-05-09");
+        System.out.println(product);
     }
 }
