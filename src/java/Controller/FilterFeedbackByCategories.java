@@ -62,41 +62,37 @@ public class FilterFeedbackByCategories extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        String id = request.getParameter("id");
-        String CategorySearch = request.getParameter("CategorySearch");
+
 //        System.out.println("id ======= " + id);
 //        System.out.println("category ===== " + CategorySearch);
+        String CategorySearch = request.getParameter("CategorySearch");
         FeedbackDAO da = new FeedbackDAO();
-        if (CategorySearch.equals("1")) {
-            ArrayList<Feedback> listFeedbackByCategories = da.getFeedBackByCategories1();
+        ArrayList<Feedback> listFeedbackByCategories = new ArrayList<>();
 
-            request.setAttribute("allfeedback", listFeedbackByCategories);
-            request.setAttribute("CategorySearch", CategorySearch);
-           request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
-
-        } else if (CategorySearch.equals("2")) {
-            ArrayList<Feedback> listFeedbackByCategories = da.getFeedBackByCategories2();
-
-            request.setAttribute("allfeedback", listFeedbackByCategories);
-            request.setAttribute("CategorySearch", CategorySearch);
-            request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
-
-        } else if (CategorySearch.equals("3")) {
-            ArrayList<Feedback> listFeedbackByCategories = da.getFeedBackByCategories3();
-
-            request.setAttribute("allfeedback", listFeedbackByCategories);
-            request.setAttribute("CategorySearch", CategorySearch);
-          request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
-
-        } else if (CategorySearch.equals("4")) {
-            ArrayList<Feedback> listFeedbackByCategories = da.getFeedBackByCategories4();
-
-            request.setAttribute("allfeedback", listFeedbackByCategories);
-            request.setAttribute("CategorySearch", CategorySearch);
-          request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
-
+        if (CategorySearch != null) {
+            switch (CategorySearch) {
+                case "1":
+                    listFeedbackByCategories = da.getFeedBackByCategories1();
+                    break;
+                case "2":
+                    listFeedbackByCategories = da.getFeedBackByCategories2();
+                    break;
+                case "3":
+                    listFeedbackByCategories = da.getFeedBackByCategories3();
+                    break;
+                case "4":
+                    listFeedbackByCategories = da.getFeedBackByCategories4();
+                    break;
+                default:
+                    // Xử lý các giá trị không mong muốn nếu cần
+                    break;
+            }
         }
+
+        request.setAttribute("allfeedback", listFeedbackByCategories);
         request.setAttribute("CategorySearch", CategorySearch);
-      request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
+        request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
+    
     }
 
     /**
