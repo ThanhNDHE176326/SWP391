@@ -4,10 +4,12 @@
  */
 package DAO;
 
+import Models.Product;
 import dal.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,15 +38,13 @@ public class CartProductDAO extends DBContext {
         }
     }
 
-  
-
     public int getProductIDFromByCartID(int cartID, int productID) {
         String sql = "SELECT * FROM CartProducts WHERE cart_id = ? AND product_id = ?";
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, cartID);
             stm.setInt(2, productID);
-            rs=stm.executeQuery();
+            rs = stm.executeQuery();
             if (rs.next()) {
                 return rs.getInt("product_id");
             }
@@ -60,7 +60,7 @@ public class CartProductDAO extends DBContext {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, cartID);
             stm.setInt(2, productID);
-            rs=stm.executeQuery();
+            rs = stm.executeQuery();
             if (rs.next()) {
                 return rs.getInt("quantity");
             }
@@ -76,7 +76,7 @@ public class CartProductDAO extends DBContext {
                 + "   SET [quantity] = ?\n"
                 + " WHERE cart_id = ? AND product_id =?";
         try {
-            stm= connection.prepareStatement(sql);
+            stm = connection.prepareStatement(sql);
             stm.setInt(1, quantityFromCart);
             stm.setInt(2, cartID);
             stm.setInt(3, productIDFromCart);
@@ -84,5 +84,30 @@ public class CartProductDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("updateQuantityByCartID: " + e.getMessage());
         }
+    }
+
+    public List<Product> getProductsFromCartByCartID(int cartID) {
+        List<Product> listProduct = new ArrayList<>();
+        String sql = "SELECT p.id, p.title, p.image, p.sale_price, cp.quantity AS cart_quantity FROM Products p \n"
+                + "JOIN CartProducts cp ON p.id = cp.product_id\n"
+                + "WHERE p.isDelete = 1 AND p.status = 1 AND cp.cart_id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, cartID);
+            rs=stm.executeQuery();
+            while (rs.next()) {                
+                String id= String.valueOf(rs.getInt("id"));
+                String title = rs.getString("title");
+                String image = rs.getString("image");
+                String salePrice = String.valueOf(rs.getDouble("sale_price"));
+                String cartQuantity = String.valueOf(rs.getInt("cart_quantity"));
+                Product productFromCart = new Product(id, title, image, salePrice, cartQuantity);
+                listProduct.add(productFromCart);
+            }
+        } catch (SQLException e) {
+            System.out.println("getProductsFromCartByCartID: " + e.getMessage());
+        }
+        System.out.println("getProductsFromCartByCartID - listSize = " + listProduct.size());
+        return listProduct;      
     }
 }
