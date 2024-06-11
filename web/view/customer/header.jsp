@@ -70,7 +70,7 @@
                                             </li>
                                             <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
                                             <li><a href="checkout.jsp"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                            <li><a href="cart.jsp"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                                            <li><a href="${pageContext.request.contextPath}/viewCartDetail"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                             </c:when>
                                             <c:otherwise>
                                             <li><a href="${pageContext.request.contextPath}/view/customer/logincustomer.jsp"><i class="fa fa-lock"></i> Login</a></li>

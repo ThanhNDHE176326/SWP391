@@ -51,90 +51,164 @@
                         <thead>
                             <tr class="cart_menu">
                                 <td class="image">Item</td>
-                                <td class="description"></td>
+                                <td class="description">Title</td>
                                 <td class="price">Price</td>
                                 <td class="quantity">Quantity</td>
                                 <td class="total">Total</td>
-                                <td></td>
+                                <td class="total">Delete</td>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td class="cart_product">
-                                    <a href=""><img src="images/cart/one.png" alt=""></a>
-                                </td>
-                                <td class="cart_description">
-                                    <h4><a href="">Colorblock Scuba</a></h4>
-                                    <p>Web ID: 1089772</p>
-                                </td>
-                                <td class="cart_price">
-                                    <p>$59</p>
-                                </td>
-                                <td class="cart_quantity">
-                                    <div class="cart_quantity_button">
-                                        <a class="cart_quantity_up" href=""> + </a>
-                                        <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-                                        <a class="cart_quantity_down" href=""> - </a>
-                                    </div>
-                                </td>
-                                <td class="cart_total">
-                                    <p class="cart_total_price">$59</p>
-                                </td>
-                                <td class="cart_delete">
-                                    <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                                </td>
-                            </tr>
+                        <style>.table-responsive.cart_info {
+                                margin-bottom: 20px; /* Khoảng cách dưới cùng của bảng */
+                            }
 
-                            <tr>
-                                <td class="cart_product">
-                                    <a href=""><img src="images/cart/two.png" alt=""></a>
-                                </td>
-                                <td class="cart_description">
-                                    <h4><a href="">Colorblock Scuba</a></h4>
-                                    <p>Web ID: 1089772</p>
-                                </td>
-                                <td class="cart_price">
-                                    <p>$59</p>
-                                </td>
-                                <td class="cart_quantity">
-                                    <div class="cart_quantity_button">
-                                        <a class="cart_quantity_up" href=""> + </a>
-                                        <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-                                        <a class="cart_quantity_down" href=""> - </a>
-                                    </div>
-                                </td>
-                                <td class="cart_total">
-                                    <p class="cart_total_price">$59</p>
-                                </td>
-                                <td class="cart_delete">
-                                    <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="cart_product">
-                                    <a href=""><img src="images/cart/three.png" alt=""></a>
-                                </td>
-                                <td class="cart_description">
-                                    <h4><a href="">Colorblock Scuba</a></h4>
-                                    <p>Web ID: 1089772</p>
-                                </td>
-                                <td class="cart_price">
-                                    <p>$59</p>
-                                </td>
-                                <td class="cart_quantity">
-                                    <div class="cart_quantity_button">
-                                        <a class="cart_quantity_up" href=""> + </a>
-                                        <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-                                        <a class="cart_quantity_down" href=""> - </a>
-                                    </div>
-                                </td>
-                                <td class="cart_total">
-                                    <p class="cart_total_price">$59</p>
-                                </td>
-                                <td class="cart_delete">
-                                    <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                                </td>
-                            </tr>
+                            .table.table-condensed {
+                                width: 100%; /* Chiều rộng của bảng là 100% */
+                                /* Gộp viền của các ô */
+                            }
+
+                            .cart_menu td {
+                                font-weight: bold; /* Đặt đậm cho các ô tiêu đề */
+                            }
+
+                            .cart_menu td, .cart_product, .cart_description, .cart_price, .cart_quantity, .cart_total, .cart_delete {
+                                text-align: center; /* Canh giữa nội dung của các ô */
+                                vertical-align: middle; /* Canh giữa theo chiều dọc của các ô */
+                                padding: 10px; /* Khoảng cách nội dung với viền trong mỗi ô */
+                            }
+
+                            .cart_menu td.image {
+                                width: 15%; /* Chiều rộng của ô Item */
+                            }
+
+                            .cart_menu td.description {
+                                width: 25%; /* Chiều rộng của ô Description */
+                            }
+                            
+                            .cart_menu td.price {
+                                width: 15%; /* Chiều rộng của ô Price */
+                            }
+
+                            .cart_menu td.quantity {
+                                width: 15%; /* Chiều rộng của ô Quantity */
+                            }
+
+                            .cart_menu td.total {
+                                width: 15%; /* Chiều rộng của ô Total */
+                            }
+
+                            .cart_menu td.cart_delete {
+                                width: 10%; /* Chiều rộng của ô Xóa */
+                            }
+
+                            .cart_menu td.cart_delete a {
+                                color: #333; /* Màu chữ của nút Xóa */
+                            }
+
+                            .cart_menu td.cart_delete a:hover {
+                                color: red; /* Màu chữ khi rê chuột qua nút Xóa */
+                            }
+
+                            .cart_product img {
+                                width: 130px; /* Kích thước của hình ảnh sản phẩm */
+                                height: auto; /* Chiều cao tự động tính toán để giữ tỷ lệ khung hình */
+                                
+                            }
+                        </style>
+                        <tbody>
+                            <c:forEach var="listProduct" items="${listProduct}">
+                                <tr>
+                                    <td class="cart_product">
+                                        <a href=""><img src="<c:url value='/images/${listProduct.image}'/>" alt=""></a>
+                                    </td>
+                                    <td class="cart_description">
+                                        <h4><a href="">${listProduct.title}</a></h4>
+                                        <p>${listProduct.id}</p>
+                                    </td>
+                                    <td class="cart_price">
+                                        <p>${listProduct.salePrice}</p>
+                                    </td>
+                                    <td class="cart_quantity">
+                                        <div class="cart_quantity_button">
+                                            <a class="cart_quantity_up" href="javascript:void(0)"> + </a>
+                                            <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
+                                            <a class="cart_quantity_down" href="javascript:void(0)"> - </a>
+                                        </div>
+                                    </td>
+                                    <td class="cart_total">
+                                        <p class="cart_total_price">${listProduct.salePrice}</p>
+                                    </td>
+                                    <td class="cart_delete">
+                                        <a class="cart_quantity_delete" href="javascript:void(0)"><i class="fa fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const quantityInputs = document.querySelectorAll('.cart_quantity_input');
+                                const salePrices = document.querySelectorAll('.cart_price p');
+                                const totalPrices = document.querySelectorAll('.cart_total_price');
+
+                                function updateTotalPrice(index) {
+                                    const quantity = parseInt(quantityInputs[index].value);
+                                    const salePrice = parseFloat(salePrices[index].textContent);
+                                    const totalPrice = quantity * salePrice;
+                                    totalPrices[index].textContent = Math.floor(totalPrice); // Làm tròn xuống số nguyên gần nhất
+                                }
+
+
+                                function updateCartTotal() {
+                                    let cartTotal = 0;
+                                    totalPrices.forEach(function (price) {
+                                        cartTotal += parseFloat(price.textContent);
+                                    });
+                                    // Update cart total in your UI here
+                                }
+
+                                function deleteProduct(index) {
+                                    // Implement product deletion logic here
+                                }
+
+                                quantityInputs.forEach(function (input, index) {
+                                    input.addEventListener('change', function () {
+                                        updateTotalPrice(index);
+                                        updateCartTotal();
+                                    });
+                                });
+
+                                const incrementButtons = document.querySelectorAll('.cart_quantity_up');
+                                const decrementButtons = document.querySelectorAll('.cart_quantity_down');
+
+                                incrementButtons.forEach(function (button, index) {
+                                    button.addEventListener('click', function () {
+                                        quantityInputs[index].value = parseInt(quantityInputs[index].value) + 1;
+                                        updateTotalPrice(index);
+                                        updateCartTotal();
+                                    });
+                                });
+
+                                decrementButtons.forEach(function (button, index) {
+                                    button.addEventListener('click', function () {
+                                        const currentValue = parseInt(quantityInputs[index].value);
+                                        if (currentValue > 1) {
+                                            quantityInputs[index].value = currentValue - 1;
+                                            updateTotalPrice(index);
+                                            updateCartTotal();
+                                        }
+                                    });
+                                });
+
+                                const deleteButtons = document.querySelectorAll('.cart_quantity_delete');
+                                deleteButtons.forEach(function (button, index) {
+                                    button.addEventListener('click', function () {
+                                        deleteProduct(index);
+                                    });
+                                });
+                            });
+                        </script>
+
+
                         </tbody>
                     </table>
                 </div>
