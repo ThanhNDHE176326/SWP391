@@ -5,6 +5,12 @@
 
 package Controller.cart;
 
+import DAO.CartDAO;
+import DAO.CartProductDAO;
+import DAO.CustomerDAO;
+import DAO.ProductDAO;
+import Models.CartProduct;
+import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +18,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -55,7 +64,20 @@ public class ViewCartDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        CustomerDAO customerDAO = new CustomerDAO();
+        ProductDAO productDAO = new ProductDAO();
+        CartDAO cartDAO = new CartDAO();
+        CartProductDAO cartProductDAO = new CartProductDAO();
         
+        //lay customerName tren session
+        String customerName = (String) session.getAttribute("username");
+        int customerID = Integer.parseInt(customerDAO.getInformationCustomer(customerName).getId());
+        int cartID = cartDAO.getCartIdByCustomerID(customerID);
+        
+        List<Product> listProductFromCart = cartProductDAO.getProductsFromCartByCartID(cartID);
+        request.setAttribute("listProduct", listProductFromCart);
+        request.getRequestDispatcher("view/customer/cart.jsp").forward(request, response);
     } 
 
     /** 

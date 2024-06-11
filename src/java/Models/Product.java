@@ -82,7 +82,13 @@ public class Product {
         this.customer = customer;
         this.order = order;
     }
-
+    public Product(String id, String title, String image, String salePrice, String cartQuantity){
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.salePrice = salePrice;
+        this.quantity = cartQuantity;
+    }
     public String getId() {
         return id;
     }
