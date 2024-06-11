@@ -201,4 +201,10 @@ public class CustomerDAO extends DBContext {
         CustomerDAO dao = new CustomerDAO();
         System.out.println(dao.getTotalCustomer());
     }
+
+    public int getIByCustomerName(String customerName) {
+        String sql ="";
+        
+        return 0;
+    }
 }
