@@ -116,30 +116,31 @@
                             }
                         </style>
                         <tbody>
-                            <c:forEach var="listProduct" items="${listProduct}">
+                            <c:forEach var="product" items="${listProduct}">
                                 <tr>
                                     <td class="cart_product">
-                                        <a href=""><img src="<c:url value='/images/${listProduct.image}'/>" alt=""></a>
+                                        <a href=""><img src="<c:url value='/images/${product.image}'/>" alt=""></a>
                                     </td>
                                     <td class="cart_description">
-                                        <h4><a href="">${listProduct.title}</a></h4>
-                                        <p>${listProduct.id}</p>
+                                        <h4><a href="">${product.title}</a></h4>
+                                        <p>${product.id}</p>
                                     </td>
                                     <td class="cart_price">
-                                        <p>${listProduct.salePrice}</p>
+                                        <p>${product.salePrice}</p>
                                     </td>
                                     <td class="cart_quantity">
                                         <div class="cart_quantity_button">
-                                            <a class="cart_quantity_up" href="javascript:void(0)"> + </a>
-                                            <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-                                            <a class="cart_quantity_down" href="javascript:void(0)"> - </a>
+                                            <a class="cart_quantity_down" href="updateQuantityCartProduct?productID=${product.id}&mode=tru"> - </a>
+                                            <input class="cart_quantity_input" type="text" name="quantity" value="${product.quantity}" autocomplete="off" size="2">
+                                            <a class="cart_quantity_up" href="updateQuantityCartProduct?productID=${product.id}&mode=cong"> + </a>
                                         </div>
                                     </td>
                                     <td class="cart_total">
-                                        <p class="cart_total_price">${listProduct.salePrice}</p>
+                                        <p class="cart_total_price">${product.salePrice * product.quantity}</p>
                                     </td>
                                     <td class="cart_delete">
-                                        <a class="cart_quantity_delete" href="javascript:void(0)"><i class="fa fa-times"></i></a>
+                                        <a class="cart_quantity_delete" href="deleteCart?productID=${product.id}"><i class="fa fa-times"></i></a>
+                                        <!--<a class="cart_quantity_delete" href="javascript:void(0)"><i class="fa fa-times"></i></a>-->
                                     </td>
                                 </tr>
                             </c:forEach>
