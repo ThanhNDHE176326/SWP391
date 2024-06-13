@@ -94,9 +94,9 @@ public class CartProductDAO extends DBContext {
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, cartID);
-            rs=stm.executeQuery();
-            while (rs.next()) {                
-                String id= String.valueOf(rs.getInt("id"));
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String id = String.valueOf(rs.getInt("id"));
                 String title = rs.getString("title");
                 String image = rs.getString("image");
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
@@ -108,6 +108,19 @@ public class CartProductDAO extends DBContext {
             System.out.println("getProductsFromCartByCartID: " + e.getMessage());
         }
         System.out.println("getProductsFromCartByCartID - listSize = " + listProduct.size());
-        return listProduct;      
+        return listProduct;
+    }
+
+    public void deleteProductInCart(int cartID, int productID) {
+        String sql = "DELETE FROM [dbo].[CartProducts]\n"
+                + "      WHERE cart_id = ? AND product_id =?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, cartID);
+            stm.setInt(2, productID);
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("deleteProductInCart: " + e.getMessage());
+        }
     }
 }
