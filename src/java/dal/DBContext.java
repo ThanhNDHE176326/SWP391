@@ -14,14 +14,20 @@ public class DBContext {
 
     public DBContext() {
         try {
-// Edit URL , username, password to authenticate with your MS SQL Server
-            String url = "jdbc:sqlserver://DESKTOP-EM30SMM\\DATNGO:1433;databaseName=SWP391_re16";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=SWP391_re17";
             String username = "sa";
             String password = "123";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println(ex);
+        }
+    }
+    public static void main(String[] args) {
+        if(new DBContext().connection != null){
+            System.out.println("connect okela!");
+        }else{
+            System.out.println("connect fail!");
         }
     }
 }

@@ -38,6 +38,7 @@ public class ProductDetailPublicController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String productId = request.getParameter("productId");
+        System.out.println("ID nhan duoc ben Detail: " + productId); // Debug print
         String indexPage = request.getParameter("index");
 
         if (indexPage == null) {
@@ -53,6 +54,7 @@ public class ProductDetailPublicController extends HttpServlet {
                 // Xử lý lỗi nếu không có id được gửi từ request
                 indexId = 1; // Sử dụng giá trị mặc định
             }
+//            indexId = Integer.parseInt(productId);
 
             ProductDAOByPublic dao = new ProductDAOByPublic();
             int count = dao.countFeedbackOfAProduct(indexId);

@@ -66,7 +66,7 @@ public class AddToCartController extends HttpServlet {
         CustomerDAO customerDAO = new CustomerDAO();
         CartDAO cartDAO = new CartDAO();
         CartProductDAO cartProductDAO = new CartProductDAO();
-
+        
         int productID = Integer.parseInt(request.getParameter("productID"));
         String customerName = (String) session.getAttribute("username");
         String customerID_STR = customerDAO.getInformationCustomer(customerName).getId();
@@ -79,7 +79,7 @@ public class AddToCartController extends HttpServlet {
             cartDAO.addNewCartByCustomerID(customerID);
             int cartID = cartDAO.getCartIdByCustomerID(customerID);
             cartProductDAO.addToCart(cartID, productID);
-            response.sendRedirect("ProductListPublic");
+//            response.sendRedirect("ProductListPublic");
         } else {
             int cartID = Integer.parseInt(cartCustomer.getId());
             //check product xem ton tai trong Cart Product chua?
@@ -87,17 +87,28 @@ public class AddToCartController extends HttpServlet {
             if (productIDFromCart == 0) {
                 //neu chua thi add cart voi quantity = 1
                 cartProductDAO.addToCart(cartID, productID);
-                response.sendRedirect("ProductListPublic");
+//                response.sendRedirect("ProductListPublic");
             } else {
                 //neu roi thi upade cart voi quantity + 1
                 int quantityFromCart = cartProductDAO.getQuantityByCartIdAndProductID(cartID, productID);
                 quantityFromCart += 1;
                 cartProductDAO.updateQuantityByCartID(cartID, productIDFromCart, quantityFromCart);
-                response.sendRedirect("ProductListPublic");
+//                response.sendRedirect("ProductListPublic");
             }
             //neu chua thi add cart voi quantity = 1
             //neu roi thi upade cart voi quantity + 1
         }
+        String location = request.getParameter("location");
+        if (location.equals("list")) {
+            response.sendRedirect("ProductListPublic");
+        }
+        if (location.equals("detail")) {
+//            request.setAttribute("productId", productID);
+            System.out.println("ID gui di tu add: " + productID); // Debug print
+//            request.getRequestDispatcher("ProductDetailPublic").forward(request, response);
+            response.sendRedirect("ProductDetailPublic?productId=" + productID);
+        }
+        
     }
 
     /**
