@@ -184,466 +184,413 @@
                     <div class="col-sm-9 padding-right">
 
                         <div id="cart_items">
-                            
-                                <div class="breadcrumbs">
-                                    <ol class="breadcrumb">
-                                        <li><a href="#">Product List</a></li>
-                                        <li class="active">Cart Detail</li>
-                                    </ol>
-                                </div>
-                                <div class="table-responsive cart_info">
-                                    <table class="table table-condensed">
-                                        <thead>
-                                            <tr class="cart_menu">
-                                                <td class="image">Item</td>
-                                                <td class="description">Title</td>
-                                                <td class="price">Price</td>
-                                                <td class="quantity">Quantity</td>
-                                                <td class="total">Total</td>
-                                                <td class="total">Delete</td>
+
+                            <div class="breadcrumbs">
+                                <ol class="breadcrumb">
+                                    <li><a href="#">Product List</a></li>
+                                    <li class="active">Cart Detail</li>
+                                </ol>
+                            </div>
+                            <div class="table-responsive cart_info" style="max-width: 1400px; margin: auto;">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr class="cart_menu">
+                                            <td class="select">Select</td>
+                                            <td class="image">Item</td>
+                                            <td class="description">Title</td>
+                                            <td class="price">Price</td>
+                                            <td class="stock">Stock</td>
+                                            <td class="quantity">Quantity</td>
+                                            <td class="total">Total</td>
+                                            <td class="cart_delete">Delete</td>
+                                        </tr>
+                                    </thead>
+                                    <style>
+                                        .table-responsive.cart_info {
+                                            margin-bottom: 20px; /* Khoảng cách dưới cùng của bảng */
+                                            overflow-x: hidden; /* Loại bỏ thanh trượt ngang */
+                                        }
+
+                                        .table.table-condensed {
+                                            width: 100%; /* Chiều rộng của bảng là 100% */
+                                        }
+
+                                        .cart_menu td {
+                                            font-weight: bold; /* Đặt đậm cho các ô tiêu đề */
+                                            text-align: center; /* Canh giữa nội dung của các ô */
+                                            vertical-align: middle; /* Canh giữa theo chiều dọc của các ô */
+                                            padding: 10px; /* Khoảng cách nội dung với viền trong mỗi ô */
+                                        }
+
+                                        .cart_menu td.select {
+                                            width: 5%; /* Chiều rộng của ô Select */
+                                        }
+
+                                        .cart_menu td.image {
+                                            width: 12%; /* Chiều rộng của ô Item */
+                                        }
+
+                                        .cart_menu td.description {
+                                            width: 28%; /* Chiều rộng của ô Description */
+                                        }
+
+                                        .cart_menu td.price {
+                                            width: 10%; /* Chiều rộng của ô Price */
+                                        }
+
+                                        .cart_menu td.quantity {
+                                            width: 10%; /* Chiều rộng của ô Quantity */
+                                        }
+
+                                        .cart_menu td.stock {
+                                            width: 10%; /* Chiều rộng của ô Stock */
+                                        }
+
+                                        .cart_menu td.total {
+                                            width: 15%; /* Chiều rộng của ô Total */
+                                        }
+
+                                        .cart_menu td.cart_delete {
+                                            width: 10%; /* Chiều rộng của ô Xóa */
+                                        }
+
+                                        .cart_menu td.cart_delete a {
+                                            color: #333; /* Màu chữ của nút Xóa */
+                                        }
+
+                                        .cart_menu td.cart_delete a:hover {
+                                            color: red; /* Màu chữ khi rê chuột qua nút Xóa */
+                                        }
+
+                                        .cart_product img {
+                                            width: 130px; /* Kích thước của hình ảnh sản phẩm */
+                                            height: auto; /* Chiều cao tự động tính toán để giữ tỷ lệ khung hình */
+                                        }
+                                    </style>
+                                    <tbody>
+                                        <c:forEach var="product" items="${listProduct}">
+                                            <tr>
+                                                <td class="cart_select">
+                                                    <input type="checkbox" name="selectedProducts" value="${product.id}">
+                                                </td>
+                                                <td class="cart_product">
+                                                    <a href=""><img src="<c:url value='/images/${product.image}'/>" alt=""></a>
+                                                </td>
+                                                <td class="cart_description">
+                                                    <h4><a href="">${product.title}</a></h4>
+                                                    <p>${product.id}</p>
+                                                </td>
+                                                <td class="cart_price">
+                                                    <p>${product.salePrice}</p>
+                                                </td>
+                                                <td >
+                                                    <p style="color: black;">100</p>
+                                                </td>
+                                                <td class="cart_quantity">
+                                                    <div class="cart_quantity_button">
+                                                        <a class="cart_quantity_down" href="updateQuantityCartProduct?productID=${product.id}&mode=tru"> - </a>
+                                                        <input class="cart_quantity_input" type="text" name="quantity" value="${product.quantity}" autocomplete="off" size="2">
+                                                        <a class="cart_quantity_up" href="updateQuantityCartProduct?productID=${product.id}&mode=cong"> + </a>
+                                                    </div>
+                                                </td>
+                                                <td class="cart_total">
+                                                    <p class="cart_total_price">${product.salePrice * product.quantity}</p>
+                                                </td>
+                                                <td class="cart_delete">
+                                                    <a class="cart_quantity_delete" href="deleteCart?productID=${product.id}"><i class="fa fa-times"></i></a>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <style>
-                                            .table-responsive.cart_info {
-                                                margin-bottom: 20px; /* Khoảng cách dưới cùng của bảng */
-                                            }
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                                            .table.table-condensed {
-                                                width: 100%; /* Chiều rộng của bảng là 100% */
-                                                /* Gộp viền của các ô */
-                                            }
 
-                                            .cart_menu td {
-                                                font-weight: bold; /* Đặt đậm cho các ô tiêu đề */
-                                            }
 
-                                            .cart_menu td, .cart_product, .cart_description, .cart_price, .cart_quantity, .cart_total, .cart_delete {
-                                                text-align: center; /* Canh giữa nội dung của các ô */
-                                                vertical-align: middle; /* Canh giữa theo chiều dọc của các ô */
-                                                padding: 10px; /* Khoảng cách nội dung với viền trong mỗi ô */
-                                            }
 
-                                            .cart_menu td.image {
-                                                width: 15%; /* Chiều rộng của ô Item */
-                                            }
 
-                                            .cart_menu td.description {
-                                                width: 25%; /* Chiều rộng của ô Description */
-                                            }
 
-                                            .cart_menu td.price {
-                                                width: 15%; /* Chiều rộng của ô Price */
-                                            }
+                            <ul class="pagination">
+                                <c:if test="${tag > 1}">
+                                    <li><a href="?index=${tag - 1}&productId=${param.productId}">Previous</a></li>
+                                    </c:if>
+                                    <c:forEach begin="1" end="${endP}" var="i">
+                                    <li class="${tag == i ? 'active' : ''}">
+                                        <a class="pagination-link" href="?index=${i}&productId=${param.productId}">${i}</a>
+                                    </li>
+                                </c:forEach>
+                                <c:if test="${tag < endP}">
+                                    <li><a href="?index=${tag + 1}&productId=${param.productId}">Next</a></li>
+                                    </c:if>
+                            </ul>
 
-                                            .cart_menu td.quantity {
-                                                width: 15%; /* Chiều rộng của ô Quantity */
-                                            }
+                            <style>
+                                .pagination {
+                                    display: flex;
+                                    justify-content: center;
+                                    padding: 0;
+                                    list-style: none;
+                                }
 
-                                            .cart_menu td.total {
-                                                width: 15%; /* Chiều rộng của ô Total */
-                                            }
+                                .pagination li {
+                                    display: inline;
+                                    margin: 0 5px;
+                                }
 
-                                            .cart_menu td.cart_delete {
-                                                width: 10%; /* Chiều rộng của ô Xóa */
-                                            }
+                                .pagination a {
+                                    text-decoration: none;
+                                    padding: 10px 15px;
+                                    color: #007bff;
+                                    border: 1px solid #dee2e6;
+                                    border-radius: 4px;
+                                }
 
-                                            .cart_menu td.cart_delete a {
-                                                color: #333; /* Màu chữ của nút Xóa */
-                                            }
+                                .pagination .active a {
+                                    background-color: #FE980F; /* Màu nền của trang được chọn */
+                                    color: #000; /* Màu chữ của trang được chọn */
+                                    border-color: yellow; /* Màu viền của trang được chọn */
+                                }
+                            </style>
+                            <div class="recommended_items"><!--recommended_items-->
+                                <h2 class="title text-center">recommended items</h2>
 
-                                            .cart_menu td.cart_delete a:hover {
-                                                color: red; /* Màu chữ khi rê chuột qua nút Xóa */
-                                            }
-
-                                            .cart_product img {
-                                                width: 130px; /* Kích thước của hình ảnh sản phẩm */
-                                                height: auto; /* Chiều cao tự động tính toán để giữ tỷ lệ khung hình */
-
-                                            }
-                                        </style>
-                                        <tbody>
-                                            <c:forEach var="product" items="${listProduct}">
-                                                <tr>
-                                                    <td class="cart_product">
-                                                        <a href=""><img src="<c:url value='/images/${product.image}'/>" alt=""></a>
-                                                    </td>
-                                                    <td class="cart_description">
-                                                        <h4><a href="">${product.title}</a></h4>
-                                                        <p>${product.id}</p>
-                                                    </td>
-                                                    <td class="cart_price">
-                                                        <p>${product.salePrice}</p>
-                                                    </td>
-                                                    <td class="cart_quantity">
-                                                        <div class="cart_quantity_button">
-                                                            <a class="cart_quantity_down" href="updateQuantityCartProduct?productID=${product.id}&mode=tru"> - </a>
-                                                            <input class="cart_quantity_input" type="text" name="quantity" value="${product.quantity}" autocomplete="off" size="2">
-                                                            <a class="cart_quantity_up" href="updateQuantityCartProduct?productID=${product.id}&mode=cong"> + </a>
+                                <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="item active">	
+                                            <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
+                                                <c:if test="${loop.index == 0}">
+                                                    <div class="col-sm-4">
+                                                        <div class="product-image-wrapper">
+                                                            <div class="single-products  product-item" data-id="${listNewProduct.id}">
+                                                                <div class="productinfo text-center">
+                                                                    <img src="images/${listNewProduct.image}" alt="" />
+                                                                    <h2>${listNewProduct.title}</h2>
+                                                                    <p>${listNewProduct.description}</p>
+                                                                    <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <div class="button-container">
+                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-overlay">
+                                                                    <div class="overlay-content">
+                                                                        <h2>${listNewProduct.title}</h2>
+                                                                        <p>${listNewProduct.description}</p>
+                                                                        <div class="button-container">
+                                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                            <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="choose">
+                                                                <ul class="nav nav-pills nav-justified">
+                                                                    <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                    <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
-                                                    </td>
-                                                    <td class="cart_total">
-                                                        <p class="cart_total_price">${product.salePrice * product.quantity}</p>
-                                                    </td>
-                                                    <td class="cart_delete">
-                                                        <a class="cart_quantity_delete" href="deleteCart?productID=${product.id}"><i class="fa fa-times"></i></a>
-                                                        <!--<a class="cart_quantity_delete" href="javascript:void(0)"><i class="fa fa-times"></i></a>-->
-                                                    </td>
-                                                </tr>
+                                                    </div>
+                                                </c:if>
                                             </c:forEach>
 
-                                        <script>
-                                            document.addEventListener('DOMContentLoaded', function () {
-                                                const quantityInputs = document.querySelectorAll('.cart_quantity_input');
-                                                const salePrices = document.querySelectorAll('.cart_price p');
-                                                const totalPrices = document.querySelectorAll('.cart_total_price');
-
-                                                function updateTotalPrice(index) {
-                                                    const quantity = parseInt(quantityInputs[index].value);
-                                                    const salePrice = parseFloat(salePrices[index].textContent);
-                                                    const totalPrice = quantity * salePrice;
-                                                    totalPrices[index].textContent = Math.floor(totalPrice); // Làm tròn xuống số nguyên gần nhất
-                                                }
-
-
-                                                function updateCartTotal() {
-                                                    let cartTotal = 0;
-                                                    totalPrices.forEach(function (price) {
-                                                        cartTotal += parseFloat(price.textContent);
-                                                    });
-                                                    // Update cart total in your UI here
-                                                }
-
-                                                function deleteProduct(index) {
-                                                    // Implement product deletion logic here
-                                                }
-
-                                                quantityInputs.forEach(function (input, index) {
-                                                    input.addEventListener('change', function () {
-                                                        updateTotalPrice(index);
-                                                        updateCartTotal();
-                                                    });
-                                                });
-
-                                                const incrementButtons = document.querySelectorAll('.cart_quantity_up');
-                                                const decrementButtons = document.querySelectorAll('.cart_quantity_down');
-
-                                                incrementButtons.forEach(function (button, index) {
-                                                    button.addEventListener('click', function () {
-                                                        quantityInputs[index].value = parseInt(quantityInputs[index].value) + 1;
-                                                        updateTotalPrice(index);
-                                                        updateCartTotal();
-                                                    });
-                                                });
-
-                                                decrementButtons.forEach(function (button, index) {
-                                                    button.addEventListener('click', function () {
-                                                        const currentValue = parseInt(quantityInputs[index].value);
-                                                        if (currentValue > 1) {
-                                                            quantityInputs[index].value = currentValue - 1;
-                                                            updateTotalPrice(index);
-                                                            updateCartTotal();
-                                                        }
-                                                    });
-                                                });
-
-                                                const deleteButtons = document.querySelectorAll('.cart_quantity_delete');
-                                                deleteButtons.forEach(function (button, index) {
-                                                    button.addEventListener('click', function () {
-                                                        deleteProduct(index);
-                                                    });
-                                                });
-                                            });
-                                        </script>
-
-
-                                        </tbody>
-                                    </table>
-                                </div>
-
-
-
-
-                                <ul class="pagination">
-                                    <c:if test="${tag > 1}">
-                                        <li><a href="?index=${tag - 1}&productId=${param.productId}">Previous</a></li>
-                                        </c:if>
-                                        <c:forEach begin="1" end="${endP}" var="i">
-                                        <li class="${tag == i ? 'active' : ''}">
-                                            <a class="pagination-link" href="?index=${i}&productId=${param.productId}">${i}</a>
-                                        </li>
-                                    </c:forEach>
-                                    <c:if test="${tag < endP}">
-                                        <li><a href="?index=${tag + 1}&productId=${param.productId}">Next</a></li>
-                                        </c:if>
-                                </ul>
-
-                                <style>
-                                    .pagination {
-                                        display: flex;
-                                        justify-content: center;
-                                        padding: 0;
-                                        list-style: none;
-                                    }
-
-                                    .pagination li {
-                                        display: inline;
-                                        margin: 0 5px;
-                                    }
-
-                                    .pagination a {
-                                        text-decoration: none;
-                                        padding: 10px 15px;
-                                        color: #007bff;
-                                        border: 1px solid #dee2e6;
-                                        border-radius: 4px;
-                                    }
-
-                                    .pagination .active a {
-                                        background-color: #FE980F; /* Màu nền của trang được chọn */
-                                        color: #000; /* Màu chữ của trang được chọn */
-                                        border-color: yellow; /* Màu viền của trang được chọn */
-                                    }
-                                </style>
-                                <div class="recommended_items"><!--recommended_items-->
-                                    <h2 class="title text-center">recommended items</h2>
-
-                                    <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-                                        <div class="carousel-inner">
-                                            <div class="item active">	
-                                                <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
-                                                    <c:if test="${loop.index == 0}">
-                                                        <div class="col-sm-4">
-                                                            <div class="product-image-wrapper">
-                                                                <div class="single-products  product-item" data-id="${listNewProduct.id}">
-                                                                    <div class="productinfo text-center">
-                                                                        <img src="images/${listNewProduct.image}" alt="" />
+                                            <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
+                                                <c:if test="${loop.index == 1}">
+                                                    <div class="col-sm-4">
+                                                        <div class="product-image-wrapper">
+                                                            <div class="single-products  product-item" data-id="${listNewProduct.id}">
+                                                                <div class="productinfo text-center">
+                                                                    <img src="images/${listNewProduct.image}" alt="" />
+                                                                    <h2>${listNewProduct.title}</h2>
+                                                                    <p>${listNewProduct.description}</p>
+                                                                    <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <div class="button-container">
+                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-overlay">
+                                                                    <div class="overlay-content">
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
-                                                                        <p style="display: none;">${listNewProduct.id}</p>
                                                                         <div class="button-container">
                                                                             <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                             <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                         </div>
                                                                     </div>
-                                                                    <div class="product-overlay">
-                                                                        <div class="overlay-content">
-                                                                            <h2>${listNewProduct.title}</h2>
-                                                                            <p>${listNewProduct.description}</p>
-                                                                            <div class="button-container">
-                                                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                                <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="choose">
-                                                                    <ul class="nav nav-pills nav-justified">
-                                                                        <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
-                                                                        <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
-                                                                    </ul>
                                                                 </div>
                                                             </div>
+                                                            <div class="choose">
+                                                                <ul class="nav nav-pills nav-justified">
+                                                                    <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                    <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
-                                                    </c:if>
-                                                </c:forEach>
+                                                    </div>
+                                                </c:if>
+                                            </c:forEach>
 
-                                                <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
-                                                    <c:if test="${loop.index == 1}">
-                                                        <div class="col-sm-4">
-                                                            <div class="product-image-wrapper">
-                                                                <div class="single-products  product-item" data-id="${listNewProduct.id}">
-                                                                    <div class="productinfo text-center">
-                                                                        <img src="images/${listNewProduct.image}" alt="" />
+                                            <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
+                                                <c:if test="${loop.index == 2}">
+                                                    <div class="col-sm-4">
+                                                        <div class="product-image-wrapper">
+                                                            <div class="single-products  product-item" data-id="${listNewProduct.id}">
+                                                                <div class="productinfo text-center">
+                                                                    <img src="images/${listNewProduct.image}" alt="" />
+                                                                    <h2>${listNewProduct.title}</h2>
+                                                                    <p>${listNewProduct.description}</p>
+                                                                    <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <div class="button-container">
+                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-overlay">
+                                                                    <div class="overlay-content">
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
-                                                                        <p style="display: none;">${listNewProduct.id}</p>
                                                                         <div class="button-container">
                                                                             <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                             <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                         </div>
                                                                     </div>
-                                                                    <div class="product-overlay">
-                                                                        <div class="overlay-content">
-                                                                            <h2>${listNewProduct.title}</h2>
-                                                                            <p>${listNewProduct.description}</p>
-                                                                            <div class="button-container">
-                                                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                                <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="choose">
-                                                                    <ul class="nav nav-pills nav-justified">
-                                                                        <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
-                                                                        <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
-                                                                    </ul>
                                                                 </div>
                                                             </div>
+                                                            <div class="choose">
+                                                                <ul class="nav nav-pills nav-justified">
+                                                                    <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                    <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
-                                                    </c:if>
-                                                </c:forEach>
+                                                    </div>
+                                                </c:if>
+                                            </c:forEach>
 
-                                                <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
-                                                    <c:if test="${loop.index == 2}">
-                                                        <div class="col-sm-4">
-                                                            <div class="product-image-wrapper">
-                                                                <div class="single-products  product-item" data-id="${listNewProduct.id}">
-                                                                    <div class="productinfo text-center">
-                                                                        <img src="images/${listNewProduct.image}" alt="" />
-                                                                        <h2>${listNewProduct.title}</h2>
-                                                                        <p>${listNewProduct.description}</p>
-                                                                        <p style="display: none;">${listNewProduct.id}</p>
-                                                                        <div class="button-container">
-                                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                            <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-overlay">
-                                                                        <div class="overlay-content">
-                                                                            <h2>${listNewProduct.title}</h2>
-                                                                            <p>${listNewProduct.description}</p>
-                                                                            <div class="button-container">
-                                                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                                <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="choose">
-                                                                    <ul class="nav nav-pills nav-justified">
-                                                                        <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
-                                                                        <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </c:if>
-                                                </c:forEach>
-
-                                            </div>
-                                            <div class="item">	
-                                                <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
-                                                    <c:if test="${loop.index == 3}">
-                                                        <div class="col-sm-4">
-                                                            <div class="product-image-wrapper">
-                                                                <div class="single-products  product-item" data-id="${listNewProduct.id}">
-                                                                    <div class="productinfo text-center">
-                                                                        <img src="images/${listNewProduct.image}" alt="" />
-                                                                        <h2>${listNewProduct.title}</h2>
-                                                                        <p>${listNewProduct.description}</p>
-                                                                        <p style="display: none;">${listNewProduct.id}</p>
-                                                                        <div class="button-container">
-                                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                            <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-overlay">
-                                                                        <div class="overlay-content">
-                                                                            <h2>${listNewProduct.title}</h2>
-                                                                            <p>${listNewProduct.description}</p>
-                                                                            <div class="button-container">
-                                                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                                <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="choose">
-                                                                    <ul class="nav nav-pills nav-justified">
-                                                                        <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
-                                                                        <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </c:if>
-                                                </c:forEach>
-
-                                                <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
-                                                    <c:if test="${loop.index == 4}">
-                                                        <div class="col-sm-4">
-                                                            <div class="product-image-wrapper">
-                                                                <div class="single-products  product-item" data-id="${listNewProduct.id}">
-                                                                    <div class="productinfo text-center">
-                                                                        <img src="images/${listNewProduct.image}" alt="" />
-                                                                        <h2>${listNewProduct.title}</h2>
-                                                                        <p>${listNewProduct.description}</p>
-                                                                        <p style="display: none;">${listNewProduct.id}</p>
-                                                                        <div class="button-container">
-                                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                            <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-overlay">
-                                                                        <div class="overlay-content">
-                                                                            <h2>${listNewProduct.title}</h2>
-                                                                            <p>${listNewProduct.description}</p>
-                                                                            <div class="button-container">
-                                                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                                <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="choose">
-                                                                    <ul class="nav nav-pills nav-justified">
-                                                                        <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
-                                                                        <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </c:if>
-                                                </c:forEach>
-
-                                                <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
-                                                    <c:if test="${loop.index == 5}">
-                                                        <div class="col-sm-4">
-                                                            <div class="product-image-wrapper">
-                                                                <div class="single-products  product-item" data-id="${listNewProduct.id}">
-                                                                    <div class="productinfo text-center">
-                                                                        <img src="images/${listNewProduct.image}" alt="" />
-                                                                        <h2>${listNewProduct.title}</h2>
-                                                                        <p>${listNewProduct.description}</p>
-                                                                        <p style="display: none;">${listNewProduct.id}</p>
-                                                                        <div class="button-container">
-                                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                            <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-overlay">
-                                                                        <div class="overlay-content">
-                                                                            <h2>${listNewProduct.title}</h2>
-                                                                            <p>${listNewProduct.description}</p>
-                                                                            <div class="button-container">
-                                                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                                <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="choose">
-                                                                    <ul class="nav nav-pills nav-justified">
-                                                                        <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
-                                                                        <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </c:if>
-                                                </c:forEach>
-                                            </div>
                                         </div>
-                                        <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-                                            <i class="fa fa-angle-left"></i>
-                                        </a>
-                                        <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>			
+                                        <div class="item">	
+                                            <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
+                                                <c:if test="${loop.index == 3}">
+                                                    <div class="col-sm-4">
+                                                        <div class="product-image-wrapper">
+                                                            <div class="single-products  product-item" data-id="${listNewProduct.id}">
+                                                                <div class="productinfo text-center">
+                                                                    <img src="images/${listNewProduct.image}" alt="" />
+                                                                    <h2>${listNewProduct.title}</h2>
+                                                                    <p>${listNewProduct.description}</p>
+                                                                    <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <div class="button-container">
+                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-overlay">
+                                                                    <div class="overlay-content">
+                                                                        <h2>${listNewProduct.title}</h2>
+                                                                        <p>${listNewProduct.description}</p>
+                                                                        <div class="button-container">
+                                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                            <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="choose">
+                                                                <ul class="nav nav-pills nav-justified">
+                                                                    <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                    <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                            </c:forEach>
+
+                                            <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
+                                                <c:if test="${loop.index == 4}">
+                                                    <div class="col-sm-4">
+                                                        <div class="product-image-wrapper">
+                                                            <div class="single-products  product-item" data-id="${listNewProduct.id}">
+                                                                <div class="productinfo text-center">
+                                                                    <img src="images/${listNewProduct.image}" alt="" />
+                                                                    <h2>${listNewProduct.title}</h2>
+                                                                    <p>${listNewProduct.description}</p>
+                                                                    <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <div class="button-container">
+                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-overlay">
+                                                                    <div class="overlay-content">
+                                                                        <h2>${listNewProduct.title}</h2>
+                                                                        <p>${listNewProduct.description}</p>
+                                                                        <div class="button-container">
+                                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                            <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="choose">
+                                                                <ul class="nav nav-pills nav-justified">
+                                                                    <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                    <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                            </c:forEach>
+
+                                            <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
+                                                <c:if test="${loop.index == 5}">
+                                                    <div class="col-sm-4">
+                                                        <div class="product-image-wrapper">
+                                                            <div class="single-products  product-item" data-id="${listNewProduct.id}">
+                                                                <div class="productinfo text-center">
+                                                                    <img src="images/${listNewProduct.image}" alt="" />
+                                                                    <h2>${listNewProduct.title}</h2>
+                                                                    <p>${listNewProduct.description}</p>
+                                                                    <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <div class="button-container">
+                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-overlay">
+                                                                    <div class="overlay-content">
+                                                                        <h2>${listNewProduct.title}</h2>
+                                                                        <p>${listNewProduct.description}</p>
+                                                                        <div class="button-container">
+                                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                            <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="choose">
+                                                                <ul class="nav nav-pills nav-justified">
+                                                                    <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                    <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                            </c:forEach>
+                                        </div>
                                     </div>
-                                </div><!--/recommended_items-->
-                            
+                                    <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                                        <i class="fa fa-angle-left"></i>
+                                    </a>
+                                    <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>			
+                                </div>
+                            </div><!--/recommended_items-->
+
                         </div>
                     </div>
                 </div>

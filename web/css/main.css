@@ -1670,7 +1670,14 @@ h2.title {
     display: block;
     margin: 15px -70px 10px 25px;
 }
+#cart_items .cart_info .cart_select input {
+    margin-top: 5px;
+}
 
+#cart_items .cart_info .cart_stock p {
+    color: #696763;
+    font-size: 18px;
+}
 
 
 .cart_quantity_button a {
@@ -1696,22 +1703,25 @@ h2.title {
 }
 
 
-.cart_delete  {
+.cart_delete {
     display: block;
     margin-right: -12px;
     overflow: hidden;
 }
 
-
 .cart_delete a {
-    background:#F0F0E9;
-    color: #FFFFFF;
+    background: #FF6347; /* Đổi màu nền sang màu đỏ (ví dụ: màu đỏ thường được dùng cho nút xóa) */
+    color: #FFFFFF; /* Màu chữ trắng */
     padding: 5px 7px;
-    font-size: 16px
+    font-size: 16px;
+    text-decoration: none; /* Bỏ gạch chân mặc định của liên kết */
+    display: inline-block;
+    border-radius: 3px; /* Bo tròn viền nút */
+    transition: background 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
 }
 
 .cart_delete a:hover {
-    background:#FE980F
+    background: #FE980F; /* Màu nền khi rê chuột qua */
 }
 
 
