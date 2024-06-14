@@ -1587,8 +1587,6 @@ h2.title {
     content:"";
     height:auto;
     width: auto;
-    border-width: 8px;
-    border-style: solid;
     border-color:transparent transparent transparent #FE980F;
     position: absolute;
     top: 11px;

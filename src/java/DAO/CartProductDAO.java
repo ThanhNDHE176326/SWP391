@@ -88,7 +88,7 @@ public class CartProductDAO extends DBContext {
 
     public List<Product> getProductsFromCartByCartID(int cartID) {
         List<Product> listProduct = new ArrayList<>();
-        String sql = "SELECT p.id, p.title, p.image, p.sale_price, cp.quantity AS cart_quantity FROM Products p \n"
+        String sql = "SELECT p.id, p.title, p.image, p.sale_price, p.quantity, cp.quantity AS cart_quantity FROM Products p \n"
                 + "JOIN CartProducts cp ON p.id = cp.product_id\n"
                 + "WHERE p.isDelete = 1 AND p.status = 1 AND cp.cart_id = ?";
         try {
@@ -99,9 +99,10 @@ public class CartProductDAO extends DBContext {
                 String id = String.valueOf(rs.getInt("id"));
                 String title = rs.getString("title");
                 String image = rs.getString("image");
+                int stock = rs.getInt("quantity");
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
                 String cartQuantity = String.valueOf(rs.getInt("cart_quantity"));
-                Product productFromCart = new Product(id, title, image, salePrice, cartQuantity);
+                Product productFromCart = new Product(id, title, image, stock, salePrice, cartQuantity);
                 listProduct.add(productFromCart);
             }
         } catch (SQLException e) {
@@ -122,5 +123,45 @@ public class CartProductDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println("deleteProductInCart: " + e.getMessage());
         }
+    }
+
+    public Product getProductInCartIDPush(int cartID, int productID) {
+    Product productByCart = null; // Initialize productByCart outside try block
+    String sql = "SELECT p.id, p.title, p.image, p.quantity, p.sale_price, cp.quantity AS cart_quantity\n"
+            + "FROM Products p\n"
+            + "JOIN CartProducts cp ON p.id = cp.product_id\n"
+            + "WHERE p.isDelete = 1 AND p.status = 1 AND cp.cart_id = ? AND p.id = ?;";
+    
+    try {
+        stm = connection.prepareStatement(sql);
+        stm.setInt(1, cartID);
+        stm.setInt(2, productID);
+        rs = stm.executeQuery();
+        
+        if (rs.next()) {
+            String id = String.valueOf(rs.getInt("id"));
+            String title = rs.getString("title");
+            String image = rs.getString("image");
+            int stock = rs.getInt("quantity");
+            String salePrice = String.valueOf(rs.getDouble("sale_price"));
+            String cartQuantity = String.valueOf(rs.getInt("cart_quantity"));
+            
+            // Create a new Product object with retrieved data
+            productByCart = new Product(id, title, image, stock, salePrice, cartQuantity);
+        }
+        
+    } catch (SQLException e) {
+        System.out.println("Error in getAllProductIDFromByCartID: " + e.getMessage());
+        // Handle the exception (e.g., logging, returning null, etc.)
+        productByCart = null; // or handle the error according to your application's logic
+    }
+    
+    return productByCart;
+}
+
+    public static void main(String[] args) {
+        CartProductDAO dao = new CartProductDAO();
+        Product product = dao.getAllProductIDFromByCartID(1, 19);
+        System.out.println(product);
     }
 }

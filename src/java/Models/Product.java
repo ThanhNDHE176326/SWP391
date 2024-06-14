@@ -13,6 +13,7 @@ public class Product {
     String id, title, image, author, quantity, updateDate,
             description, category, originalPrice, salePrice, staff, status, isDelete, customer, order;
 
+    int stock;
     public Product() {
     }
 
@@ -82,15 +83,30 @@ public class Product {
         this.customer = customer;
         this.order = order;
     }
-    public Product(String id, String title, String image, String salePrice, String cartQuantity){
+    public Product(String id, String title, String image, int stock, String salePrice, String cartQuantity){
         this.id = id;
         this.title = title;
         this.image = image;
+        this.stock = stock;
         this.salePrice = salePrice;
         this.quantity = cartQuantity;
     }
+
+    public Product(String id) {
+        this.id = id;
+    }
+    
+    
     public String getId() {
         return id;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public void setId(String id) {
@@ -211,7 +227,9 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" + "id=" + id + ", title=" + title + ", image=" + image + ", author=" + author + ", quantity=" + quantity + ", updateDate=" + updateDate + ", description=" + description + ", category=" + category + ", originalPrice=" + originalPrice + ", salePrice=" + salePrice + '}';
+        return "Product{" + "id=" + id + ", title=" + title + ", image=" + image + ", author=" + author + ", quantity=" + quantity + ", updateDate=" + updateDate + ", description=" + description + ", category=" + category + ", originalPrice=" + originalPrice + ", salePrice=" + salePrice + ", staff=" + staff + ", status=" + status + ", isDelete=" + isDelete + ", customer=" + customer + ", order=" + order + ", stock=" + stock + '}';
     }
+
+    
 
 }
