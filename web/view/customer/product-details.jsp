@@ -187,40 +187,6 @@
                                 <div class="view-product">
                                     <img src="images/${product.image}" alt="" />
                                 </div>
-                                <div id="similar-product" class="carousel slide" data-ride="carousel">
-                                    <!-- Wrapper for slides -->
-                                    <div class="carousel-inner">
-                                        <div class="item active">
-                                            <c:forEach var="listProduct" items="${listProduct}" varStatus="loop">
-                                                <c:if test="${loop.index == 0}">
-                                                    <a href="ProductDetailPublic?index=1&productId=${listProduct.id}"><img src="images/${listProduct.image}" alt=""></a>
-                                                    </c:if>
-                                                </c:forEach>
-                                        </div>
-                                        <div class="item">
-                                            <c:forEach var="listProduct" items="${listProduct}" varStatus="loop">
-                                                <c:if test="${loop.index == 1}">
-                                                    <a href="ProductDetailPublic?index=1&productId=${listProduct.id}"><img src="images/${listProduct.image}" alt=""></a>
-                                                    </c:if>
-                                                </c:forEach>
-                                        </div>
-                                        <div class="item">
-                                            <c:forEach var="listProduct" items="${listProduct}" varStatus="loop">
-                                                <c:if test="${loop.index == 2}">
-                                                    <a href="ProductDetailPublic?index=1&productId=${listProduct.id}"><img src="images/${listProduct.image}" alt=""></a>
-                                                    </c:if>
-                                                </c:forEach>
-                                        </div>
-                                    </div>
-
-                                    <!-- Controls -->
-                                    <a class="left item-control" href="#similar-product" data-slide="prev">
-                                        <i class="fa fa-angle-left"></i>
-                                    </a>
-                                    <a class="right item-control" href="#similar-product" data-slide="next">
-                                        <i class="fa fa-angle-right"></i>
-                                    </a>
-                                </div>
 
                             </div>
                             <div class="col-sm-7">
@@ -351,8 +317,8 @@
                                                                 <p>${listProduct.description}</p>
                                                                 <p style="display: none;">${listProduct.id}</p>
                                                                 <div class="button-container">
-                                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                    <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                    <a href="addToCart?productID=${listProduct.id}&location=detail" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                    <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                 </div>
                                                             </div>
                                                             <div class="product-overlay">
@@ -360,8 +326,8 @@
                                                                     <h2>${listProduct.title}</h2>
                                                                     <p>${listProduct.description}</p>
                                                                     <div class="button-container">
-                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                        <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                        <a href="addToCart?productID=${listProduct.id}&location=detail" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -388,8 +354,8 @@
                                                                 <p>${listProduct.description}</p>
                                                                 <p style="display: none;">${listProduct.id}</p>
                                                                 <div class="button-container">
-                                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                    <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                    <a href="addToCart?productID=${listProduct.id}&location=detail" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                    <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                 </div>
                                                             </div>
                                                             <div class="product-overlay">
@@ -397,8 +363,8 @@
                                                                     <h2>${listProduct.title}</h2>
                                                                     <p>${listProduct.description}</p>
                                                                     <div class="button-container">
-                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                        <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                        <a href="addToCart?productID=${listProduct.id}&location=detail" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -425,8 +391,8 @@
                                                                 <p>${listProduct.description}</p>
                                                                 <p style="display: none;">${listProduct.id}</p>
                                                                 <div class="button-container">
-                                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                    <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                    <a href="addToCart?productID=${listProduct.id}&location=detail" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                    <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                 </div>
                                                             </div>
                                                             <div class="product-overlay">
@@ -434,8 +400,8 @@
                                                                     <h2>${listProduct.title}</h2>
                                                                     <p>${listProduct.description}</p>
                                                                     <div class="button-container">
-                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                        <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                        <a href="addToCart?productID=${listProduct.id}&location=detail" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -464,8 +430,8 @@
                                                                 <p>${listProduct.description}</p>
                                                                 <p style="display: none;">${listProduct.id}</p>
                                                                 <div class="button-container">
-                                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                    <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                    <a href="addToCart?productID=${listProduct.id}&location=detail" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                    <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                 </div>
                                                             </div>
                                                             <div class="product-overlay">
@@ -473,8 +439,8 @@
                                                                     <h2>${listProduct.title}</h2>
                                                                     <p>${listProduct.description}</p>
                                                                     <div class="button-container">
-                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                        <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                        <a href="addToCart?productID=${listProduct.id}&location=detail" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -501,8 +467,8 @@
                                                                 <p>${listProduct.description}</p>
                                                                 <p style="display: none;">${listProduct.id}</p>
                                                                 <div class="button-container">
-                                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                    <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                    <a href="addToCart?productID=${listProduct.id}&location=detail" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                    <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                 </div>
                                                             </div>
                                                             <div class="product-overlay">
@@ -510,8 +476,8 @@
                                                                     <h2>${listProduct.title}</h2>
                                                                     <p>${listProduct.description}</p>
                                                                     <div class="button-container">
-                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                        <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                        <a href="addToCart?productID=${listProduct.id}&location=detail" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -538,8 +504,8 @@
                                                                 <p>${listProduct.description}</p>
                                                                 <p style="display: none;">${listProduct.id}</p>
                                                                 <div class="button-container">
-                                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                    <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                    <a href="addToCart?productID=${listProduct.id}&location=detail" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                    <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                 </div>
                                                             </div>
                                                             <div class="product-overlay">
@@ -547,8 +513,8 @@
                                                                     <h2>${listProduct.title}</h2>
                                                                     <p>${listProduct.description}</p>
                                                                     <div class="button-container">
-                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                        <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                                        <a href="addToCart?productID=${listProduct.id}&location=detail" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
                                                             </div>

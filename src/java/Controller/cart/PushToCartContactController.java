@@ -4,8 +4,12 @@
  */
 package Controller.cart;
 
+import DAO.CartDAO;
 import DAO.CartProductDAO;
+import DAO.CustomerDAO;
 import DAO.ProductDAO;
+import DAO.ProductDAOByPublic;
+import Models.Category;
 import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -77,53 +81,60 @@ public class PushToCartContactController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        CartProductDAO cartProductDAO = new CartProductDAO();
+        CustomerDAO customerDAO = new CustomerDAO();
+        ProductDAO productDAO = new ProductDAO();
+        CartDAO cartDAO = new CartDAO();
+        ProductDAOByPublic productDAOByPublic = new ProductDAOByPublic();
+
         HttpSession session = request.getSession();
-        int cartID = Integer.parseInt(session.getAttribute("cartID"));
+        String customerName = (String) session.getAttribute("username");
+
+        if (customerName == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User not logged in.");
+            return;
+        }
+
+        int customerID = Integer.parseInt(customerDAO.getInformationCustomer(customerName).getId());
+        int cartID = cartDAO.getCartIdByCustomerID(customerID);
+
         String[] selectedProductIds = request.getParameterValues("selectedProducts");
+
+        List<Category> categories = productDAOByPublic.getCategory();
 
         if (selectedProductIds != null && selectedProductIds.length > 0) {
             List<Product> selectedProducts = new ArrayList<>();
 
-            // Vòng lặp để lấy thông tin chi tiết của từng sản phẩm từ CSDL hoặc từ dữ liệu có sẵn
-            CartProductDAO dao = new CartProductDAO();// Thay thế bằng DAO tương ứng của bạn
             for (String productId : selectedProductIds) {
                 try {
                     int id = Integer.parseInt(productId);
-                    // Lấy thông tin chi tiết của sản phẩm từ CSDL hoặc dữ liệu có sẵn
-                    Product product = dao.getProductInCartIDPush(cartID, cartID);
+                    Product product = cartProductDAO.getProductInCartIDPush(cartID, id);
+
                     if (product != null) {
                         selectedProducts.add(product);
                     } else {
-                        // Xử lý trường hợp không tìm thấy sản phẩm với id tương ứng
-                        // Có thể bỏ qua hoặc xử lý lỗi tùy theo logic của bạn
+                        System.out.println("Product not found with ID: " + id);
                     }
                 } catch (NumberFormatException e) {
-                    // Xử lý nếu không thể chuyển đổi thành số nguyên
                     e.printStackTrace();
-                    // Có thể bỏ qua hoặc xử lý lỗi tùy theo logic của bạn
                 }
             }
+            session.setAttribute("categories", categories);
+            session.setAttribute("selectedProducts", selectedProducts);
 
-            // Thực hiện các xử lý với danh sách sản phẩm được chọn ở đây (ví dụ: lưu vào session, đẩy sang trang khác, ...)
-            // Ví dụ: Lưu danh sách sản phẩm vào session để sử dụng ở trang khác
-            request.getSession().setAttribute("selectedProducts", selectedProducts);
-
-            // Chuyển hướng đến trang khác sau khi xử lý
             response.sendRedirect(request.getContextPath() + "/view/customer/cartcontact.jsp");
         } else {
-            // Xử lý nếu không có sản phẩm nào được chọn
             response.sendRedirect(request.getContextPath() + "/view/customer/cartcontact.jsp");
         }
     }
 
-
-/**
- * Returns a short description of the servlet.
- *
- * @return a String containing servlet description
- */
-@Override
-public String getServletInfo() {
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

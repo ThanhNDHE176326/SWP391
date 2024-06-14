@@ -285,6 +285,41 @@
                                             .cart_description h4 a {
                                                 font-size: 15px !important;
                                             }
+                                            .button-container {
+                                                display: flex;
+                                                justify-content: flex-end; /* Aligns items to the right */
+                                                padding: 10px; /* Optional: Add padding to the container */
+                                            }
+
+                                            .styled-button {
+                                                background-color: #FE980F; /* Green background */
+                                                border: none; /* Remove border */
+                                                color: white; /* White text */
+                                                padding: 5px 5px; /* Add some padding */
+                                                text-align: center; /* Center text */
+                                                text-decoration: none; /* Remove underline */
+                                                display: inline-block; /* Make the button inline-block */
+                                                font-size: 16px; /* Increase font size */
+                                                margin: 4px 2px; /* Add some margin */
+                                                cursor: pointer; /* Pointer/hand icon */
+                                                border-radius: 12px; /* Rounded corners */
+                                                transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+                                            }
+
+                                            .styled-button:hover {
+                                                background-color: #FE980F; /* Darker green on hover */
+                                                transform: scale(1.05); /* Slightly enlarge on hover */
+                                            }
+
+                                            .styled-button:active {
+                                                background-color: #3e8e41; /* Even darker green on click */
+                                                transform: scale(1); /* Reset scale on click */
+                                            }
+
+                                            .styled-button:focus {
+                                                outline: none; /* Remove focus outline */
+                                            }
+
                                         </style>
                                         <tbody>
                                             <c:forEach var="product" items="${listProduct}">
@@ -323,7 +358,9 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <input type="submit" value="Push Selected Products">
+                                <div class="button-container">
+                                    <input type="submit" value="Buy" class="styled-button">
+                                </div>
                             </form>
                             <ul class="pagination">
                                 <c:if test="${tag > 1}">
