@@ -38,10 +38,10 @@
     <body>
         <jsp:include page="header.jsp"/>
 
-
         <div class="account-info-container">
             <h2>THÔNG TIN TÀI KHOẢN</h2>
             <form id="profileForm" class="account-info-form" action="${pageContext.request.contextPath}/updateuser" method="POST">
+               
                 <div class="form-group">
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" placeholder="Username" value="${user.username}" readonly="readonly">

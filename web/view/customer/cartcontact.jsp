@@ -53,6 +53,135 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="left-sidebar">
+                            <style>
+                                body {
+                                    font-family: Arial, sans-serif;
+                                    background-color: #f0f0f0;
+                                }
+
+                                .form-container {
+                                    max-width: 800px;
+                                    margin: 20px auto;
+                                    padding: 20px;
+                                    background-color: #ffffff;
+                                    border: 1px solid #ddd;
+                                    border-radius: 10px;
+                                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                                }
+
+                                .form-group {
+                                    margin-bottom: 15px;
+                                }
+
+                                .form-group label {
+                                    display: block;
+                                    margin-bottom: 5px;
+                                    font-weight: bold;
+                                }
+
+                                .form-group input[type="text"],
+                                .form-group input[type="email"],
+                                .form-group select,
+                                .form-group textarea {
+                                    width: 100%;
+                                    padding: 10px;
+                                    border: 1px solid #ccc;
+                                    border-radius: 5px;
+                                    box-sizing: border-box;
+                                    font-size: 14px;
+                                }
+
+                                .form-row {
+                                    display: flex;
+                                    gap: 20px;
+                                }
+
+                                .form-row .form-group {
+                                    flex: 1;
+                                }
+
+                                .button-container {
+                                    text-align: center;
+                                    margin-top: 20px;
+                                }
+
+                                .styled-button {
+                                    display: inline-block;
+                                    padding: 10px 20px;
+                                    background-color: #007bff;
+                                    color: #fff;
+                                    border: none;
+                                    border-radius: 5px;
+                                    text-decoration: none;
+                                    font-size: 16px;
+                                    cursor: pointer;
+                                    transition: background-color 0.3s;
+                                }
+
+                                .styled-button:hover {
+                                    background-color: #0056b3;
+                                }
+
+                                .styled-button:focus {
+                                    outline: none;
+                                }
+
+                                .styled-button:disabled {
+                                    background-color: #ccc;
+                                    cursor: not-allowed;
+                                }
+
+                                .error-message {
+                                    color: red;
+                                    font-style: italic;
+                                    margin-top: 5px;
+                                }
+                            </style>
+                            </head>
+
+                            <!-- Profile Form -->
+                            <form id="profileForm" class="account-info-form" action="${pageContext.request.contextPath}/updateinfuserincart" method="POST" >
+                                <div class="form-container">
+                                    <h2>Recipient Information</h2>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="name">Name:</label>
+                                            <input type="text" id="name" name="name" placeholder="Enter your name" value="${user1.name}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="gender">Gender:</label>
+                                            <select id="gender" name="gender" required>
+                                                <option value="" disabled selected>Select gender</option>
+                                                <option value="1" ${user1.gender == 1 ? "selected" : ""}>Male</option>
+                                                <option value="0" ${user1.gender == 0 ? "selected" : ""}>Female</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email:</label>
+                                        <input type="email" id="email" name="email" placeholder="Enter your email" value="${user1.email}" readonly>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="phone">Phone:</label>
+                                        <input type="text" id="phone" name="phone" placeholder="Enter your phone number" value="${user1.phone}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Address:</label>
+                                        <input type="text" id="address" name="address" placeholder="Enter your address" value="${user1.address}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="notes">Notes:</label>
+                                        <textarea id="notes" name="notes" placeholder="Enter any additional notes"></textarea>
+                                    </div>
+                                    <p class="error-message">${mess}</p>
+                                    <span id="phone-error" class="error-message"></span><br>
+                                    <div class="button-container">
+                                        <button type="submit" class="styled-button">Edit</button>
+                                    </div>
+                                </div>
+                            </form>
                             <h2>Search Product</h2>
                             <div class="well">
                                 <form action="SearchProductPulbic?index=1" method="POST" class="form-inline">
@@ -104,6 +233,7 @@
                                     </ul>
                                 </div>
                             </div>
+
                             <%-- js để xác định liên kết nào cần được đánh dấu là "active" dựa trên URL hiện tại  --%>
                             <script>
                                 document.addEventListener("DOMContentLoaded", function () {
@@ -191,7 +321,11 @@
                                     <li class="active">Cart Detail</li>
                                 </ol>
                             </div>
-                            <form action="${pageContext.request.contextPath}/pushToCartContact" method="POST">
+
+
+
+
+                            <form action="${pageContext.request.contextPath}/pushToCartCompletion" method="POST">
                                 <div class="table-responsive cart_info" style="max-width: 1400px; margin: auto;">
                                     <table class="table table-condensed">
                                         <thead>
@@ -243,7 +377,7 @@
                                                 width: 10%; /* Width for each of these cells */
                                             }
 
-                                            .cart_menu td.stock{
+                                            .cart_menu td.stock {
                                                 width: 5%;
                                             }
 
@@ -273,15 +407,18 @@
                                             .cart_quantity_input {
                                                 text-align: center; /* Center the quantity input text */
                                             }
+
                                             .cart_select, .cart_description, .cart_price, .cart_stock, .cart_quantity, .cart_total, .cart_delete {
                                                 text-align: center; /* Center text alignment */
                                                 vertical-align: middle; /* Vertical middle alignment */
                                             }
+
                                             .cart_price, .cart_stock, .cart_quantity, .cart_total {
                                                 font-size: 16px; /* Set your desired font size here */
                                                 padding: 10px; /* Consistent padding for all cells */
                                                 box-sizing: border-box; /* Ensure padding is included in width calculation */
                                             }
+
                                             .cart_description h4 a {
                                                 font-size: 15px !important;
                                             }
@@ -323,78 +460,112 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </form>
-                            <ul class="pagination">
-                                <c:if test="${tag > 1}">
-                                    <li><a href="?index=${tag - 1}&productId=${param.productId}">Previous</a></li>
-                                    </c:if>
-                                    <c:forEach begin="1" end="${endP}" var="i">
-                                    <li class="${tag == i ? 'active' : ''}">
-                                        <a class="pagination-link" href="?index=${i}&productId=${param.productId}">${i}</a>
-                                    </li>
-                                </c:forEach>
-                                <c:if test="${tag < endP}">
-                                    <li><a href="?index=${tag + 1}&productId=${param.productId}">Next</a></li>
-                                    </c:if>
-                            </ul>
-
-                            <style>
-                                .pagination {
-                                    display: flex;
-                                    justify-content: center;
-                                    padding: 0;
-                                    list-style: none;
-                                }
-
-                                .pagination li {
-                                    display: inline;
-                                    margin: 0 5px;
-                                }
-
-                                .pagination a {
-                                    text-decoration: none;
-                                    padding: 10px 15px;
-                                    color: #007bff;
-                                    border: 1px solid #dee2e6;
-                                    border-radius: 4px;
-                                }
-
-                                .pagination .active a {
-                                    background-color: #FE980F; /* Màu nền của trang được chọn */
-                                    color: #000; /* Màu chữ của trang được chọn */
-                                    border-color: yellow; /* Màu viền của trang được chọn */
-                                }
-                            </style>
 
 
+
+                                <div class="button-container">
+                                    <a href="#" class="styled-button">Change</a>
+                                    <input type="submit" value="Submit" class="styled-button">
+                                </div>
                         </div>
+
+                        </form>
+
+                        <ul class="pagination">
+                            <c:if test="${tag > 1}">
+                                <li><a href="?index=${tag - 1}&productId=${param.productId}">Previous</a></li>
+                                </c:if>
+                                <c:forEach begin="1" end="${endP}" var="i">
+                                <li class="${tag == i ? 'active' : ''}">
+                                    <a class="pagination-link" href="?index=${i}&productId=${param.productId}">${i}</a>
+                                </li>
+                            </c:forEach>
+                            <c:if test="${tag < endP}">
+                                <li><a href="?index=${tag + 1}&productId=${param.productId}">Next</a></li>
+                                </c:if>
+                        </ul>
+
+                        <style>
+                            .pagination {
+                                display: flex;
+                                justify-content: center;
+                                padding: 0;
+                                list-style: none;
+                            }
+
+                            .pagination li {
+                                display: inline;
+                                margin: 0 5px;
+                            }
+
+                            .pagination a {
+                                text-decoration: none;
+                                padding: 10px 15px;
+                                color: #007bff;
+                                border: 1px solid #dee2e6;
+                                border-radius: 4px;
+                            }
+
+                            .pagination .active a {
+                                background-color: #FE980F; /* Màu nền của trang được chọn */
+                                color: #000; /* Màu chữ của trang được chọn */
+                                border-color: yellow; /* Màu viền của trang được chọn */
+                            }
+                        </style>
+
+
                     </div>
                 </div>
             </div>
-        </section>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var productItems = document.querySelectorAll('.product-item');
-                productItems.forEach(function (item) {
-                    item.addEventListener('click', function () {
-                        var productId = this.getAttribute('data-id');
-                        window.location.href = '${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=' + productId;
-                    });
+        </div>
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var productItems = document.querySelectorAll('.product-item');
+            productItems.forEach(function (item) {
+                item.addEventListener('click', function () {
+                    var productId = this.getAttribute('data-id');
+                    window.location.href = '${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=' + productId;
                 });
             });
-        </script>
-        <jsp:include page="footer.jsp"/>
+        });
+    </script>
+    <jsp:include page="footer.jsp"/>
 
 
 
-        <script src="<c:url value='/js/jquery.js'/>"></script>
-        <script src="<c:url value='/js/price-range.js'/>"></script>
-        <script src="<c:url value='/js/jquery.scrollUp.min.js'/>"></script>
-        <script src="<c:url value='/js/bootstrap.min.js'/>"></script>
-        <script src="<c:url value='/js/jquery.prettyPhoto.js'/>"></script>
-        <script src="<c:url value='/js/main.js'/>"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <!-- Bootstrap JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    </body>
+    <script src="<c:url value='/js/jquery.js'/>"></script>
+    <script src="<c:url value='/js/price-range.js'/>"></script>
+    <script src="<c:url value='/js/jquery.scrollUp.min.js'/>"></script>
+    <script src="<c:url value='/js/bootstrap.min.js'/>"></script>
+    <script src="<c:url value='/js/jquery.prettyPhoto.js'/>"></script>
+    <script src="<c:url value='/js/main.js'/>"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+<script>
+        window.onload = function () {
+            document.getElementById("profileForm").addEventListener("submit", function (event) {
+                var phone = document.getElementsByName("phone")[0].value;
+                var phoneRegex = /^\+?\d{10,}$/;
+
+                var phoneError = document.getElementById("phone-error");
+
+                // Clear previous error message
+                phoneError.innerText = "";
+
+                var isValid = true;
+
+                if (!phoneRegex.test(phone)) {
+                    phoneError.innerText = "Please enter a valid phone number.";
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    event.preventDefault(); // Prevent form submission
+                }
+            });
+        };
+</script>
 </html>
