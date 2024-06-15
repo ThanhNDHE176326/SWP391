@@ -2,11 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package PostController;
 
-import DAO.postDAO;
-import Models.Blog;
+package Controller.sale.order;
 
+import DAO.OrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,39 +18,36 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Acer
  */
-@WebServlet(name = "UpdatePostController", urlPatterns = {"/updatepost"})
-public class UpdatePostController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+@WebServlet(name="UpdateOrderStatusController", urlPatterns={"/updateorderstatus"})
+public class UpdateOrderStatusController extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditPostController</title>");
+            out.println("<title>Servlet UpdateOrderStatusController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditPostController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateOrderStatusController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -59,18 +55,12 @@ public class UpdatePostController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        postDAO postDAO = new postDAO();
-        Blog post = postDAO.getPostById(id);
-        request.setAttribute("post", post);
-        request.getRequestDispatcher("view/marketing/updatepost.jsp").forward(request, response);
+    throws ServletException, IOException {
+        processRequest(request, response);
+    } 
 
-    }
-
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -78,24 +68,19 @@ public class UpdatePostController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String title = request.getParameter("title");
-        String categoryBlogId = request.getParameter("category_blog_id");
-        String image = request.getParameter("image");
-        String description = request.getParameter("description");
-        String content = request.getParameter("content");
-        String status = request.getParameter("status");
-        Blog updatedPost = new Blog("", title, categoryBlogId, image, description, content, status);
-        postDAO postDAO = new postDAO();
-        postDAO.updatePost(updatedPost);
+    throws ServletException, IOException {
+        String orderId = request.getParameter("orderId");
+        String statusId = request.getParameter("statusId");
 
-        response.sendRedirect("postlist");
+        OrderDAO dao = new OrderDAO();
+        dao.updateOrderStatus(orderId, statusId);
+
+        // Redirect back to the order list page
+        response.sendRedirect(request.getContextPath() + "/saleorderlist");
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

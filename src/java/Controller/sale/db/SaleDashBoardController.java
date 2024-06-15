@@ -2,11 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package PostController;
+package Controller.sale.db;
 
-import DAO.postDAO;
-import Models.Blog;
-
+import DAO.OrderDAO;
+import Models.Order;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,13 +13,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
  * @author Acer
  */
-@WebServlet(name = "UpdatePostController", urlPatterns = {"/updatepost"})
-public class UpdatePostController extends HttpServlet {
+@WebServlet(name = "SaleDashBoardController", urlPatterns = {"/saledashboard"})
+public class SaleDashBoardController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +40,10 @@ public class UpdatePostController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditPostController</title>");
+            out.println("<title>Servlet SaleDashBoardController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditPostController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SaleDashBoardController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,12 +61,22 @@ public class UpdatePostController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        postDAO postDAO = new postDAO();
-        Blog post = postDAO.getPostById(id);
-        request.setAttribute("post", post);
-        request.getRequestDispatcher("view/marketing/updatepost.jsp").forward(request, response);
+        OrderDAO orderDAO = new OrderDAO();
+        String fromDate = request.getParameter("fromDate");
+        String toDate = request.getParameter("toDate");
 
+        List<Order> orders;
+        if (fromDate != null && toDate != null) {
+            orders = orderDAO.getOrdersByDateRange(fromDate, toDate);
+        } else {
+            // Default date range for the last 7 days
+            LocalDate now = LocalDate.now();
+            fromDate = now.minusDays(7).toString();
+            toDate = now.toString();
+            orders = orderDAO.getOrdersByDateRange(fromDate, toDate);
+        }
+        request.setAttribute("orders", orders);
+        request.getRequestDispatcher("view/sale/saledashboard.jsp").forward(request, response);
     }
 
     /**
@@ -79,18 +90,7 @@ public class UpdatePostController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String title = request.getParameter("title");
-        String categoryBlogId = request.getParameter("category_blog_id");
-        String image = request.getParameter("image");
-        String description = request.getParameter("description");
-        String content = request.getParameter("content");
-        String status = request.getParameter("status");
-        Blog updatedPost = new Blog("", title, categoryBlogId, image, description, content, status);
-        postDAO postDAO = new postDAO();
-        postDAO.updatePost(updatedPost);
-
-        response.sendRedirect("postlist");
+        processRequest(request, response);
     }
 
     /**

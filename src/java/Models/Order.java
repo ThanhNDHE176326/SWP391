@@ -10,10 +10,68 @@ package Models;
  */
 public class Order {
 
-    String id, customer, totalCost, note, orderDate, address, phone, isDelete, staff;
+    String id, customer, totalCost, note, orderDate, address, phone, isDelete, staff,status_id,status_name, customer_name;
 
     public Order() {
     }
+
+    public Order(String id, String customer, String totalCost, String note, String orderDate, String address, String phone, String isDelete, String staff, String status_id, String status_name, String customer_name) {
+        this.id = id;
+        this.customer = customer;
+        this.totalCost = totalCost;
+        this.note = note;
+        this.orderDate = orderDate;
+        this.address = address;
+        this.phone = phone;
+        this.isDelete = isDelete;
+        this.staff = staff;
+        this.status_id = status_id;
+        this.status_name = status_name;
+        this.customer_name = customer_name;
+    }
+    
+
+    public String getCustomer_name() {
+        return customer_name;
+    }
+
+    public void setCustomer_name(String customer_name) {
+        this.customer_name = customer_name;
+    }
+
+    public String getStatus_name() {
+        return status_name;
+    }
+
+    public void setStatus_name(String status_name) {
+        this.status_name = status_name;
+    }
+
+    public Order(String id, String customer, String totalCost, String note, String orderDate, String address, String phone, String isDelete, String staff, String status_id, String status_name) {
+        this.id = id;
+        this.customer = customer;
+        this.totalCost = totalCost;
+        this.note = note;
+        this.orderDate = orderDate;
+        this.address = address;
+        this.phone = phone;
+        this.isDelete = isDelete;
+        this.staff = staff;
+        this.status_id = status_id;
+        this.status_name = status_name;
+    }
+    
+
+    public String getStatus_id() {
+        return status_id;
+    }
+
+    public void setStatus_id(String status_id) {
+        this.status_id = status_id;
+    }
+
+  
+    
 
     public Order(String id, String customer, String totalCost, String note, String orderDate, String address, String phone, String isDelete, String staff) {
         this.id = id;
