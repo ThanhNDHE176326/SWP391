@@ -203,7 +203,7 @@
 
                                     </span>
                                     <div>
-                                        <button type="button" class="btn btn-fefault cart add-to-cart" style="background-color: #007bff; color: #fff; margin-bottom: 20px;">
+                                        <button type="button" class="btn btn-fefault cart add-to-cart" style="background-color: #fff; color: #004085; margin-bottom: 20px;">
                                             <i class="fa fa-shopping-cart"></i>
                                             <a href="addToCart?productID=${product.id}&location=detail">Add to cart</a>
                                         </button>

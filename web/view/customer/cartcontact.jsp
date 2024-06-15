@@ -54,6 +54,13 @@
                     <div class="col-sm-3">
                         <div class="left-sidebar">
                             <style>
+                                .breadcrumbs .breadcrumb {
+                                    margin-bottom: 30px !important;
+                                }
+                                .breadcrumbs .breadcrumb li a {
+                                    padding: 8px 8px !important;
+                                    font-size: 1.2em;
+                                }
                                 body {
                                     font-family: Arial, sans-serif;
                                     background-color: #f0f0f0;
@@ -318,7 +325,7 @@
                             <div class="breadcrumbs">
                                 <ol class="breadcrumb">
                                     <li><a href="${pageContext.request.contextPath}/ProductListPublic">Back to Product List</a></li>
-                                    <li class="active">Cart Detail</li>
+                                    <li class="active">Cart Contact</li>
                                 </ol>
                             </div>
 
@@ -433,9 +440,9 @@
                                                     <td class="cart_total">
                                                         <fmt:formatNumber value="${product.salePrice * product.quantity}" type="number" maxFractionDigits="0" />
                                                     </td>
-<!--                                                    <td class="cart_delete">
-                                                        <a class="cart_quantity_delete" href="${pageContext.request.contextPath}/deleteCart?productID=${product.id}"><i class="fa fa-times"></i></a>
-                                                    </td>-->
+                                                    <!--                                                    <td class="cart_delete">
+                                                                                                            <a class="cart_quantity_delete" href="${pageContext.request.contextPath}/deleteCart?productID=${product.id}"><i class="fa fa-times"></i></a>
+                                                                                                        </td>-->
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
