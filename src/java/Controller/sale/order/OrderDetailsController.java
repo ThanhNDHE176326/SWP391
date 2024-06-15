@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package PostController;
+package Controller.sale.order;
 
-import DAO.postDAO;
-import Models.Blog;
-
+import DAO.OrderDAO;
+import Models.Order;
+import Models.OrderDetail;
+import Models.OrderStatus;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,13 +15,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
  * @author Acer
  */
-@WebServlet(name = "UpdatePostController", urlPatterns = {"/updatepost"})
-public class UpdatePostController extends HttpServlet {
+@WebServlet(name = "OrderDetailsController", urlPatterns = {"/saleorderdetails"})
+public class OrderDetailsController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +41,10 @@ public class UpdatePostController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditPostController</title>");
+            out.println("<title>Servlet OrderDetailsController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditPostController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet OrderDetailsController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,37 +62,39 @@ public class UpdatePostController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        postDAO postDAO = new postDAO();
-        Blog post = postDAO.getPostById(id);
-        request.setAttribute("post", post);
-        request.getRequestDispatcher("view/marketing/updatepost.jsp").forward(request, response);
+        OrderDAO orderDAO = new OrderDAO();
+        String id = request.getParameter("id");
 
+        Order order = orderDAO.getOrderById(id);
+        List<OrderDetail> orderDetails = orderDAO.getOrderDetailsByOrderId(id);
+        List<OrderStatus> orderStatusList = orderDAO.getAllOrderStatus();
+
+        request.setAttribute("order", order);
+        request.setAttribute("orderDetails", orderDetails);
+        request.setAttribute("orderStatusList", orderStatusList);
+
+        request.getRequestDispatcher("view/sale/orderdetails.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String title = request.getParameter("title");
-        String categoryBlogId = request.getParameter("category_blog_id");
-        String image = request.getParameter("image");
-        String description = request.getParameter("description");
-        String content = request.getParameter("content");
-        String status = request.getParameter("status");
-        Blog updatedPost = new Blog("", title, categoryBlogId, image, description, content, status);
-        postDAO postDAO = new postDAO();
-        postDAO.updatePost(updatedPost);
+        OrderDAO orderDAO = new OrderDAO();
+        String id = request.getParameter("orderId");
+        String statusId = request.getParameter("statusId");
 
-        response.sendRedirect("postlist");
+        orderDAO.updateOrderStatus(id, statusId);
+
+        // Retrieve updated order details
+        Order order = orderDAO.getOrderById(id);
+        List<OrderDetail> orderDetails = orderDAO.getOrderDetailsByOrderId(id);
+        List<OrderStatus> orderStatusList = orderDAO.getAllOrderStatus();
+
+        request.setAttribute("order", order);
+        request.setAttribute("orderDetails", orderDetails);
+        request.setAttribute("orderStatusList", orderStatusList);
+
+        request.getRequestDispatcher("view/sale/orderdetails.jsp").forward(request, response);
     }
 
     /**
