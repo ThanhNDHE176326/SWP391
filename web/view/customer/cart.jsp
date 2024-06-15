@@ -362,7 +362,7 @@
                                     <a href="#" class="styled-button">Choose More Product</a>
                                 </div>
                                 <div class="button-container">
-                                    <input type="submit" value="Check Out" class="styled-button">
+                                    <input type="submit" value="Create Oder" class="styled-button">
                                 </div>
                             </form>
                             <ul class="pagination">

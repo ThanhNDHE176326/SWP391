@@ -74,15 +74,15 @@ public class UpdateInfUserInCartController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String name = request.getParameter("name");
-        String username = request.getParameter("username");
+        String username = (String) session.getAttribute("username");
         String email = request.getParameter("email");
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
         String gender = request.getParameter("gender");
         CustomerDAO dao = new CustomerDAO();
         dao.updateInformationCustomer(username, email, name, address, phone, gender);
-        HttpSession session = request.getSession();
         request.getRequestDispatcher("pushToCartContact").forward(request, response);
     }
 

@@ -330,14 +330,12 @@
                                     <table class="table table-condensed">
                                         <thead>
                                             <tr class="cart_menu">
-                                                <td class="select">Select</td>
                                                 <td class="image">Item</td>
                                                 <td class="description">Title</td>
                                                 <td class="price">Price</td>
-                                                <td class="stock">Stock</td>
                                                 <td class="quantity">Quantity</td>
                                                 <td class="total">Total</td>
-                                                <td class="delete">Delete</td>
+                                                <!--<td class="delete">Delete</td>-->
                                             </tr>
                                         </thead>
                                         <style>
@@ -358,16 +356,12 @@
                                                 word-wrap: break-word; /* Break words if they are too long */
                                             }
 
-                                            .cart_menu td.select {
-                                                width: 3%; /* Width for Select cell */
-                                            }
-
                                             .cart_menu td.image {
-                                                width: 25%; /* Width for Item cell */
+                                                width: 30%; /* Adjusted width for Item cell */
                                             }
 
                                             .cart_menu td.description {
-                                                width: 15%; /* Width for Description cell */
+                                                width: 20%; /* Adjusted width for Description cell */
                                             }
 
                                             .cart_menu td.price,
@@ -375,10 +369,6 @@
                                             .cart_menu td.total,
                                             .cart_menu td.delete {
                                                 width: 10%; /* Width for each of these cells */
-                                            }
-
-                                            .cart_menu td.stock {
-                                                width: 5%;
                                             }
 
                                             .cart_menu td.cart_delete a {
@@ -397,23 +387,22 @@
                                             .cart_quantity_button {
                                                 display: flex; /* Use flexbox for quantity controls */
                                                 align-items: center; /* Center align the items */
+                                                justify-content: center; /* Center align horizontally */
                                             }
 
-                                            .cart_quantity_button a,
                                             .cart_quantity_button input {
                                                 margin: 0 5px; /* Margin between controls */
-                                            }
-
-                                            .cart_quantity_input {
                                                 text-align: center; /* Center the quantity input text */
+                                                border: none; /* Remove border for read-only input */
+                                                background: transparent; /* Remove background for read-only input */
                                             }
 
-                                            .cart_select, .cart_description, .cart_price, .cart_stock, .cart_quantity, .cart_total, .cart_delete {
+                                            .cart_description, .cart_price, .cart_quantity, .cart_total, .cart_delete {
                                                 text-align: center; /* Center text alignment */
                                                 vertical-align: middle; /* Vertical middle alignment */
                                             }
 
-                                            .cart_price, .cart_stock, .cart_quantity, .cart_total {
+                                            .cart_price, .cart_quantity, .cart_total {
                                                 font-size: 16px; /* Set your desired font size here */
                                                 padding: 10px; /* Consistent padding for all cells */
                                                 box-sizing: border-box; /* Ensure padding is included in width calculation */
@@ -426,9 +415,6 @@
                                         <tbody>
                                             <c:forEach var="product" items="${selectedProducts}">
                                                 <tr>
-                                                    <td class="cart_select">
-                                                        <input type="checkbox" name="selectedProducts" value="${product.id}">
-                                                    </td>
                                                     <td class="cart_product">
                                                         <a href=""><img src="<c:url value='/images/${product.image}'/>" alt=""></a>
                                                     </td>
@@ -439,133 +425,124 @@
                                                     <td class="cart_price">
                                                         <fmt:formatNumber value="${product.salePrice}" type="number" maxFractionDigits="0" />
                                                     </td>
-                                                    <td class="cart_stock">
-                                                        <fmt:formatNumber value="${product.stock}" type="number" maxFractionDigits="0" />
-                                                    </td>
                                                     <td class="cart_quantity">
                                                         <div class="cart_quantity_button">
-                                                            <a class="cart_quantity_down" href="updateQuantityCartProduct?productID=${product.id}&mode=tru"> - </a>
-                                                            <input class="cart_quantity_input" type="text" name="quantity" value="${product.quantity}" autocomplete="off" size="2">
-                                                            <a class="cart_quantity_up" href="updateQuantityCartProduct?productID=${product.id}&mode=cong"> + </a>
+                                                            <input class="cart_quantity_input" type="text" name="quantity" value="${product.quantity}" readonly>
                                                         </div>
                                                     </td>
                                                     <td class="cart_total">
                                                         <fmt:formatNumber value="${product.salePrice * product.quantity}" type="number" maxFractionDigits="0" />
                                                     </td>
-                                                    <td class="cart_delete">
-                                                        <a class="cart_quantity_delete" href="deleteCart?productID=${product.id}"><i class="fa fa-times"></i></a>
-                                                    </td>
+<!--                                                    <td class="cart_delete">
+                                                        <a class="cart_quantity_delete" href="${pageContext.request.contextPath}/deleteCart?productID=${product.id}"><i class="fa fa-times"></i></a>
+                                                    </td>-->
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
 
-
-
                                 <div class="button-container">
-                                    <a href="#" class="styled-button">Change</a>
+                                    <a href="${pageContext.request.contextPath}/viewCartDetail" class="styled-button">Change</a>
                                     <input type="submit" value="Submit" class="styled-button">
                                 </div>
+                            </form>
+
+                            <ul class="pagination">
+                                <c:if test="${tag > 1}">
+                                    <li><a href="?index=${tag - 1}&productId=${param.productId}">Previous</a></li>
+                                    </c:if>
+                                    <c:forEach begin="1" end="${endP}" var="i">
+                                    <li class="${tag == i ? 'active' : ''}">
+                                        <a class="pagination-link" href="?index=${i}&productId=${param.productId}">${i}</a>
+                                    </li>
+                                </c:forEach>
+                                <c:if test="${tag < endP}">
+                                    <li><a href="?index=${tag + 1}&productId=${param.productId}">Next</a></li>
+                                    </c:if>
+                            </ul>
+
+                            <style>
+                                .pagination {
+                                    display: flex;
+                                    justify-content: center;
+                                    padding: 0;
+                                    list-style: none;
+                                }
+
+                                .pagination li {
+                                    display: inline;
+                                    margin: 0 5px;
+                                }
+
+                                .pagination a {
+                                    text-decoration: none;
+                                    padding: 10px 15px;
+                                    color: #007bff;
+                                    border: 1px solid #dee2e6;
+                                    border-radius: 4px;
+                                }
+
+                                .pagination .active a {
+                                    background-color: #FE980F; /* Màu nền của trang được chọn */
+                                    color: #000; /* Màu chữ của trang được chọn */
+                                    border-color: yellow; /* Màu viền của trang được chọn */
+                                }
+                            </style>
+
+
                         </div>
-
-                        </form>
-
-                        <ul class="pagination">
-                            <c:if test="${tag > 1}">
-                                <li><a href="?index=${tag - 1}&productId=${param.productId}">Previous</a></li>
-                                </c:if>
-                                <c:forEach begin="1" end="${endP}" var="i">
-                                <li class="${tag == i ? 'active' : ''}">
-                                    <a class="pagination-link" href="?index=${i}&productId=${param.productId}">${i}</a>
-                                </li>
-                            </c:forEach>
-                            <c:if test="${tag < endP}">
-                                <li><a href="?index=${tag + 1}&productId=${param.productId}">Next</a></li>
-                                </c:if>
-                        </ul>
-
-                        <style>
-                            .pagination {
-                                display: flex;
-                                justify-content: center;
-                                padding: 0;
-                                list-style: none;
-                            }
-
-                            .pagination li {
-                                display: inline;
-                                margin: 0 5px;
-                            }
-
-                            .pagination a {
-                                text-decoration: none;
-                                padding: 10px 15px;
-                                color: #007bff;
-                                border: 1px solid #dee2e6;
-                                border-radius: 4px;
-                            }
-
-                            .pagination .active a {
-                                background-color: #FE980F; /* Màu nền của trang được chọn */
-                                color: #000; /* Màu chữ của trang được chọn */
-                                border-color: yellow; /* Màu viền của trang được chọn */
-                            }
-                        </style>
-
-
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var productItems = document.querySelectorAll('.product-item');
-            productItems.forEach(function (item) {
-                item.addEventListener('click', function () {
-                    var productId = this.getAttribute('data-id');
-                    window.location.href = '${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=' + productId;
+        </section>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var productItems = document.querySelectorAll('.product-item');
+                productItems.forEach(function (item) {
+                    item.addEventListener('click', function () {
+                        var productId = this.getAttribute('data-id');
+                        window.location.href = '${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=' + productId;
+                    });
                 });
             });
-        });
+        </script>
+        <jsp:include page="footer.jsp"/>
+
+
+
+        <script src="<c:url value='/js/jquery.js'/>"></script>
+        <script src="<c:url value='/js/price-range.js'/>"></script>
+        <script src="<c:url value='/js/jquery.scrollUp.min.js'/>"></script>
+        <script src="<c:url value='/js/bootstrap.min.js'/>"></script>
+        <script src="<c:url value='/js/jquery.prettyPhoto.js'/>"></script>
+        <script src="<c:url value='/js/main.js'/>"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </body>
+    <script>
+            window.onload = function () {
+                document.getElementById("profileForm").addEventListener("submit", function (event) {
+                    var phone = document.getElementsByName("phone")[0].value;
+                    var phoneRegex = /^\+?\d{10,}$/;
+
+                    var phoneError = document.getElementById("phone-error");
+
+                    // Clear previous error message
+                    phoneError.innerText = "";
+
+                    var isValid = true;
+
+                    if (!phoneRegex.test(phone)) {
+                        phoneError.innerText = "Please enter a valid phone number.";
+                        isValid = false;
+                    }
+
+                    if (!isValid) {
+                        event.preventDefault(); // Prevent form submission
+                    }
+                });
+            };
     </script>
-    <jsp:include page="footer.jsp"/>
-
-
-
-    <script src="<c:url value='/js/jquery.js'/>"></script>
-    <script src="<c:url value='/js/price-range.js'/>"></script>
-    <script src="<c:url value='/js/jquery.scrollUp.min.js'/>"></script>
-    <script src="<c:url value='/js/bootstrap.min.js'/>"></script>
-    <script src="<c:url value='/js/jquery.prettyPhoto.js'/>"></script>
-    <script src="<c:url value='/js/main.js'/>"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- Bootstrap JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</body>
-<script>
-        window.onload = function () {
-            document.getElementById("profileForm").addEventListener("submit", function (event) {
-                var phone = document.getElementsByName("phone")[0].value;
-                var phoneRegex = /^\+?\d{10,}$/;
-
-                var phoneError = document.getElementById("phone-error");
-
-                // Clear previous error message
-                phoneError.innerText = "";
-
-                var isValid = true;
-
-                if (!phoneRegex.test(phone)) {
-                    phoneError.innerText = "Please enter a valid phone number.";
-                    isValid = false;
-                }
-
-                if (!isValid) {
-                    event.preventDefault(); // Prevent form submission
-                }
-            });
-        };
-</script>
 </html>
