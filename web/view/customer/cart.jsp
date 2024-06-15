@@ -359,7 +359,10 @@
                                     </table>
                                 </div>
                                 <div class="button-container">
-                                    <input type="submit" value="Buy" class="styled-button">
+                                    <a href="#" class="styled-button">Choose More Product</a>
+                                </div>
+                                <div class="button-container">
+                                    <input type="submit" value="Check Out" class="styled-button">
                                 </div>
                             </form>
                             <ul class="pagination">

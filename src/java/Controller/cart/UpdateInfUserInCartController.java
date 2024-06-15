@@ -4,14 +4,8 @@
  */
 package Controller.cart;
 
-import DAO.CartDAO;
-import DAO.CartProductDAO;
 import DAO.CustomerDAO;
-import DAO.ProductDAO;
-import DAO.ProductDAOByPublic;
-import Models.Category;
 import Models.Customer;
-import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,15 +14,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
- * @author Admin
+ * @author HP
  */
-@WebServlet(name = "PushToCartContactController", urlPatterns = {"/pushToCartContact"})
-public class PushToCartContactController extends HttpServlet {
+@WebServlet(name = "UpdateInfUserInCartController", urlPatterns = {"/updateinfuserincart"})
+public class UpdateInfUserInCartController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,10 +39,10 @@ public class PushToCartContactController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PushToCartContactController</title>");
+            out.println("<title>Servlet UpdateInfUserInCartController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet PushToCartContactController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateInfUserInCartController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -68,7 +60,7 @@ public class PushToCartContactController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        processRequest(request, response);
     }
 
     /**
@@ -82,53 +74,16 @@ public class PushToCartContactController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        String name = request.getParameter("name");
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
+        String gender = request.getParameter("gender");
+        CustomerDAO dao = new CustomerDAO();
+        dao.updateInformationCustomer(username, email, name, address, phone, gender);
         HttpSession session = request.getSession();
-        String customerName = (String) session.getAttribute("username");
-        CustomerDAO customerDAO = new CustomerDAO();
-        Customer user1 = customerDAO.getInformationCustomer(customerName);
-        session.setAttribute("user1", user1);
-        CartProductDAO cartProductDAO = new CartProductDAO();
-        ProductDAO productDAO = new ProductDAO();
-        CartDAO cartDAO = new CartDAO();
-        ProductDAOByPublic productDAOByPublic = new ProductDAOByPublic();
-        if (customerName == null) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User not logged in.");
-            return;
-        }
-
-        int customerID = Integer.parseInt(customerDAO.getInformationCustomer(customerName).getId());
-        int cartID = cartDAO.getCartIdByCustomerID(customerID);
-
-        String[] selectedProductIds = request.getParameterValues("selectedProducts");
-
-        List<Category> categories = productDAOByPublic.getCategory();
-
-        if (selectedProductIds != null && selectedProductIds.length > 0) {
-            List<Product> selectedProducts = new ArrayList<>();
-
-            for (String productId : selectedProductIds) {
-                try {
-                    int id = Integer.parseInt(productId);
-                    Product product = cartProductDAO.getProductInCartIDPush(cartID, id);
-
-                    if (product != null) {
-                        selectedProducts.add(product);
-                    } else {
-                        System.out.println("Product not found with ID: " + id);
-                    }
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-            }
-            session.setAttribute("categories", categories);
-            session.setAttribute("selectedProducts", selectedProducts);
-
-            response.sendRedirect(request.getContextPath() + "/view/customer/cartcontact.jsp");
-        } else {
-            response.sendRedirect(request.getContextPath() + "/view/customer/cartcontact.jsp");
-        }
-
+        request.getRequestDispatcher("pushToCartContact").forward(request, response);
     }
 
     /**
