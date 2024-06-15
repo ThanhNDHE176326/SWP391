@@ -43,6 +43,117 @@
         <!-- CDN for Font Awesome (ensure you need this) -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+        <style>
+            .breadcrumbs .breadcrumb {
+                margin-bottom: 30px !important;
+            }
+            .breadcrumbs .breadcrumb li a {
+                padding: 8px 8px !important;
+                font-size: 1.2em;
+            }
+            .table-responsive.cart_info {
+                margin-bottom: 20px; /* Bottom margin for the table */
+                overflow-x: hidden; /* Hide horizontal scrollbar */
+            }
+
+            .table.table-condensed {
+                width: 100%; /* Full width table */
+            }
+
+            .cart_menu td {
+                font-weight: bold; /* Bold font for header cells */
+                text-align: center; /* Center text alignment */
+                vertical-align: middle; /* Vertical middle alignment */
+                padding: 10px; /* Padding for table cells */
+                word-wrap: break-word; /* Break words if they are too long */
+            }
+
+            .cart_menu td.select {
+                width: 3%; /* Width for Select cell */
+            }
+
+            .cart_menu td.image {
+                width: 25%; /* Width for Item cell */
+            }
+
+            .cart_menu td.description {
+                width: 15%; /* Width for Description cell */
+            }
+
+            .cart_menu td.price,
+            .cart_menu td.quantity,
+            .cart_menu td.total,
+            .cart_menu td.delete {
+                width: 10%; /* Width for each of these cells */
+            }
+
+            .cart_menu td.stock{
+                width: 5%;
+            }
+
+            .cart_menu td.cart_delete a {
+                color: #333; /* Color for Delete link */
+            }
+
+            .cart_menu td.cart_delete a:hover {
+                color: red; /* Hover color for Delete link */
+            }
+
+            .cart_product img {
+                width: 130px; /* Product image width */
+                height: auto; /* Maintain aspect ratio */
+            }
+
+            .cart_quantity_button {
+                display: flex; /* Use flexbox for quantity controls */
+                align-items: center; /* Center align the items */
+            }
+
+            .cart_quantity_button a,
+            .cart_quantity_button input {
+                margin: 0 5px; /* Margin between controls */
+            }
+
+            .cart_quantity_input {
+                text-align: center; /* Center the quantity input text */
+            }
+            .cart_select, .cart_description, .cart_price, .cart_stock, .cart_quantity, .cart_total, .cart_delete {
+                text-align: center; /* Center text alignment */
+                vertical-align: middle; /* Vertical middle alignment */
+            }
+            .cart_price, .cart_stock, .cart_quantity, .cart_total {
+                font-size: 16px; /* Set your desired font size here */
+                padding: 10px; /* Consistent padding for all cells */
+                box-sizing: border-box; /* Ensure padding is included in width calculation */
+            }
+            .cart_description h4 a {
+                font-size: 15px !important;
+            }
+            .button-container {
+                display: flex;
+                text-align: right;
+                padding-bottom: 20px; /* Optional: Add padding to the container */
+            }
+
+            .styled-button {
+                background-color: #FE980F;
+                border: none;
+                color: white;
+                padding: 5px 5px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 12px;
+                transition: background-color 0.3s ease, transform 0.3s ease;
+            }
+            .styled-button:hover {
+                background-color: #FE980F;
+                transform: scale(1.05);
+            }
+        </style>
     </head><!--/head-->
 
     <body>
@@ -183,11 +294,10 @@
                     </div>
 
                     <div class="col-sm-9 padding-right">
-
                         <div id="cart_items">
                             <div class="breadcrumbs">
                                 <ol class="breadcrumb">
-                                    <li><a href="${pageContext.request.contextPath}/ProductListPublic">Back to Product List</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/ProductListPublic">Choose More Product</a></li>
                                     <li class="active">Cart Detail</li>
                                 </ol>
                             </div>
@@ -206,126 +316,12 @@
                                                 <td class="delete">Delete</td>
                                             </tr>
                                         </thead>
-                                        <style>
-                                            .table-responsive.cart_info {
-                                                margin-bottom: 20px; /* Bottom margin for the table */
-                                                overflow-x: hidden; /* Hide horizontal scrollbar */
-                                            }
 
-                                            .table.table-condensed {
-                                                width: 100%; /* Full width table */
-                                            }
-
-                                            .cart_menu td {
-                                                font-weight: bold; /* Bold font for header cells */
-                                                text-align: center; /* Center text alignment */
-                                                vertical-align: middle; /* Vertical middle alignment */
-                                                padding: 10px; /* Padding for table cells */
-                                                word-wrap: break-word; /* Break words if they are too long */
-                                            }
-
-                                            .cart_menu td.select {
-                                                width: 3%; /* Width for Select cell */
-                                            }
-
-                                            .cart_menu td.image {
-                                                width: 25%; /* Width for Item cell */
-                                            }
-
-                                            .cart_menu td.description {
-                                                width: 15%; /* Width for Description cell */
-                                            }
-
-                                            .cart_menu td.price,
-                                            .cart_menu td.quantity,
-                                            .cart_menu td.total,
-                                            .cart_menu td.delete {
-                                                width: 10%; /* Width for each of these cells */
-                                            }
-
-                                            .cart_menu td.stock{
-                                                width: 5%;
-                                            }
-
-                                            .cart_menu td.cart_delete a {
-                                                color: #333; /* Color for Delete link */
-                                            }
-
-                                            .cart_menu td.cart_delete a:hover {
-                                                color: red; /* Hover color for Delete link */
-                                            }
-
-                                            .cart_product img {
-                                                width: 130px; /* Product image width */
-                                                height: auto; /* Maintain aspect ratio */
-                                            }
-
-                                            .cart_quantity_button {
-                                                display: flex; /* Use flexbox for quantity controls */
-                                                align-items: center; /* Center align the items */
-                                            }
-
-                                            .cart_quantity_button a,
-                                            .cart_quantity_button input {
-                                                margin: 0 5px; /* Margin between controls */
-                                            }
-
-                                            .cart_quantity_input {
-                                                text-align: center; /* Center the quantity input text */
-                                            }
-                                            .cart_select, .cart_description, .cart_price, .cart_stock, .cart_quantity, .cart_total, .cart_delete {
-                                                text-align: center; /* Center text alignment */
-                                                vertical-align: middle; /* Vertical middle alignment */
-                                            }
-                                            .cart_price, .cart_stock, .cart_quantity, .cart_total {
-                                                font-size: 16px; /* Set your desired font size here */
-                                                padding: 10px; /* Consistent padding for all cells */
-                                                box-sizing: border-box; /* Ensure padding is included in width calculation */
-                                            }
-                                            .cart_description h4 a {
-                                                font-size: 15px !important;
-                                            }
-                                            .button-container {
-                                                display: flex;
-                                                justify-content: flex-end; /* Aligns items to the right */
-                                                padding: 10px; /* Optional: Add padding to the container */
-                                            }
-
-                                            .styled-button {
-                                                background-color: #FE980F; /* Green background */
-                                                border: none; /* Remove border */
-                                                color: white; /* White text */
-                                                padding: 5px 5px; /* Add some padding */
-                                                text-align: center; /* Center text */
-                                                text-decoration: none; /* Remove underline */
-                                                display: inline-block; /* Make the button inline-block */
-                                                font-size: 16px; /* Increase font size */
-                                                margin: 4px 2px; /* Add some margin */
-                                                cursor: pointer; /* Pointer/hand icon */
-                                                border-radius: 12px; /* Rounded corners */
-                                                transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
-                                            }
-
-                                            .styled-button:hover {
-                                                background-color: #FE980F; /* Darker green on hover */
-                                                transform: scale(1.05); /* Slightly enlarge on hover */
-                                            }
-
-                                            .styled-button:active {
-                                                background-color: #3e8e41; /* Even darker green on click */
-                                                transform: scale(1); /* Reset scale on click */
-                                            }
-
-                                            .styled-button:focus {
-                                                outline: none; /* Remove focus outline */
-                                            }
-
-                                        </style>
                                         <tbody>
                                             <c:forEach var="product" items="${listProduct}">
                                                 <tr>
                                                     <td class="cart_select">
-                                                        <input type="checkbox" name="selectedProducts" value="${product.id}">
+                                                        <input type="checkbox" name="selectedProducts" value="${product.id}" data-price="${product.salePrice}" data-quantity="${product.quantity}" class="product-checkbox">
                                                     </td>
                                                     <td class="cart_product">
                                                         <a href=""><img src="<c:url value='/images/${product.image}'/>" alt=""></a>
@@ -358,54 +354,38 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="button-container">
-                                    <a href="#" class="styled-button">Choose More Product</a>
+                                <div id="total-amount" style="text-align: right; margin: 15px; font-size: 1.3em; font-weight: bold;">
+                                    Total Cost: $0
                                 </div>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const checkboxes = document.querySelectorAll('.product-checkbox');
+                                        const totalAmountElement = document.getElementById('total-amount');
+
+                                        function calculateTotal() {
+                                            let total = 0;
+                                            checkboxes.forEach(checkbox => {
+                                                if (checkbox.checked) {
+                                                    const price = parseFloat(checkbox.getAttribute('data-price'));
+                                                    const quantity = parseInt(checkbox.getAttribute('data-quantity'));
+                                                    total += price * quantity;
+                                                }
+                                            });
+                                            totalAmountElement.textContent = 'Total Cost: ' + total.toLocaleString('en-US') + ' VNĐ';
+                                        }
+
+                                        checkboxes.forEach(checkbox => {
+                                            checkbox.addEventListener('change', calculateTotal);
+                                        });
+
+                                        calculateTotal(); // Initial calculation in case some checkboxes are pre-selected
+                                    });
+                                </script>   
                                 <div class="button-container">
                                     <input type="submit" value="Create Oder" class="styled-button">
                                 </div>
                             </form>
-                            <ul class="pagination">
-                                <c:if test="${tag > 1}">
-                                    <li><a href="?index=${tag - 1}&productId=${param.productId}">Previous</a></li>
-                                    </c:if>
-                                    <c:forEach begin="1" end="${endP}" var="i">
-                                    <li class="${tag == i ? 'active' : ''}">
-                                        <a class="pagination-link" href="?index=${i}&productId=${param.productId}">${i}</a>
-                                    </li>
-                                </c:forEach>
-                                <c:if test="${tag < endP}">
-                                    <li><a href="?index=${tag + 1}&productId=${param.productId}">Next</a></li>
-                                    </c:if>
-                            </ul>
 
-                            <style>
-                                .pagination {
-                                    display: flex;
-                                    justify-content: center;
-                                    padding: 0;
-                                    list-style: none;
-                                }
-
-                                .pagination li {
-                                    display: inline;
-                                    margin: 0 5px;
-                                }
-
-                                .pagination a {
-                                    text-decoration: none;
-                                    padding: 10px 15px;
-                                    color: #007bff;
-                                    border: 1px solid #dee2e6;
-                                    border-radius: 4px;
-                                }
-
-                                .pagination .active a {
-                                    background-color: #FE980F; /* Màu nền của trang được chọn */
-                                    color: #000; /* Màu chữ của trang được chọn */
-                                    border-color: yellow; /* Màu viền của trang được chọn */
-                                }
-                            </style>
                             <div class="recommended_items"><!--recommended_items-->
                                 <h2 class="title text-center">recommended items</h2>
 
@@ -423,7 +403,7 @@
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <div class="button-container">
-                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                         <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
@@ -432,7 +412,7 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                             <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                         </div>
                                                                     </div>
@@ -460,7 +440,7 @@
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <div class="button-container">
-                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                         <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
@@ -469,7 +449,7 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                             <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                         </div>
                                                                     </div>
@@ -497,7 +477,7 @@
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <div class="button-container">
-                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                         <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
@@ -506,7 +486,7 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                             <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                         </div>
                                                                     </div>
@@ -536,7 +516,7 @@
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <div class="button-container">
-                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                         <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
@@ -545,7 +525,7 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                             <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                         </div>
                                                                     </div>
@@ -573,7 +553,7 @@
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <div class="button-container">
-                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                         <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
@@ -582,7 +562,7 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                             <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                         </div>
                                                                     </div>
@@ -610,7 +590,7 @@
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <div class="button-container">
-                                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                         <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
@@ -619,7 +599,7 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                             <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                         </div>
                                                                     </div>

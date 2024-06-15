@@ -108,6 +108,10 @@ public class AddToCartController extends HttpServlet {
 //            request.getRequestDispatcher("ProductDetailPublic").forward(request, response);
             response.sendRedirect("ProductDetailPublic?productId=" + productID);
         }
+        if(location.equals("cart")){
+                        response.sendRedirect("viewCartDetail");
+
+        }
         session.setAttribute("customerID", customerID_STR);
         
     }
