@@ -55,7 +55,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -77,9 +77,10 @@
                                                 <td>${feedback.ratedStar}</td>
                                                 <td>${feedback.comment}</td>
                                                 <td>
-                                                    <form method="get" action="${pageContext.request.contextPath}/updatefeedback" id="status${feedback.id}">
-                                                        <input type="hidden" name="customer" value="${feedback.customer}">
-                                                        <select name="status" class="form-control" onchange="document.getElementById('status${feedback.id}').submit()">
+                                                    <form method="get" action="${pageContext.request.contextPath}/updatefeedback">
+                                                        <input type="hidden" name="id" value="${feedback.id}">
+                                                        <input type="hidden" name="status" value="${feedback.status}">
+                                                        <select name="newStatus" class="form-control" onchange="this.form.submit()">
                                                             <option value="0" ${feedback.status == '0' ? 'selected' : ''}>Show</option>
                                                             <option value="1" ${feedback.status == '1' ? 'selected' : ''}>Hide</option>
                                                         </select>

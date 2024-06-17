@@ -37,7 +37,7 @@ public class UpdateFeedbackController extends HttpServlet {
         String status = request.getParameter("status");
         String id = request.getParameter("id");
         FeedbackDAO da = new FeedbackDAO();
-        da.update(status);
+        da.update(status, id);
         ArrayList<Feedback> feedbackdetail = da.getFeedbackDetailById(id);
         request.setAttribute("feedbackdetail", feedbackdetail);
         request.getRequestDispatcher("view/marketing/feedbackdetail.jsp").forward(request, response);

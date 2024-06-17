@@ -34,7 +34,7 @@ public class ListFeedbackController extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+         
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -58,19 +58,19 @@ public class ListFeedbackController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        FeedbackDAO da = new FeedbackDAO();
+    FeedbackDAO da = new FeedbackDAO();
         ArrayList<Feedback> allfeedback = da.getAllFeedback();
         
         if (request.getParameter("mode") != null && request.getParameter("mode").equals("4")) {
             String id = request.getParameter("id");
-             ArrayList<Feedback> feedbackdetail = da.getFeedbackDetailById(id);
-             request.setAttribute("feedbackdetail", feedbackdetail);
+            ArrayList<Feedback> feedbackdetail = da.getFeedbackDetailById(id);
+            request.setAttribute("feedbackdetail", feedbackdetail);
             request.getRequestDispatcher("view/marketing/feedbackdetail.jsp").forward(request, response);
+            return; // Dừng xử lý thêm sau khi chuyển tiếp
         }
         
         request.setAttribute("allfeedback", allfeedback);
         request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
-        
     } 
 
     /** 
