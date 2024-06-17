@@ -316,7 +316,6 @@
                                                 <td class="delete">Delete</td>
                                             </tr>
                                         </thead>
-
                                         <tbody>
                                             <c:forEach var="product" items="${listProduct}">
                                                 <tr>
@@ -339,7 +338,7 @@
                                                     <td class="cart_quantity">
                                                         <div class="cart_quantity_button">
                                                             <a class="cart_quantity_down" href="updateQuantityCartProduct?productID=${product.id}&mode=tru"> - </a>
-                                                            <input class="cart_quantity_input" type="text" name="quantity" value="${product.quantity}" autocomplete="off" size="2">
+                                                            <input class="cart_quantity_input" type="text" name="quantity" value="${product.quantity}" autocomplete="off" size="2" data-stock="${product.stock}">
                                                             <a class="cart_quantity_up" href="updateQuantityCartProduct?productID=${product.id}&mode=cong"> + </a>
                                                         </div>
                                                     </td>
@@ -374,18 +373,37 @@
                                             totalAmountElement.textContent = 'Total Cost: ' + total.toLocaleString('en-US') + ' VNĐ';
                                         }
 
+                                        function updateQuantityButtons() {
+                                            const quantityInputs = document.querySelectorAll('.cart_quantity_input');
+                                            quantityInputs.forEach(input => {
+                                                const quantity = parseInt(input.value);
+                                                const stock = parseInt(input.getAttribute('data-stock'));
+                                                const plusButton = input.nextElementSibling;
+                                                if (quantity >= stock) {
+                                                    plusButton.style.display = 'none';
+                                                } else {
+                                                    plusButton.style.display = 'inline';
+                                                }
+                                            });
+                                        }
+
                                         checkboxes.forEach(checkbox => {
                                             checkbox.addEventListener('change', calculateTotal);
                                         });
 
+                                        const quantityInputs = document.querySelectorAll('.cart_quantity_input');
+                                        quantityInputs.forEach(input => {
+                                            input.addEventListener('input', updateQuantityButtons);
+                                        });
+
                                         calculateTotal(); // Initial calculation in case some checkboxes are pre-selected
+                                        updateQuantityButtons(); // Initial check for quantity vs. stock
                                     });
                                 </script>   
                                 <div class="button-container">
-                                    <input type="submit" value="Create Oder" class="styled-button">
+                                    <input type="submit" value="Create Order" class="styled-button">
                                 </div>
                             </form>
-
                             <div class="recommended_items"><!--recommended_items-->
                                 <h2 class="title text-center">recommended items</h2>
 
