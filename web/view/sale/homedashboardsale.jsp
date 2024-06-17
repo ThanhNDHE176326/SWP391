@@ -9,146 +9,155 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
+    <title>Saler - Dashboard</title>
 
-        <title>Saler - Dashboard</title>
+    <!-- Custom fonts for this template-->
+    <link href="<c:url value='/vendor/fontawesome-free/css/all.min.css'/>" rel="stylesheet" type="text/css">
 
-        <!-- Custom fonts for this template-->
-        <link href="<c:url value='/vendor/fontawesome-free/css/all.min.css'/>" rel="stylesheet" type="text/css">
+    <!-- Page level plugin CSS-->
+    <link href="<c:url value='/vendor/datatables/dataTables.bootstrap4.css'/>" rel="stylesheet">
 
-        <!-- Page level plugin CSS-->
-        <link href="<c:url value='/vendor/datatables/dataTables.bootstrap4.css'/>" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="<c:url value='/css/sb-admin.css'/>" rel="stylesheet">
+    <link rel="stylesheet" href="<c:url value='/css/colReorder-bootstrap4.css'/>">
 
-        <!-- Custom styles for this template-->
-        <link href="<c:url value='/css/sb-admin.css'/>" rel="stylesheet">
+    <!-- Additional custom styles for better appearance -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fc;
+        }
 
-        <link rel="stylesheet" href="<c:url value='/css/colReorder-bootstrap4.css'/>">
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+        }
 
-    </head>
+        h1 {
+            color: #4e73df;
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-    <body id="page-top">
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
 
-        <jsp:include page="headersale.jsp"/>
+        form label {
+            margin: 0 10px;
+        }
 
-        <div id="wrapper">
+        form input, form button {
+            margin: 0 10px;
+            padding: 5px 10px;
+            font-size: 1rem;
+        }
 
-            <!-- Sidebar -->
-            <jsp:include page="navbarsale.jsp"/>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
 
-            <div id="content-wrapper">
+        table, th, td {
+            border: 1px solid #ddd;
+        }
 
-                <div class="container-fluid">
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
 
-                    <!-- Breadcrumbs-->
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="#">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item active">Overview</li>
-                    </ol>
+        th {
+            background-color: #4e73df;
+            color: white;
+        }
 
-                    <!-- Icon Cards-->
-                    <div class="row">
-                        <div class="col-xl-3 col-sm-6 mb-3">
-                            <div class="card text-white bg-primary o-hidden h-100">
-                                <div class="card-body">
-                                    <div class="card-body-icon">
-                                        <i class="fas fa-fw fa-comments"></i>
-                                    </div>
-                                    <div class="mr-5">
-                                        <strong>Post</strong><br/>
-                                        Total post ${totalPost}<br/>
-                                        Total post category: ${totalCategoryPost}<br/>
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
 
-                                    </div>
-                                </div>
+        .sticky-footer {
+            background-color: #f8f9fc;
+            padding: 10px 0;
+        }
 
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-sm-6 mb-3">
-                            <div class="card text-white bg-warning o-hidden h-100">
-                                <div class="card-body">
-                                    <div class="card-body-icon">
-                                        <i class="fas fa-fw fa-list"></i>
-                                    </div>
-                                    <div class="mr-5">
-                                        <strong>Product</strong><br/>
-                                        Total number product ${totalProduct}<br/>
-                                        Total category: ${totalCategory}<br/>
-                                        Total quantity of product: ${totalQuantityOfProduct}<br/>
-                                    </div>
-                                </div>
+        .sticky-footer .container {
+            text-align: center;
+        }
 
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-sm-6 mb-3">
-                            <div class="card text-white bg-success o-hidden h-100">
-                                <div class="card-body">
-                                    <div class="card-body-icon">
-                                        <i class="fas fa-fw fa-shopping-cart"></i>
-                                    </div>
-                                    <div class="mr-5">
-                                        <strong>Customer</strong><br/>
-                                        Total customer: ${totalCustomer}<br/>
+        .scroll-to-top {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            width: 2.75rem;
+            height: 2.75rem;
+            text-align: center;
+            color: white;
+            background-color: #4e73df;
+            border-radius: 50%;
+            display: none;
+        }
 
-                                    </div>
-                                </div>
+        .scroll-to-top:hover {
+            color: white;
+            background-color: #2e59d9;
+        }
 
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-sm-6 mb-3">
-                            <div class="card text-white bg-danger o-hidden h-100">
-                                <div class="card-body">
-                                    <div class="card-body-icon">
-                                        <i class="fas fa-fw fa-life-ring"></i>
-                                    </div>
-                                    <div class="mr-5">
-                                        <strong>Feedback</strong><br/>
-                                        Total feedback: ${totalFeedback}
-                                    </div>
-                                </div>
+        .modal-body {
+            text-align: center;
+        }
+    </style>
 
-                            </div>
-                        </div>
-                    </div>
+</head>
 
-                    <!-- Area Chart Example-->
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <i class="fas fa-chart-area"></i>
-                            <h3><strong>Trend of customers </strong></h3>
-                        </div>
+<body id="page-top">
 
-                        <div class="card-body">
-                            <form action="marketingDashboard">
-                                Start Date: <input type="date" name="startDate" value="${startDate}">
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                End Date: <input type="date" name="endDate" value="${endDate}">
-                                <input type="submit" value="CONFIRM">
-                            </form>
-                            <!--<canvas id="myAreaChart" width="100%" height="30"></canvas>-->
-                            <img src="${trendProduct.image}" alt="Image of Trend Product" width="500px" height="500px"/><br/>
-                            Title: <strong>${trendProduct.title}</strong><br/>
-                            Author: ${trendProduct.author}<br/>
-                            Number of customer have order: ${trendProduct.customer}<br/>
-                            Number order of customer: ${trendProduct.order}<br/>
-                        </div> 
-                        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-                    </div>
+    <jsp:include page="headersale.jsp"/>
 
-                    <!-- DataTables Example -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <jsp:include page="navbarsale.jsp"/>
 
-                </div>
-                <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-            </div>
+        <div class="container">
+            <h1>Dashboard</h1>
 
+            <form method="get" action="${pageContext.request.contextPath}/saledashboard">
+                <label for="fromDate">From Date:</label>
+                <input type="date" id="fromDate" name="fromDate" required>
+                <label for="toDate">To Date:</label>
+                <input type="date" id="toDate" name="toDate" required>
+                <button type="submit">Filter</button>
+            </form>
+
+            <h2>Order Trends</h2>
+            <table>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Total Cost</th>
+                    <th>Order Date</th>
+                </tr>
+                <c:forEach var="order" items="${orders}">
+                    <tr>
+                        <td>${order.id}</td>
+                        <td>${order.customer}</td>
+                        <td>${order.totalCost}</td>
+                        <td>${order.orderDate}</td>
+                    </tr>
+                </c:forEach>
+            </table>
         </div>
+
         <!-- /.container-fluid -->
 
         <!-- Sticky Footer -->
@@ -163,52 +172,50 @@
     </div>
     <!-- /.content-wrapper -->
 
-</div>
-<!-- /#wrapper -->
+    </div>
+    <!-- /#wrapper -->
 
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Bootstrap core JavaScript-->
-<script src="<c:url value='/vendor/jquery/jquery.min.js'/>"></script>
-<script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js'/>"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="<c:url value='/vendor/jquery/jquery.min.js'/>"></script>
+    <script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js'/>"></script>
 
-<!-- Core plugin JavaScript-->
-<script src="<c:url value='/vendor/jquery-easing/jquery.easing.min.js'/>"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="<c:url value='/vendor/jquery-easing/jquery.easing.min.js'/>"></script>
 
-<!-- Page level plugin JavaScript-->
-<script src="<c:url value='/vendor/datatables/jquery.dataTables.js'/>"></script>
-<script src="<c:url value='/vendor/datatables/dataTables.bootstrap4.js'/>"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="<c:url value='/vendor/datatables/jquery.dataTables.js'/>"></script>
+    <script src="<c:url value='/vendor/datatables/dataTables.bootstrap4.js'/>"></script>
 
-<!-- Custom scripts for all pages-->
-<script src="<c:url value='/js/sb-admin.min.js'/>"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="<c:url value='/js/sb-admin.min.js'/>"></script>
 
-<!-- Demo scripts for this page-->
-<script src="<c:url value='/js/demo/datatables-demo.js'/>"></script>
-
-
+    <!-- Demo scripts for this page-->
+    <script src="<c:url value='/js/demo/datatables-demo.js'/>"></script>
 
 </body>
 

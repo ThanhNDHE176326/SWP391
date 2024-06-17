@@ -1,14 +1,7 @@
-<%-- 
-    Document   : dashboard
-    Created on : Jun 8, 2024, 6:08:29 PM
-    Author     : admin
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,85 +13,68 @@
 
         <!-- Custom fonts for this template-->
         <link href="<c:url value='/vendor/fontawesome-free/css/all.min.css'/>" rel="stylesheet" type="text/css">
-
         <!-- Page level plugin CSS-->
         <link href="<c:url value='/vendor/datatables/dataTables.bootstrap4.css'/>" rel="stylesheet">
-
         <!-- Custom styles for this template-->
         <link href="<c:url value='/css/sb-admin.css'/>" rel="stylesheet">
         <link rel="stylesheet" href="<c:url value='/css/colReorder-bootstrap4.css'/>">
 
-        <!-- Additional custom styles for better appearance -->
         <style>
             body {
                 font-family: 'Arial', sans-serif;
                 background-color: #f8f9fc;
             }
-
             .container {
                 max-width: 1200px;
                 margin: 20px auto;
             }
-
             h1, h2 {
                 color: #4e73df;
                 text-align: center;
                 margin-bottom: 20px;
             }
-
             form {
                 display: flex;
                 justify-content: center;
                 margin-bottom: 20px;
             }
-
             form label {
                 margin: 0 10px;
             }
-
             form input, form button {
                 margin: 0 10px;
                 padding: 5px 10px;
                 font-size: 1rem;
             }
-
             table {
                 width: 100%;
                 border-collapse: collapse;
                 margin-bottom: 20px;
             }
-
             table, th, td {
                 border: 1px solid #ddd;
             }
-
             th, td {
                 padding: 10px;
                 text-align: center;
             }
-
             th {
                 background-color: #4e73df;
                 color: white;
             }
-
             tr:nth-child(even) {
                 background-color: #f2f2f2;
             }
-
             tr:hover {
                 background-color: #ddd;
             }
-
             .sticky-footer {
                 background-color: #f8f9fc;
                 padding: 10px 0;
             }
-
             .sticky-footer .container {
                 text-align: center;
             }
-
             .scroll-to-top {
                 position: fixed;
                 bottom: 1rem;
@@ -111,144 +87,174 @@
                 border-radius: 50%;
                 display: none;
             }
-
             .scroll-to-top:hover {
                 color: white;
                 background-color: #2e59d9;
-            }
-
-            .modal-body {
-                text-align: center;
-            }
-
-            .btn-primary {
-                background-color: #4e73df;
-                border-color: #4e73df;
-            }
-
-            .btn-primary:hover {
-                background-color: #2e59d9;
-                border-color: #2653d4;
             }
         </style>
 
     </head>
 
     <body id="page-top">
-
         <jsp:include page="headersale.jsp"/>
-
+        <!-- Page Wrapper -->
         <div id="wrapper">
             <!-- Sidebar -->
             <jsp:include page="navbarsale.jsp"/>
+            <!-- Sidebar -->
 
-            <div class="container">
-                <h1>Dashboard</h1>
 
-                <form method="get" action="${pageContext.request.contextPath}/saledashboard">
-                    <label for="fromDate">From Date:</label>
-                    <input type="date" id="fromDate" name="fromDate" required>
-                    <label for="toDate">To Date:</label>
-                    <input type="date" id="toDate" name="toDate" required>
-                    <button type="submit" class="btn btn-primary">Filter</button>
-                </form>
+            <div id="content-wrapper">
+                <div class="container-fluid">
+                    <h1>Orders List</h1>
+                    <form action="${pageContext.request.contextPath}/saleorderlist" method="get" style="margin-bottom: 20px;">
+                        <div class="form-row justify-content-center">
+                            <div class="form-group col-md-3">
+                                <label for="orderId">Order ID:</label>
+                                <input type="text" class="form-control" id="orderId" name="orderId" value="${param.orderId}">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="statusId">Status:</label>
+                                <select class="form-control" id="statusId" name="statusId">
+                                    <option value="">All</option>
+                                    <c:forEach var="status" items="${orderStatusList}">
+                                        <option value="${status.id}" ${param.statusId == status.id ? 'selected' : ''}>${status.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+<!--                            <div class="form-group col-md-3">
+                                <label for="fromDate">From Date:</label>
+                                <input type="date" class="form-control" id="fromDate" name="fromDate" value="${param.fromDate}" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="toDate">To Date:</label>
+                                <input type="date" class="form-control" id="toDate" name="toDate" value="${param.toDate}" required>
+                            </div>-->
+<!--                            <div class="form-group col-md-3">
+                                <label for="staffName">Staff Name:</label>
+                                <input type="text" class="form-control" id="staffName" name="staffName" value="${param.staffName}">
+                            </div>-->
+                            <div class="form-group col-md-3">
+                                <label for="customerName">Customer Name:</label>
+                                <input type="text" class="form-control" id="customerName" name="customerName" value="${param.customer_name}">
+                            </div>
+                            <div class="form-group col-md-3" style="margin:24px">
+                                <button type="submit" class="btn btn-primary">Filter</button>
+                            </div>
+                        </div>
+                    </form>
 
-                <h2>Order List</h2>
-                <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>Customer</th>
-                        <th>Total Cost</th>
-                        <th>Order Date</th>
-                        <th>Actions</th>
-                        <th>Status</th>
-                    </tr>
-                    <c:forEach var="order" items="${orders}">
-                        <tr>
-                            <td><a href="saleorderdetails?id=${order.id}">${order.id}</a></td>
-                            <td>${order.customer_name}</td>
-                            <td>${order.totalCost}</td>
-                            <td>${order.orderDate}</td>
-                            <td><a href="saleorderdetails?id=${order.id}" class="btn btn-info">View Details</a></td>
-                            <td>
-                                <form action="${pageContext.request.contextPath}/saleorderlist" method="post">
-                                    <input type="hidden" name="orderId" value="${order.id}">
-                                    <select name="statusId">
-                                        <!-- Lặp qua danh sách status để hiển thị -->
-                                        <c:forEach var="status" items="${orderStatusList}">
-                                            <option value="${status.id}" ${status.id eq order.status_id ? 'selected' : ''}>${status.name}</option>
-                                        </c:forEach>
-                                    </select>
-                                    <button type="submit">Update Status</button>
-                                </form>
-                            </td>
 
-                        </tr>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Total Cost</th>
+                                <th>Order Date</th>
+                                <th>Actions</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="order" items="${orders}">
+                                <tr>
+                                    <td><a href="saleorderdetails?id=${order.id}">${order.id}</a></td>
+                                    <td>${order.customer_name}</td>
+                                    <td>${order.totalCost}</td>
+                                    <td>${order.orderDate}</td>
+                                    <td><a href="saleorderdetails?id=${order.id}" class="btn btn-info">View Details</a></td>
+                                    <td>
+                                        <form action="${pageContext.request.contextPath}/saleorderlist" method="post" style="display:inline;">
+                                            <input type="hidden" name="orderId" value="${order.id}">
+                                            <select name="statusId">
+                                                <c:forEach var="status" items="${orderStatusList}">
+                                                    <option value="${status.id}" ${order.status_id == status.id ? 'selected' : ''}>${status.name}</option>
+                                                </c:forEach>
+                                            </select>
+                                            <button type="submit">Update</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
 
-                    </c:forEach>
-
-                </table>
-            </div>
-
-            <!-- /.container-fluid -->
-
-            <!-- Sticky Footer -->
-            <footer class="sticky-footer">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright © Your Website 2019</span>
+                    <div>
+                        <c:if test="${currentPage > 1}">
+                            <a href="${pageContext.request.contextPath}/saleorderlist?page=${currentPage - 1}&statusId=${statusId}&orderId=${orderId}">Previous</a>
+                        </c:if>
+                        <c:forEach begin="1" end="${totalPages}" var="i">
+                            <c:url var="pageUrl" value="/saleorderlist">
+                                <c:param name="page" value="${i}" />
+                                <c:if test="${not empty statusId}">
+                                    <c:param name="statusId" value="${statusId}" />
+                                </c:if>
+                                <c:if test="${not empty orderId}">
+                                    <c:param name="orderId" value="${orderId}" />
+                                </c:if>
+                            </c:url>
+                            <a href="${pageUrl}">${i}</a>
+                        </c:forEach>
+                        <c:if test="${currentPage < totalPages}">
+                            <a href="${pageContext.request.contextPath}/saleorderlist?page=${currentPage + 1}&statusId=${statusId}&orderId=${orderId}">Next</a>
+                        </c:if>
                     </div>
                 </div>
-            </footer>
+                <!-- /.container-fluid -->
+                <footer class="sticky-footer">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright © Your Website 2019</span>
+                        </div>
+                    </div>
+                </footer>
 
-        </div>
-        <!-- /.content-wrapper -->
+            </div>
+            <!-- /.content-wrapper -->
 
-    </div>
-    <!-- /#wrapper -->
+            <!-- Scroll to Top Button-->
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+            <!-- Logout Modal-->
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            <a class="btn btn-primary" href="login.html">Logout</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="<c:url value='/vendor/jquery/jquery.min.js'/>"></script>
-    <script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js'/>"></script>
+            <!-- Bootstrap core JavaScript-->
+            <script src="<c:url value='/vendor/jquery/jquery.min.js'/>"></script>
+            <script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js'/>"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="<c:url value='/vendor/jquery-easing/jquery.easing.min.js'/>"></script>
+            <!-- Core plugin JavaScript-->
+            <script src="<c:url value='/vendor/jquery-easing/jquery.easing.min.js'/>"></script>
 
-    <!-- Page level plugin JavaScript-->
-    <script src="<c:url value='/vendor/datatables/jquery.dataTables.js'/>"></script>
-    <script src="<c:url value='/vendor/datatables/dataTables.bootstrap4.js'/>"></script>
+            <!-- Page level plugin JavaScript-->
+            <script src="<c:url value='/vendor/datatables/jquery.dataTables.js'/>"></script>
+            <script src="<c:url value='/vendor/datatables/dataTables.bootstrap4.js'/>"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="<c:url value='/js/sb-admin.min.js'/>"></script>
+            <!-- Custom scripts for all pages-->
+            <script src="<c:url value='/js/sb-admin.min.js'/>"></script>
 
-    <!-- Demo scripts for this page-->
-    <script src="<c:url value='/js/demo/datatables-demo.js'/>"></script>
+            <!-- Demo scripts for this page-->
+            <script src="<c:url value='/js/demo/datatables-demo.js'/>"></script>
 
-</body>
+    </body>
 
 </html>

@@ -62,21 +62,28 @@ public class SaleDashBoardController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         OrderDAO orderDAO = new OrderDAO();
-        String fromDate = request.getParameter("fromDate");
-        String toDate = request.getParameter("toDate");
+    
+    String fromDateParam = request.getParameter("fromDate");
+    String toDateParam = request.getParameter("toDate");
 
-        List<Order> orders;
-        if (fromDate != null && toDate != null) {
-            orders = orderDAO.getOrdersByDateRange(fromDate, toDate);
-        } else {
-            // Default date range for the last 7 days
-            LocalDate now = LocalDate.now();
-            fromDate = now.minusDays(7).toString();
-            toDate = now.toString();
-            orders = orderDAO.getOrdersByDateRange(fromDate, toDate);
-        }
-        request.setAttribute("orders", orders);
-        request.getRequestDispatcher("view/sale/saledashboard.jsp").forward(request, response);
+    LocalDate fromDate;
+    LocalDate toDate;
+
+    if (fromDateParam != null && toDateParam != null) {
+        fromDate = LocalDate.parse(fromDateParam);
+        toDate = LocalDate.parse(toDateParam);
+    } else {
+        // Default date range for the last 7 days
+        LocalDate now = LocalDate.now();
+        fromDate = now.minusDays(7);
+        toDate = now;
+    }
+
+    // Get orders based on the date range
+    List<Order> orders = orderDAO.getOrdersByDateRange(fromDate, toDate);
+
+    request.setAttribute("orders", orders);
+    request.getRequestDispatcher("/view/sale/saledashboard.jsp").forward(request, response);
     }
 
     /**

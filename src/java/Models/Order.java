@@ -10,7 +10,7 @@ package Models;
  */
 public class Order {
 
-    String id, customer, totalCost, note, orderDate, address, phone, isDelete, staff,status_id,status_name, customer_name;
+    String id, customer, totalCost, note, orderDate, address, phone, isDelete, staff,status_id,status_name, customer_name,staff_name;
 
     public Order() {
     }
