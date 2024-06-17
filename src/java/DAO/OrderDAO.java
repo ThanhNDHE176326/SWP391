@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +87,7 @@ public class OrderDAO extends DBContext {
     public Order getOrderById(String id) {
         Order order = null;
         try {
-            String sql = "SELECT o.*,c.name AS customer_name "
+            String sql = "SELECT o.*, c.name AS customer_name "
                     + "FROM Orders o "
                     + "INNER JOIN Customers c ON o.customer_id = c.id "
                     + "WHERE o.id = ?";
@@ -118,7 +119,10 @@ public class OrderDAO extends DBContext {
 
         try {
             // Get connection from DBContext
-            String sql = "SELECT * FROM orders WHERE order_date >= ? AND order_date <= ?";
+            String sql = "SELECT o.*, c.name AS customer_name "
+                    + " FROM Orders o "
+                    + "INNER JOIN Customers c ON o.customer_id = c.id "
+                    + " WHERE order_date >= ? AND order_date <= ?";
             stm = connection.prepareStatement(sql);
             stm.setObject(1, fromDate);
             stm.setObject(2, toDate);
@@ -127,7 +131,7 @@ public class OrderDAO extends DBContext {
             while (rs.next()) {
                 Order order = new Order();
                 order.setId(rs.getString("id"));
-                order.setCustomer(rs.getString("customer_id"));
+                order.setCustomer_name(rs.getString("customer_name"));
                 order.setTotalCost(rs.getString("total_cost"));
                 order.setNote(rs.getString("note"));
                 order.setOrderDate(rs.getString("order_date"));
@@ -195,7 +199,7 @@ public class OrderDAO extends DBContext {
         String sql = "SELECT o.id,s.name AS status_name, c.name as customer_name,  o.total_cost, o.order_date "
                 + "FROM Orders o "
                 + "INNER JOIN Customers c ON o.customer_id = c.id "
-                 + "INNER JOIN OrderStatus s ON o.status_id = s.id "
+                + "INNER JOIN OrderStatus s ON o.status_id = s.id "
                 + "WHERE c.name LIKE ? AND o.isDelete = 1";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -229,7 +233,7 @@ public class OrderDAO extends DBContext {
             stmt.setString(1, "%" + staffName + "%");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                 Order order = new Order();
+                Order order = new Order();
                 order.setId(rs.getString("id"));
                 order.setCustomer_name(rs.getString("customer_name"));
                 order.setOrderDate(rs.getString("order_date"));
@@ -433,7 +437,10 @@ public class OrderDAO extends DBContext {
 
     public static void main(String[] args) {
         OrderDAO dao = new OrderDAO();
-        System.out.println("minDate: " + dao.getOrdersByCustomerName("Kiều Thị AB"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String fromDate = LocalDate.of(2024, 5, 1).format(formatter);
+        String toDate = LocalDate.of(2024, 6, 17).format(formatter);
+        System.out.println("Orders: " + dao.getOrdersByDateRange(fromDate, toDate));
         System.out.println("maxDate: " + dao.getDateMaxInOrder());
     }
 }
