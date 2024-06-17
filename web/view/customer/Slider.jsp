@@ -8,11 +8,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <jsp:useBean id="t" class="DAO.HomePageDAO" scope="request" />
 <title>Slider in CSS</title>
 <style>
 
 body{
-    background-color: rgb(58, 58, 58);
+    background-color: white;
     margin-top: 100px;
 }
 .carousel-container {
@@ -83,9 +84,9 @@ body{
 }
 
 .image-text {
-  position: absolute;
+   position: relative; /* Thay đổi từ absolute sang relative */
   bottom: 0;
-  width: 103%;
+  width: 100%; /* Thay đổi từ 103% thành 100% để đảm bảo rộng bằng ảnh */
   display: flex;
   font-size: 20px;
   justify-content: center;
@@ -98,7 +99,7 @@ body{
 </style>
 </head>
 <body>
-    <form action="slider" method="post">
+    
 <div id="parent-container">
 
 <div class="navigation-buttons">
@@ -108,22 +109,23 @@ body{
 
 <div class="slider-carousel">
   <div class="images main">
-    <img src="${data}" alt="flower 1" />
-    <div class="image-text">Sale off 20%</div>
+      <img src="${pageContext.request.contextPath}/images/${t.image1ByShowStatus.image}" alt="" />
+    <div class="image-text">${t.image1ByShowStatus.title}</div>
   </div>
 <div class="images">
-    <img src="${data}" alt="flower 2" />
-    <div class="image-text">New Event</div>
+    <img src="${pageContext.request.contextPath}/images/${t.image2ByShowStatus.image}" alt="" />
+    <div class="image-text">${t.image2ByShowStatus.title}</div>
   </div>
   <div class="images">
-    <img src="${data}" alt="flower 3" />
-    <div class="image-text">Image 3</div>
+      <img src="${pageContext.request.contextPath}/images/${t.image3ByShowStatus.image}" alt="" />      
+    <div class="image-text">${t.image3ByShowStatus.title}</div>
   </div>      
 </div>
 
 </div>
+    
         
-</form> 
+ 
     
 <script>
 
@@ -181,5 +183,4 @@ body{
 
 </body>
 </html>
-
 

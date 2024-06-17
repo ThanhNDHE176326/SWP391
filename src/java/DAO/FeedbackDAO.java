@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -487,4 +487,22 @@ public class FeedbackDAO extends DBContext {
         return listFeedbackByCategories;
     }
 
+    public void update(String status, String id) {
+         try {
+        String strSQL = "UPDATE [dbo].[Feedbacks]\n"
+                + "   SET \n"
+                + "      [status] = ?\n"
+                + " WHERE id = ?";
+        stm = connection.prepareStatement(strSQL);
+
+        stm.setString(1, status);
+        stm.setString(2, id);
+
+        stm.executeUpdate();
+
+    } catch (Exception e) {
+        System.out.println("Lỗi khi cập nhật: " + e.getMessage());
+    }
 }
+    }
+

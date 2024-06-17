@@ -14,6 +14,15 @@ public class Slider {
 
     public Slider() {
     }
+
+    public Slider(String title, String image) {
+        this.title = title;
+        this.image = image;
+    }
+
+    public Slider(String image) {
+        this.image = image;
+    }
     
 
     public Slider(String id, String title, String image, String note, String staff, String startDate, String endDate, String isDelete) {
