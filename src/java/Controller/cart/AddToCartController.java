@@ -112,6 +112,10 @@ public class AddToCartController extends HttpServlet {
                         response.sendRedirect("viewCartDetail");
 
         }
+        if(location.equals("home")){
+                        response.sendRedirect("view/customer/homepage.jsp");
+
+        }
         session.setAttribute("customerID", customerID_STR);
         
     }

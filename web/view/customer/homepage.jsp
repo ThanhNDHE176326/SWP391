@@ -191,7 +191,7 @@
         <section id="blog"><!--/#blog-->
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-8">
+                    <div class="col-sm-12">
                         <div class="blog-post-area">
                             <h2 class="title text-center">Latest From Our Blog</h2>
                             <div class="single-blog-post row">
@@ -210,7 +210,7 @@
                                         </ul>
                                     </div>
                                     <p>${t.top1Blog.description}</p>
-                                    <a href="blogdetail?id=${t.top1Blog.id}" class="btn btn-primary">Read More</a>
+                                    <a href="${pageContext.request.contextPath}/blogdetail?id=${t.top1Blog.id}" class="btn btn-primary">Read More</a>
                                 </div>
                             </div>
                         </div>
@@ -356,14 +356,14 @@
                                 <c:forEach var="product" items="${t.popularProducts}">
                                     <div class="col-sm-4">
                                         <div class="product-image-wrapper">
-                                            <div class="single-products">
+                                            <div class="single-products  product-item" data-id="${product.id}">
                                                 <div class="productinfo text-center">
                                                     <img src="${pageContext.request.contextPath}/images/${product.image}" alt="${product.title}" />
                                                     <h2>${product.title}</h2>
                                                     <p>${product.description}</p>
                                                     <div class="button-container">
-                                                        <a href="${pageContext.request.contextPath}/addToCart?productID=${product.id}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                        <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                        <a href="${pageContext.request.contextPath}/addToCart?productID=${product.id}&location=home" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                     </div>
                                                 </div>
                                                 <div class="product-overlay">
@@ -371,8 +371,8 @@
                                                         <h2>${product.title}</h2>
                                                         <p>${product.description}</p>
                                                         <div class="button-container">
-                                                            <a href="${pageContext.request.contextPath}/addToCart?productID=${product.id}&location=list" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                            <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                            <a href="${pageContext.request.contextPath}/addToCart?productID=${product.id}&location=home" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                            <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -389,7 +389,17 @@
                             </div>
                         </div>
                     </div>
-
+<script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var productItems = document.querySelectorAll('.product-item');
+                productItems.forEach(function (item) {
+                    item.addEventListener('click', function () {
+                        var productId = this.getAttribute('data-id');
+                        window.location.href = '${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=' + productId;
+                    });
+                });
+            });
+        </script>
 
                 </div><!--/recommended_items-->
 
