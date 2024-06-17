@@ -9,168 +9,168 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-    <title>Saler - Dashboard</title>
+        <title>Saler - Dashboard</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="<c:url value='/vendor/fontawesome-free/css/all.min.css'/>" rel="stylesheet" type="text/css">
+        <!-- Custom fonts for this template-->
+        <link href="<c:url value='/vendor/fontawesome-free/css/all.min.css'/>" rel="stylesheet" type="text/css">
 
-    <!-- Page level plugin CSS-->
-    <link href="<c:url value='/vendor/datatables/dataTables.bootstrap4.css'/>" rel="stylesheet">
+        <!-- Page level plugin CSS-->
+        <link href="<c:url value='/vendor/datatables/dataTables.bootstrap4.css'/>" rel="stylesheet">
 
-    <!-- Custom styles for this template-->
-    <link href="<c:url value='/css/sb-admin.css'/>" rel="stylesheet">
-    <link rel="stylesheet" href="<c:url value='/css/colReorder-bootstrap4.css'/>">
+        <!-- Custom styles for this template-->
+        <link href="<c:url value='/css/sb-admin.css'/>" rel="stylesheet">
+        <link rel="stylesheet" href="<c:url value='/css/colReorder-bootstrap4.css'/>">
 
-    <!-- Additional custom styles for better appearance -->
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fc;
-        }
+        <!-- Additional custom styles for better appearance -->
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f8f9fc;
+            }
 
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-        }
+            .container {
+                max-width: 1200px;
+                margin: 20px auto;
+            }
 
-        h1 {
-            color: #4e73df;
-            text-align: center;
-            margin-bottom: 20px;
-        }
+            h1 {
+                color: #4e73df;
+                text-align: center;
+                margin-bottom: 20px;
+            }
 
-        form {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
+            form {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
 
-        form label {
-            margin: 0 10px;
-        }
+            form label {
+                margin: 0 10px;
+            }
 
-        form input, form button {
-            margin: 0 10px;
-            padding: 5px 10px;
-            font-size: 1rem;
-        }
+            form input, form button {
+                margin: 0 10px;
+                padding: 5px 10px;
+                font-size: 1rem;
+            }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
 
-        table, th, td {
-            border: 1px solid #ddd;
-        }
+            table, th, td {
+                border: 1px solid #ddd;
+            }
 
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
+            th, td {
+                padding: 10px;
+                text-align: center;
+            }
 
-        th {
-            background-color: #4e73df;
-            color: white;
-        }
+            th {
+                background-color: #4e73df;
+                color: white;
+            }
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
 
-        .sticky-footer {
-            background-color: #f8f9fc;
-            padding: 10px 0;
-        }
+            .sticky-footer {
+                background-color: #f8f9fc;
+                padding: 10px 0;
+            }
 
-        .sticky-footer .container {
-            text-align: center;
-        }
+            .sticky-footer .container {
+                text-align: center;
+            }
 
-        .scroll-to-top {
-            position: fixed;
-            bottom: 1rem;
-            right: 1rem;
-            width: 2.75rem;
-            height: 2.75rem;
-            text-align: center;
-            color: white;
-            background-color: #4e73df;
-            border-radius: 50%;
-            display: none;
-        }
+            .scroll-to-top {
+                position: fixed;
+                bottom: 1rem;
+                right: 1rem;
+                width: 2.75rem;
+                height: 2.75rem;
+                text-align: center;
+                color: white;
+                background-color: #4e73df;
+                border-radius: 50%;
+                display: none;
+            }
 
-        .scroll-to-top:hover {
-            color: white;
-            background-color: #2e59d9;
-        }
+            .scroll-to-top:hover {
+                color: white;
+                background-color: #2e59d9;
+            }
 
-        .modal-body {
-            text-align: center;
-        }
-    </style>
+            .modal-body {
+                text-align: center;
+            }
+        </style>
 
-</head>
+    </head>
 
-<body id="page-top">
+    <body id="page-top">
 
-    <jsp:include page="headersale.jsp"/>
+        <jsp:include page="headersale.jsp"/>
 
-    <div id="wrapper">
-        <!-- Sidebar -->
-        <jsp:include page="navbarsale.jsp"/>
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <jsp:include page="navbarsale.jsp"/>
 
-        <div class="container">
-            <h1>Dashboard</h1>
+            <div class="container">
+                <h1>Dashboard</h1>
 
-            <form method="get" action="${pageContext.request.contextPath}/saledashboard">
-                <label for="fromDate">From Date:</label>
-                <input type="date" id="fromDate" name="fromDate" required>
-                <label for="toDate">To Date:</label>
-                <input type="date" id="toDate" name="toDate" required>
-                <button type="submit">Filter</button>
-            </form>
+                <form method="get" action="${pageContext.request.contextPath}/saledashboard">
+                    <label for="fromDate">From Date:</label>
+                    <input type="date" id="fromDate" name="fromDate" value="${param.fromDate}" required>
+                    <label for="toDate">To Date:</label>
+                    <input type="date" id="toDate" name="toDate" value="${param.toDate}" required>
+                    <button type="submit">Filter</button>
+                </form>
 
-            <h2>Order Trends</h2>
-            <table>
-                <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Total Cost</th>
-                    <th>Order Date</th>
-                </tr>
-                <c:forEach var="order" items="${orders}">
+                <h2>Order Trends</h2>
+                <table>
                     <tr>
-                        <td>${order.id}</td>
-                        <td>${order.customer}</td>
-                        <td>${order.totalCost}</td>
-                        <td>${order.orderDate}</td>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Total Cost</th>
+                        <th>Order Date</th>
                     </tr>
-                </c:forEach>
-            </table>
-        </div>
-
-        <!-- /.container-fluid -->
-
-        <!-- Sticky Footer -->
-        <footer class="sticky-footer">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright © Your Website 2019</span>
-                </div>
+                    <c:forEach var="order" items="${orders}">
+                        <tr>
+                            <td>${order.id}</td>
+                            <td>${order.customer}</td>
+                            <td>${order.totalCost}</td>
+                            <td>${order.orderDate}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
             </div>
-        </footer>
 
-    </div>
-    <!-- /.content-wrapper -->
+            <!-- /.container-fluid -->
+
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © Your Website 2019</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
 
     </div>
     <!-- /#wrapper -->
@@ -182,7 +182,7 @@
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

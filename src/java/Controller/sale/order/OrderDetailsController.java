@@ -80,14 +80,16 @@ public class OrderDetailsController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         OrderDAO orderDAO = new OrderDAO();
+                String id_1 = request.getParameter("id");
+
         String id = request.getParameter("orderId");
         String statusId = request.getParameter("statusId");
 
         orderDAO.updateOrderStatus(id, statusId);
 
         // Retrieve updated order details
-        Order order = orderDAO.getOrderById(id);
-        List<OrderDetail> orderDetails = orderDAO.getOrderDetailsByOrderId(id);
+        Order order = orderDAO.getOrderById(id_1);
+        List<OrderDetail> orderDetails = orderDAO.getOrderDetailsByOrderId(id_1);
         List<OrderStatus> orderStatusList = orderDAO.getAllOrderStatus();
 
         request.setAttribute("order", order);
