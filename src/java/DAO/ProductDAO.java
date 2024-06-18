@@ -690,9 +690,35 @@ public class ProductDAO extends DBContext {
         }
         return null;
     }
-    public static void main(String[] args) {
-        ProductDAO dao = new ProductDAO();
-        Product product = dao.getMostOrderedProductBetweenDates("2024-05-01", "2024-05-09");
-        System.out.println(product);
+
+   
+
+    public int getQuantityByProductID(int productID) {
+        String sql = "SELECT quantity FROM Products WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, productID);
+            rs = stm.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("getQuantityByProductID: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    public void updateQuantityAfterCart(int productID, int quantityChanged) {
+        String sql = "UPDATE [dbo].[Products]\n"
+                + "   SET [quantity] = ?    \n"
+                + " WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, quantityChanged);
+            stm.setInt(2, productID);
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("updateQuantityAfterCart: " + e.getMessage());
+        }
     }
 }

@@ -221,216 +221,228 @@
                                         <div class="button-container">
                                             <button type="submit" class="styled-button">Submit</button>
                                         </div>
+                                    </div>
                                 </form>
                             </div>
-                        </div>
-                        <form id="cartForm" action="${pageContext.request.contextPath}/pushToCartCompletion" method="POST">
-                            <div class="table-responsive cart_info" style="max-width: 1400px; margin: auto;">
-                                <table class="table table-condensed">
-                                    <thead>
-                                        <tr class="cart_menu">
-                                            <td class="select" style="width: 15%;">Select</td>
-                                            <td class="address" style="width: 30%;">Delivery Address</td>
-                                            <td class="phone" style="width: 20%;">Phone</td>
-                                            <td class="name" style="width: 20%;">Name</td>
-                                            <td class="gender" style="width: 20%;">Gender</td>
-                                            <td class="delete" style="width: 15%;">Delete</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="cart_select" style="text-align: center; vertical-align: middle;">
-                                                <input type="radio" name="selectedProducts" value="${user1.id}" class="product-checkbox" style="margin: 0; transform: scale(1.2); accent-color: #007bff;">
-                                            </td>
-                                            <td class="cart_description">
-                                                <p>${user1.address}</p>
-                                            </td>
-                                            <td class="cart_quantity">
-                                                <p>${user1.phone}</p>
-                                            </td>
-                                            <td class="cart_name">
-                                                <p>${user1.name}</p>
-                                            </td>
-                                            <td class="cart_gender">
-                                                <p>${user1.gender == 1 ? 'Male' : 'Female'}</p>
-                                            </td>
-                                            <td class="cart_delete">
-                                                <a class="cart_quantity_delete" href="javascript:void(0);"><i class=""></i></a>
-                                            </td>
-                                        </tr>
-                                        <c:forEach var="shippingaddress" items="${shippingaddress}">
+                            <form id="cartForm" action="${pageContext.request.contextPath}/cartCompletion" method="POST">
+                                <div class="table-responsive cart_info" style="max-width: 1400px; margin: auto;">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                            <tr class="cart_menu">
+                                                <td class="select" style="width: 15%;">Select</td>
+                                                <td class="address" style="width: 30%;">Delivery Address</td>
+                                                <td class="phone" style="width: 20%;">Phone</td>
+                                                <td class="name" style="width: 20%;">Name</td>
+                                                <td class="gender" style="width: 20%;">Gender</td>
+                                                <td class="delete" style="width: 15%;">Delete</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                             <tr>
                                                 <td class="cart_select" style="text-align: center; vertical-align: middle;">
-                                                    <input type="radio" name="selectedProducts" value="${shippingaddress.id}" data-price="${product.salePrice}" data-quantity="${product.quantity}" class="product-checkbox" style="margin: 0; transform: scale(1.2); accent-color: #007bff;">
+                                                    <input type="radio" name="selectedAddressDefault" onclick="handleRadioClick(this)" value="${userCreateOrder.id}" class="product-checkbox" style="margin: 0; transform: scale(1.2); accent-color: #007bff;">
                                                 </td>
                                                 <td class="cart_description">
-                                                    <p>${shippingaddress.address}</p>
+                                                    <p>${userCreateOrder.address}</p>
                                                 </td>
                                                 <td class="cart_quantity">
-                                                    <p>${shippingaddress.phone}</p>
+                                                    <p>${userCreateOrder.phone}</p>
                                                 </td>
                                                 <td class="cart_name">
-                                                    <p>${shippingaddress.recipient_name}</p>
+                                                    <p>${userCreateOrder.name}</p>
                                                 </td>
                                                 <td class="cart_gender">
-                                                    <p>${shippingaddress.recipient_gender == 1 ? 'Male' : 'Female'}</p>
+                                                    <p>${userCreateOrder.gender == 1 ? 'Male' : 'Female'}</p>
                                                 </td>
                                                 <td class="cart_delete">
-                                                    <a class="cart_quantity_delete" href="${pageContext.request.contextPath}/deleteDeliveryAddress?id=${shippingaddress.id}"><i class="fa fa-times"></i></a>
+                                                    <a class="cart_quantity_delete" href="javascript:void(0);"><i class=""></i></a>
                                                 </td>
                                             </tr>
-                                        </c:forEach>
-                                    </tbody>
+                                            <c:forEach var="shippingaddress" items="${shippingaddress}">
+                                                <tr>
+                                                    <td class="cart_select" style="text-align: center; vertical-align: middle;">
+                                                        <input type="radio" name="selectedAddressChange" onclick="handleRadioClick(this)" value="${shippingaddress.id}" data-price="${product.salePrice}" data-quantity="${product.quantity}" class="product-checkbox" style="margin: 0; transform: scale(1.2); accent-color: #007bff;">
+                                                    </td>
+                                                    <td class="cart_description">
+                                                        <p>${shippingaddress.address}</p>
+                                                    </td>
+                                                    <td class="cart_quantity">
+                                                        <p>${shippingaddress.phone}</p>
+                                                    </td>
+                                                    <td class="cart_name">
+                                                        <p>${shippingaddress.recipient_name}</p>
+                                                    </td>
+                                                    <td class="cart_gender">
+                                                        <p>${shippingaddress.recipient_gender == 1 ? 'Male' : 'Female'}</p>
+                                                    </td>
+                                                    <td class="cart_delete">
+                                                        <a class="cart_quantity_delete" href="${pageContext.request.contextPath}/deleteDeliveryAddress?id=${shippingaddress.id}"><i class="fa fa-times"></i></a>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
 
-                                </table>
-                                <!-- Thêm input ẩn để lưu giá trị của radio button đã chọn -->
-                                <input type="hidden" id="selectedAddressId" name="selectedAddressId" value="">
-                            </div>
-                            <div class="table-responsive cart_info" style="max-width: 1400px; margin-top: 50px;">
-                                <table class="table table-condensed">
-                                    <thead>
-                                        <tr class="cart_menu">
-                                            <td class="image">Item</td>
-                                            <td class="description">Title</td>
-                                            <td class="price">Price</td>
-                                            <td class="quantity">Quantity</td>
-                                            <td class="total">Total</td>
-                                            <!--<td class="delete">Delete</td>-->
-                                        </tr>
-                                    </thead>
-                                    <style>
-                                        .table-responsive.cart_info {
-                                            margin-bottom: 20px; /* Bottom margin for the table */
-                                            overflow-x: hidden; /* Hide horizontal scrollbar */
-                                        }
+                                    </table>
+                                    <!-- Thêm input ẩn để lưu giá trị của radio button đã chọn -->
+                                    <!--<input type="hidden" id="selectedAddressId" name="selectedAddressId" value="">-->
+                                </div>
+                                <div class="table-responsive cart_info" style="max-width: 1400px; margin-top: 50px;">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                            <tr class="cart_menu">
+                                                <td class="image">Item</td>
+                                                <td class="description">Title</td>
+                                                <td class="price">Price</td>
+                                                <td class="quantity">Quantity</td>
+                                                <td class="total">Total</td>
+                                                <!--<td class="delete">Delete</td>-->
+                                            </tr>
+                                        </thead>
+                                        <style>
+                                            .table-responsive.cart_info {
+                                                margin-bottom: 20px; /* Bottom margin for the table */
+                                                overflow-x: hidden; /* Hide horizontal scrollbar */
+                                            }
 
-                                        .table.table-condensed {
-                                            width: 100%; /* Full width table */
-                                        }
+                                            .table.table-condensed {
+                                                width: 100%; /* Full width table */
+                                            }
 
-                                        .cart_menu td {
-                                            font-weight: bold; /* Bold font for header cells */
-                                            text-align: center; /* Center text alignment */
-                                            vertical-align: middle; /* Vertical middle alignment */
-                                            padding: 10px; /* Padding for table cells */
-                                            word-wrap: break-word; /* Break words if they are too long */
-                                        }
+                                            .cart_menu td {
+                                                font-weight: bold; /* Bold font for header cells */
+                                                text-align: center; /* Center text alignment */
+                                                vertical-align: middle; /* Vertical middle alignment */
+                                                padding: 10px; /* Padding for table cells */
+                                                word-wrap: break-word; /* Break words if they are too long */
+                                            }
 
-                                        .cart_menu td.image {
-                                            width: 30%; /* Adjusted width for Item cell */
-                                        }
+                                            .cart_menu td.image {
+                                                width: 30%; /* Adjusted width for Item cell */
+                                            }
 
-                                        .cart_menu td.description {
-                                            width: 20%; /* Adjusted width for Description cell */
-                                        }
+                                            .cart_menu td.description {
+                                                width: 20%; /* Adjusted width for Description cell */
+                                            }
 
-                                        .cart_menu td.price,
-                                        .cart_menu td.quantity,
-                                        .cart_menu td.total,
-                                        .cart_menu td.delete {
-                                            width: 10%; /* Width for each of these cells */
-                                        }
+                                            .cart_menu td.price,
+                                            .cart_menu td.quantity,
+                                            .cart_menu td.total,
+                                            .cart_menu td.delete {
+                                                width: 10%; /* Width for each of these cells */
+                                            }
 
-                                        .cart_menu td.cart_delete a {
-                                            color: #333; /* Color for Delete link */
-                                        }
+                                            .cart_menu td.cart_delete a {
+                                                color: #333; /* Color for Delete link */
+                                            }
 
-                                        .cart_menu td.cart_delete a:hover {
-                                            color: red; /* Hover color for Delete link */
-                                        }
+                                            .cart_menu td.cart_delete a:hover {
+                                                color: red; /* Hover color for Delete link */
+                                            }
 
-                                        .cart_product img {
-                                            width: 130px; /* Product image width */
-                                            height: auto; /* Maintain aspect ratio */
-                                        }
+                                            .cart_product img {
+                                                width: 130px; /* Product image width */
+                                                height: auto; /* Maintain aspect ratio */
+                                            }
 
-                                        .cart_quantity_button {
-                                            display: flex; /* Use flexbox for quantity controls */
-                                            align-items: center; /* Center align the items */
-                                            justify-content: center; /* Center align horizontally */
-                                        }
+                                            .cart_quantity_button {
+                                                display: flex; /* Use flexbox for quantity controls */
+                                                align-items: center; /* Center align the items */
+                                                justify-content: center; /* Center align horizontally */
+                                            }
 
-                                        .cart_quantity_button input {
-                                            margin: 0 5px; /* Margin between controls */
-                                            text-align: center; /* Center the quantity input text */
-                                            border: none; /* Remove border for read-only input */
-                                            background: transparent; /* Remove background for read-only input */
-                                        }
+                                            .cart_quantity_button input {
+                                                margin: 0 5px; /* Margin between controls */
+                                                text-align: center; /* Center the quantity input text */
+                                                border: none; /* Remove border for read-only input */
+                                                background: transparent; /* Remove background for read-only input */
+                                            }
 
-                                        .cart_description, .cart_price, .cart_quantity, .cart_total, .cart_delete,.cart_name, .cart_gender {
-                                            text-align: center; /* Center text alignment */
-                                            vertical-align: middle; /* Vertical middle alignment */
-                                        }
+                                            .cart_description, .cart_price, .cart_quantity, .cart_total, .cart_delete,.cart_name, .cart_gender {
+                                                text-align: center; /* Center text alignment */
+                                                vertical-align: middle; /* Vertical middle alignment */
+                                            }
 
-                                        .cart_price, .cart_quantity, .cart_total {
-                                            font-size: 16px; /* Set your desired font size here */
-                                            padding: 10px; /* Consistent padding for all cells */
-                                            box-sizing: border-box; /* Ensure padding is included in width calculation */
-                                        }
+                                            .cart_price, .cart_quantity, .cart_total {
+                                                font-size: 16px; /* Set your desired font size here */
+                                                padding: 10px; /* Consistent padding for all cells */
+                                                box-sizing: border-box; /* Ensure padding is included in width calculation */
+                                            }
 
-                                        .cart_description h4 a {
-                                            font-size: 15px !important;
-                                        }
-                                    </style>
-                                    <tbody>
-                                        <c:forEach var="product" items="${selectedProducts}">
+                                            .cart_description h4 a {
+                                                font-size: 15px !important;
+                                            }
+                                        </style>
+                                        <tbody>
+                                            <c:forEach var="product" items="${selectedProducts}">
+                                                <tr>
+                                                    <td class="cart_product">
+                                                        <a href=""><img src="<c:url value='/images/${product.image}'/>" alt=""></a>
+                                                    </td>
+                                                    <td class="cart_description">
+                                                        <h4><a href="">${product.title}</a></h4>
+                                                        <p>ID: ${product.id}</p>
+                                                        <input type="hidden" name="productId" value="${product.id}">
+                                                    </td>
+                                                    <td class="cart_price">
+                                                        <fmt:formatNumber value="${product.salePrice}" type="number" maxFractionDigits="0" />
+                                                    </td>
+                                                    <td class="cart_quantity">
+                                                        <div class="cart_quantity_button">
+                                                            <input class="cart_quantity_input" type="text" name="quantity" value="${product.quantity}" readonly>
+                                                        </div>
+                                                    </td>
+                                                    <td class="cart_total">
+                                                        <fmt:formatNumber value="${product.salePrice * product.quantity}" type="number" maxFractionDigits="0" />
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                        <tfoot>
                                             <tr>
-                                                <td class="cart_product">
-                                                    <a href=""><img src="<c:url value='/images/${product.image}'/>" alt=""></a>
-                                                </td>
-                                                <td class="cart_description">
-                                                    <h4><a href="">${product.title}</a></h4>
-                                                    <p>ID: ${product.id}</p>
-                                                </td>
-                                                <td class="cart_price">
-                                                    <fmt:formatNumber value="${product.salePrice}" type="number" maxFractionDigits="0" />
-                                                </td>
-                                                <td class="cart_quantity">
-                                                    <div class="cart_quantity_button">
-                                                        <input class="cart_quantity_input" type="text" name="quantity" value="${product.quantity}" readonly>
-                                                    </div>
-                                                </td>
-                                                <td class="cart_total">
-                                                    <fmt:formatNumber value="${product.salePrice * product.quantity}" type="number" maxFractionDigits="0" />
+                                                <td colspan="4" class="text-right">Total Price:</td>
+                                                <td class="cart_total_price">
+                                                    <c:set var="totalPrice" value="0" />
+                                                    <c:forEach var="product" items="${selectedProducts}">
+                                                        <c:set var="totalPrice" value="${totalPrice + (product.salePrice * product.quantity)}" />
+                                                    </c:forEach>
+                                                    <fmt:formatNumber value="${totalPrice}" type="number" maxFractionDigits="0" />
+                                                    <input type="hidden" name="totalCost" value="${totalPrice + (product.salePrice * product.quantity)}">
                                                 </td>
                                             </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="4" class="text-right">Total Price:</td>
-                                            <td class="cart_total_price">
-                                                <c:set var="totalPrice" value="0" />
-                                                <c:forEach var="product" items="${selectedProducts}">
-                                                    <c:set var="totalPrice" value="${totalPrice + (product.salePrice * product.quantity)}" />
-                                                </c:forEach>
-                                                <fmt:formatNumber value="${totalPrice}" type="number" maxFractionDigits="0" />
-                                            </td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                                        </tfoot>
+                                    </table>
+                                </div>
 
-                            </div>
-
-                            <p class="error-message">${mess}</p>
-                            <span id="phone-error" class="error-message"></span><br>
-
-                            </div>
-                        </form>
-
-                        <div class="button-container">
-                            <button type="button" class="styled-button" onclick="submitForm()">Submit</button>
+                                <p class="error-message">${mess}</p>
+                                <span id="phone-error" class="error-message"></span><br>
+                                <div class="button-container">
+                                    <button type="button" class="styled-button" onclick="submitForm()">Submit</button>
+                                </div>
+                            </form>
                         </div>
 
+
+
+
                         <script>
+                            function handleRadioClick(radio) {
+                                const allRadios = document.querySelectorAll('input[type="radio"]');
+                                allRadios.forEach((r) => {
+                                    if (r !== radio) {
+                                        r.checked = false;
+                                    }
+                                });
+                            }
                             function submitForm() {
-                                const selectedRadio = document.querySelector('input[name="selectedProducts"]:checked');
-                                if (selectedRadio) {
-                                    document.getElementById('selectedAddressId').value = selectedRadio.value;
-                                    document.getElementById('cartForm').submit(); // Gửi form khi đã cập nhật giá trị
-                                } else {
-                                    alert('Please select a delivery address.'); // Thông báo nếu chưa chọn địa chỉ giao hàng
+                                const defaultAddressRadio = document.querySelector('input[name="selectedAddressDefault"]:checked');
+                                const changeAddressRadio = document.querySelector('input[name="selectedAddressChange"]:checked');
+
+                                if (!defaultAddressRadio && !changeAddressRadio) {
+                                    alert("Please select a delivery address.");
+                                    return;
                                 }
+
+                                document.getElementById('cartForm').submit();
                             }
                         </script>
 

@@ -4,6 +4,8 @@
  */
 package Models;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author admin
@@ -37,6 +39,10 @@ public class Order {
         this.address = address;
         this.status_name = status_name;
     }
+
+//    public Order(String id, String totalCost, LocalDate orderDate, String addressOrder, String phoneOrder, int salerRandomID) {
+//        this
+//    }
     
 
     public String getCustomer_name() {

@@ -9,12 +9,17 @@ import dal.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author HP
  */
 public class StaffDAO extends DBContext {
+
+    PreparedStatement stm; // thực hiện câu lệnh SQL
+    ResultSet resultSET;//lưu trữ dữ liệu được lưu về từ  select
 
     public Staff loginStaff(String user) {
         String sql = "SELECT * FROM Staffs WHERE\n"
@@ -102,5 +107,37 @@ public class StaffDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         }
+    }
+
+    public List<Staff> getSalers() {
+        List<Staff> listSaler = new ArrayList<>();
+        String sql = "SELECT s.id, s.email, s.fullname, s.username, s.password, s.gender, s.phone, s.address, s.isDelete, r.name AS role_name\n"
+                + "FROM Staffs s JOIN Roles r ON s.role_id = r.id\n"
+                + "WHERE role_id = 2";
+        try {
+            stm = connection.prepareStatement(sql);
+            resultSET = stm.executeQuery();
+            while (resultSET.next()) {
+                String id = String.valueOf(resultSET.getInt("id"));
+//                String email = resultSET.getString("email");
+                String fullName = resultSET.getString("fullname");
+                String userName = resultSET.getString("username");
+                String password = resultSET.getString("password");
+                String gender = String.valueOf(resultSET.getInt("gender"));
+                String phone = resultSET.getString("phone");
+                String address = resultSET.getString("address");
+                String role = resultSET.getString("role_name");
+                String isDelete = String.valueOf(resultSET.getInt("isDelete"));
+                Staff saler = new Staff(id, fullName, userName, password, gender, phone, address, role, isDelete);
+                listSaler.add(saler);
+            }
+        } catch (SQLException e) {
+            System.out.println("getSalers: " + e.getMessage());
+        }
+        return listSaler;
+    }
+    public static void main(String[] args) {
+        StaffDAO dao = new StaffDAO();
+        System.out.println(dao.getSalers().size());
     }
 }
