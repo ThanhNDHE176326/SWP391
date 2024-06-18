@@ -112,6 +112,11 @@ public class AddToCartController extends HttpServlet {
                         response.sendRedirect("viewCartDetail");
 
         }
+        if(location.equals("myorders")){
+                        response.sendRedirect("listOrderCustomer");
+
+        }
+
         if(location.equals("home")){
                         response.sendRedirect("view/customer/homepage.jsp");
 
