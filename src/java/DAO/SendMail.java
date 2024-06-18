@@ -38,7 +38,7 @@ public class SendMail {
             prop.setProperty("mail.smtp.auth", "true");
             prop.setProperty("mail.smtp.starttls.enable", "true");
 //        prop.put("mail.smtp.starttls.required", "true");
-            prop.put("mail.smtp.socketFactory.pỏt", "587");
+            prop.put("mail.smtp.socketFactory.port", "587");
             prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 
             Session session = Session.getInstance(prop, new Authenticator() {

@@ -5,10 +5,13 @@
 package DAO;
 
 import Models.Customer;
+import Models.DeliveryAddresses;
 import dal.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import javax.mail.Authenticator;
@@ -24,8 +27,10 @@ import javax.mail.internet.MimeMessage;
  * @author HP
  */
 public class CustomerDAO extends DBContext {
-    PreparedStatement stm; 
+
+    PreparedStatement stm;
     ResultSet resultSET;
+
     //đăng kí
     public Customer LoginCustomer(String user) {
         String sql = "SELECT * FROM Customers WHERE\n"
@@ -98,7 +103,6 @@ public class CustomerDAO extends DBContext {
             System.out.println(e);
         }
     }
-
 
     public Customer getInformationCustomer(String name) {
         String sql = "SELECT * FROM Customers WHERE username=?";
@@ -185,11 +189,11 @@ public class CustomerDAO extends DBContext {
     }
 
     public int getTotalCustomer() {
-        String sql= "SELECT COUNT(*) FROM Customers";
+        String sql = "SELECT COUNT(*) FROM Customers";
         try {
-            stm=connection.prepareStatement(sql);
+            stm = connection.prepareStatement(sql);
             resultSET = stm.executeQuery();
-            while (resultSET.next()) {                
+            while (resultSET.next()) {
                 return resultSET.getInt(1);
             }
         } catch (SQLException e) {
@@ -197,10 +201,59 @@ public class CustomerDAO extends DBContext {
         }
         return 0;
     }
-    public static void main(String[] args) {
-        CustomerDAO dao = new CustomerDAO();
-        System.out.println(dao.getTotalCustomer());
+
+    public List<DeliveryAddresses> getAllAddress(String customer_id) {
+        List<DeliveryAddresses> list = new ArrayList<>();
+        String sql = "Select * From DeliveryAddresses where customer_id=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, customer_id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String id = String.valueOf(rs.getInt("id"));
+                String address = rs.getString("address");
+                String phone = rs.getString("phone");
+                String name = rs.getString("recipient_name");
+                String gender = rs.getString("recipient_gender");
+                DeliveryAddresses deliveryAddress = new DeliveryAddresses(id, customer_id, address, phone, name, gender);
+                list.add(deliveryAddress);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
     }
 
+    public void addDeliveryAddress(String customer_id, String address, String phone, String recipient_name, String recipient_gender) {
+        String sql = "INSERT INTO DeliveryAddresses (customer_id, address, phone, recipient_name, recipient_gender) "
+                + "VALUES (?, ?, ?, ?, ?)";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, customer_id);
+            ps.setString(2, address);
+            ps.setString(3, phone);
+            ps.setString(4, recipient_name);
+            ps.setString(5, recipient_gender);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteDeliveryAddress(int id) {
+        String sql = "DELETE FROM DeliveryAddresses WHERE id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        CustomerDAO dao = new CustomerDAO();
+        System.out.println(dao.getAllAddress(String.valueOf(21)));
+    }
 
 }

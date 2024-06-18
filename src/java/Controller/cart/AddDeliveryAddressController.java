@@ -5,7 +5,6 @@
 package Controller.cart;
 
 import DAO.CustomerDAO;
-import Models.Customer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,8 +18,8 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author HP
  */
-@WebServlet(name = "UpdateInfUserInCartController", urlPatterns = {"/updateinfuserincart"})
-public class UpdateInfUserInCartController extends HttpServlet {
+@WebServlet(name = "AddDeliveryAddressController", urlPatterns = {"/addDeliveryAddress"})
+public class AddDeliveryAddressController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +38,10 @@ public class UpdateInfUserInCartController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateInfUserInCartController</title>");
+            out.println("<title>Servlet AddDeliveryAddressController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateInfUserInCartController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddDeliveryAddressController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -75,14 +74,15 @@ public class UpdateInfUserInCartController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String name = request.getParameter("name");
+        CustomerDAO dao = new CustomerDAO();
+        String recipient_name = request.getParameter("name");
         String username = (String) session.getAttribute("username");
-        String email = request.getParameter("email");
+        String customer_id = dao.getInformationCustomer(username).getId();
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
-        String gender = request.getParameter("gender");
-        CustomerDAO dao = new CustomerDAO();
-        dao.updateInformationCustomer(username, email, name, address, phone, gender);
+        String recipient_gender = request.getParameter("gender");
+
+        dao.addDeliveryAddress(customer_id, address, phone, recipient_name, recipient_gender);
         request.getRequestDispatcher("pushToCartContact").forward(request, response);
     }
 
