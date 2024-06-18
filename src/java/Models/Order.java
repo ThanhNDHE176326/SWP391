@@ -29,6 +29,14 @@ public class Order {
         this.status_name = status_name;
         this.customer_name = customer_name;
     }
+
+    public Order(String id, String totalCost, String orderDate, String address, String status_name) {
+        this.id = id;
+        this.totalCost = totalCost;
+        this.orderDate = orderDate;
+        this.address = address;
+        this.status_name = status_name;
+    }
     
 
     public String getCustomer_name() {
@@ -157,4 +165,10 @@ public class Order {
         this.staff = staff;
     }
 
+    @Override
+    public String toString() {
+        return "Order{" + "id=" + id + ", customer=" + customer + ", totalCost=" + totalCost + ", note=" + note + ", orderDate=" + orderDate + ", address=" + address + ", phone=" + phone + ", isDelete=" + isDelete + ", staff=" + staff + ", status_id=" + status_id + ", status_name=" + status_name + ", customer_name=" + customer_name + ", staff_name=" + staff_name + '}';
+    }
+
+    
 }

@@ -68,7 +68,7 @@
                                                     <li><a href="checkout.jsp" style="color: #333; display: block; padding: 10px 20px; text-decoration: none; transition: background-color 0.3s ease; border: none;">Logout</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+                                            <li><a href="${pageContext.request.contextPath}/listOrderCustomer"><i class="fa fa-star"></i> My Orders</a></li>
                                             <li><a href="checkout.jsp"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                             <li><a href="${pageContext.request.contextPath}/viewCartDetail"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                             </c:when>
