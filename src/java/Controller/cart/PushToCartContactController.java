@@ -11,6 +11,7 @@ import DAO.ProductDAO;
 import DAO.ProductDAOByPublic;
 import Models.Category;
 import Models.Customer;
+import Models.DeliveryAddresses;
 import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -66,9 +67,29 @@ public class PushToCartContactController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        try {
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Redirecting...</title>");
+            out.println("<script type='text/javascript'>");
+            out.println("function redirectPost() {");
+            out.println("var form = document.createElement('form');");
+            out.println("form.method = 'POST';");
+            out.println("form.action = '" + request.getContextPath() + "/pushToCartContact';");
+            out.println("document.body.appendChild(form);");
+            out.println("form.submit();");
+            out.println("}");
+            out.println("</script>");
+            out.println("</head>");
+            out.println("<body onload='redirectPost()'>");
+            out.println("</body>");
+            out.println("</html>");
+        } finally {
+            out.close();
+        }
     }
 
     /**
@@ -88,6 +109,8 @@ public class PushToCartContactController extends HttpServlet {
         CustomerDAO customerDAO = new CustomerDAO();
         Customer user1 = customerDAO.getInformationCustomer(customerName);
         session.setAttribute("user1", user1);
+        List<DeliveryAddresses> shippingaddress = customerDAO.getAllAddress(user1.getId());
+        session.setAttribute("shippingaddress", shippingaddress);
         CartProductDAO cartProductDAO = new CartProductDAO();
         ProductDAO productDAO = new ProductDAO();
         CartDAO cartDAO = new CartDAO();
