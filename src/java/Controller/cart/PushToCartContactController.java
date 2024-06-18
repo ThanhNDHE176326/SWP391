@@ -107,9 +107,9 @@ public class PushToCartContactController extends HttpServlet {
         HttpSession session = request.getSession();
         String customerName = (String) session.getAttribute("username");
         CustomerDAO customerDAO = new CustomerDAO();
-        Customer user1 = customerDAO.getInformationCustomer(customerName);
-        session.setAttribute("user1", user1);
-        List<DeliveryAddresses> shippingaddress = customerDAO.getAllAddress(user1.getId());
+        Customer userCreateOrder = customerDAO.getInformationCustomer(customerName);
+        session.setAttribute("userCreateOrder", userCreateOrder);
+        List<DeliveryAddresses> shippingaddress = customerDAO.getAllAddress(userCreateOrder.getId());
         session.setAttribute("shippingaddress", shippingaddress);
         CartProductDAO cartProductDAO = new CartProductDAO();
         ProductDAO productDAO = new ProductDAO();

@@ -242,7 +242,7 @@ public class CustomerDAO extends DBContext {
 
     public void deleteDeliveryAddress(int id) {
         String sql = "DELETE FROM DeliveryAddresses WHERE id = ?";
-
+        
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -254,6 +254,36 @@ public class CustomerDAO extends DBContext {
     public static void main(String[] args) {
         CustomerDAO dao = new CustomerDAO();
         System.out.println(dao.getAllAddress(String.valueOf(21)));
+    }
+
+    public String getAddressByCustomerId(int customerID) {
+        String sql = "SELECT * FROM Customers WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, customerID);
+            resultSET = stm.executeQuery();
+            if(resultSET.next()){
+                return resultSET.getString("address");
+            }
+        } catch (SQLException e) {
+            System.out.println("getAddressByCustomerId: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public String getPhoneByCustomerId(int customerID) {
+        String sql = "SELECT * FROM Customers WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, customerID);
+            resultSET = stm.executeQuery();
+            if(resultSET.next()){
+                return resultSET.getString("phone");
+            }
+        } catch (SQLException e) {
+            System.out.println("getPhoneByCustomerId: " + e.getMessage());
+        }
+        return null;
     }
 
 }

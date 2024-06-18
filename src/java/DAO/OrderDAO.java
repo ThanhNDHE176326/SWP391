@@ -443,4 +443,57 @@ public class OrderDAO extends DBContext {
         System.out.println("Orders: " + dao.getOrdersByDateRange(fromDate, toDate));
         System.out.println("maxDate: " + dao.getDateMaxInOrder());
     }
+
+    public void createOrder(Order order) {
+        String sql = "INSERT INTO [dbo].[Orders]\n"
+                + "           ([customer_id]\n"
+                + "           ,[total_cost]\n"
+                + "           ,[order_date]\n"
+                + "           ,[address]\n"
+                + "           ,[phone]\n"
+                + "           ,[isDelete]\n"
+                + "           ,[staff_id]\n"
+                + "           ,[status_id])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,1,?,1)";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, Integer.parseInt(order.getCustomer()));
+            stm.setDouble(2, Double.parseDouble(order.getTotalCost()));
+            stm.setString(3, order.getOrderDate());
+            stm.setString(4, order.getAddress());
+            stm.setString(5, order.getPhone());
+            stm.setInt(6, Integer.parseInt(order.getStaff()));
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("createOrder: " + e.getMessage());
+        }
+    }
+
+    public void insertOrder(int customerID, String totalCost, LocalDate orderDate, String addressOrder, String phoneOrder, int salerRandomID) {
+        String sql = "INSERT INTO [dbo].[Orders]\n"
+                + "           ([customer_id]\n"
+                + "           ,[total_cost]\n"
+                + "           ,[note]\n"
+                + "           ,[order_date]\n"
+                + "           ,[address]\n"
+                + "           ,[phone]\n"
+                + "           ,[isDelete]\n"
+                + "           ,[staff_id]\n"
+                + "           ,[status_id])\n"
+                + "     VALUES\n"
+                + "           (?,?,'Không có yêu cầu đặc biệt',?,?,?,1,?,1)";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, customerID);
+            stm.setDouble(2, Double.parseDouble(totalCost));
+            stm.setString(3, String.valueOf(orderDate));
+            stm.setString(4, addressOrder);
+            stm.setString(5, phoneOrder);
+            stm.setInt(6, salerRandomID);
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("insertOrder: " + e.getMessage());
+        }
+    }
 }
