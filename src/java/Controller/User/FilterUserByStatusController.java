@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller;
+package Controller.User;
 
-import DAO.DAO;
-import Models.Slider;
+import DAO.UserDAO;
+import Models.Staff;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,8 +19,8 @@ import java.util.ArrayList;
  *
  * @author dat ngo huy
  */
-
-public class EditController extends HttpServlet {
+@WebServlet(name = "FilterUserByStatusController", urlPatterns = {"/FilterUserByStatus"})
+public class FilterUserByStatusController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +39,10 @@ public class EditController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet editSlider</title>");
+            out.println("<title>Servlet FilterUserByStatusController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet editSlider at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet FilterUserByStatusController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,14 +60,39 @@ public class EditController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        DAO da = new DAO();
+        UserDAO da = new UserDAO();
+        String statusSearch = request.getParameter("statusSearch");
+        String statusModeFromServlet = "";
+        ArrayList<Staff> listUserByStatus = new ArrayList<>();
 
-        if (request.getParameter("mode") != null && request.getParameter("mode").equals("1")) {
-            Slider slider = da.getSliderByID(id);
-            request.setAttribute("slider", slider);
-            request.getRequestDispatcher("view/marketing/editslider.jsp").forward(request, response);
+        if (statusSearch != null) {
+            switch (statusSearch) {
+
+                case "0":
+                    listUserByStatus = da.getUserByInActiveStatus();
+                    statusModeFromServlet = "inactive";
+                    break;
+
+                case "1":
+                    listUserByStatus = da.getUserByActiveStatus();
+                    statusModeFromServlet = "active";
+                    break;
+                case "all":
+                    listUserByStatus = da.getAllUser();
+                    statusModeFromServlet = "all";
+                    break;
+                default:
+                    // Xử lý các giá trị không mong muốn nếu cần
+                    break;
+            }
         }
+
+        request.setAttribute("listuser", listUserByStatus);
+        request.setAttribute("statusSearch", statusSearch);
+        request.setAttribute("statusModeFromServlet", statusModeFromServlet);
+
+        request.getRequestDispatcher("view/admin/listuser.jsp").forward(request, response);
+
     }
 
     /**
@@ -81,23 +106,7 @@ public class EditController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        String title = request.getParameter("title");
-        String image = request.getParameter("image");
-        String note = request.getParameter("note");
-        String staff = request.getParameter("staff");
-        String startDate = request.getParameter("startDate");
-        String endDate = request.getParameter("endDate");
-        String isDelete = request.getParameter("isDelete");
-        String status = request.getParameter("status");
-
-        DAO da = new DAO();
-        Slider s = new Slider(id, title, image, note, staff, startDate, endDate, isDelete, status);
-        da.update(s);
-        ArrayList<Slider> listslider = da.getSlider();
-        request.setAttribute("listslider", listslider);
-        request.getRequestDispatcher("view/marketing/listslider.jsp").forward(request, response);
-
+        processRequest(request, response);
     }
 
     /**

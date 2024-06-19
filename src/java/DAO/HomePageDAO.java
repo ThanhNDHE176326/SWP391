@@ -22,18 +22,20 @@ public class HomePageDAO extends dal.DBContext {
 
     public Slider getImage1ByShowStatus() {
         try {
-            String strSQL = "SELECT TOP 1 image,title\n"
-                    + "FROM sliders\n"
-                    + "WHERE status = 1\n"
-                    + "ORDER BY id ASC;";
+            String strSQL = "SELECT TOP 1 s.image, s.title, p.id AS product_id\n"
+                    + "FROM sliders s\n"
+                    + "JOIN products p ON s.id = p.slider_id\n"
+                    + "WHERE s.status = 1 \n"
+                    + "ORDER BY s.start_date DESC;";
             stm = connection.prepareStatement(strSQL);
 
             rs = stm.executeQuery();
             if (rs.next()) {
                 String title = rs.getString("title");
                 String image = rs.getString("image");
+                String product_id = rs.getString("product_id");
 
-                return new Slider(title, image);
+                return new Slider(title, image, product_id);
             }
         } catch (Exception e) {
             System.out.println("getImageByShowStatus:" + e.getMessage());
@@ -45,10 +47,14 @@ public class HomePageDAO extends dal.DBContext {
 
     public Slider getImage2ByShowStatus() {
         try {
-            String strSQL = "SELECT TOP 1 image,title\n"
-                    + "FROM sliders\n"
-                    + "WHERE id > (SELECT MIN(id) FROM sliders WHERE status = 1) AND status = 1\n"
-                    + "ORDER BY id ASC;";
+            String strSQL = "SELECT TOP 1 s.image, s.title, p.id AS product_id\n"
+                    + "FROM sliders s\n"
+                    + "JOIN products p ON s.id = p.slider_id\n"
+                    + "WHERE s.status = 1 \n"
+                    + "AND s.start_date < (SELECT MAX(s2.start_date) \n"
+                    + "                    FROM sliders s2 \n"
+                    + "                    WHERE s2.status = 1)\n"
+                    + "ORDER BY s.start_date DESC;";
             stm = connection.prepareStatement(strSQL);
 
             rs = stm.executeQuery();
@@ -56,8 +62,9 @@ public class HomePageDAO extends dal.DBContext {
 
                 String title = rs.getString("title");
                 String image = rs.getString("image");
+                String product_id = rs.getString("product_id");
 
-                return new Slider(title, image);
+                return new Slider(title, image, product_id);
             }
         } catch (Exception e) {
             System.out.println("getImageByShowStatus:" + e.getMessage());
@@ -69,18 +76,28 @@ public class HomePageDAO extends dal.DBContext {
 
     public Slider getImage3ByShowStatus() {
         try {
-            String strSQL = "SELECT TOP 1 image,title\n"
-                    + "FROM sliders\n"
-                    + "WHERE id > (SELECT MIN(id) FROM sliders WHERE status = 1 AND id > (SELECT MIN(id) FROM sliders WHERE status = 1)) AND status = 1\n"
-                    + "ORDER BY id ASC;";
+            String strSQL = "SELECT TOP 1 s.image, s.title, p.id AS product_id\n"
+                    + "FROM sliders s\n"
+                    + "JOIN products p ON s.id = p.slider_id\n"
+                    + "WHERE s.status = 1 \n"
+                    + "AND s.start_date < (\n"
+                    + "    SELECT MAX(s2.start_date) \n"
+                    + "    FROM sliders s2 \n"
+                    + "    WHERE s2.status = 1 \n"
+                    + "    AND s2.start_date < (SELECT MAX(s3.start_date) \n"
+                    + "                         FROM sliders s3 \n"
+                    + "                         WHERE s3.status = 1)\n"
+                    + ")\n"
+                    + "ORDER BY s.start_date DESC;";
             stm = connection.prepareStatement(strSQL);
 
             rs = stm.executeQuery();
             if (rs.next()) {
                 String title = rs.getString("title");
                 String image = rs.getString("image");
+                String product_id = rs.getString("product_id");
 
-                return new Slider(title, image);
+                return new Slider(title, image, product_id);
             }
         } catch (Exception e) {
             System.out.println("getImageByShowStatus:" + e.getMessage());
@@ -125,7 +142,7 @@ public class HomePageDAO extends dal.DBContext {
     }
 
     public ArrayList<Product> getPopularProducts() {
-         ArrayList<Product> list = new ArrayList<Product>();
+        ArrayList<Product> list = new ArrayList<Product>();
         try {
             String strSQL = "SELECT TOP 6 p.id, p.title, p.image, p.description, p.original_price, p.sale_price, \n"
                     + "             COALESCE(SUM(od.quantity), 0) AS total_sold\n"

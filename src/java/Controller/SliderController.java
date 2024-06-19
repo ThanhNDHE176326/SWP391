@@ -62,7 +62,7 @@ public class SliderController extends HttpServlet {
         DAO da = new DAO();                       
         ArrayList<Slider> listslider = da.getSlider();
         request.setAttribute("listslider", listslider);
-        request.getRequestDispatcher("ListSlider.jsp").forward(request, response);
+        request.getRequestDispatcher("view/marketing/listslider.jsp").forward(request, response);
     } 
 
     /** 

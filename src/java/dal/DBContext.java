@@ -10,11 +10,12 @@ import java.sql.SQLException;
 
 public class DBContext {
 
-    protected Connection connection;
+   protected Connection connection;
 
     public DBContext() {
         try {
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=SWP391_re20";
+// Edit URL , username, password to authenticate with your MS SQL Server
+            String url = "jdbc:sqlserver://DESKTOP-EM30SMM\\DATNGO:1433;databaseName=SWP391_re21";
             String username = "sa";
             String password = "123";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");

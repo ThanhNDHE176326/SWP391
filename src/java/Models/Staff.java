@@ -10,7 +10,7 @@ package Models;
  */
 public class Staff {
 
-    String id, fullname, username, password, email, gender, phone, address, role, isDelete, code;
+    String id, fullname, username, password, email, gender, phone, address, role, isDelete, code, status;
 
     public Staff() {
     }
@@ -26,6 +26,32 @@ public class Staff {
         this.role = role;
         this.isDelete = isDelete;
     }
+
+    public Staff(String id, String fullname, String username, String password, String email, String gender, String phone, String address, String role, String isDelete, String code, String status) {
+        this.id = id;
+        this.fullname = fullname;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.gender = gender;
+        this.phone = phone;
+        this.address = address;
+        this.role = role;
+        this.isDelete = isDelete;
+        this.code = code;
+        this.status = status;
+    }
+
+    public Staff(String id, String fullname, String email, String gender, String phone, String role, String status) {
+        this.id = id;
+        this.fullname = fullname;
+        this.email = email;
+        this.gender = gender;
+        this.phone = phone;
+        this.role = role;
+        this.status = status;
+    }
+    
 
     public Staff(String fullname, String username, String password, String gender, String phone, String address, String role, String isDelete) {
         this.fullname = fullname;
@@ -45,6 +71,21 @@ public class Staff {
         this.role = role;
         this.isDelete = isDelete;
     }
+
+    public Staff(String id, String fullname, String username, String password, String email, String gender, String phone, String address, String role, String status) {
+        this.id = id;
+        this.fullname = fullname;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.gender = gender;
+        this.phone = phone;
+        this.address = address;
+        this.role = role;
+        this.status = status;
+    }
+    
+    
 
     public String getEmail() {
         return email;
@@ -132,6 +173,14 @@ public class Staff {
 
     public void setIsDelete(String isDelete) {
         this.isDelete = isDelete;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }
