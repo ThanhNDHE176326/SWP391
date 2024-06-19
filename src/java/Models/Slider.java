@@ -10,14 +10,15 @@ package Models;
  */
 public class Slider {
 
-    String id, title, image, note, staff, startDate, endDate, isDelete ,status;
+    String id, title, image, note, staff, startDate, endDate, isDelete ,status,product_id;
 
     public Slider() {
     }
 
-    public Slider(String title, String image) {
+    public Slider(String title, String image, String product_id) {
         this.title = title;
         this.image = image;
+        this.product_id = product_id;
     }
 
     public Slider(String image) {

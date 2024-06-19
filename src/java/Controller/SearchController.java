@@ -53,7 +53,7 @@ public class SearchController extends HttpServlet {
            request.setAttribute("index", index);
            request.setAttribute("txtSearch", txtSearch);
            
-           request.getRequestDispatcher("SearchSlider.jsp").forward(request, response);
+           request.getRequestDispatcher("view/marketing/searchslider.jsp").forward(request, response);
         
            
        }catch(Exception e){

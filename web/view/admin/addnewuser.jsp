@@ -1,18 +1,18 @@
 <%-- 
-    Document   : editSlider
-    Created on : 24 May 2024, 4:32:56 pm
+    Document   : addnewuser
+    Created on : 19 June 2024, 11:15:20 am
     Author     : dat ngo huy
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Edit Slider</title>
+    <title>Add New User</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -21,78 +21,97 @@
     <!-- Custom styles for this template-->
     <link href="<c:url value='/css/sb-admin.css'/>" rel="stylesheet">
 </head>
-
 <body id="page-top">
-    <jsp:include page="headermarketing.jsp"/>
+    <jsp:include page="headeradmin.jsp"/>
 
     <div id="wrapper">
         <!-- Sidebar -->
-        <jsp:include page="navbarmarketing.jsp"/>
+        <jsp:include page="navbaradmin.jsp"/>
 
         <div id="content-wrapper">
             <div class="container-fluid">
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="homedashboard.jsp">Dashboard</a>
+                        <a href="homedashboardadmin.jsp">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">Edit Slider</li>
+                    <li class="breadcrumb-item active">Add New User</li>
                 </ol>
 
-                <!-- Edit Form -->
+                <!-- Add User Form -->
                 <div class="card mb-3">
-                    <div class="card-header">
-                        <i class="fas fa-edit"></i>
-                        Edit Slider
-                    </div>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-user-plus"></i>
+                                Add New User
+                            </div>
+                        </div>
                     <div class="card-body">
-                        <form action="${pageContext.request.contextPath}/edit" method="post">
+                        <form action="${pageContext.request.contextPath}/adduser" method="post">
+                            <!-- Remove the ID field as it should not be editable for new user -->
+                            
                             <div class="form-group row">
-                                <label for="title" class="col-sm-2 col-form-label">Title</label>
+                                <label for="email" class="col-sm-2 col-form-label">Email</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="title" value="${slider.title}" required>
+                                    <input type="email" class="form-control" name="email" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="image" class="col-sm-2 col-form-label">Image</label>
+                                <label for="fullname" class="col-sm-2 col-form-label">Full Name</label>
                                 <div class="col-sm-10">
-                                    <img src="${slider.image}" alt="Image of Slider" class="img-fluid mb-3">
+                                    <input type="text" class="form-control" name="fullname" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="note" class="col-sm-2 col-form-label">Note</label>
+                                <label for="username" class="col-sm-2 col-form-label">Username</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="note" value="${slider.note}">
+                                    <input type="text" class="form-control" name="username" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="staff" class="col-sm-2 col-form-label">Staff</label>
+                                <label for="password" class="col-sm-2 col-form-label">Password</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="staff" value="${slider.staff}">
+                                    <input type="password" class="form-control" name="password" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="startDate" class="col-sm-2 col-form-label">Start Date</label>
+                                <label for="gender" class="col-sm-2 col-form-label">Gender</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="startDate" value="${slider.startDate}">
+                                    <select name="gender" class="form-control">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="endDate" class="col-sm-2 col-form-label">End Date</label>
+                                <label for="phone" class="col-sm-2 col-form-label">Phone</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="endDate" value="${slider.endDate}">
+                                    <input type="text" class="form-control" name="phone" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="isDelete" class="col-sm-2 col-form-label">Is Delete</label>
+                                <label for="address" class="col-sm-2 col-form-label">Address</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="isDelete" value="${slider.isDelete}">
+                                    <input type="text" class="form-control" name="address" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="role" class="col-sm-2 col-form-label">Role</label>
+                                <div class="col-sm-10">
+                                    
+                                    <select name="role" class="form-control">
+                                        <c:forEach items="${listrole}" var="role" >
+                                        <option value="${role.id}">${role.name}</option>
+                                        
+                                        </c:forEach>
+                                    </select>
                                 </div>
                             </div>
 
@@ -100,15 +119,15 @@
                                 <label for="status" class="col-sm-2 col-form-label">Status</label>
                                 <div class="col-sm-10">
                                     <select name="status" class="form-control">
-                                        <option value="1" ${slider.status == 1 ? "selected" : ""}>Show</option>
-                                        <option value="0" ${slider.status == 0 ? "selected" : ""}>Hide</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-sm-10 offset-sm-2">
-                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                    <button type="submit" class="btn btn-primary">Add User</button>
                                 </div>
                             </div>
                         </form>
@@ -167,6 +186,5 @@
     <!-- Custom scripts for all pages-->
     <script src="<c:url value='/js/sb-admin.min.js'/>"></script>
 </body>
-
 </html>
 

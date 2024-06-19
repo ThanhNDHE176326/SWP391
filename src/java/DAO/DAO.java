@@ -42,7 +42,7 @@ public class DAO extends DBContext {
             }
 
         } catch (Exception e) {
-            System.out.println("check:" + e.getMessage());
+            System.out.println("getSlider:" + e.getMessage());
         }
         return listslider;
 
@@ -68,7 +68,7 @@ public class DAO extends DBContext {
                 return new Slider(id, title, image, note, staff, startDate, endDate, isDelete, status);
             }
         } catch (Exception e) {
-            System.out.println("err:" + e.getMessage());
+            System.out.println("getSliderByID:" + e.getMessage());
         }
 
         return null;
@@ -148,70 +148,15 @@ public class DAO extends DBContext {
             }
 
         } catch (Exception e) {
-            System.out.println("check:" + e.getMessage());
+            System.out.println("Search:" + e.getMessage());
         }
         return list;
 
     }
 
-    public ArrayList<Slider> getSliderByStatus() {
-         ArrayList<Slider> show = new ArrayList<Slider>();
-        try {
-            String strSQL = "select * from Sliders where status = '1'";
-            stm = connection.prepareStatement(strSQL);
-
-            rs = stm.executeQuery();
-
-            while (rs.next()) {
-                String id = String.valueOf(rs.getInt(1));
-                String title = rs.getString(2);
-                String image = rs.getString(3);
-                String note = rs.getString(4);
-                String staff = rs.getString(5);
-                String startDate = rs.getString(6);
-                String endDate = rs.getString(7);
-                String isDelete = rs.getString(8);
-                String status = rs.getString(9);
-                show.add(new Slider(id, title, image, note, staff, startDate, endDate, isDelete, status));
-            }
-
-        } catch (Exception e) {
-            System.out.println("check:" + e.getMessage());
-        }
-        return show;
-
-    }
-
-    public ArrayList<Slider> getSliderByStatus0() {
-         ArrayList<Slider> hide = new ArrayList<Slider>();
-        try {
-            String strSQL = "select * from Sliders where status = '0'";
-            stm = connection.prepareStatement(strSQL);
-
-            rs = stm.executeQuery();
-
-            while (rs.next()) {
-                String id = String.valueOf(rs.getInt(1));
-                String title = rs.getString(2);
-                String image = rs.getString(3);
-                String note = rs.getString(4);
-                String staff = rs.getString(5);
-                String startDate = rs.getString(6);
-                String endDate = rs.getString(7);
-                String isDelete = rs.getString(8);
-                String status = rs.getString(9);
-                hide.add(new Slider(id, title, image, note, staff, startDate, endDate, isDelete, status));
-            }
-
-        } catch (Exception e) {
-            System.out.println("check:" + e.getMessage());
-        }
-        return hide;
-        
-    }
-
+  
     public ArrayList<Slider> getAllSlider() {
-             ArrayList<Slider> all = new ArrayList<Slider>();
+             ArrayList<Slider> listSliderByStatus = new ArrayList<Slider>();
         try {
             String strSQL = "select * from Sliders";
             stm = connection.prepareStatement(strSQL);
@@ -228,13 +173,70 @@ public class DAO extends DBContext {
                 String endDate = rs.getString(7);
                 String isDelete = rs.getString(8);
                 String status = rs.getString(9);
-                all.add(new Slider(id, title, image, note, staff, startDate, endDate, isDelete, status));
+                listSliderByStatus.add(new Slider(id, title, image, note, staff, startDate, endDate, isDelete, status));
             }
 
         } catch (Exception e) {
-            System.out.println("check:" + e.getMessage());
+            System.out.println("getAllSlider:" + e.getMessage());
         }
-        return all;
+        return listSliderByStatus;
 
     }
-}
+
+    public ArrayList<Slider> getSliderByShowStatus() {
+         ArrayList<Slider> listSliderByStatus = new ArrayList<Slider>();
+        try {
+            String strSQL = "select * from Sliders where status = 1";
+            stm = connection.prepareStatement(strSQL);
+
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                String id = String.valueOf(rs.getInt(1));
+                String title = rs.getString(2);
+                String image = rs.getString(3);
+                String note = rs.getString(4);
+                String staff = rs.getString(5);
+                String startDate = rs.getString(6);
+                String endDate = rs.getString(7);
+                String isDelete = rs.getString(8);
+                String status = rs.getString(9);
+                listSliderByStatus.add(new Slider(id, title, image, note, staff, startDate, endDate, isDelete, status));
+            }
+
+        } catch (Exception e) {
+            System.out.println("getSliderByShowStatus:" + e.getMessage());
+        }
+        return listSliderByStatus;
+    }
+
+    public ArrayList<Slider> getSliderByHideStatus() {
+        ArrayList<Slider> listSliderByStatus = new ArrayList<Slider>();
+        try {
+            String strSQL = "select * from Sliders where status = 0";
+            stm = connection.prepareStatement(strSQL);
+
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                String id = String.valueOf(rs.getInt(1));
+                String title = rs.getString(2);
+                String image = rs.getString(3);
+                String note = rs.getString(4);
+                String staff = rs.getString(5);
+                String startDate = rs.getString(6);
+                String endDate = rs.getString(7);
+                String isDelete = rs.getString(8);
+                String status = rs.getString(9);
+                listSliderByStatus.add(new Slider(id, title, image, note, staff, startDate, endDate, isDelete, status));
+            }
+
+        } catch (Exception e) {
+            System.out.println("getSliderByHideStatus:" + e.getMessage());
+        }
+        return listSliderByStatus;
+    }
+    }
+
+
+

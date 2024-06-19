@@ -127,16 +127,22 @@
                             </div>
                             <div class="slider-carousel">
                                 <div class="images main">
-                                    <img src="${pageContext.request.contextPath}/images/${t.image1ByShowStatus.image}" alt="" />
-                                    <div class="image-text">${t.image1ByShowStatus.title}</div>
+                                    <a href="${pageContext.request.contextPath}/ProductDetailPublic?productId=${t.image1ByShowStatus.id}">
+                                        <img src="${pageContext.request.contextPath}/images/${t.image1ByShowStatus.image}" alt="" />
+                                        <div class="image-text">${t.image1ByShowStatus.title}</div>
+                                    </a>
                                 </div>
                                 <div class="images">
-                                    <img src="${pageContext.request.contextPath}/images/${t.image2ByShowStatus.image}" alt="" />
-                                    <div class="image-text">${t.image2ByShowStatus.title}</div>
+                                    <a href="${pageContext.request.contextPath}/ProductDetailPublic?productId=${t.image2ByShowStatus.id}">
+                                        <img src="${pageContext.request.contextPath}/images/${t.image2ByShowStatus.image}" alt="" />
+                                        <div class="image-text">${t.image2ByShowStatus.title}</div>
+                                    </a>
                                 </div>
                                 <div class="images">
-                                    <img src="${pageContext.request.contextPath}/images/${t.image3ByShowStatus.image}" alt="" />
-                                    <div class="image-text">${t.image3ByShowStatus.title}</div>
+                                    <a href="${pageContext.request.contextPath}/ProductDetailPublic?productId=${t.image3ByShowStatus.id}">
+                                        <img src="${pageContext.request.contextPath}/images/${t.image3ByShowStatus.image}" alt="" />
+                                        <div class="image-text">${t.image3ByShowStatus.title}</div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -144,6 +150,7 @@
                 </div>
             </div>
         </section><!--/slider-->
+
         <script>
             const previous = document.querySelector('.previous');
             const next = document.querySelector('.next');
@@ -389,17 +396,17 @@
                             </div>
                         </div>
                     </div>
-<script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var productItems = document.querySelectorAll('.product-item');
-                productItems.forEach(function (item) {
-                    item.addEventListener('click', function () {
-                        var productId = this.getAttribute('data-id');
-                        window.location.href = '${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=' + productId;
-                    });
-                });
-            });
-        </script>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var productItems = document.querySelectorAll('.product-item');
+                            productItems.forEach(function (item) {
+                                item.addEventListener('click', function () {
+                                    var productId = this.getAttribute('data-id');
+                                    window.location.href = '${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=' + productId;
+                                });
+                            });
+                        });
+                    </script>
 
                 </div><!--/recommended_items-->
 

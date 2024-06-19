@@ -34,30 +34,44 @@ public class FilterController extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        DAO da = new DAO();
-        ArrayList<Slider> listslider = da.getSlider();
-        request.setAttribute("slider", listslider);
-        if (request.getParameter("show") != null) {
-            ArrayList<Slider> show = da.getSliderByStatus();
-            request.setAttribute("listslider", show);
-            request.getRequestDispatcher("ListSlider").forward(request, response);
-            
+        DAO da = new DAO();            
+        String statusSearch = request.getParameter("statusSearch");
+        String statusModeFromServlet = "";
+        ArrayList<Slider> listSliderByStatus = new ArrayList<>();
+
+        if (statusSearch != null) {
+            switch (statusSearch) {
+                case "show":
+                    listSliderByStatus = da.getSliderByShowStatus();
+                    statusModeFromServlet = "show";
+                    break;
+                case "hide":
+                    listSliderByStatus = da.getSliderByHideStatus();
+                    statusModeFromServlet = "hide";
+                    break;
+                case "all":
+                    listSliderByStatus = da.getAllSlider();
+                    statusModeFromServlet = "all";
+                    break;
+                default:
+                    // Xử lý các giá trị không mong muốn nếu cần
+                    break;
+            }
         }
-         if (request.getParameter("hide") != null) {
-            ArrayList<Slider> hide = da.getSliderByStatus0();
-            request.setAttribute("listslider", hide);
-            request.getRequestDispatcher("ListSlider").forward(request, response);
-            
-        }
-         if (request.getParameter("all") != null) {
-            ArrayList<Slider> all = da.getAllSlider();
-            request.setAttribute("listslider", all);
-            request.getRequestDispatcher("ListSlider").forward(request, response);
-            
-        }
+
+        request.setAttribute("listslider", listSliderByStatus);
+        request.setAttribute("statusSearch", statusSearch);
+        request.setAttribute("statusModeFromServlet", statusModeFromServlet);
+     
+
+        request.getRequestDispatcher("view/marketing/listslider.jsp").forward(request, response);
+    
+    }
+
+    
         
         
-    } 
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
