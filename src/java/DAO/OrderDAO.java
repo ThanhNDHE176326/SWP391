@@ -482,7 +482,7 @@ public class OrderDAO extends DBContext {
                 + "           ,[staff_id]\n"
                 + "           ,[status_id])\n"
                 + "     VALUES\n"
-                + "           (?,?,'Không có yêu cầu đặc biệt',?,?,?,1,?,1)";
+                + "           (?,?,N'Không có yêu cầu đặc biệt',?,?,?,1,?,1)";
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, customerID);
