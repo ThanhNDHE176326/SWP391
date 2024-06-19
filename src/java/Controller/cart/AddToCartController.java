@@ -66,7 +66,7 @@ public class AddToCartController extends HttpServlet {
         CustomerDAO customerDAO = new CustomerDAO();
         CartDAO cartDAO = new CartDAO();
         CartProductDAO cartProductDAO = new CartProductDAO();
-        
+
         int productID = Integer.parseInt(request.getParameter("productID"));
         String customerName = (String) session.getAttribute("username");
         String customerID_STR = customerDAO.getInformationCustomer(customerName).getId();
@@ -108,21 +108,24 @@ public class AddToCartController extends HttpServlet {
 //            request.getRequestDispatcher("ProductDetailPublic").forward(request, response);
             response.sendRedirect("ProductDetailPublic?productId=" + productID);
         }
-        if(location.equals("cart")){
-                        response.sendRedirect("viewCartDetail");
+        if (location.equals("cart")) {
+            response.sendRedirect("viewCartDetail");
 
         }
-        if(location.equals("myorders")){
-                        response.sendRedirect("listOrderCustomer");
+        if (location.equals("myorders")) {
+            response.sendRedirect("listOrderCustomer");
 
         }
+        if (location.equals("orderinfo")) {
+            response.sendRedirect("orderInformationCustomer");
 
-        if(location.equals("home")){
-                        response.sendRedirect("view/customer/homepage.jsp");
+        }
+        if (location.equals("home")) {
+            response.sendRedirect("view/customer/homepage.jsp");
 
         }
         session.setAttribute("customerID", customerID_STR);
-        
+
     }
 
     /**
