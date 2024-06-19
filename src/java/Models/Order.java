@@ -40,6 +40,17 @@ public class Order {
         this.status_name = status_name;
     }
 
+    public Order(String id, String totalCost, String orderDate, String address, String phone, String status_name, String customer_name) {
+        this.id = id;
+        this.totalCost = totalCost;
+        this.orderDate = orderDate;
+        this.address = address;
+        this.phone = phone;
+        this.status_name = status_name;
+        this.customer_name = customer_name;
+    }
+
+    
 //    public Order(String id, String totalCost, LocalDate orderDate, String addressOrder, String phoneOrder, int salerRandomID) {
 //        this
 //    }

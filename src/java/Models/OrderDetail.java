@@ -10,11 +10,22 @@ package Models;
  */
 public class OrderDetail {
 
-    String id, order, product, quantity, isDelete,product_name,image,unitprice,total_cost;
+    String id, order, product, quantity, isDelete, product_name, image, unitprice, total_cost, product_id, category_name;
 
     public OrderDetail() {
     }
 
+    public OrderDetail(String id, String quantity, String product_name, String image, String unitprice, String product_id, String category_name) {
+        this.id = id;
+        this.quantity = quantity;
+        this.product_name = product_name;
+        this.image = image;
+        this.unitprice = unitprice;
+        this.product_id = product_id;
+        this.category_name = category_name;
+    }
+
+    
     public String getImage() {
         return image;
     }
@@ -116,4 +127,27 @@ public class OrderDetail {
         this.isDelete = isDelete;
     }
 
+    public String getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(String product_id) {
+        this.product_id = product_id;
+    }
+
+    public String getCategory_name() {
+        return category_name;
+    }
+
+    public void setCategory_name(String category_name) {
+        this.category_name = category_name;
+    }
+
+    
+    @Override
+    public String toString() {
+        return "OrderDetail{" + "id=" + id + ", order=" + order + ", product=" + product + ", quantity=" + quantity + ", isDelete=" + isDelete + ", product_name=" + product_name + ", image=" + image + ", unitprice=" + unitprice + ", total_cost=" + total_cost + ", product_id=" + product_id + ", category_name=" + category_name + '}';
+    }
+
+    
 }

@@ -8,6 +8,7 @@ import DAO.OrderCustomerDAO;
 import DAO.ProductDAOByPublic;
 import Models.Category;
 import Models.Order;
+import Models.OrderDetail;
 import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,15 +17,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "ViewListOrderCustomerController", urlPatterns = {"/listOrderCustomer"})
-public class ViewListOrderCustomerController extends HttpServlet {
+@WebServlet(name = "ViewOrderInformationCustomerController", urlPatterns = {"/orderInformationCustomer"})
+public class ViewOrderInformationCustomerController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,38 +38,23 @@ public class ViewListOrderCustomerController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
+        String orderId = request.getParameter("orderId");
+        String cancelled = request.getParameter("cancelled");
+        int order_id = Integer.parseInt(orderId);
         OrderCustomerDAO dao = new OrderCustomerDAO();
         ProductDAOByPublic ProductDAOByPublic = new ProductDAOByPublic();
-        String orderId = request.getParameter("orderId");
-        if (orderId != null) {
-            int order_id = Integer.parseInt(orderId);
+        if (cancelled != null) {
             dao.updateOrderStatus(order_id);
         }
-        String customerName = (String) session.getAttribute("username");
-        String customer_id = String.valueOf(dao.getCustomerIdByUsername(customerName));
-        String indexPage = request.getParameter("index");
-        if (indexPage == null) {
-            indexPage = "1";
-        }
-        int index = Integer.parseInt(indexPage);
-        int count = dao.countTotalOrderByCustomer(customer_id);
-        int endPage = count / 5;
-        if (count % 5 != 0) {
-            endPage++;
-        }
-
+        List<OrderDetail> listProductOrder = dao.getProductByOrderId(order_id);
         List<Product> listNewProduct = ProductDAOByPublic.getTop6ProductNew();
-
-        List<Order> orderList = dao.getAllOrderById(customer_id, index);
-        List<Category> categories = ProductDAOByPublic.getCategory();
-        request.setAttribute("categories", categories);
+        List<Category> category = ProductDAOByPublic.getCategory();
+        Order order = dao.getInfoOrderByOrderId(order_id);
         request.setAttribute("listNewProduct", listNewProduct);
-        request.setAttribute("orderList", orderList);
-        request.setAttribute("endP", endPage);
-        request.setAttribute("tag", index);
-        request.getRequestDispatcher("view/customer/MyOrders.jsp").forward(request, response);
-
+        request.setAttribute("listProductOrder", listProductOrder);
+        request.setAttribute("categories", category);
+        request.setAttribute("order", order);
+        request.getRequestDispatcher("view/customer/order_information.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -68,17 +68,29 @@
                 word-wrap: break-word; /* Break words if they are too long */
             }
 
-            .cart_menu td.select {
-                width: 3%; /* Width for Select cell */
+            .cart_menu .select {
+                width: 5%;
             }
-
-            .cart_menu td.description {
-                width: 20%; /* Width for Description cell */
+            .cart_menu .image {
+                width: 15%;
             }
-
-            .cart_menu td.price,
-            .cart_menu td.delete {
-                width: 15%; /* Width for each of these cells */
+            .cart_menu .description {
+                width: 25%;
+            }
+            .cart_menu .price {
+                width: 10%;
+            }
+            .cart_menu .stock {
+                width: 10%;
+            }
+            .cart_menu .quantity {
+                width: 5%;
+            }
+            .cart_menu .total {
+                width: 10%;
+            }
+            .cart_menu .feedback{
+                width: 20%;
             }
 
             .cart_menu td.cart_delete a {
@@ -90,7 +102,7 @@
             }
 
             .cart_product img {
-                width: 130px; /* Product image width */
+                width: 100px; /* Product image width */
                 height: auto; /* Maintain aspect ratio */
             }
 
@@ -143,26 +155,88 @@
                 background-color: #FE980F;
                 transform: scale(1.05);
             }
-            .cart_delete a {
-                display: inline-block;
-                padding: 5px 10px;
-                margin: 0 5px;
+            .feedback_button {
+                background-color: #008CBA; /* Màu nền */
+                border: none; /* Không viền */
+                color: white; /* Màu chữ */
+                padding: 3px 6px; /* Khoảng cách bên trong nút */
+                text-align: center; /* Căn giữa chữ */
+                text-decoration: none; /* Bỏ gạch chân */
+                display: inline-block; /* Hiển thị dưới dạng khối nội tuyến */
+                font-size: 12px; /* Cỡ chữ */
+                font-weight: bold; /* Đậm chữ */
+                margin: 5px 2px; /* Khoảng cách bên ngoài */
+                cursor: pointer; /* Con trỏ chuột thay đổi thành hình bàn tay */
+                border-radius: 8px; /* Bo tròn góc nút */
+                box-shadow: 0 4px #999; /* Đổ bóng */
+                transition: all 0.3s ease; /* Thời gian chuyển đổi khi hover */
+            }
+
+            .feedback_button:hover {
+                background-color: #005f73; /* Màu nền khi hover */
+                box-shadow: 0 6px #666; /* Đổ bóng khi hover */
+                transform: translateY(-2px); /* Hiệu ứng di chuyển lên khi hover */
+            }
+
+            .feedback_button:active {
+                background-color: #005f73; /* Màu nền khi nhấn */
+                box-shadow: 0 2px #666; /* Đổ bóng khi nhấn */
+                transform: translateY(2px); /* Hiệu ứng di chuyển xuống khi nhấn */
+            }
+            /* CSS for order details */
+            .order-details {
+                font-family: Arial, sans-serif;
+                max-width: 400px;
+                margin: 20px auto;
+                padding-left: 20px;
+                padding-right: 20px;
+                padding-top: 20px;
+                padding-bottom: 5px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            /* Styling for individual paragraphs */
+            .order-details p {
+                margin: 10px 0;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+
+            /* Alternate background colors for paragraphs */
+            .order-details p:nth-child(odd) {
+                background-color: #ffffff;
+            }
+
+            .order-details p:nth-child(even) {
+            }
+
+            /* Bold the first paragraph for emphasis */
+            .order-details p:first-child {
+                font-weight: bold;
+            }
+            /* Style for update and cancel links */
+            .update-link,
+            .cancel-link {
+                margin-left: 10px;
+                padding: 4px 6px; /* Thay đổi padding tùy theo nhu cầu */
+                color: #ff6347;
                 text-decoration: none;
-                border-radius: 3px;
-                font-size: 11px !important;
-                cursor: pointer;
+                border: 1px solid #ff6347; /* Khung bao quanh */
+                border-radius: 4px;
+                display: inline-block; /* Hiển thị như khối để có thể điều chỉnh padding và margin */
             }
 
-            .view-button {
-                background-color: #007bff;
+            .update-link:hover,
+            .cancel-link:hover {
+                background-color: #ff6347;
                 color: white;
+                text-decoration: none;
             }
-
-            .cancel-button {
-                background-color: #dc3545;
-                color: white;
+            [data-status="Canceled"] .cancel-link,
+            [data-status="Canceled"] .update-link {
+                display: none;
             }
-
         </style>
     </head><!--/head-->
 
@@ -308,69 +382,74 @@
                             <div class="breadcrumbs">
                                 <ol class="breadcrumb">
                                     <li><a href="${pageContext.request.contextPath}/ProductListPublic">Choose More Product</a></li>
-                                    <li class="active">My Orders</li>
+                                    <li class="active">Order Infomation</li>
                                 </ol>
                             </div>
-                                <div class="table-responsive cart_info" style="max-width: 1400px; margin-bottom: 20px;">
-                                    <table class="table table-condensed">
-                                        <thead>
-                                            <tr class="cart_menu">
-                                                <td class="select">ID</td>
-                                                <td class="description">Order Date</td>
-                                                <td class="description">Delivery Address</td>
-                                                <td class="price">Total Cost</td>
-                                                <td class="description">Status</td>
-                                                <td class="delete">Action</td>
+                            <div class="order-details">
+                                <p>Receiver's information:</p>
+                                <p>Order ID: ${order.id}</p>
+                                <p>Receiver: ${order.customer_name}</p>
+                                <p>Delivery address: ${order.address}</p>
+                                <p>Phone: ${order.phone}</p>
+                                <p>Order date: ${order.orderDate}</p>
+                                <p>Total Cost: ${order.totalCost} VNĐ</p>
+                                <p data-status="${order.status_name}">
+                                    Status: ${order.status_name}
+                                    <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&cancelled=cancelled" class="cancel-link">Cancelled</a>
+                                    <a href="${pageContext.request.contextPath}/viewCartDetail" class="update-link">Update Order</a>
+                                </p>
+                            </div>
+
+                            <div class="table-responsive cart_info" style="max-width: 1400px; margin: auto;">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr class="cart_menu">
+                                            <td class="select">ID</td>
+                                            <td class="image">Item</td>
+                                            <td class="description">Title</td>
+                                            <td class="price">Price</td>
+                                            <td class="stock">Category</td>
+                                            <td class="quantity">Quantity</td>
+                                            <td class="total">Total</td>
+                                            <td class="feedback">Feedback</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="listProductOrder" items="${listProductOrder}">
+                                            <tr>
+                                                <td class="cart_select">
+                                                    <p>${listProductOrder.id}</p>                                                    </td>
+                                                <td class="cart_product">
+                                                    <a href=""><img src="<c:url value='/images/${listProductOrder.image}'/>" alt=""></a>
+                                                </td>
+                                                <td class="cart_description">
+                                                    <h4><a href="">${listProductOrder.product_name}</a></h4>
+                                                    <p>ID: ${listProductOrder.product_id}</p>
+                                                </td>
+                                                <td class="cart_price">
+                                                    <fmt:formatNumber value="${listProductOrder.unitprice}" type="number" maxFractionDigits="0" />
+                                                </td>
+                                                <td class="cart_stock">
+                                                    <p>${listProductOrder.category_name}</p>                                                     </td>
+                                                <td class="cart_quantity">
+                                                    <p>${listProductOrder.quantity}</p>
+                                                </td>
+                                                <td class="cart_total">
+                                                    <fmt:formatNumber value="${listProductOrder.unitprice * listProductOrder.quantity}" type="number" maxFractionDigits="0" />
+                                                </td>
+                                                <td class="cart_feedback">
+                                                    <a class="feedback_button">Feedback</a>
+                                                    <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${listProductOrder.product_id}" class="feedback_button">Repurchase</a>
+                                                </td>
+
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="orderList" items="${orderList}">
-                                                <tr style="background-color: #f9f9f9;">
-                                                    <td class="cart_select" style="padding: 10px; text-align: center;">
-                                                        <p style="color: #007bff; text-decoration: none;">${orderList.id}</p>
-                                                    </td>
-                                                    <td class="cart_description" style="padding: 10px;">
-                                                        <p style="margin: 0; font-size: 14px;">${orderList.orderDate}</p>
-                                                    </td>
-                                                    <td class="cart_description" style="padding: 10px;">
-                                                        <p style="margin: 0; font-size: 14px;">${orderList.address}</p>
-                                                    </td>
-                                                    <td class="cart_price" style="padding: 10px; text-align: center;">
-                                                        <fmt:formatNumber value="${orderList.totalCost}" type="number" maxFractionDigits="0" />
-                                                    </td>
-                                                    <td class="cart_description" style="padding: 10px;">
-                                                        <p style="margin: 0; font-size: 14px;">${orderList.status_name}</p>
-                                                    </td>
-                                                    <td class="cart_delete" style="padding: 10px; text-align: center;">
-                                                        <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${orderList.id}" class="view-button">View</a>
-                                                        <c:choose>
-                                                            <c:when test="${orderList.status_name == 'Processing' || orderList.status_name == 'Confirmed'}">
-                                                                <a href="${pageContext.request.contextPath}/listOrderCustomer?orderId=${orderList.id}" class="cancel-button">Cancelled</a>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <!-- Do nothing or add any alternative content if needed -->
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                    <ul class="pagination">
-                            <c:if test="${tag > 1}">
-                                <li><a href="?index=${tag - 1}">Previous</a></li>
-                                </c:if>
-                                <c:forEach begin="1" end="${endP}" var="i">
-                                <li class="${tag == i ? 'active' : ''}">
-                                    <a class="pagination-link" href="?index=${i}">${i}</a>
-                                </li>
-                            </c:forEach>
-                            <c:if test="${tag < endP}">
-                                <li><a href="?index=${tag + 1}">Next</a></li>
-                                </c:if>
-                        </ul>
-                                    
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="total-amount" style="text-align: right; margin: 15px; font-size: 1.3em; font-weight: bold;">
+                                Total Cost: <fmt:formatNumber value="${order.totalCost}" type="number" maxFractionDigits="0" /> VNĐ
+                            </div>
                             <div class="recommended_items"><!--recommended_items-->
                                 <h2 class="title text-center">recommended items</h2>
 
@@ -388,7 +467,7 @@
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <div class="button-container">
-                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="${pageContext.request.contextPath}/addToCart?productID=${listNewProduct.id}&orderId=${order.id}&location=orderinfo" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                         <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
@@ -397,7 +476,7 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                            <a href="${pageContext.request.contextPath}/addToCart?productID=${listNewProduct.id}&orderId=${order.id}&location=orderinfo" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                             <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                         </div>
                                                                     </div>
@@ -425,7 +504,7 @@
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <div class="button-container">
-                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="${pageContext.request.contextPath}/addToCart?productID=${listNewProduct.id}&orderId=${order.id}&location=orderinfo" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                         <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
@@ -434,7 +513,7 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                            <a href="${pageContext.request.contextPath}/addToCart?productID=${listNewProduct.id}&orderId=${order.id}&location=orderinfo" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                             <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                         </div>
                                                                     </div>
@@ -462,7 +541,7 @@
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <div class="button-container">
-                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="${pageContext.request.contextPath}/addToCart?productID=${listNewProduct.id}&orderId=${order.id}&location=orderinfo" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                         <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
@@ -471,7 +550,7 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                            <a href="${pageContext.request.contextPath}/addToCart?productID=${listNewProduct.id}&orderId=${order.id}&location=orderinfo" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                             <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                         </div>
                                                                     </div>
@@ -501,7 +580,7 @@
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <div class="button-container">
-                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="${pageContext.request.contextPath}/addToCart?productID=${listNewProduct.id}&orderId=${order.id}&location=orderinfo" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                         <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
@@ -510,7 +589,7 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                            <a href="${pageContext.request.contextPath}/addToCart?productID=${listNewProduct.id}&orderId=${order.id}&location=orderinfo" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                             <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                         </div>
                                                                     </div>
@@ -538,7 +617,7 @@
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <div class="button-container">
-                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="${pageContext.request.contextPath}/addToCart?productID=${listNewProduct.id}&orderId=${order.id}&location=orderinfo" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                         <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
@@ -547,7 +626,7 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                            <a href="${pageContext.request.contextPath}/addToCart?productID=${listNewProduct.id}&orderId=${order.id}&location=orderinfo" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                             <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                         </div>
                                                                     </div>
@@ -575,7 +654,7 @@
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <div class="button-container">
-                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                        <a href="${pageContext.request.contextPath}/addToCart?productID=${listNewProduct.id}&orderId=${order.id}&location=orderinfo" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                         <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                     </div>
                                                                 </div>
@@ -584,7 +663,7 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                                            <a href="${pageContext.request.contextPath}/addToCart?productID=${listNewProduct.id}&orderId=${order.id}&location=orderinfo" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                                             <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                                         </div>
                                                                     </div>
