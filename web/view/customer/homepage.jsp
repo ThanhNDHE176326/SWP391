@@ -127,19 +127,19 @@
                             </div>
                             <div class="slider-carousel">
                                 <div class="images main">
-                                    <a href="${pageContext.request.contextPath}/ProductDetailPublic?productId=${t.image1ByShowStatus.id}">
+                                    <a href="${pageContext.request.contextPath}/ProductDetailPublic?productId=${t.image1ByShowStatus.product_id}">
                                         <img src="${pageContext.request.contextPath}/images/${t.image1ByShowStatus.image}" alt="" />
                                         <div class="image-text">${t.image1ByShowStatus.title}</div>
                                     </a>
                                 </div>
                                 <div class="images">
-                                    <a href="${pageContext.request.contextPath}/ProductDetailPublic?productId=${t.image2ByShowStatus.id}">
+                                    <a href="${pageContext.request.contextPath}/ProductDetailPublic?productId=${t.image2ByShowStatus.product_id}">
                                         <img src="${pageContext.request.contextPath}/images/${t.image2ByShowStatus.image}" alt="" />
                                         <div class="image-text">${t.image2ByShowStatus.title}</div>
                                     </a>
                                 </div>
                                 <div class="images">
-                                    <a href="${pageContext.request.contextPath}/ProductDetailPublic?productId=${t.image3ByShowStatus.id}">
+                                    <a href="${pageContext.request.contextPath}/ProductDetailPublic?productId=${t.image3ByShowStatus.product_id}">
                                         <img src="${pageContext.request.contextPath}/images/${t.image3ByShowStatus.image}" alt="" />
                                         <div class="image-text">${t.image3ByShowStatus.title}</div>
                                     </a>
