@@ -11,7 +11,7 @@ package Models;
 public class Product {
 
     String id, title, image, author, quantity, updateDate,
-            description, category, originalPrice, salePrice, staff, status, isDelete, customer, order;
+            description, category, originalPrice, salePrice, status, isDelete, customer, order;
 
     int stock;
     public Product() {
@@ -19,7 +19,7 @@ public class Product {
 
     public Product(String id, String title, String image, String author,
             String quantity, String updateDate, String description, String category,
-            String originalPrice, String salePrice, String staff, String status, String isDelete) {
+            String originalPrice, String salePrice, String status, String isDelete) {
         this.id = id;
         this.title = title;
         this.image = image;
@@ -30,14 +30,13 @@ public class Product {
         this.category = category;
         this.originalPrice = originalPrice;
         this.salePrice = salePrice;
-        this.staff = staff;
         this.status = status;
         this.isDelete = isDelete;
     }
 
     public Product(String id, String title, String image, String author, String quantity,
             String updateDate, String description, String category, String originalPrice,
-            String salePrice, String staff, String status) {
+            String salePrice, String status) {
         this.id = id;
         this.title = title;
         this.image = image;
@@ -48,7 +47,6 @@ public class Product {
         this.category = category;
         this.originalPrice = originalPrice;
         this.salePrice = salePrice;
-        this.staff = staff;
         this.status = status;
     }
 
@@ -185,14 +183,7 @@ public class Product {
         this.salePrice = salePrice;
     }
 
-    public String getStaff() {
-        return staff;
-    }
-
-    public void setStaff(String staff) {
-        this.staff = staff;
-    }
-
+   
     public String getStatus() {
         return status;
     }
@@ -227,7 +218,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" + "id=" + id + ", title=" + title + ", image=" + image + ", author=" + author + ", quantity=" + quantity + ", updateDate=" + updateDate + ", description=" + description + ", category=" + category + ", originalPrice=" + originalPrice + ", salePrice=" + salePrice + ", staff=" + staff + ", status=" + status + ", isDelete=" + isDelete + ", customer=" + customer + ", order=" + order + ", stock=" + stock + '}';
+        return "Product{" + "id=" + id + ", title=" + title + ", image=" + image + ", author=" + author + ", quantity=" + quantity + ", updateDate=" + updateDate + ", description=" + description + ", category=" + category + ", originalPrice=" + originalPrice + ", salePrice=" + salePrice +", status=" + status + ", isDelete=" + isDelete + ", customer=" + customer + ", order=" + order + ", stock=" + stock + '}';
     }
 
     
