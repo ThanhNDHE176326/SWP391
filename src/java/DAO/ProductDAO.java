@@ -45,7 +45,7 @@ public class ProductDAO extends DBContext {
 
     public List<Product> pagingProduct(int index) {
         List<Product> list = new ArrayList<>();
-        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id\n"
                 + "ORDER BY id\n"
                 + "OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
@@ -64,12 +64,11 @@ public class ProductDAO extends DBContext {
                 String category = rs.getString("category");
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
-                String staff = String.valueOf(rs.getInt("staff_id"));
 //                int quantityInt = Integer.parseInt(quantity);
                 String status = String.valueOf(rs.getInt("status"));
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice, staff, status);
+                        salePrice, status);
                 list.add(product);
             }
         } catch (SQLException e) {
@@ -82,7 +81,7 @@ public class ProductDAO extends DBContext {
         List<Product> listProduct = new ArrayList<>();
         int count = 0;
         try {
-            String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+            String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
                     + "FROM Products p JOIN Categories c ON p.category_id = c.id";
             stm = connection.prepareStatement(sql);
             rs = stm.executeQuery();
@@ -97,12 +96,10 @@ public class ProductDAO extends DBContext {
                 String category = rs.getString("category");
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
-                String staff = String.valueOf(rs.getInt("staff_id"));
-                int quantityInt = Integer.parseInt(quantity);
                 String status = String.valueOf(rs.getInt("status"));
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice, staff, status);
+                        salePrice,  status);
                 listProduct.add(product);
                 count++;
             }
@@ -118,7 +115,7 @@ public class ProductDAO extends DBContext {
     public List<Product> getProductByCategoryID(int categoryID) {
         int count = 0;
         List<Product> listProduct = new ArrayList<>();
-        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
                 + "WHERE c.id = ? ";
         try {
@@ -136,13 +133,12 @@ public class ProductDAO extends DBContext {
                 String category = rs.getString("category");
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
-                String staff = String.valueOf(rs.getInt("staff_id"));
                 int quantityInt = Integer.parseInt(quantity);
                 String status = String.valueOf(rs.getInt("status"));
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice, staff, status);
+                        salePrice,  status);
                 listProduct.add(product);
                 count++;
             }
@@ -157,7 +153,7 @@ public class ProductDAO extends DBContext {
     public List<Product> getProductByShowStatus() {
         List<Product> listProduct = new ArrayList<>();
         int count = 0;
-        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
                 + "WHERE  p.status = 1";
         try {
@@ -174,12 +170,11 @@ public class ProductDAO extends DBContext {
                 String category = rs.getString("category");
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
-                String staff = String.valueOf(rs.getInt("staff_id"));
                 String status = String.valueOf(rs.getInt("status"));
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice, staff, status);
+                        salePrice,  status);
                 listProduct.add(product);
                 count++;
             }
@@ -194,7 +189,7 @@ public class ProductDAO extends DBContext {
     public List<Product> getProductByHideStatus() {
         List<Product> listProduct = new ArrayList<>();
         int count = 0;
-        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
                 + "WHERE  p.status = 0";
         try {
@@ -211,12 +206,11 @@ public class ProductDAO extends DBContext {
                 String category = rs.getString("category");
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
-                String staff = String.valueOf(rs.getInt("staff_id"));
                 String status = String.valueOf(rs.getInt("status"));
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice, staff, status);
+                        salePrice,  status);
                 listProduct.add(product);
                 count++;
             }
@@ -231,7 +225,7 @@ public class ProductDAO extends DBContext {
     public List<Product> getProductByTitle(String titleSearch) {
         int count = 0;
         List<Product> listProduct = new ArrayList<>();
-        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
                 + "WHERE  p.title LIKE ?";
         try {
@@ -249,13 +243,11 @@ public class ProductDAO extends DBContext {
                 String category = rs.getString("category");
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
-                String staff = String.valueOf(rs.getInt("staff_id"));
-                int quantityInt = Integer.parseInt(quantity);
                 String status = String.valueOf(rs.getInt("status"));
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice, staff, status);
+                        salePrice,  status);
                 listProduct.add(product);
                 count++;
             }
@@ -270,7 +262,7 @@ public class ProductDAO extends DBContext {
     public List<Product> getProductByBriefInfo(String breifInfoSearch) {
         int count = 0;
         List<Product> listProduct = new ArrayList<>();
-        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
                 + "WHERE  p.description LIKE ?";
         try {
@@ -288,13 +280,11 @@ public class ProductDAO extends DBContext {
                 String category = rs.getString("category");
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
-                String staff = String.valueOf(rs.getInt("staff_id"));
-                int quantityInt = Integer.parseInt(quantity);
                 String status = String.valueOf(rs.getInt("status"));
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice, staff, status);
+                        salePrice,  status);
                 listProduct.add(product);
                 count++;
             }
@@ -331,10 +321,13 @@ public class ProductDAO extends DBContext {
             System.out.println("updateShowStatusByID: " + e.getMessage());
         }
     }
-
+    public static void main(String[] args) {
+        ProductDAO dao = new ProductDAO();
+        System.out.println(dao.getProductsByPaging(1));
+    }
     public List<Product> getProductsByPaging(int index) {
         List<Product> listProduct = new ArrayList<>();
-        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id\n"
                 + "WHERE p.isDelete = 1\n"
                 + "ORDER BY p.id\n"
@@ -354,12 +347,10 @@ public class ProductDAO extends DBContext {
                 String category = rs.getString("category");
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
-                String staff = String.valueOf(rs.getInt("staff_id"));
-//                int quantityInt = Integer.parseInt(quantity);
                 String status = String.valueOf(rs.getInt("status"));
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice, staff, status);
+                        salePrice,  status);
                 listProduct.add(product);
             }
         } catch (SQLException e) {
@@ -371,7 +362,7 @@ public class ProductDAO extends DBContext {
 
     public List<Product> getProductPagingByCategoryID(int categorySearchID, int index) {
         List<Product> listProduct = new ArrayList<>();
-        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
                 + "WHERE c.id = ? AND p.isDelete = 1\n"
                 + "ORDER BY p.id\n"
@@ -392,12 +383,11 @@ public class ProductDAO extends DBContext {
                 String category = rs.getString("category");
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
-                String staff = String.valueOf(rs.getInt("staff_id"));
                 String status = String.valueOf(rs.getInt("status"));
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice, staff, status);
+                        salePrice,  status);
                 listProduct.add(product);
             }
         } catch (SQLException e) {
@@ -409,7 +399,7 @@ public class ProductDAO extends DBContext {
     public int getTotalProductByCategoryID(int categorySearchID) {
         String sql = "SELECT COUNT(*) \n"
                 + "FROM(\n"
-                + "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+                + "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
                 + "WHERE c.id = ? AND p.isDelete = 1\n"
                 + ") AS RESULT";
@@ -429,7 +419,7 @@ public class ProductDAO extends DBContext {
     public int getTotalProductByShowStatus() {
         String sql = "SELECT COUNT(*)\n"
                 + "FROM(\n"
-                + "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+                + "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
                 + "WHERE p.status = 1 AND p.isDelete = 1) AS SHOW_STATUS";
         try {
@@ -447,7 +437,7 @@ public class ProductDAO extends DBContext {
     public int getTotalProductByHideStatus() {
         String sql = "SELECT COUNT(*)\n"
                 + "FROM(\n"
-                + "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+                + "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
                 + "WHERE p.status = 0 AND p.isDelete = 1) AS SHOW_STATUS";
         try {
@@ -464,7 +454,7 @@ public class ProductDAO extends DBContext {
 
     public List<Product> getProductPagingByShowStatus(int index) {
         List<Product> listProduct = new ArrayList<>();
-        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
                 + "WHERE p.status = 1 AND p.isDelete = 1\n"
                 + "ORDER BY p.id\n"
@@ -484,12 +474,11 @@ public class ProductDAO extends DBContext {
                 String category = rs.getString("category");
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
-                String staff = String.valueOf(rs.getInt("staff_id"));
                 String status = String.valueOf(rs.getInt("status"));
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice, staff, status);
+                        salePrice,  status);
                 listProduct.add(product);
             }
         } catch (SQLException e) {
@@ -500,7 +489,7 @@ public class ProductDAO extends DBContext {
 
     public List<Product> getProductPagingByHideStatus(int index) {
         List<Product> listProduct = new ArrayList<>();
-        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
                 + "WHERE p.status = 0 AND p.isDelete = 1\n"
                 + "ORDER BY p.id\n"
@@ -520,12 +509,11 @@ public class ProductDAO extends DBContext {
                 String category = rs.getString("category");
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
-                String staff = String.valueOf(rs.getInt("staff_id"));
                 String status = String.valueOf(rs.getInt("status"));
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice, staff, status);
+                        salePrice , status);
                 listProduct.add(product);
             }
         } catch (SQLException e) {
@@ -537,7 +525,7 @@ public class ProductDAO extends DBContext {
     public int getTotalProductBySearch(String search) {
         String sql = "SELECT COUNT(*) \n"
                 + "FROM(\n"
-                + "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+                + "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
                 + "WHERE  (p.title LIKE ? OR p.description LIKE ?) AND p.isDelete = 1) AS SEARCH_RESULT";
         try {
@@ -556,7 +544,7 @@ public class ProductDAO extends DBContext {
 
     public List<Product> getProductPagingBySearch(String search, int index) {
         List<Product> listProduct = new ArrayList<>();
-        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
                 + "WHERE  (p.title LIKE ? OR p.description LIKE ?) AND p.isDelete = 1\n"
                 + "ORDER BY p.id\n"
@@ -578,12 +566,11 @@ public class ProductDAO extends DBContext {
                 String category = rs.getString("category");
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
-                String staff = String.valueOf(rs.getInt("staff_id"));
                 String status = String.valueOf(rs.getInt("status"));
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice, staff, status);
+                        salePrice,  status);
                 listProduct.add(product);
             }
         } catch (SQLException e) {
@@ -593,7 +580,7 @@ public class ProductDAO extends DBContext {
     }
 
     public Product getProductDetailByID(int productID) {
-        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.staff_id,p.status \n"
+        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
                 + "WHERE p.id = ? AND p.isDelete = 1";
         try {
@@ -611,12 +598,11 @@ public class ProductDAO extends DBContext {
                 String category = rs.getString("category");
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
-                String staff = String.valueOf(rs.getInt("staff_id"));
                 String status = String.valueOf(rs.getInt("status"));
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice, staff, status);
+                        salePrice,  status);
                 return product;
             }
         } catch (SQLException e) {
@@ -666,7 +652,7 @@ public class ProductDAO extends DBContext {
                 + "GROUP BY \n"
                 + "    P.id, P.title, P.image, P.author, P.quantity, P.update_date, \n"
                 + "    P.description, P.category_id, P.original_price, P.sale_price, \n"
-                + "    P.staff_id, P.status\n"
+                + "    P.status\n"
                 + "ORDER BY \n"
                 + "    COUNT(DISTINCT O.customer_id) DESC;";
         try {
