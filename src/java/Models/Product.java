@@ -14,6 +14,7 @@ public class Product {
             description, category, originalPrice, salePrice, status, isDelete, customer, order;
 
     int stock;
+    float total_cost;
     public Product() {
     }
 
@@ -90,6 +91,15 @@ public class Product {
         this.quantity = cartQuantity;
     }
 
+    public Product(String id, String title, String image, String quantity, String salePrice, float total_cost) {
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.quantity = quantity;
+        this.salePrice = salePrice;
+        this.total_cost = total_cost;
+    }
+    
     public Product(String id) {
         this.id = id;
     }

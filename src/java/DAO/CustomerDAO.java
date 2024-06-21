@@ -224,16 +224,18 @@ public class CustomerDAO extends DBContext {
         return list;
     }
 
-    public void addDeliveryAddress(String customer_id, String address, String phone, String recipient_name, String recipient_gender) {
-        String sql = "INSERT INTO DeliveryAddresses (customer_id, address, phone, recipient_name, recipient_gender) "
-                + "VALUES (?, ?, ?, ?, ?)";
+    public void addDeliveryAddress(int customer_id, String address, String phone, String recipient_name, boolean isMale) {
+        String sql = "INSERT INTO DeliveryAddresses (customer_id, address, phone, recipient_name, recipient_gender, isDelete) "
+                + "VALUES (?, ?, ?, ?, ?, 1)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, customer_id);
+            ps.setInt(1, customer_id);
             ps.setString(2, address);
             ps.setString(3, phone);
             ps.setString(4, recipient_name);
-            ps.setString(5, recipient_gender);
+            // Convert boolean to bit value (1 for true, 0 for false)
+            ps.setInt(5, isMale ? 1 : 0);
+
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -242,7 +244,7 @@ public class CustomerDAO extends DBContext {
 
     public void deleteDeliveryAddress(int id) {
         String sql = "DELETE FROM DeliveryAddresses WHERE id = ?";
-        
+
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -251,10 +253,7 @@ public class CustomerDAO extends DBContext {
         }
     }
 
-    public static void main(String[] args) {
-        CustomerDAO dao = new CustomerDAO();
-        System.out.println(dao.getAllAddress(String.valueOf(21)));
-    }
+    
 
     public String getAddressByCustomerId(int customerID) {
         String sql = "SELECT * FROM Customers WHERE id = ?";
@@ -262,7 +261,7 @@ public class CustomerDAO extends DBContext {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, customerID);
             resultSET = stm.executeQuery();
-            if(resultSET.next()){
+            if (resultSET.next()) {
                 return resultSET.getString("address");
             }
         } catch (SQLException e) {
@@ -277,7 +276,7 @@ public class CustomerDAO extends DBContext {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, customerID);
             resultSET = stm.executeQuery();
-            if(resultSET.next()){
+            if (resultSET.next()) {
                 return resultSET.getString("phone");
             }
         } catch (SQLException e) {
@@ -286,4 +285,9 @@ public class CustomerDAO extends DBContext {
         return null;
     }
 
+    public static void main(String[] args) {
+        CustomerDAO dao = new CustomerDAO();
+        dao.addDeliveryAddress(1, "thái bình", "0987654321", "Nguyễn Trọng Hải", true);
+    }
 }
+

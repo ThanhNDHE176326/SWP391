@@ -12,7 +12,7 @@ import java.time.LocalDate;
  */
 public class Order {
 
-    String id, customer, totalCost, note, orderDate, address, phone, isDelete, staff,status_id,status_name, customer_name,staff_name;
+    String id, customer, totalCost, note, orderDate, address, phone, isDelete, staff,status_id,status_name, customer_name,staff_name, recipient_name, recipient_gender,payment_name;
 
     public Order() {
     }
@@ -48,6 +48,15 @@ public class Order {
         this.phone = phone;
         this.status_name = status_name;
         this.customer_name = customer_name;
+    }
+
+    public Order(String orderDate, String address, String phone, String recipient_name, String recipient_gender, String payment_name) {
+        this.orderDate = orderDate;
+        this.address = address;
+        this.phone = phone;
+        this.recipient_name = recipient_name;
+        this.recipient_gender = recipient_gender;
+        this.payment_name = payment_name;
     }
 
     
@@ -93,6 +102,38 @@ public class Order {
 
     public void setStatus_id(String status_id) {
         this.status_id = status_id;
+    }
+
+    public String getStaff_name() {
+        return staff_name;
+    }
+
+    public void setStaff_name(String staff_name) {
+        this.staff_name = staff_name;
+    }
+
+    public String getRecipient_name() {
+        return recipient_name;
+    }
+
+    public void setRecipient_name(String recipient_name) {
+        this.recipient_name = recipient_name;
+    }
+
+    public String getRecipient_gender() {
+        return recipient_gender;
+    }
+
+    public void setRecipient_gender(String recipient_gender) {
+        this.recipient_gender = recipient_gender;
+    }
+
+    public String getPayment_name() {
+        return payment_name;
+    }
+
+    public void setPayment_name(String payment_name) {
+        this.payment_name = payment_name;
     }
 
   
@@ -184,8 +225,10 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" + "id=" + id + ", customer=" + customer + ", totalCost=" + totalCost + ", note=" + note + ", orderDate=" + orderDate + ", address=" + address + ", phone=" + phone + ", isDelete=" + isDelete + ", staff=" + staff + ", status_id=" + status_id + ", status_name=" + status_name + ", customer_name=" + customer_name + ", staff_name=" + staff_name + '}';
+        return "Order{" + "id=" + id + ", customer=" + customer + ", totalCost=" + totalCost + ", note=" + note + ", orderDate=" + orderDate + ", address=" + address + ", phone=" + phone + ", isDelete=" + isDelete + ", staff=" + staff + ", status_id=" + status_id + ", status_name=" + status_name + ", customer_name=" + customer_name + ", staff_name=" + staff_name + ", recipient_name=" + recipient_name + ", recipient_gender=" + recipient_gender + ", payment_name=" + payment_name + '}';
     }
+
+    
 
     
 }

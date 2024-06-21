@@ -406,51 +406,58 @@
     <body>
         <jsp:include page="header.jsp"/>
         <section>
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <div class="left-sidebar">
-                            <jsp:include page="leftsidebar.jsp"/>  
+            <form action="${pageContext.request.contextPath}/cartCompletion" method="POST">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="left-sidebar">
+                                <jsp:include page="leftsidebar.jsp"/>  
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-9 padding-right">
-                        <div id="cart_items">
-                            <div class="breadcrumbs">
-                                <ol class="breadcrumb">
-                                    <li><a href="${pageContext.request.contextPath}/ProductListPublic">Back to Product List</a></li>
-                                    <li class="active">Cart Contact</li>
-                                </ol>
-                            </div>
-                            <div class="order-info">
-                                <h2>Địa Chỉ Nhận Hàng</h2>
-                                <div class="order-details">
-                                    <p class="name">${userCreateOrder.name}</p>
-                                    <p class="phone">(+84) ${userCreateOrder.phone}</p>
-                                    <p class="address">${userCreateOrder.address}</p>
-                                    <p class="gender">${userCreateOrder.gender == 1 ? 'Male' : 'Female'}</p>
-                                    <span class="default-tag">Mặc Định</span>
-                                    <button class="styled-button" onclick="showAddressModal()">Thay Đổi</button>
+                        <div class="col-sm-9 padding-right">
+                            <div id="cart_items">
+                                <div class="breadcrumbs">
+                                    <ol class="breadcrumb">
+                                        <li><a href="${pageContext.request.contextPath}/ProductListPublic">Back to Product List</a></li>
+                                        <li class="active">Cart Contact</li>
+                                    </ol>
                                 </div>
-                            </div>
-                            <!-- Thêm phần tử new-address để hiển thị thông tin địa chỉ mới -->
-                            <div class="new-address">
-                                <h2>Địa Chỉ Nhận Hàng</h2>
-                                <div class="order-details">
-                                    <p class="name" id="newName"></p>
-                                    <p class="phone" id="newPhone"></p>
-                                    <p class="address" id="newAddress"></p>
-                                    <p class="gender" id="newGender"></p>
-                                    <button class="styled-button" onclick="showAddressModal()">Thay Đổi</button>
+                                <div class="order-info">
+                                    <h2>Địa Chỉ Nhận Hàng</h2>
+                                    <div class="order-details">
+                                        <p class="name">${userCreateOrder.name}</p>
+                                        <input type="hidden" name="name" value="${userCreateOrder.name}">
+                                        <p class="phone">(+84) ${userCreateOrder.phone}</p>
+                                        <input type="hidden" name="phone" value="${userCreateOrder.phone}">
+                                        <p class="address">${userCreateOrder.address}</p>
+                                        <input type="hidden" name="address" value="${userCreateOrder.address}">
+                                        <p class="gender">${userCreateOrder.gender == 1 ? 'Male' : 'Female'}</p>
+                                        <input type="hidden" name="gender" value="${userCreateOrder.gender == 1 ? 'Male' : 'Female'}">
+                                        <span class="default-tag">Mặc Định</span>
+                                        <button type="button" class="styled-button" onclick="showAddressModal()">Thay Đổi</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- The Modal -->
-                            <div id="addressModal" class="modal" tabindex="-1" role="dialog">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <button class="back-button" onclick="redirectToCartContact()">Hủy</button>
-                                        <h4>Thay Đổi Địa Chỉ Nhận Hàng</h4>
-                                        <form id="addressForm">
+                                <!-- Thêm phần tử new-address để hiển thị thông tin địa chỉ mới -->
+                                <div class="new-address">
+                                    <h2>Địa Chỉ Nhận Hàng</h2>
+                                    <div class="order-details">
+                                        <p class="name" id="newNameDisplay"></p>
+                                        <input type="hidden" class="name" name="newName" id="newName">
+                                        <p class="phone" id="newPhoneDisplay"></p>
+                                        <input type="hidden" class="phone" name="newPhone" id="newPhone">
+                                        <p class="address" id="newAddressDisplay"></p>
+                                        <input type="hidden" class="address" name="newAddress" id="newAddress">
+                                        <p class="gender" id="newGenderDisplay"></p>
+                                        <input type="hidden" class="gender" name="newGender" id="newGender">
+                                        <button type="button" class="styled-button" onclick="showAddressModal()">Thay Đổi</button>
+                                    </div>
+                                </div>
+                                <!-- The Modal -->
+                                <div id="addressModal" class="modal" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="back-button" onclick="redirectToCartContact()">Hủy</button>
+                                            <h4>Thay Đổi Địa Chỉ Nhận Hàng</h4>
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
@@ -489,115 +496,112 @@
                                                 <button type="button" class="styled-button" onclick="confirmChange()">Xác nhận</button>
                                                 <button type="button" class="styled-button" onclick="showNewAddressModal()">Add New Address</button>
                                             </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- The Add New Address Modal -->
-                            <div id="newAddressModal" class="modal" tabindex="-1" role="dialog">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <button class="back-button" onclick="closeNewAddressModal()">Trở lại</button>
-                                        <h4>Add New Address</h4>
-                                        <div id="address-options">
-                                            <form id="profileForm" class="account-info-form" action="${pageContext.request.contextPath}/addDeliveryAddress"
-                                                  method="POST">
-                                                <div class="form-container">
-                                                    <div class="form-row">
-                                                        <div class="form-group">
-                                                            <label for="name">Name:</label>
-                                                            <input type="text" id="name" name="name" placeholder="Enter your name" value="">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="gender">Gender:</label>
-                                                            <select id="gender" name="gender" required>
-                                                                <option value="1">Male</option>
-                                                                <option value="0">Female</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="phone">Phone:</label>
-                                                        <input type="text" id="phone" name="phone" placeholder="Enter your phone number" value="">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="address">Address:</label>
-                                                        <input type="text" id="address" name="address" placeholder="Enter your address" value="">
-                                                    </div>
-                                                    <div class="button-container">
-                                                        <button type="submit" class="styled-button">Submit</button>
-                                                    </div>
-                                                </div>
-                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="table-responsive cart_info" style="max-width: 1400px; margin-top: 50px;">
-                                <table class="table table-condensed">
-                                    <thead>
-                                        <tr class="cart_menu">
-                                            <td class="image">Item</td>
-                                            <td class="description">Title</td>
-                                            <td class="price">Price</td>
-                                            <td class="quantity">Quantity</td>
-                                            <td class="total">Total</td>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <c:forEach var="product" items="${selectedProducts}">
-                                            <tr>
-                                                <td class="cart_product">
-                                                    <a href=""><img src="<c:url value='/images/${product.image}'/>" alt=""></a>
-                                                </td>
-                                                <td class="cart_description">
-                                                    <h4><a href="">${product.title}</a></h4>
-                                                    <p>ID: ${product.id}</p>
-                                                    <input type="hidden" name="productId" value="${product.id}">
-                                                </td>
-                                                <td class="cart_price">
-                                                    <fmt:formatNumber value="${product.salePrice}" type="number" maxFractionDigits="0" />
-                                                </td>
-                                                <td class="cart_quantity">
-                                                    <div class="cart_quantity_button">
-                                                        <input class="cart_quantity_input" type="text" name="quantity" value="${product.quantity}" readonly>
+                                <!-- The Add New Address Modal -->
+                                <div id="newAddressModal" class="modal" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="back-button" onclick="closeNewAddressModal()">Trở lại</button>
+                                            <h4>Add New Address</h4>
+                                            <div id="address-options">
+                                                <form id="profileForm" class="account-info-form" action="${pageContext.request.contextPath}/addDeliveryAddress" method="POST">
+                                                    <div class="form-container">
+                                                        <div class="form-row">
+                                                            <div class="form-group">
+                                                                <label for="name">Name:</label>
+                                                                <input type="text" id="name" name="name" placeholder="Enter your name" value="">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="gender">Gender:</label>
+                                                                <select id="gender" name="gender" required>
+                                                                    <option value="1">Male</option>
+                                                                    <option value="0">Female</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="phone">Phone:</label>
+                                                            <input type="text" id="phone" name="phone" placeholder="Enter your phone number" value="">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="address">Address:</label>
+                                                            <input type="text" id="address" name="address" placeholder="Enter your address" value="">
+                                                        </div>
+                                                        <div class="button-container">
+                                                            <button type="submit" class="styled-button">Submit</button>
+                                                        </div>
                                                     </div>
-                                                </td>
-                                                <td class="cart_total">
-                                                    <fmt:formatNumber value="${product.salePrice * product.quantity}" type="number" maxFractionDigits="0" />
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive cart_info" style="max-width: 1400px; margin-top: 50px;">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                            <tr class="cart_menu">
+                                                <td class="image">Item</td>
+                                                <td class="description">Title</td>
+                                                <td class="price">Price</td>
+                                                <td class="quantity">Quantity</td>
+                                                <td class="total">Total</td>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <c:forEach var="product" items="${selectedProducts}">
+                                                <tr>
+                                                    <td class="cart_product">
+                                                        <a href=""><img src="<c:url value='/images/${product.image}'/>" alt=""></a>
+                                                    </td>
+                                                    <td class="cart_description">
+                                                        <h4><a href="">${product.title}</a></h4>
+                                                        <p>ID: ${product.id}</p>
+                                                        <input type="hidden" name="productId" value="${product.id}">
+                                                    </td>
+                                                    <td class="cart_price">
+                                                        <fmt:formatNumber value="${product.salePrice}" type="number" maxFractionDigits="0" />
+                                                    </td>
+                                                    <td class="cart_quantity">
+                                                        <div class="cart_quantity_button">
+                                                            <input class="cart_quantity_input" type="text" name="quantity" value="${product.quantity}" readonly>
+                                                        </div>
+                                                    </td>
+                                                    <td class="cart_total">
+                                                        <fmt:formatNumber value="${product.salePrice * product.quantity}" type="number" maxFractionDigits="0" />
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="4" class="text-right">Total Price:</td>
+                                                <td class="cart_total_price">
+                                                    <c:set var="totalPrice" value="0" />
+                                                    <c:forEach var="product" items="${selectedProducts}">
+                                                        <c:set var="totalPrice" value="${totalPrice + (product.salePrice * product.quantity)}" />
+                                                    </c:forEach>
+                                                    <fmt:formatNumber value="${totalPrice}" type="number" maxFractionDigits="0" />
+                                                    <input type="hidden" name="totalCost" value="${totalPrice}">
                                                 </td>
                                             </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="4" class="text-right">Total Price:</td>
-                                            <td class="cart_total_price">
-                                                <c:set var="totalPrice" value="0" />
-                                                <c:forEach var="product" items="${selectedProducts}">
-                                                    <c:set var="totalPrice" value="${totalPrice + (product.salePrice * product.quantity)}" />
-                                                </c:forEach>
-                                                <fmt:formatNumber value="${totalPrice}" type="number" maxFractionDigits="0" />
-                                                <input type="hidden" name="totalCost" value="${totalPrice + (product.salePrice * product.quantity)}">
-                                            </td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
+                                        </tfoot>
+                                    </table>
+                                </div>
 
-                            <p class="error-message">${mess}</p>
-                            <span id="phone-error" class="error-message"></span><br>
+                                <p class="error-message">${mess}</p>
+                                <span id="phone-error" class="error-message"></span><br>
 
-                            <!-- Payment Methods Section -->
-                            <div id="payment_methods">
-                                <h2>Hình thức thanh toán</h2>
-                                <form id="paymentForm" action="${pageContext.request.contextPath}/processPayment" method="POST">
+                                <!-- Payment Methods Section -->
+                                <div id="payment_methods">
+                                    <h2>Hình thức thanh toán</h2>
                                     <div class="payment-options">
                                         <div class="payment-option">
-                                            <input type="radio" id="payment_gateway" name="paymentMethod" value="payment_gateway">
+                                            <input type="radio" id="payment_gateway" name="paymentMethod" value="3">
                                             <label for="payment_gateway"> 
                                                 <img src="<c:url value='/images/payGateway.jpg'/>" alt="VNPay">
                                                 <div class="name-pay">
@@ -609,7 +613,7 @@
                                             </label>
                                         </div>
                                         <div class="payment-option">
-                                            <input type="radio" id="cod" name="paymentMethod" value="cod">
+                                            <input type="radio" id="cod" name="paymentMethod" value="1">
                                             <label for="cod">
                                                 <img src="<c:url value='/images/payCOD.png'/>" alt="COD">
                                                 <div class="name-pay">
@@ -619,7 +623,7 @@
                                             </label>
                                         </div>
                                         <div class="payment-option">
-                                            <input type="radio" id="bank_transfer" name="paymentMethod" value="bank_transfer">
+                                            <input type="radio" id="bank_transfer" name="paymentMethod" value="2">
                                             <label for="bank_transfer">
                                                 <img src="<c:url value='/images/payBank.jpg'/>" alt="Bank Transfer">
                                                 <div class="name-pay">
@@ -631,15 +635,15 @@
                                     <div class="button-container">
                                         <button type="submit" class="styled-button">Thanh toán</button>
                                     </div>
-                                </form>
+                                </div>
+                                <!-- End of Payment Methods Section -->
                             </div>
-                            <!-- End of Payment Methods Section -->
                         </div>
                     </div>
                 </div>
-            </div>
-
+            </form>
         </section>
+
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 var productItems = document.querySelectorAll('.product-item');
@@ -718,10 +722,15 @@
                 document.querySelector('.new-address').style.display = 'none';
             });
             function showSelectedAddress(name, phone, address, gender) {
-                document.getElementById('newName').textContent = name;
-                document.getElementById('newPhone').textContent = "(+84) " + phone;
-                document.getElementById('newAddress').textContent = address;
-                document.getElementById('newGender').textContent = (gender == 1 ? 'Male' : 'Female');
+                document.getElementById('newNameDisplay').textContent = name;
+                document.getElementById('newPhoneDisplay').textContent = "(+84) " + phone;
+                document.getElementById('newAddressDisplay').textContent = address;
+                document.getElementById('newGenderDisplay').textContent = (gender == 1 ? 'Male' : 'Female');
+
+                document.getElementById('newName').value = name;
+                document.getElementById('newPhone').value = phone;
+                document.getElementById('newAddress').value = address;
+                document.getElementById('newGender').value = gender;
 
                 // Hiển thị phần tử new-address khi có dữ liệu
                 document.querySelector('.new-address').style.display = 'block';

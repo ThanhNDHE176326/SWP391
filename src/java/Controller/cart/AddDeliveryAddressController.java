@@ -77,12 +77,14 @@ public class AddDeliveryAddressController extends HttpServlet {
         CustomerDAO dao = new CustomerDAO();
         String recipient_name = request.getParameter("name");
         String username = (String) session.getAttribute("username");
-        String customer_id = dao.getInformationCustomer(username).getId();
+        String idCustomer = dao.getInformationCustomer(username).getId();
+        int customer_id = Integer.parseInt(idCustomer);
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
         String recipient_gender = request.getParameter("gender");
+        boolean isMale = "male".equalsIgnoreCase(recipient_gender); // true nếu là "male", false nếu là "female"
 
-        dao.addDeliveryAddress(customer_id, address, phone, recipient_name, recipient_gender);
+        dao.addDeliveryAddress(customer_id, address, phone, recipient_name, isMale);
         request.getRequestDispatcher("pushToCartContact").forward(request, response);
     }
 
