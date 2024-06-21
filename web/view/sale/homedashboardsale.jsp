@@ -9,168 +9,157 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-    <title>Saler - Dashboard</title>
+        <title>Saler - Dashboard</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="<c:url value='/vendor/fontawesome-free/css/all.min.css'/>" rel="stylesheet" type="text/css">
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f8f9fc;
+            }
 
-    <!-- Page level plugin CSS-->
-    <link href="<c:url value='/vendor/datatables/dataTables.bootstrap4.css'/>" rel="stylesheet">
+            .container {
+                max-width: 1200px;
+                margin: 20px auto;
+            }
 
-    <!-- Custom styles for this template-->
-    <link href="<c:url value='/css/sb-admin.css'/>" rel="stylesheet">
-    <link rel="stylesheet" href="<c:url value='/css/colReorder-bootstrap4.css'/>">
+            h1 {
+                color: #4e73df;
+                text-align: center;
+                margin-bottom: 20px;
+            }
 
-    <!-- Additional custom styles for better appearance -->
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fc;
-        }
+            form {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
 
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-        }
+            form label {
+                margin: 0 10px;
+            }
 
-        h1 {
-            color: #4e73df;
-            text-align: center;
-            margin-bottom: 20px;
-        }
+            form input, form button {
+                margin: 0 10px;
+                padding: 5px 10px;
+                font-size: 1rem;
+            }
 
-        form {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
 
-        form label {
-            margin: 0 10px;
-        }
+            table, th, td {
+                border: 1px solid #ddd;
+            }
 
-        form input, form button {
-            margin: 0 10px;
-            padding: 5px 10px;
-            font-size: 1rem;
-        }
+            th, td {
+                padding: 10px;
+                text-align: center;
+            }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
+            th {
+                background-color: #4e73df;
+                color: white;
+            }
 
-        table, th, td {
-            border: 1px solid #ddd;
-        }
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
 
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
+            .sticky-footer {
+                background-color: #f8f9fc;
+                padding: 10px 0;
+            }
 
-        th {
-            background-color: #4e73df;
-            color: white;
-        }
+            .sticky-footer .container {
+                text-align: center;
+            }
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
+            .scroll-to-top {
+                position: fixed;
+                bottom: 1rem;
+                right: 1rem;
+                width: 2.75rem;
+                height: 2.75rem;
+                text-align: center;
+                color: white;
+                background-color: #4e73df;
+                border-radius: 50%;
+                display: none;
+            }
 
-        .sticky-footer {
-            background-color: #f8f9fc;
-            padding: 10px 0;
-        }
+            .scroll-to-top:hover {
+                color: white;
+                background-color: #2e59d9;
+            }
 
-        .sticky-footer .container {
-            text-align: center;
-        }
+            .modal-body {
+                text-align: center;
+            }
+        </style>
 
-        .scroll-to-top {
-            position: fixed;
-            bottom: 1rem;
-            right: 1rem;
-            width: 2.75rem;
-            height: 2.75rem;
-            text-align: center;
-            color: white;
-            background-color: #4e73df;
-            border-radius: 50%;
-            display: none;
-        }
+    </head>
 
-        .scroll-to-top:hover {
-            color: white;
-            background-color: #2e59d9;
-        }
+    <body id="page-top">
 
-        .modal-body {
-            text-align: center;
-        }
-    </style>
+        <jsp:include page="headersale.jsp"/>
 
-</head>
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <jsp:include page="navbarsale.jsp"/>
 
-<body id="page-top">
+            <div class="container">
+                <h1>Dashboard</h1>
 
-    <jsp:include page="headersale.jsp"/>
+                <form method="get" action="${pageContext.request.contextPath}/saledashboard">
+                    <label for="fromDate">From Date:</label>
+                    <input type="date" id="fromDate" name="fromDate" required>
+                    <label for="toDate">To Date:</label>
+                    <input type="date" id="toDate" name="toDate" required>
+                    <button type="submit">Filter</button>
+                </form>
 
-    <div id="wrapper">
-        <!-- Sidebar -->
-        <jsp:include page="navbarsale.jsp"/>
-
-        <div class="container">
-            <h1>Dashboard</h1>
-
-            <form method="get" action="${pageContext.request.contextPath}/saledashboard">
-                <label for="fromDate">From Date:</label>
-                <input type="date" id="fromDate" name="fromDate" required>
-                <label for="toDate">To Date:</label>
-                <input type="date" id="toDate" name="toDate" required>
-                <button type="submit">Filter</button>
-            </form>
-
-            <h2>Order Trends</h2>
-            <table>
-                <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Total Cost</th>
-                    <th>Order Date</th>
-                </tr>
-                <c:forEach var="order" items="${orders}">
+                <h2>Order Trends</h2>
+                <table>
                     <tr>
-                        <td>${order.id}</td>
-                        <td>${order.customer}</td>
-                        <td>${order.totalCost}</td>
-                        <td>${order.orderDate}</td>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Total Cost</th>
+                        <th>Order Date</th>
                     </tr>
-                </c:forEach>
-            </table>
-        </div>
-
-        <!-- /.container-fluid -->
-
-        <!-- Sticky Footer -->
-        <footer class="sticky-footer">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright © Your Website 2019</span>
-                </div>
+                    <c:forEach var="order" items="${orders}">
+                        <tr>
+                            <td>${order.id}</td>
+                            <td>${order.customer}</td>
+                            <td>${order.totalCost}</td>
+                            <td>${order.orderDate}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
             </div>
-        </footer>
 
-    </div>
-    <!-- /.content-wrapper -->
+            <!-- /.container-fluid -->
+
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © Your Website 2019</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- /.content-wrapper -->
 
     </div>
     <!-- /#wrapper -->
@@ -182,7 +171,7 @@
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -199,24 +188,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="<c:url value='/vendor/jquery/jquery.min.js'/>"></script>
-    <script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js'/>"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="<c:url value='/vendor/jquery-easing/jquery.easing.min.js'/>"></script>
-
-    <!-- Page level plugin JavaScript-->
-    <script src="<c:url value='/vendor/datatables/jquery.dataTables.js'/>"></script>
-    <script src="<c:url value='/vendor/datatables/dataTables.bootstrap4.js'/>"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="<c:url value='/js/sb-admin.min.js'/>"></script>
-
-    <!-- Demo scripts for this page-->
-    <script src="<c:url value='/js/demo/datatables-demo.js'/>"></script>
-
 </body>
 
 </html>

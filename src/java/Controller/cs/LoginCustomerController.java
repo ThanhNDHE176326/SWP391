@@ -115,9 +115,8 @@ public class LoginCustomerController extends HttpServlet {
 
 // Reset login attempts on successful login
         session.removeAttribute("loginAttempts");
-        session.setAttribute("acc", c);
-        session.setAttribute("username", username); // Set the username into session
-        session.setAttribute("password", password); // Set the password into session
+        session.setAttribute("usernamecustomer", username); // Set the username into session
+        session.setAttribute("passwordcustomer", password); // Set the password into session
         session.setMaxInactiveInterval(1800); // 30'
         response.sendRedirect("view/customer/homepage.jsp");
 

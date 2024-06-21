@@ -17,6 +17,10 @@
 
         <title>Admin - Dashboard</title>
 
+        <!-- Bootstrap CSS -->
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
         <!-- Custom fonts for this template-->
         <link href="<c:url value='/vendor/fontawesome-free/css/all.min.css' />" rel="stylesheet" type="text/css">
 
@@ -115,6 +119,9 @@
         </div>
 
         <!-- Bootstrap core JavaScript-->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="<c:url value='/vendor/jquery/jquery.min.js' />"></script>
         <script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js' />"></script>
 
