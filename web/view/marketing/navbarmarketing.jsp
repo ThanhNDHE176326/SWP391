@@ -17,16 +17,6 @@
 
         <title>SB Admin - Dashboard</title>
 
-        <!-- Custom fonts for this template-->
-        <link href="<c:url value='/vendor/fontawesome-free/css/all.min.css'/>" rel="stylesheet" type="text/css">
-
-        <!-- Page level plugin CSS-->
-        <link href="<c:url value='/vendor/datatables/dataTables.bootstrap4.css'/>" rel="stylesheet">
-
-        <!-- Custom styles for this template-->
-        <link href="<c:url value='/css/sb-admin.css'/>" rel="stylesheet">
-
-        <link rel="stylesheet" href="<c:url value='/css/colReorder-bootstrap4.css'/>">
 
     </head>
     <body>

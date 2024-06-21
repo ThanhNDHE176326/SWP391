@@ -8,14 +8,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>User List</title>
 
-        <!-- Bootstrap CSS -->
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Custom fonts for this template-->
-        <link href="<c:url value='/vendor/fontawesome-free/css/all.min.css'/>" rel="stylesheet" type="text/css">
-        <!-- Page level plugin CSS-->
-        <link href="<c:url value='/vendor/datatables/dataTables.bootstrap4.css'/>" rel="stylesheet">
-        <!-- Custom styles for this template-->
-        <link href="<c:url value='/css/sb-admin.css'/>" rel="stylesheet">
     </head>
     <body id="page-top">
         <jsp:include page="headeradmin.jsp"/>
@@ -197,65 +189,48 @@
                 </div>
             </div>
         </div>
-
-        <!-- Bootstrap core JavaScript-->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src="<c:url value='/vendor/jquery/jquery.min.js'/>"></script>
-        <script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js'/>"></script>
-        <!-- Core plugin JavaScript-->
-        <script src="<c:url value='/vendor/jquery-easing/jquery.easing.min.js'/>"></script>
-        <!-- Page level plugin JavaScript-->
-        <script src="<c:url value='/vendor/datatables/jquery.dataTables.js'/>"></script>
-        <script src="<c:url value='/vendor/datatables/dataTables.bootstrap4.js'/>"></script>
-        <!-- Custom scripts for all pages-->
-        <script src="<c:url value='/js/sb-admin.min.js'/>"></script>
-        <!-- Demo scripts for this page-->
-        <script src="<c:url value='/js/demo/datatables-demo.js'/>"></script>
-
         <script>
-                                    document.addEventListener("DOMContentLoaded", function () {
-                                        const rowsPerPage = 5;
-                                        const rows = Array.from(document.querySelectorAll("#tableBody tr"));
-                                        const paginationControls = document.getElementById("pagination");
-                                        const totalPages = Math.ceil(rows.length / rowsPerPage);
+            document.addEventListener("DOMContentLoaded", function () {
+                const rowsPerPage = 5;
+                const rows = Array.from(document.querySelectorAll("#tableBody tr"));
+                const paginationControls = document.getElementById("pagination");
+                const totalPages = Math.ceil(rows.length / rowsPerPage);
 
-                                        function displayRows(page) {
-                                            const start = (page - 1) * rowsPerPage;
-                                            const end = start + rowsPerPage;
-                                            rows.forEach((row, index) => {
-                                                row.style.display = (index >= start && index < end) ? '' : 'none';
-                                            });
-                                        }
+                function displayRows(page) {
+                    const start = (page - 1) * rowsPerPage;
+                    const end = start + rowsPerPage;
+                    rows.forEach((row, index) => {
+                        row.style.display = (index >= start && index < end) ? '' : 'none';
+                    });
+                }
 
-                                        function setupPagination() {
-                                            paginationControls.innerHTML = '';
-                                            for (let i = 1; i <= totalPages; i++) {
-                                                const li = document.createElement('li');
-                                                li.classList.add('page-item');
-                                                const a = document.createElement('a');
-                                                a.classList.add('page-link');
-                                                a.href = '#';
-                                                a.textContent = i;
-                                                a.addEventListener('click', (event) => {
-                                                    event.preventDefault();
-                                                    displayRows(i);
-                                                    document.querySelectorAll('#pagination .page-item').forEach(item => item.classList.remove('active'));
-                                                    li.classList.add('active');
-                                                });
-                                                li.appendChild(a);
-                                                paginationControls.appendChild(li);
-                                            }
-                                            // Set the first page as active
-                                            if (paginationControls.firstChild) {
-                                                paginationControls.firstChild.classList.add('active');
-                                            }
-                                        }
+                function setupPagination() {
+                    paginationControls.innerHTML = '';
+                    for (let i = 1; i <= totalPages; i++) {
+                        const li = document.createElement('li');
+                        li.classList.add('page-item');
+                        const a = document.createElement('a');
+                        a.classList.add('page-link');
+                        a.href = '#';
+                        a.textContent = i;
+                        a.addEventListener('click', (event) => {
+                            event.preventDefault();
+                            displayRows(i);
+                            document.querySelectorAll('#pagination .page-item').forEach(item => item.classList.remove('active'));
+                            li.classList.add('active');
+                        });
+                        li.appendChild(a);
+                        paginationControls.appendChild(li);
+                    }
+                    // Set the first page as active
+                    if (paginationControls.firstChild) {
+                        paginationControls.firstChild.classList.add('active');
+                    }
+                }
 
-                                        displayRows(1);
-                                        setupPagination();
-                                    });
+                displayRows(1);
+                setupPagination();
+            });
         </script>
     </body>
 </html>

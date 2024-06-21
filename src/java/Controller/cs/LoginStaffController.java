@@ -115,9 +115,8 @@ public class LoginStaffController extends HttpServlet {
         }
 // Reset login attempts on successful login
         session.removeAttribute("loginAttempts");
-        session.setAttribute("acc", s);
-        session.setAttribute("username", username); // Set the username into session
-        session.setAttribute("password", password); // Set the password into session
+        session.setAttribute("usernamestaff", username); // Set the username into session
+        session.setAttribute("passwordstaff", password); // Set the password into session
         session.setMaxInactiveInterval(1800); // 30'
         if (s.getRole().equals("1")) {
             response.sendRedirect("view/admin/homedashboardadmin.jsp");
