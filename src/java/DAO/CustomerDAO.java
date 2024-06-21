@@ -104,11 +104,11 @@ public class CustomerDAO extends DBContext {
         }
     }
 
-    public Customer getInformationCustomer(String name) {
+    public Customer getInformationCustomer(String username) {
         String sql = "SELECT * FROM Customers WHERE username=?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, name);
+            ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 return new Customer(rs.getString("id"),

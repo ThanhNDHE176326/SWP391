@@ -126,7 +126,7 @@ public class LoginStaffController extends HttpServlet {
             response.sendRedirect("view/sale/homedashboardsale.jsp");
         }
         if (s.getRole().equals("3")) {
-            response.sendRedirect("view/sale/homedashboardsale.jsp");
+            response.sendRedirect("view/sale/homedashboardsaleadmin.jsp");
         }
         if (s.getRole().equals("4")) {
             response.sendRedirect("view/marketing/homedashboardmarketing.jsp");
