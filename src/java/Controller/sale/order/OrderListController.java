@@ -1,6 +1,7 @@
 package Controller.sale.order;
 
 import DAO.OrderDAO;
+import DAO.StaffDAO;
 import Models.Order;
 import Models.OrderStatus;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,55 +39,67 @@ public class OrderListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        OrderDAO orderDAO = new OrderDAO();
-        int page = 1;
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
-        }
-        int offset = (page - 1) * ORDERS_PER_PAGE;
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+        StaffDAO dao = new StaffDAO();
+        String id = dao.getInformationStaff(username).getId();
+       
 
-        // Lấy các tham số từ request để lọc
-        String orderId = request.getParameter("orderId");
-        String statusId = request.getParameter("statusId");
-        String customerName = request.getParameter("customerName");
+    // Ensure the staffId is available
+    if (id == null) {
+        response.sendRedirect("view/staff/loginstaff.jsp"); // Redirect to login if not logged in
+        return;
+    }
 
-        List<Order> orders;
-        int totalOrders;
+    OrderDAO orderDAO = new OrderDAO();
+    int page = 1;
+    if (request.getParameter("page") != null) {
+        page = Integer.parseInt(request.getParameter("page"));
+    }
+    int offset = (page - 1) * ORDERS_PER_PAGE;
 
-        if (orderId != null && !orderId.isEmpty()) {
-            // Lọc theo orderId nếu được chỉ định
-            Order order = orderDAO.getOrderById(orderId);
-            orders = (order != null) ? List.of(order) : List.of();
-            totalOrders = orders.size();
-        } else if (statusId != null && !statusId.isEmpty()) {
-            // Lọc theo statusId nếu được chỉ định
-            orders = orderDAO.getOrdersByStatusWithPagination(statusId, offset, ORDERS_PER_PAGE);
-            totalOrders = orderDAO.getTotalOrderCountByStatus(statusId);
-        } else if (customerName != null && !customerName.isEmpty()) {
-            // Lọc theo customerName nếu được chỉ định
-            orders = orderDAO.getOrdersByCustomerName(customerName);
-            totalOrders = orders.size();
-        } else {
-            // Lấy danh sách đơn hàng bình thường
-            orders = orderDAO.getOrdersWithPagination(offset, ORDERS_PER_PAGE);
-            totalOrders = orderDAO.getTotalOrderCount();
-        }
+    // Lấy các tham số từ request để lọc
+    String orderId = request.getParameter("orderId");
+    String statusId = request.getParameter("statusId");
+    String customerName = request.getParameter("customerName");
 
-        int totalPages = (int) Math.ceil(totalOrders / (double) ORDERS_PER_PAGE);
+    List<Order> orders;
+    int totalOrders;
 
-        request.setAttribute("orders", orders);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
+    if (orderId != null && !orderId.isEmpty()) {
+        // Lọc theo orderId nếu được chỉ định
+        Order order = orderDAO.getOrderByIdAndStaff(orderId, id);
+        orders = (order != null) ? List.of(order) : List.of();
+        totalOrders = orders.size();
+    } else if (statusId != null && !statusId.isEmpty()) {
+        // Lọc theo statusId nếu được chỉ định
+        orders = orderDAO.getOrdersByStatusAndStaffWithPagination(statusId, id, offset, ORDERS_PER_PAGE);
+        totalOrders = orderDAO.getTotalOrderCountByStatusAndStaff(statusId, id);
+    } else if (customerName != null && !customerName.isEmpty()) {
+        // Lọc theo customerName nếu được chỉ định
+        orders = orderDAO.getOrdersByCustomerNameAndStaff(customerName, id);
+        totalOrders = orders.size();
+    } else {
+        // Lấy danh sách đơn hàng bình thường
+        orders = orderDAO.getOrdersByStaffWithPagination(id, offset, ORDERS_PER_PAGE);
+        totalOrders = orderDAO.getTotalOrderCountByStaff(id);
+    }
 
-        List<OrderStatus> orderStatusList = orderDAO.getAllOrderStatus();
-        request.setAttribute("orderStatusList", orderStatusList);
+    int totalPages = (int) Math.ceil(totalOrders / (double) ORDERS_PER_PAGE);
 
-        // Đảm bảo rằng các tham số lọc được truyền tiếp qua request dispatcher
-        request.setAttribute("statusId", statusId);
-        request.setAttribute("orderId", orderId);
-        request.setAttribute("customerName", customerName);
+    request.setAttribute("orders", orders);
+    request.setAttribute("currentPage", page);
+    request.setAttribute("totalPages", totalPages);
 
-        request.getRequestDispatcher("view/sale/orderlist.jsp").forward(request, response);
+    List<OrderStatus> orderStatusList = orderDAO.getAllOrderStatus();
+    request.setAttribute("orderStatusList", orderStatusList);
+
+    // Đảm bảo rằng các tham số lọc được truyền tiếp qua request dispatcher
+    request.setAttribute("statusId", statusId);
+    request.setAttribute("orderId", orderId);
+    request.setAttribute("customerName", customerName);
+
+    request.getRequestDispatcher("view/sale/orderlist.jsp").forward(request, response);
     }
 
     @Override
