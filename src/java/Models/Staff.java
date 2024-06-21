@@ -15,6 +15,15 @@ public class Staff {
     public Staff() {
     }
 
+    public Staff(String id, String fullname, String username, String password, String role, String isDelete) {
+        this.id = id;
+        this.fullname = fullname;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.isDelete = isDelete;
+    }
+
     public Staff(String id, String fullname, String username, String password, String gender, String phone, String address, String role, String isDelete) {
         this.id = id;
         this.fullname = fullname;
