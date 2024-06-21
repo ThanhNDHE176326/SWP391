@@ -1,19 +1,19 @@
-:root {
-  // Custom variable values only support SassScript inside `#{}`.
-  @each $color, $value in $colors {
-    --#{$color}: #{$value};
-  }
+$colors: (
+  red: #ff0000,
+  green: #00ff00,
+  blue: #0000ff,
+);
 
-  @each $color, $value in $theme-colors {
-    --#{$color}: #{$value};
-  }
+$theme-colors: (
+  primary: #336699,
+  secondary: #993366,
+);
 
-  @each $bp, $value in $grid-breakpoints {
-    --breakpoint-#{$bp}: #{$value};
-  }
+$grid-breakpoints: (
+  small: 576px,
+  medium: 768px,
+  large: 992px,
+);
 
-  // Use `inspect` for lists so that quoted items keep the quotes.
-  // See https://github.com/sass/sass/issues/2383#issuecomment-336349172
-  --font-family-sans-serif: #{inspect($font-family-sans-serif)};
-  --font-family-monospace: #{inspect($font-family-monospace)};
-}
+$font-family-sans-serif: ("Helvetica Neue", Helvetica, Arial, sans-serif);
+$font-family-monospace: ("Courier New", Courier, monospace);

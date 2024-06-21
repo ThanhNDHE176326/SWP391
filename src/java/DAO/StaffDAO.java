@@ -29,13 +29,13 @@ public class StaffDAO extends DBContext {
             st.setString(1, user);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                String name = rs.getString("fullname");
+                String fullname = rs.getString("fullname");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
                 String role = rs.getString("role_id");
                 String isDelete = rs.getString("isDelete");
 
-                return new Staff(username, username, password, role, isDelete);
+                return new Staff(fullname, username, password, role, isDelete);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -136,8 +136,32 @@ public class StaffDAO extends DBContext {
         }
         return listSaler;
     }
+    public Staff getInformationStaff(String username) {
+        String sql = "SELECT * FROM Staffs WHERE username=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Staff(rs.getString("id"),
+                        rs.getString("fullname"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("gender"),
+                        rs.getString("phone"),
+                        rs.getString("address"),
+                        rs.getString("role_id"),
+                        rs.getString("isDelete"));
+            }
+        } catch (SQLException e) {
+            System.out.println("getInformationCustomer: " + e.getMessage());
+        }
+        return null;
+
+    }
     public static void main(String[] args) {
         StaffDAO dao = new StaffDAO();
-        System.out.println(dao.getSalers().size());
+        System.out.println(dao.getInformationStaff("nguyenvana"));
     }
 }

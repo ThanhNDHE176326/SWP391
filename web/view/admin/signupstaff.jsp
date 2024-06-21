@@ -79,7 +79,7 @@
                                         <select name="role" class="form-control" required>
                                             <option value="1">Admin</option>
                                             <option value="2">Sale</option>
-                                            <option value="3">Sale Manager</option>
+                                            <option value="3">Sale Admin</option>
                                             <option value="4">Marketing</option>
                                             <option value="5">Delive</option>
                                         </select>
