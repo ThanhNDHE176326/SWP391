@@ -76,7 +76,7 @@ public class AddDeliveryAddressController extends HttpServlet {
         HttpSession session = request.getSession();
         CustomerDAO dao = new CustomerDAO();
         String recipient_name = request.getParameter("name");
-        String username = (String) session.getAttribute("username");
+        String username = (String) session.getAttribute("usernamecustomer");
         String idCustomer = dao.getInformationCustomer(username).getId();
         int customer_id = Integer.parseInt(idCustomer);
         String address = request.getParameter("address");
