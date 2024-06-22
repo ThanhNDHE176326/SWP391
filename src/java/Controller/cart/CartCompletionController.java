@@ -13,6 +13,7 @@ import DAO.ProductDAO;
 import DAO.StaffDAO;
 import Models.Customer;
 import Models.Order;
+import Models.Product;
 import Models.Staff;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -107,21 +108,31 @@ public class CartCompletionController extends HttpServlet {
         int salerRandomID = Integer.parseInt(salerRandom.getId());//staff_id in Orders
 
 //        Customer customerCreateOrder = (Customer) session.getAttribute("userCreateOrder");
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+        String gender = request.getParameter("gender");
+        boolean isMale = "Male".equals(gender);
+        String newName = request.getParameter("newName");
+        String newPhone = request.getParameter("newPhone");
+        String newAddress = request.getParameter("newAddress");
+        String newGender = request.getParameter("newGender");
+        boolean isMaleNew = "1".equals(newGender);
+        String paymentMethod = request.getParameter("paymentMethod");
+        int paymentID = Integer.parseInt(paymentMethod);
 
-        String selectedAddressDefault = request.getParameter("selectedAddressDefault"); //id cua bang Customers
-        String selectedAddressChange = request.getParameter("selectedAddressChange"); // id cua bang Address
-        String addressOrder="";
-        String phoneOrder="";
-        if(selectedAddressDefault != null){
-//            int customerID = Integer.parseInt(selectedAddressDefault);
-            addressOrder = customerDAO.getAddressByCustomerId(customerID);
-            phoneOrder = customerDAO.getPhoneByCustomerId(customerID);
+        String totalCostStr = request.getParameter("totalCost");
+        double totalCost = Double.parseDouble(totalCostStr);
+        LocalDate orderDate = LocalDate.now();
+        if (newName != null && !newName.isEmpty()
+                && newPhone != null && !newPhone.isEmpty()
+                && newAddress != null && !newAddress.isEmpty()
+                && newGender != null && !newGender.isEmpty()) {
+            orderDAO.insertOrder(customerID, totalCost, orderDate, newAddress, newPhone, newName, isMaleNew, paymentID, salerRandomID);
+        } else {
+            orderDAO.insertOrder(customerID, totalCost, orderDate, address, phone, name, isMale, paymentID, salerRandomID);
         }
-        if(selectedAddressChange != null){
-            int deliveryAddressID = Integer.parseInt(selectedAddressChange);
-            addressOrder = deliveryAddressDAO.getAddressByIdAndCustomerID(deliveryAddressID, customerID);
-            phoneOrder = deliveryAddressDAO.getPhoneByIdAndCustomerID(deliveryAddressID, customerID);
-        }
+        int orderID = orderDAO.getOrderIDByCustomerID(customerID);
         String[] productIds = request.getParameterValues("productId");
         for (String productId : productIds) {
             int productID = Integer.parseInt(productId);
@@ -129,12 +140,17 @@ public class CartCompletionController extends HttpServlet {
             int quantityInProducts = productDAO.getQuantityByProductID(productID);
             int quantityChanged = quantityInProducts - quatityInCartProduct;
             productDAO.updateQuantityAfterCart(productID, quantityChanged);
+            orderDAO.insertOrderDetail(orderID, productID, cartID);
         }
-        String totalCost = request.getParameter("totalCost");
-        LocalDate orderDate = LocalDate.now();
+
+        List<Product> listProduct = orderDAO.getProductByOrderID(orderID);
+        Order orderInfo = orderDAO.getInfoByOrderID(orderID);
+        request.setAttribute("listProduct", listProduct);
+        request.setAttribute("orderInfo", orderInfo);
+
 //        Order order = new Order(customerID,totalCost,orderDate,addressOrder,phoneOrder,salerRandomID);
 //        orderDAO.createOrder(order);
-        orderDAO.insertOrder(customerID, totalCost, orderDate, addressOrder, phoneOrder, salerRandomID);
+        //orderDAO.insertOrder(customerID, totalCost, orderDate, addressOrder, phoneOrder, salerRandomID);
         request.getRequestDispatcher("view/customer/cart-completion.jsp").forward(request, response);
     }
 
