@@ -70,7 +70,7 @@ public class UpdateQuantityCartProductController extends HttpServlet {
 
         int productID = Integer.parseInt(request.getParameter("productID"));
         String mode = request.getParameter("mode");
-        String customerName = (String) session.getAttribute("username");
+        String customerName = (String) session.getAttribute("customer");
         int customerID = Integer.parseInt(customerDAO.getInformationCustomer(customerName).getId());
         int cartID = cartDAO.getCartIdByCustomerID(customerID);
 

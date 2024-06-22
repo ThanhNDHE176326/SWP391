@@ -76,7 +76,7 @@ public class ViewCartDetailController extends HttpServlet {
         ProductDAOByPublic dao = new ProductDAOByPublic();
 
         //lay customerName tren session
-        String customerName = (String) session.getAttribute("username");
+        String customerName = (String) session.getAttribute("usernamecustomer");
         int customerID = Integer.parseInt(customerDAO.getInformationCustomer(customerName).getId());
         int cartID = cartDAO.getCartIdByCustomerID(customerID);
         List<Product> listNewProduct = dao.getTop6ProductNew();

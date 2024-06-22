@@ -68,7 +68,7 @@ public class AddToCartController extends HttpServlet {
         CartProductDAO cartProductDAO = new CartProductDAO();
 
         int productID = Integer.parseInt(request.getParameter("productID"));
-        String customerName = (String) session.getAttribute("username");
+        String customerName = (String) session.getAttribute("usernamecustomer");
         String customerID_STR = customerDAO.getInformationCustomer(customerName).getId();
         int customerID = Integer.parseInt(customerID_STR);
         Cart cartCustomer = cartDAO.getCartByCustomerID(customerID);
