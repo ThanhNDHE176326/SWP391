@@ -12,9 +12,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -22,6 +26,11 @@ import java.util.List;
  * @author admin
  */
 @WebServlet(name = "UpdateProductDetailMarketingController", urlPatterns = {"/updateProductDetailMarketing"})
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 2, // 2 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 50 // 50 MB
+)
 public class UpdateProductDetailMarketingController extends HttpServlet {
 
     /**
@@ -66,6 +75,7 @@ public class UpdateProductDetailMarketingController extends HttpServlet {
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Category> listCategory = categoryDAO.getCategorys();
         request.setAttribute("listCategory", listCategory);
+
         String idString = request.getParameter("productID");
         int productID = Integer.parseInt(idString);
         Product productDetail = productDAO.getProductDetailByID(productID);
@@ -84,14 +94,94 @@ public class UpdateProductDetailMarketingController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        ProductDAO productDAO = new ProductDAO();
+
+        String idString = request.getParameter("id");
+        int idInt = Integer.parseInt(idString);
         String title = request.getParameter("title");
         String author = request.getParameter("author");
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        String quantityStr = request.getParameter("quantity");
+        int quantityInt = Integer.parseInt(quantityStr);
         String description = request.getParameter("description");
-        int categoryID = Integer.parseInt(request.getParameter("category"));
-        String originalPrice = request.getParameter("originalPrice");
-        String salePrice = request.getParameter("salePrice");
+        String categoryIdStr = request.getParameter("category");
+        int categoryIdInt = Integer.parseInt(categoryIdStr);
+        String originalPriceStr = request.getParameter("originalPrice");
+        double originalPriceDou = Double.parseDouble(originalPriceStr);
+        String salePriceStr = request.getParameter("salePrice");
+        double salePriceDou = Double.parseDouble(salePriceStr);
+        //handle File image
+
+        if (title != null) {
+            productDAO.updateTitleOfProductById(idInt, title);
+        }
+        if (author != null) {
+            productDAO.updateAuthorOfProductById(idInt, author);
+        }
+        if (quantityStr != null) {
+            productDAO.updateQuantityOfProductById(idInt, quantityInt);
+        }
+        if (description != null) {
+            productDAO.updateDescriptionOfProductById(idInt, description);
+        }
+        if (categoryIdStr != null) {
+            productDAO.updateCategoryOfProductById(idInt, categoryIdInt);
+        }
+        if (originalPriceStr != null) {
+            productDAO.updateOriginalPriceOfProductById(idInt, originalPriceDou);
+        }
+        if (salePriceStr != null) {
+            productDAO.updateSalePriceOfProductById(idInt, salePriceDou);
+        }
+
+        if (request.getPart("imageFile") != null) {
+            String realPath = "D:\\Web_Project_Java\\SWP391\\web\\images";
+            Files.createDirectories(Paths.get(realPath)); // Tạo thư mục nếu chưa tồn tại
+            Part part = request.getPart("imageFile");
+            String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+            part.write(Paths.get(realPath, fileName).toString());
+            System.out.println("File uploaded to: " + Paths.get(realPath, fileName).toString());
+
+            productDAO.updateImageOfProductById(idInt, fileName);
+        }
+//        Product product = new Product();
+//        product.setId(id);
+//        product.setTitle(title);
+//        product.setAuthor(author);
+//        product.setQuantity(quantity);
+//        product.setDescription(description);
+//        product.setCategory(categoryID);
+//        product.setOriginalPrice(originalPrice);
+//        product.setSalePrice(salePrice);
+//        Part imagePart = request.getPart("image");
+//
+//        // Kiểm tra kích thước file (nếu cần)
+//        long fileSize = imagePart.getSize();
+//        if (fileSize > 800 * 1024) { // Giới hạn kích thước file 800KB
+//            throw new IllegalArgumentException("File size exceeds the limit.");
+//        }
+//
+//        // Đọc hình ảnh từ luồng đầu vào
+//        BufferedImage img = ImageIO.read(imagePart.getInputStream());
+//
+//        // Xác định đường dẫn tuyệt đối và tương đối của thư mục lưu trữ
+//        String relativePath = "images";
+//        String absolutePath = request.getServletContext().getRealPath(relativePath);
+//
+//        // Tạo thư mục nếu chưa tồn tại
+//        File directory = new File(absolutePath);
+//        if (!directory.exists()) {
+//            directory.mkdirs(); // Tạo thư mục nếu chưa tồn tại
+//        }
+        // Tạo tên tệp duy nhất dựa trên thông tin sản phẩm (có thể dùng UUID hoặc timestamp để duy nhất)
+//        String fileName = title.replaceAll("\\s+", "_") + "_" + System.currentTimeMillis() + ".jpg";
+//
+//        // Ghi hình ảnh vào tệp
+//        File outputFile = new File(directory, fileName);
+//        ImageIO.write(img, "jpg", outputFile);
+//
+//        // Cập nhật đường dẫn hình ảnh vào cơ sở dữ liệu
+//        String imagePath = relativePath + "/" + fileName;
+////        product.setImage(imagePath);
     }
 
     /**
