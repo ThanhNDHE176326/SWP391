@@ -44,229 +44,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <style>
-            .breadcrumbs .breadcrumb {
-                margin-bottom: 30px !important;
-            }
-            .breadcrumbs .breadcrumb li a {
-                padding: 8px 8px !important;
-                font-size: 1.2em;
-            }
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f0f0f0;
-            }
-
-            .form-container {
-                max-width: 900px;
-                margin: 20px auto;
-                padding: 20px;
-                background-color: #ffffff;
-                border: 1px solid #ddd;
-                border-radius: 10px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-
-            .form-group {
-                margin-bottom: 15px;
-            }
-
-            .form-group label {
-                display: block;
-                margin-bottom: 5px;
-                font-weight: bold;
-            }
-
-            .form-group input[type="text"],
-            .form-group input[type="email"],
-            .form-group select,
-            .form-group textarea {
-                width: 100%;
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                box-sizing: border-box;
-                font-size: 14px;
-            }
-
-            .form-row {
-                display: flex;
-                gap: 20px;
-            }
-
-            .form-row .form-group {
-                flex: 1;
-            }
-
-            .button-container {
-                text-align: center;
-                margin-top: 20px;
-            }
-
-            .styled-button {
-                display: inline-block;
-                padding: 5px 5px;
-                background-color: #007bff;
-                color: #fff;
-                border: none;
-                border-radius: 5px;
-                text-decoration: none;
-                font-size: 16px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-            }
-
-            .styled-button:hover {
-                background-color: #0056b3;
-            }
-
-            .styled-button:focus {
-                outline: none;
-            }
-
-            .styled-button:disabled {
-                background-color: #ccc;
-                cursor: not-allowed;
-            }
-
-            .error-message {
-                color: red;
-                font-style: italic;
-                margin-top: 5px;
-            }
-            .order-info {
-                font-family: Arial, sans-serif;
-            }
-
-            .order-info h2 {
-                font-size: 20px;
-                color: #ff6600; /* Màu nổi bật */
-                margin-bottom: 10px;
-                display: flex;
-                align-items: center;
-            }
-
-            .order-info h2::before {
-                content: '\1F4CD'; /* Biểu tượng pin */
-                margin-right: 5px;
-            }
-
-            .order-details {
-                display: flex;
-                align-items: center;
-                font-size: 17px;
-                flex-wrap: wrap;
-            }
-
-            .order-details > * {
-                margin-right: 10px;
-                display: flex;
-                align-items: center;
-            }
-
-            .order-details .name,
-            .order-details .phone {
-                font-weight: bold;
-            }
-
-            .order-details .name,
-            .order-details .phone,
-            .order-details .address,
-            .order-details .gender {
-                margin: 0 20px 0 0;
-                padding: 0;
-            }
-
-            .order-details .default-tag {
-                display: inline-block;
-                padding: 2px 6px;
-                border: 1px solid #ff6600;
-                color: #ff6600;
-                font-size: 12px;
-            }
-
-            .order-details .change-button {
-                color: #1a73e8;
-                text-decoration: none;
-                font-size: 14px;
-            }
-
-            .order-details .change-button:hover {
-                text-decoration: underline;
-            }
-            .styled-button {
-                background-color: #007bff;
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                cursor: pointer;
-            }
-            .styled-button:hover {
-                background-color: #0056b3;
-            }
-            .modal-content {
-                padding: 200px;
-            }
-            .modal-content h4 {
-                margin-bottom: 20px;
-            }
-            .close {
-                color: #aaa;
-                float: right;
-                font-size: 28px;
-                font-weight: bold;
-            }
-            .close:hover,
-            .close:focus {
-                color: black;
-                text-decoration: none;
-                cursor: pointer;
-            }
-            .styled-button {
-                background-color: #007bff;
-                color: white;
-                border: none;
-                padding: 3px 6px;
-                cursor: pointer;
-            }
-            .styled-button:hover {
-                background-color: #0056b3;
-            }
-            .modal-content {
-                padding: 20px;
-            }
-            .modal-content h4 {
-                margin-bottom: 20px;
-            }
-            .back-button {
-                background-color: #6c757d;
-                color: white;
-                border: none;
-                padding: 3px 6px;
-                cursor: pointer;
-                float: right;
-            }
-            .back-button:hover {
-                background-color: #5a6268;
-            }
-            .button-container {
-                display: flex;
-                justify-content: space-between;
-            }
-            .new-address {
-                font-family: Arial, sans-serif;
-            }
-
-            .new-address h2 {
-                font-size: 20px;
-                color: #ff6600; /* Màu nổi bật */
-                margin-bottom: 10px;
-                display: flex;
-                align-items: center;
-            }
-
-            .new-address h2::before {
-                content: '\1F4CD'; /* Biểu tượng pin */
-                margin-right: 5px;
+            .container{
+                margin-bottom: 10px !important;
             }
             .table-responsive.cart_info {
                 margin-bottom: 10px; /* Bottom margin for the table */
@@ -293,11 +72,14 @@
                 width: 20%; /* Adjusted width for Description cell */
             }
 
-            .cart_menu td.price,
-            .cart_menu td.quantity,
-            .cart_menu td.total,
-            .cart_menu td.delete {
-                width: 10%; /* Width for each of these cells */
+            .cart_menu td.price{
+                width: 20%;
+            }
+            .cart_menu td.quantity{
+                width: 10%;
+            }
+            .cart_menu td.total{
+                width: 20%; /* Width for each of these cells */
             }
 
             .cart_menu td.cart_delete a {
@@ -308,9 +90,17 @@
                 color: red; /* Hover color for Delete link */
             }
 
+            .cart_product {
+                display: flex !important;
+                justify-content: center !important; /* Căn giữa theo chiều ngang */
+                align-items: center !important; /* Căn giữa theo chiều dọc */
+                width: 100% !important; /* Đảm bảo phần tử bao bọc chiếm toàn bộ chiều rộng */
+                height: 100% !important; /* Đảm bảo phần tử bao bọc chiếm toàn bộ chiều cao */
+            }
+
             .cart_product img {
-                width: 130px; /* Product image width */
-                height: auto; /* Maintain aspect ratio */
+                width: 200px !important; /* Chiều rộng của ảnh */
+                height: 130px !important; /* Giữ nguyên tỷ lệ khung hình */
             }
 
             .cart_quantity_button {
@@ -332,74 +122,20 @@
             }
 
             .cart_price, .cart_quantity, .cart_total {
-                font-size: 16px; /* Set your desired font size here */
+                font-size: 20px; /* Set your desired font size here */
                 padding: 10px; /* Consistent padding for all cells */
                 box-sizing: border-box; /* Ensure padding is included in width calculation */
             }
 
             .cart_description h4 a {
-                font-size: 15px !important;
-            }
-            /* Payment Methods Section Styles */
-            #payment_methods {
-                margin-top: 0px;
-                border: 1px solid #ccc;
-                border-radius: 8px;
-                padding: 20px;
-                background-color: #f9f9f9;
-            }
-
-            #payment_methods h2 {
-                font-size: 24px;
-                margin-bottom: 50px;
-            }
-
-            .payment-options {
-                display: flex;
-                flex-direction: column;
-                margin-bottom: 25px !important;
-            }
-
-            .payment-option {
-                display: flex;
-                align-items: center;
-                margin-bottom: 5px;
-                padding: 10px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                background-color: #f9f9f9;
-            }
-
-            .payment-option input[type="radio"] {
-                margin-right: 10px;
-            }
-
-            .payment-option label {
-                display: flex;
-                align-items: center;
-                cursor: pointer;
-            }
-
-            .payment-option img {
-                margin-right: 10px;
-                margin-right: 100px;
-                margin-left: 50px;
-                width: 200px;
+                font-size: 20px !important;
             }
 
             .button-container {
                 text-align: center;
                 margin-top: 20px;
             }
-            .name-pay {
-                background-color: lightblue; /* Màu nền */
-                padding: 10px; /* Khoảng cách giữa nội dung và viền của div */
-                border: 1px solid #ccc; /* Viền */
-                width: 400px; /* Độ rộng của div */
-                font-family: Arial, sans-serif; /* Font chữ */
-                text-align: center; /* Căn giữa nội dung */
-                font-size: 17px;
-            }
+
             .confirmation-page {
                 font-family: 'Times New Roman', Times, serif;
                 text-align: center;
@@ -438,6 +174,52 @@
                 font-weight: normal;
                 color: #666;
             }
+            /* Căn lề phải cho ô chứa tổng giá */
+            .cart_total_price {
+                text-align: right;
+                padding-right: 150px; /* Thêm khoảng cách từ phải nếu cần */
+            }
+
+            /* Đảm bảo chữ "Total Price:" nằm cùng dòng với giá tổng và in đậm, màu đen */
+            .cart_total_price .total_price_label {
+                display: inline; /* Đảm bảo rằng chữ "Total Price:" nằm cùng dòng với giá tổng */
+                margin-right: 10px; /* Thêm khoảng cách giữa chữ và giá */
+                color: black; /* Màu đen */
+                font-weight: bold; /* In đậm */
+                font-size: 19px;
+            }
+            #do_action .total_area{
+                margin-left: 200px;
+                margin-right: 200px;
+                margin-bottom: 20px !important;
+            }
+            .total_area ul li{
+                font-size: 17px;
+            }
+            #order-heading {
+                text-align: center; /* căn giữa nội dung của phần tử */
+                margin-bottom: 20px; /* tăng khoảng cách dưới đoạn văn bản */
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 25px;
+                font-weight: bold;
+            }
+            .continue-shopping-btn {
+                display: block; /* Để nút a hiển thị dưới dạng block và chiếm toàn bộ chiều rộng của container */
+                width: fit-content; /* Chiều rộng của nút a phù hợp với nội dung bên trong */
+                margin: 0 auto; /* Căn giữa theo chiều ngang */
+                font-family: 'Times New Roman', Times, serif;
+                text-align: center; /* Căn giữa nội dung trong nút a */
+                font-size: 20px;
+                padding: 10px 20px; /* Điều chỉnh khoảng cách bên trong nút a */
+                background-color: #FE980F; /* Màu nền của nút a */
+                color: #fff; /* Màu chữ của nút a */
+                text-decoration: none; /* Bỏ gạch chân cho đường link */
+                border-radius: 5px; /* Bo góc cho nút a */
+            }
+
+            .continue-shopping-btn:hover {
+                background-color: #0056b3; /* Màu nền khi di chuột vào nút a */
+            }
 
         </style>
     </head><!--/head-->
@@ -449,7 +231,7 @@
             <div class="container">
                 <div class="breadcrumbs">
                     <ol class="breadcrumb">
-                        <li><a href="#">Home</a></li>
+                        <li><a href="${pageContext.request.contextPath}/view/customer/homepage.jsp">Home</a></li>
                         <li class="active">Shopping Cart</li>
                     </ol>
                 </div>
@@ -490,9 +272,7 @@
                                         <fmt:formatNumber value="${product.salePrice}" type="number" maxFractionDigits="0" />
                                     </td>
                                     <td class="cart_quantity">
-                                        <div class="cart_quantity_button">
-                                            <input class="cart_quantity_input" type="text" name="quantity" value="${product.quantity}" readonly>
-                                        </div>
+                                        <p> ${product.quantity}</p>
                                     </td>
                                     <td class="cart_total">
                                         <fmt:formatNumber value="${product.salePrice * product.quantity}" type="number" maxFractionDigits="0" />
@@ -502,8 +282,9 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="4" class="text-right">Total Price:</td>
+                                <td colspan="4"></td> <!-- Dùng cột trống để đẩy phần tử sang bên phải -->
                                 <td class="cart_total_price">
+                                    <p class="total_price_label">Total Price:</p>
                                     <c:set var="totalPrice" value="0" />
                                     <c:forEach var="product" items="${listProduct}">
                                         <c:set var="totalPrice" value="${totalPrice + (product.salePrice * product.quantity)}" />
@@ -513,6 +294,8 @@
                                 </td>
                             </tr>
                         </tfoot>
+
+
                     </table>
                 </div>
             </div>
@@ -521,13 +304,13 @@
         <section id="do_action">
             <div class="container">
                 <div class="heading">
-                    <h3>Order information</h3>
+                    <h3 id="order-heading">ORDER INFORMATION</h3>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                     <div class="total_area">
                         <ul>
                             <li>Receiver: <span>${orderInfo.recipient_name}</span></li>
-                            <li>Receiver gender:<span>${orderInfo.recipient_gender}</span></li>
+                            <li>Receiver gender: <span>${orderInfo.recipient_gender ? 'Male' : 'Female'}</span></li>
                             <li>Phone: <span>${orderInfo.phone}</span></li>
                             <li>Address: <span>${orderInfo.address}</span></li>
                             <li>Order-date: <span>${orderInfo.orderDate}</span></li>
@@ -535,22 +318,23 @@
                         </ul>
 
                     </div>
+                    <a href="${pageContext.request.contextPath}/ProductListPublic" class="continue-shopping-btn">Continue Shopping</a>
                 </div>
+
             </div>
-        </div>
-    </section>
-    <jsp:include page="footer.jsp"/>
+        </section>
+        <jsp:include page="footer.jsp"/>
 
 
 
-    <script src="<c:url value='/js/jquery.js'/>"></script>
-    <script src="<c:url value='/js/price-range.js'/>"></script>
-    <script src="<c:url value='/js/jquery.scrollUp.min.js'/>"></script>
-    <script src="<c:url value='/js/bootstrap.min.js'/>"></script>
-    <script src="<c:url value='/js/jquery.prettyPhoto.js'/>"></script>
-    <script src="<c:url value='/js/main.js'/>"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- Bootstrap JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</body>
+        <script src="<c:url value='/js/jquery.js'/>"></script>
+        <script src="<c:url value='/js/price-range.js'/>"></script>
+        <script src="<c:url value='/js/jquery.scrollUp.min.js'/>"></script>
+        <script src="<c:url value='/js/bootstrap.min.js'/>"></script>
+        <script src="<c:url value='/js/jquery.prettyPhoto.js'/>"></script>
+        <script src="<c:url value='/js/main.js'/>"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </body>
 </html>

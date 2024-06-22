@@ -293,11 +293,14 @@
                 width: 20%; /* Adjusted width for Description cell */
             }
 
-            .cart_menu td.price,
-            .cart_menu td.quantity,
-            .cart_menu td.total,
-            .cart_menu td.delete {
-                width: 10%; /* Width for each of these cells */
+            .cart_menu td.price{
+                width: 20%;
+            }
+            .cart_menu td.quantity{
+                width: 10%;
+            }
+            .cart_menu td.total{
+                width: 20%; /* Width for each of these cells */
             }
 
             .cart_menu td.cart_delete a {
@@ -308,9 +311,17 @@
                 color: red; /* Hover color for Delete link */
             }
 
+                  .cart_product {
+                display: flex !important;
+                justify-content: center !important; /* Căn giữa theo chiều ngang */
+                align-items: center !important; /* Căn giữa theo chiều dọc */
+                width: 100% !important; /* Đảm bảo phần tử bao bọc chiếm toàn bộ chiều rộng */
+                height: 100% !important; /* Đảm bảo phần tử bao bọc chiếm toàn bộ chiều cao */
+            }
+
             .cart_product img {
-                width: 130px; /* Product image width */
-                height: auto; /* Maintain aspect ratio */
+                width: 170px !important; /* Chiều rộng của ảnh */
+                height: 100px !important; /* Giữ nguyên tỷ lệ khung hình */
             }
 
             .cart_quantity_button {
@@ -332,13 +343,27 @@
             }
 
             .cart_price, .cart_quantity, .cart_total {
-                font-size: 16px; /* Set your desired font size here */
+                font-size: 17px; /* Set your desired font size here */
                 padding: 10px; /* Consistent padding for all cells */
                 box-sizing: border-box; /* Ensure padding is included in width calculation */
             }
 
             .cart_description h4 a {
-                font-size: 15px !important;
+                font-size: 17px !important;
+            }
+            /* Căn lề phải cho ô chứa tổng giá */
+            .cart_total_price {
+                text-align: right;
+                padding-right: 150px; /* Thêm khoảng cách từ phải nếu cần */
+            }
+
+            /* Đảm bảo chữ "Total Price:" nằm cùng dòng với giá tổng và in đậm, màu đen */
+            .cart_total_price .total_price_label {
+                display: inline; /* Đảm bảo rằng chữ "Total Price:" nằm cùng dòng với giá tổng */
+                margin-right: 10px; /* Thêm khoảng cách giữa chữ và giá */
+                color: black; /* Màu đen */
+                font-weight: bold; /* In đậm */
+                font-size: 16px;
             }
             /* Payment Methods Section Styles */
             #payment_methods {
@@ -387,9 +412,10 @@
                 width: 200px;
             }
 
-            .button-container {
+            .button-containerner {
                 text-align: center;
                 margin-top: 20px;
+                margin-bottom: 20px;
             }
             .name-pay {
                 background-color: lightblue; /* Màu nền */
@@ -418,12 +444,12 @@
                             <div id="cart_items">
                                 <div class="breadcrumbs">
                                     <ol class="breadcrumb">
-                                        <li><a href="${pageContext.request.contextPath}/ProductListPublic">Back to Product List</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/viewCartDetail">Back</a></li>
                                         <li class="active">Cart Contact</li>
                                     </ol>
                                 </div>
                                 <div class="order-info">
-                                    <h2>Địa Chỉ Nhận Hàng</h2>
+                                    <h2>Delivery Address</h2>
                                     <div class="order-details">
                                         <p class="name">${userCreateOrder.name}</p>
                                         <input type="hidden" name="name" value="${userCreateOrder.name}">
@@ -433,8 +459,8 @@
                                         <input type="hidden" name="address" value="${userCreateOrder.address}">
                                         <p class="gender">${userCreateOrder.gender == 1 ? 'Male' : 'Female'}</p>
                                         <input type="hidden" name="gender" value="${userCreateOrder.gender == 1 ? 'Male' : 'Female'}">
-                                        <span class="default-tag">Mặc Định</span>
-                                        <button type="button" class="styled-button" onclick="showAddressModal()">Thay Đổi</button>
+                                        <span class="default-tag">Default</span>
+                                        <button type="button" class="styled-button" onclick="showAddressModal()">Change</button>
                                     </div>
                                 </div>
                                 <!-- Thêm phần tử new-address để hiển thị thông tin địa chỉ mới -->
@@ -449,24 +475,24 @@
                                         <input type="hidden" class="address" name="newAddress" id="newAddress">
                                         <p class="gender" id="newGenderDisplay"></p>
                                         <input type="hidden" class="gender" name="newGender" id="newGender">
-                                        <button type="button" class="styled-button" onclick="showAddressModal()">Thay Đổi</button>
+                                        <button type="button" class="styled-button" onclick="showAddressModal()">Change</button>
                                     </div>
                                 </div>
                                 <!-- The Modal -->
                                 <div id="addressModal" class="modal" tabindex="-1" role="dialog">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
-                                            <button type="button" class="back-button" onclick="redirectToCartContact()">Hủy</button>
+                                            <button type="button" class="back-button" onclick="redirectToCartContact()">Cancel</button>
                                             <h4>Thay Đổi Địa Chỉ Nhận Hàng</h4>
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th>Chọn</th>
-                                                        <th>Địa Chỉ</th>
-                                                        <th>Điện Thoại</th>
-                                                        <th>Người Nhận</th>
-                                                        <th>Giới Tính</th>
-                                                        <th>Hành Động</th>
+                                                        <th>Select</th>
+                                                        <th>Address</th>
+                                                        <th>Phone</th>
+                                                        <th>Receiver</th>
+                                                        <th>Gender</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -493,7 +519,7 @@
                                                 </tbody>
                                             </table>
                                             <div class="button-container">
-                                                <button type="button" class="styled-button" onclick="confirmChange()">Xác nhận</button>
+                                                <button type="button" class="styled-button" onclick="confirmChange()">Confirm</button>
                                                 <button type="button" class="styled-button" onclick="showNewAddressModal()">Add New Address</button>
                                             </div>
                                         </div>
@@ -504,7 +530,7 @@
                                 <div id="newAddressModal" class="modal" tabindex="-1" role="dialog">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
-                                            <button type="button" class="back-button" onclick="closeNewAddressModal()">Trở lại</button>
+                                            <button type="button" class="back-button" onclick="closeNewAddressModal()">Back</button>
                                             <h4>Add New Address</h4>
                                             <div id="address-options">
                                                 <form id="profileForm" class="account-info-form" action="${pageContext.request.contextPath}/addDeliveryAddress" method="POST">
@@ -567,9 +593,7 @@
                                                         <fmt:formatNumber value="${product.salePrice}" type="number" maxFractionDigits="0" />
                                                     </td>
                                                     <td class="cart_quantity">
-                                                        <div class="cart_quantity_button">
-                                                            <input class="cart_quantity_input" type="text" name="quantity" value="${product.quantity}" readonly>
-                                                        </div>
+                                                        <p> ${product.quantity}</p>
                                                     </td>
                                                     <td class="cart_total">
                                                         <fmt:formatNumber value="${product.salePrice * product.quantity}" type="number" maxFractionDigits="0" />
@@ -578,18 +602,19 @@
                                             </c:forEach>
                                         </tbody>
                                         <tfoot>
-                                            <tr>
-                                                <td colspan="4" class="text-right">Total Price:</td>
-                                                <td class="cart_total_price">
-                                                    <c:set var="totalPrice" value="0" />
-                                                    <c:forEach var="product" items="${selectedProducts}">
-                                                        <c:set var="totalPrice" value="${totalPrice + (product.salePrice * product.quantity)}" />
-                                                    </c:forEach>
-                                                    <fmt:formatNumber value="${totalPrice}" type="number" maxFractionDigits="0" />
-                                                    <input type="hidden" name="totalCost" value="${totalPrice}">
-                                                </td>
-                                            </tr>
-                                        </tfoot>
+                            <tr>
+                                <td colspan="4"></td> <!-- Dùng cột trống để đẩy phần tử sang bên phải -->
+                                <td class="cart_total_price">
+                                    <p class="total_price_label">Total Price:</p>
+                                    <c:set var="totalPrice" value="0" />
+                                    <c:forEach var="product" items="${selectedProducts}">
+                                        <c:set var="totalPrice" value="${totalPrice + (product.salePrice * product.quantity)}" />
+                                    </c:forEach>
+                                    <fmt:formatNumber value="${totalPrice}" type="number" maxFractionDigits="0" />
+                                    <input type="hidden" name="totalCost" value="${totalPrice}">
+                                </td>
+                            </tr>
+                        </tfoot>
                                     </table>
                                 </div>
 
@@ -598,7 +623,7 @@
 
                                 <!-- Payment Methods Section -->
                                 <div id="payment_methods">
-                                    <h2>Hình thức thanh toán</h2>
+                                    <h2>Payments Method</h2>
                                     <div class="payment-options">
                                         <div class="payment-option">
                                             <input type="radio" id="payment_gateway" name="paymentMethod" value="3">
@@ -618,7 +643,7 @@
                                                 <img src="<c:url value='/images/payCOD.png'/>" alt="COD">
                                                 <div class="name-pay">
                                                     COD<br>
-                                                    Thanh toán khi nhận hàng
+                                                    Payment on delivery
                                                 </div>
                                             </label>
                                         </div>
@@ -632,11 +657,12 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="button-container">
-                                        <button type="submit" class="styled-button">Thanh toán</button>
-                                    </div>
+
                                 </div>
                                 <!-- End of Payment Methods Section -->
+                                <div class="button-containerner">
+                                    <button type="submit" class="styled-button">Checkout</button>
+                                </div>
                             </div>
                         </div>
                     </div>
