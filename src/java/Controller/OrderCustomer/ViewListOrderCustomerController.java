@@ -46,7 +46,7 @@ public class ViewListOrderCustomerController extends HttpServlet {
             int order_id = Integer.parseInt(orderId);
             dao.updateOrderStatus(order_id);
         }
-        String customerName = (String) session.getAttribute("username");
+        String customerName = (String) session.getAttribute("usernamecustomer");
         String customer_id = String.valueOf(dao.getCustomerIdByUsername(customerName));
         String indexPage = request.getParameter("index");
         if (indexPage == null) {

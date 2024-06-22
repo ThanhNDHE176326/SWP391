@@ -11,6 +11,7 @@ import DAO.DeliveryAddressDAO;
 import DAO.OrderDAO;
 import DAO.ProductDAO;
 import DAO.StaffDAO;
+import Models.Config;
 import Models.Customer;
 import Models.Order;
 import Models.Product;
@@ -23,9 +24,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -97,7 +106,7 @@ public class CartCompletionController extends HttpServlet {
         CustomerDAO customerDAO = new CustomerDAO();
         DeliveryAddressDAO deliveryAddressDAO = new DeliveryAddressDAO();
 
-        String customerName = (String) session.getAttribute("username");
+        String customerName = (String) session.getAttribute("usernamecustomer");
         int customerID = Integer.parseInt(customerDAO.getInformationCustomer(customerName).getId());
         int cartID = cartDAO.getCartIdByCustomerID(customerID);
 
@@ -105,9 +114,8 @@ public class CartCompletionController extends HttpServlet {
         Random random = new Random();
         int randomIndex = random.nextInt(listSaler.size());
         Staff salerRandom = listSaler.get(randomIndex);
-        int salerRandomID = Integer.parseInt(salerRandom.getId());//staff_id in Orders
+        int salerRandomID = Integer.parseInt(salerRandom.getId()); // staff_id in Orders
 
-//        Customer customerCreateOrder = (Customer) session.getAttribute("userCreateOrder");
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
@@ -124,6 +132,7 @@ public class CartCompletionController extends HttpServlet {
         String totalCostStr = request.getParameter("totalCost");
         double totalCost = Double.parseDouble(totalCostStr);
         LocalDate orderDate = LocalDate.now();
+
         if (newName != null && !newName.isEmpty()
                 && newPhone != null && !newPhone.isEmpty()
                 && newAddress != null && !newAddress.isEmpty()
@@ -132,6 +141,7 @@ public class CartCompletionController extends HttpServlet {
         } else {
             orderDAO.insertOrder(customerID, totalCost, orderDate, address, phone, name, isMale, paymentID, salerRandomID);
         }
+
         int orderID = orderDAO.getOrderIDByCustomerID(customerID);
         String[] productIds = request.getParameterValues("productId");
         for (String productId : productIds) {
@@ -143,14 +153,97 @@ public class CartCompletionController extends HttpServlet {
             orderDAO.insertOrderDetail(orderID, productID, cartID);
         }
 
+        if (paymentID == 3) {
+            processVnpayment(request, response, totalCost, orderID);
+        } else {
+            processNonVnpayment(request, response, orderID);
+        }
+
+        // Ensure no forwarding after sendRedirect
+    }
+
+    private void processVnpayment(HttpServletRequest request, HttpServletResponse response, double totalCost, int orderID)
+            throws IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        int total_cost = (int) totalCost;
+        String vnp_Version = "2.1.0";
+        String vnp_Command = "pay";
+        String vnp_OrderInfo = "" + orderID;
+        String orderType = "billpayment";
+        String vnp_TxnRef = orderID + "";
+        String vnp_IpAddr = Config.getIpAddress(request);
+        String vnp_TmnCode = Config.vnp_TmnCode;
+
+        int amount = Math.round(total_cost) * 100;
+        Map<String, String> vnp_Params = new HashMap<>();
+        vnp_Params.put("vnp_Version", vnp_Version);
+        vnp_Params.put("vnp_Command", vnp_Command);
+        vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
+        vnp_Params.put("vnp_Amount", String.valueOf(amount));
+        vnp_Params.put("vnp_CurrCode", "VND");
+        String bank_code = "";
+        if (bank_code != null && !bank_code.isEmpty()) {
+            vnp_Params.put("vnp_BankCode", bank_code);
+        }
+        vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
+        vnp_Params.put("vnp_OrderInfo", vnp_OrderInfo);
+        vnp_Params.put("vnp_OrderType", orderType);
+
+        String locate = "vi";
+        if (locate != null && !locate.isEmpty()) {
+            vnp_Params.put("vnp_Locale", locate);
+        } else {
+            vnp_Params.put("vnp_Locale", "vn");
+        }
+        vnp_Params.put("vnp_ReturnUrl", Config.vnp_Returnurl);
+        vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
+
+        Date dt = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String dateString = formatter.format(dt);
+        String vnp_CreateDate = dateString;
+        String vnp_TransDate = vnp_CreateDate;
+        vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
+
+        // Build data to hash and querystring
+        List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
+        Collections.sort(fieldNames);
+        StringBuilder hashData = new StringBuilder();
+        StringBuilder query = new StringBuilder();
+        for (Iterator<String> itr = fieldNames.iterator(); itr.hasNext();) {
+            String fieldName = itr.next();
+            String fieldValue = vnp_Params.get(fieldName);
+            if (fieldValue != null && fieldValue.length() > 0) {
+                // Build hash data
+                hashData.append(fieldName);
+                hashData.append('=');
+                hashData.append(fieldValue);
+                // Build query
+                query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
+                query.append('=');
+                query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                if (itr.hasNext()) {
+                    query.append('&');
+                    hashData.append('&');
+                }
+            }
+        }
+        String queryUrl = query.toString();
+        String vnp_SecureHash = Config.Sha256(Config.vnp_HashSecret + hashData.toString());
+        queryUrl += "&vnp_SecureHashType=SHA256&vnp_SecureHash=" + vnp_SecureHash;
+        String paymentUrl = Config.vnp_PayUrl + "?" + queryUrl;
+        response.sendRedirect(paymentUrl); // Ensure no further action after redirect
+    }
+
+    private void processNonVnpayment(HttpServletRequest request, HttpServletResponse response, int orderID)
+            throws ServletException, IOException {
+        OrderDAO orderDAO = new OrderDAO();
         List<Product> listProduct = orderDAO.getProductByOrderID(orderID);
         Order orderInfo = orderDAO.getInfoByOrderID(orderID);
         request.setAttribute("listProduct", listProduct);
         request.setAttribute("orderInfo", orderInfo);
-
-//        Order order = new Order(customerID,totalCost,orderDate,addressOrder,phoneOrder,salerRandomID);
-//        orderDAO.createOrder(order);
-        //orderDAO.insertOrder(customerID, totalCost, orderDate, addressOrder, phoneOrder, salerRandomID);
         request.getRequestDispatcher("view/customer/cart-completion.jsp").forward(request, response);
     }
 
