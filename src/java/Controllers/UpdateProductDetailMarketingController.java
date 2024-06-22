@@ -17,6 +17,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -75,6 +77,10 @@ public class UpdateProductDetailMarketingController extends HttpServlet {
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Category> listCategory = categoryDAO.getCategorys();
         request.setAttribute("listCategory", listCategory);
+        String message = request.getParameter("message"); // Lấy thông điệp từ tham số URL
+        if (message != null) {
+            request.setAttribute("message", URLDecoder.decode(message, "UTF-8")); // Giải mã thông điệp
+        }
 
         String idString = request.getParameter("productID");
         int productID = Integer.parseInt(idString);
@@ -110,7 +116,7 @@ public class UpdateProductDetailMarketingController extends HttpServlet {
         String salePriceStr = request.getParameter("salePrice");
         double salePriceDou = Double.parseDouble(salePriceStr);
         //handle File image
-
+        Part part = request.getPart("imageFile");
         if (title != null) {
             productDAO.updateTitleOfProductById(idInt, title);
         }
@@ -133,55 +139,17 @@ public class UpdateProductDetailMarketingController extends HttpServlet {
             productDAO.updateSalePriceOfProductById(idInt, salePriceDou);
         }
 
-        if (request.getPart("imageFile") != null) {
+        if (part != null && part.getSize() > 0) {
             String realPath = "D:\\Web_Project_Java\\SWP391\\web\\images";
             Files.createDirectories(Paths.get(realPath)); // Tạo thư mục nếu chưa tồn tại
-            Part part = request.getPart("imageFile");
             String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
             part.write(Paths.get(realPath, fileName).toString());
             System.out.println("File uploaded to: " + Paths.get(realPath, fileName).toString());
-
             productDAO.updateImageOfProductById(idInt, fileName);
         }
-//        Product product = new Product();
-//        product.setId(id);
-//        product.setTitle(title);
-//        product.setAuthor(author);
-//        product.setQuantity(quantity);
-//        product.setDescription(description);
-//        product.setCategory(categoryID);
-//        product.setOriginalPrice(originalPrice);
-//        product.setSalePrice(salePrice);
-//        Part imagePart = request.getPart("image");
-//
-//        // Kiểm tra kích thước file (nếu cần)
-//        long fileSize = imagePart.getSize();
-//        if (fileSize > 800 * 1024) { // Giới hạn kích thước file 800KB
-//            throw new IllegalArgumentException("File size exceeds the limit.");
-//        }
-//
-//        // Đọc hình ảnh từ luồng đầu vào
-//        BufferedImage img = ImageIO.read(imagePart.getInputStream());
-//
-//        // Xác định đường dẫn tuyệt đối và tương đối của thư mục lưu trữ
-//        String relativePath = "images";
-//        String absolutePath = request.getServletContext().getRealPath(relativePath);
-//
-//        // Tạo thư mục nếu chưa tồn tại
-//        File directory = new File(absolutePath);
-//        if (!directory.exists()) {
-//            directory.mkdirs(); // Tạo thư mục nếu chưa tồn tại
-//        }
-        // Tạo tên tệp duy nhất dựa trên thông tin sản phẩm (có thể dùng UUID hoặc timestamp để duy nhất)
-//        String fileName = title.replaceAll("\\s+", "_") + "_" + System.currentTimeMillis() + ".jpg";
-//
-//        // Ghi hình ảnh vào tệp
-//        File outputFile = new File(directory, fileName);
-//        ImageIO.write(img, "jpg", outputFile);
-//
-//        // Cập nhật đường dẫn hình ảnh vào cơ sở dữ liệu
-//        String imagePath = relativePath + "/" + fileName;
-////        product.setImage(imagePath);
+        String message = "Update successfully";
+        String encodedMessage = URLEncoder.encode(message, "UTF-8"); // Mã hóa thông điệp
+        response.sendRedirect(request.getContextPath() + "/updateProductDetailMarketing?productID=" + idInt + "&message=" + encodedMessage);
     }
 
     /**
