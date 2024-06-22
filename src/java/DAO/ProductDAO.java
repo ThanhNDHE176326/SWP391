@@ -99,7 +99,7 @@ public class ProductDAO extends DBContext {
                 String status = String.valueOf(rs.getInt("status"));
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice,  status);
+                        salePrice, status);
                 listProduct.add(product);
                 count++;
             }
@@ -138,7 +138,7 @@ public class ProductDAO extends DBContext {
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice,  status);
+                        salePrice, status);
                 listProduct.add(product);
                 count++;
             }
@@ -174,7 +174,7 @@ public class ProductDAO extends DBContext {
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice,  status);
+                        salePrice, status);
                 listProduct.add(product);
                 count++;
             }
@@ -210,7 +210,7 @@ public class ProductDAO extends DBContext {
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice,  status);
+                        salePrice, status);
                 listProduct.add(product);
                 count++;
             }
@@ -247,7 +247,7 @@ public class ProductDAO extends DBContext {
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice,  status);
+                        salePrice, status);
                 listProduct.add(product);
                 count++;
             }
@@ -284,7 +284,7 @@ public class ProductDAO extends DBContext {
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice,  status);
+                        salePrice, status);
                 listProduct.add(product);
                 count++;
             }
@@ -321,10 +321,12 @@ public class ProductDAO extends DBContext {
             System.out.println("updateShowStatusByID: " + e.getMessage());
         }
     }
+
     public static void main(String[] args) {
         ProductDAO dao = new ProductDAO();
         System.out.println(dao.getProductsByPaging(1));
     }
+
     public List<Product> getProductsByPaging(int index) {
         List<Product> listProduct = new ArrayList<>();
         String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
@@ -350,7 +352,7 @@ public class ProductDAO extends DBContext {
                 String status = String.valueOf(rs.getInt("status"));
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice,  status);
+                        salePrice, status);
                 listProduct.add(product);
             }
         } catch (SQLException e) {
@@ -387,7 +389,7 @@ public class ProductDAO extends DBContext {
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice,  status);
+                        salePrice, status);
                 listProduct.add(product);
             }
         } catch (SQLException e) {
@@ -478,7 +480,7 @@ public class ProductDAO extends DBContext {
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice,  status);
+                        salePrice, status);
                 listProduct.add(product);
             }
         } catch (SQLException e) {
@@ -513,7 +515,7 @@ public class ProductDAO extends DBContext {
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice , status);
+                        salePrice, status);
                 listProduct.add(product);
             }
         } catch (SQLException e) {
@@ -570,7 +572,7 @@ public class ProductDAO extends DBContext {
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice,  status);
+                        salePrice, status);
                 listProduct.add(product);
             }
         } catch (SQLException e) {
@@ -602,7 +604,7 @@ public class ProductDAO extends DBContext {
 
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice,  status);
+                        salePrice, status);
                 return product;
             }
         } catch (SQLException e) {
@@ -677,15 +679,13 @@ public class ProductDAO extends DBContext {
         return null;
     }
 
-   
-
     public int getQuantityByProductID(int productID) {
         String sql = "SELECT quantity FROM Products WHERE id = ?";
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, productID);
             rs = stm.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (SQLException e) {
@@ -705,6 +705,102 @@ public class ProductDAO extends DBContext {
             stm.execute();
         } catch (SQLException e) {
             System.out.println("updateQuantityAfterCart: " + e.getMessage());
+        }
+    }
+
+    public void updateTitleOfProductById(int idInt, String title) {
+        String sql = "UPDATE Products SET title = ? WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, title);
+            stm.setInt(2, idInt);
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("updateTitleOfProductById: " + e.getMessage());
+        }
+    }
+
+    public void updateAuthorOfProductById(int idInt, String author) {
+        String sql = "UPDATE Products SET author = ? WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, author);
+            stm.setInt(2, idInt);
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("updateAuthorOfProductById: " + e.getMessage());
+        }
+    }
+
+    public void updateQuantityOfProductById(int idInt, int quantityInt) {
+        String sql = "UPDATE Products SET quantity = ? WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, quantityInt);
+            stm.setInt(2, idInt);
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("updateQuantityOfProductById: " + e.getMessage());
+        }
+    }
+
+    public void updateDescriptionOfProductById(int idInt, String description) {
+        String sql = "UPDATE Products SET description = ? WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, description);
+            stm.setInt(2, idInt);
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("updateDescriptionOfProductById: " + e.getMessage());
+        }
+    }
+
+    public void updateCategoryOfProductById(int idInt, int categoryIdInt) {
+        String sql = "UPDATE Products SET category_id = ? WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, categoryIdInt);
+            stm.setInt(2, idInt);
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("updateCategoryOfProductById: " + e.getMessage());
+        }
+    }
+
+    public void updateOriginalPriceOfProductById(int idInt, double originalPriceDou) {
+        String sql = "UPDATE Products SET original_price = ? WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setDouble(1, originalPriceDou);
+            stm.setInt(2, idInt);
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("updateOriginalPriceOfProductById: " + e.getMessage());
+        }
+    }
+
+    public void updateSalePriceOfProductById(int idInt, double salePriceDou) {
+        String sql = "UPDATE Products SET sale_price = ? WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setDouble(1, salePriceDou);
+            stm.setInt(2, idInt);
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("updateSalePriceOfProductById: " + e.getMessage());
+        }
+    }
+
+    public void updateImageOfProductById(int idInt, String fileName) {
+        String sql = "UPDATE Products SET image = ? WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, fileName);
+            stm.setInt(2, idInt);
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("updateImageOfProductById: " + e.getMessage());
         }
     }
 }

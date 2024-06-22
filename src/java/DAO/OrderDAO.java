@@ -544,11 +544,11 @@ public class OrderDAO extends DBContext {
         return 0;
     }
 
-    public void insertOrderDetail(int orderid, int productID, int quantity) {
+    public void insertOrderDetail(int orderId, int productID, int quantity) {
         String sql = "INSERT INTO OrderDetails (order_id, product_id, quantity, isDelete) VALUES (?, ?, ?, 1)";
         try {
             stm = connection.prepareStatement(sql);
-            stm.setInt(1, orderid);
+            stm.setInt(1, orderId);
             stm.setInt(2, productID);
             stm.setInt(3, quantity);
 
