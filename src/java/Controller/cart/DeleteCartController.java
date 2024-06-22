@@ -71,7 +71,7 @@ public class DeleteCartController extends HttpServlet {
         CartProductDAO cartProductDAO = new CartProductDAO();
         
         int productID = Integer.parseInt(request.getParameter("productID"));
-        String customerName = (String) session.getAttribute("username");
+        String customerName = (String) session.getAttribute("usernamecustomer");
         int customerID = Integer.parseInt(customerDAO.getInformationCustomer(customerName).getId());
         int cartID = cartDAO.getCartIdByCustomerID(customerID);
 

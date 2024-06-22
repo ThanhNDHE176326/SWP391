@@ -105,7 +105,7 @@ public class PushToCartContactController extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        String customerName = (String) session.getAttribute("username");
+        String customerName = (String) session.getAttribute("usernamecustomer");
         CustomerDAO customerDAO = new CustomerDAO();
         Customer userCreateOrder = customerDAO.getInformationCustomer(customerName);
         session.setAttribute("userCreateOrder", userCreateOrder);
