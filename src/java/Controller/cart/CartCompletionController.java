@@ -153,23 +153,27 @@ public class CartCompletionController extends HttpServlet {
             int quantityChanged = quantityInProducts - quatityInCartProduct;
             productDAO.updateQuantityAfterCart(productID, quantityChanged);
             orderDAO.insertOrderDetail(orderID, productID, cartID);
+            cartProductDAO.deleteProductInCart(cartID, productID);
         }
 
         List<Product> listProduct = orderDAO.getProductByOrderID(orderID);
         Order orderInfo = orderDAO.getInfoByOrderID(orderID);
         session.setAttribute("listProduct", listProduct);
         session.setAttribute("orderInfo", orderInfo);
-
+        
+        // 3 - VN_Pay
+        // 2 - QR Code(chua co)
+        // 1 - COD
         if (paymentID == 3) {
-            processVnpayment(request, response, totalCost, orderID);
-        } else {
-            processNonVnpayment(request, response, orderID);
+            processVnPayment(request, response, totalCost, orderID);
+        } else if(paymentID == 1) {
+            processNonVnPayment(request, response, orderID);
         }
 
         // Ensure no forwarding after sendRedirect
     }
 
-    private void processVnpayment(HttpServletRequest request, HttpServletResponse response, double totalCost, int orderID)
+    private void processVnPayment(HttpServletRequest request, HttpServletResponse response, double totalCost, int orderID)
             throws IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
@@ -248,7 +252,7 @@ public class CartCompletionController extends HttpServlet {
         response.sendRedirect(paymentUrl);
     }
 
-    private void processNonVnpayment(HttpServletRequest request, HttpServletResponse response, int orderID)
+    private void processNonVnPayment(HttpServletRequest request, HttpServletResponse response, int orderID)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         List<Product> listProduct = (List<Product>) session.getAttribute("listProduct");
