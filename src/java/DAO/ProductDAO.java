@@ -7,6 +7,7 @@ package DAO;
 import Models.Product;
 import dal.DBContext;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -709,11 +710,12 @@ public class ProductDAO extends DBContext {
     }
 
     public void updateTitleOfProductById(int idInt, String title) {
-        String sql = "UPDATE Products SET title = ? WHERE id = ?";
+        String sql = "UPDATE Products SET title = ?, update_date = ? WHERE id = ?";
         try {
             stm = connection.prepareStatement(sql);
             stm.setString(1, title);
-            stm.setInt(2, idInt);
+            stm.setString(2, String.valueOf(LocalDate.now()));
+            stm.setInt(3, idInt);
             stm.execute();
         } catch (SQLException e) {
             System.out.println("updateTitleOfProductById: " + e.getMessage());
@@ -721,11 +723,12 @@ public class ProductDAO extends DBContext {
     }
 
     public void updateAuthorOfProductById(int idInt, String author) {
-        String sql = "UPDATE Products SET author = ? WHERE id = ?";
+        String sql = "UPDATE Products SET author = ?, update_date = ? WHERE id = ?";
         try {
             stm = connection.prepareStatement(sql);
             stm.setString(1, author);
-            stm.setInt(2, idInt);
+            stm.setString(2, String.valueOf(LocalDate.now()));
+            stm.setInt(3, idInt);
             stm.execute();
         } catch (SQLException e) {
             System.out.println("updateAuthorOfProductById: " + e.getMessage());
@@ -733,11 +736,12 @@ public class ProductDAO extends DBContext {
     }
 
     public void updateQuantityOfProductById(int idInt, int quantityInt) {
-        String sql = "UPDATE Products SET quantity = ? WHERE id = ?";
+        String sql = "UPDATE Products SET quantity = ?, update_date = ? WHERE id = ?";
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, quantityInt);
-            stm.setInt(2, idInt);
+            stm.setString(2, String.valueOf(LocalDate.now()));
+            stm.setInt(3, idInt);
             stm.execute();
         } catch (SQLException e) {
             System.out.println("updateQuantityOfProductById: " + e.getMessage());
@@ -745,11 +749,12 @@ public class ProductDAO extends DBContext {
     }
 
     public void updateDescriptionOfProductById(int idInt, String description) {
-        String sql = "UPDATE Products SET description = ? WHERE id = ?";
+        String sql = "UPDATE Products SET description = ?, update_date = ? WHERE id = ?";
         try {
             stm = connection.prepareStatement(sql);
             stm.setString(1, description);
-            stm.setInt(2, idInt);
+            stm.setString(2, String.valueOf(LocalDate.now()));
+            stm.setInt(3, idInt);
             stm.execute();
         } catch (SQLException e) {
             System.out.println("updateDescriptionOfProductById: " + e.getMessage());
@@ -757,11 +762,12 @@ public class ProductDAO extends DBContext {
     }
 
     public void updateCategoryOfProductById(int idInt, int categoryIdInt) {
-        String sql = "UPDATE Products SET category_id = ? WHERE id = ?";
+        String sql = "UPDATE Products SET category_id = ?, update_date = ? WHERE id = ?";
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, categoryIdInt);
-            stm.setInt(2, idInt);
+            stm.setString(2, String.valueOf(LocalDate.now()));
+            stm.setInt(3, idInt);
             stm.execute();
         } catch (SQLException e) {
             System.out.println("updateCategoryOfProductById: " + e.getMessage());
@@ -769,11 +775,12 @@ public class ProductDAO extends DBContext {
     }
 
     public void updateOriginalPriceOfProductById(int idInt, double originalPriceDou) {
-        String sql = "UPDATE Products SET original_price = ? WHERE id = ?";
+        String sql = "UPDATE Products SET original_price = ?, update_date = ? WHERE id = ?";
         try {
             stm = connection.prepareStatement(sql);
             stm.setDouble(1, originalPriceDou);
-            stm.setInt(2, idInt);
+            stm.setString(2, String.valueOf(LocalDate.now()));
+            stm.setInt(3, idInt);
             stm.execute();
         } catch (SQLException e) {
             System.out.println("updateOriginalPriceOfProductById: " + e.getMessage());
@@ -781,11 +788,12 @@ public class ProductDAO extends DBContext {
     }
 
     public void updateSalePriceOfProductById(int idInt, double salePriceDou) {
-        String sql = "UPDATE Products SET sale_price = ? WHERE id = ?";
+        String sql = "UPDATE Products SET sale_price = ?,  update_date = ? WHERE id = ?";
         try {
             stm = connection.prepareStatement(sql);
             stm.setDouble(1, salePriceDou);
-            stm.setInt(2, idInt);
+            stm.setString(2, String.valueOf(LocalDate.now()));
+            stm.setInt(3, idInt);
             stm.execute();
         } catch (SQLException e) {
             System.out.println("updateSalePriceOfProductById: " + e.getMessage());
@@ -793,14 +801,48 @@ public class ProductDAO extends DBContext {
     }
 
     public void updateImageOfProductById(int idInt, String fileName) {
-        String sql = "UPDATE Products SET image = ? WHERE id = ?";
+        String sql = "UPDATE Products SET image = ?, update_date = ?  WHERE id = ?";
         try {
             stm = connection.prepareStatement(sql);
             stm.setString(1, fileName);
-            stm.setInt(2, idInt);
+            stm.setString(2, String.valueOf(LocalDate.now()));
+            stm.setInt(3, idInt);
             stm.execute();
         } catch (SQLException e) {
             System.out.println("updateImageOfProductById: " + e.getMessage());
+        }
+    }
+
+    public void createNewProduct(Product product) {
+        String sql = "INSERT INTO Products\n"
+                + "           ([title]\n"
+                + "           ,[image]\n"
+                + "           ,[author]\n"
+                + "           ,[quantity]\n"
+                + "           ,[update_date]\n"
+                + "           ,[description]\n"
+                + "           ,[category_id]\n"
+                + "           ,[original_price]\n"
+                + "           ,[sale_price]\n"
+                + "           ,[status]\n"
+                + "           ,[isDelete]\n"
+                + "           ,[slider_id])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,?,?,?,?,1,1,NULL)";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, product.getTitle());
+            stm.setString(2, product.getImage());
+            stm.setString(3, product.getAuthor());
+            stm.setInt(4, Integer.parseInt(product.getQuantity()));
+            stm.setString(5, product.getUpdateDate());
+            stm.setString(6, product.getDescription());
+            stm.setInt(7, Integer.parseInt(product.getCategory()));
+            stm.setDouble(8, Double.parseDouble(product.getOriginalPrice()));
+            stm.setDouble(9, Double.parseDouble(product.getSalePrice()));
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("createNewProduct: " + e.getMessage());
         }
     }
 }
