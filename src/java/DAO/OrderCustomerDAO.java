@@ -114,8 +114,8 @@ public class OrderCustomerDAO extends DBContext {
 
     public Order getInfoOrderByOrderId(int order_id) {
         Order order = null;
-        String sql = "select o.id, o.total_cost, o.order_date, o.address, o.phone, os.name, c.name as customer_name from Orders as o\n"
-                + "join OrderStatus as os on o.status_id = os.id join Customers as c on o.customer_id = c.id where o.id = ?";
+        String sql = "SELECT o.id, o.total_cost, o.order_date, o.address, o.phone, os.name AS order_status, o.recipient_name AS recipient_name\n"
+                + "FROM Orders AS o JOIN OrderStatus AS os ON o.status_id = os.id WHERE o.id = ?";
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, order_id);
@@ -125,10 +125,10 @@ public class OrderCustomerDAO extends DBContext {
                 String orderDate = rs.getDate("order_date").toString();
                 String totalCost = Integer.toString(rs.getInt("total_cost"));
                 String address = rs.getString("address");
-                String status = rs.getString("name");
+                String status = rs.getString("order_status");
                 String phone = rs.getString("phone");
-                String customer_name = rs.getString("customer_name");
-                order = new Order(id, totalCost, orderDate, address, phone, status, customer_name);
+                String recipient_name = rs.getString("recipient_name");
+                order = new Order(id, totalCost, orderDate, address, phone, status, recipient_name);
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -150,12 +150,12 @@ public class OrderCustomerDAO extends DBContext {
     }
 
     public static void main(String[] args) {
-//        OrderCustomerDAO dao = new OrderCustomerDAO();
+        OrderCustomerDAO dao = new OrderCustomerDAO();
 //         dao.updateOrderStatus(1, 4);
 
-    // In ra thông báo sau khi cập nhật thành công (hoặc thông báo lỗi trong trường hợp xảy ra ngoại lệ)
-    System.out.println("Đã cập nhật trạng thái của đơn hàng có id = 1.");
-    
+        // In ra thông báo sau khi cập nhật thành công (hoặc thông báo lỗi trong trường hợp xảy ra ngoại lệ)
+        Order order = dao.getInfoOrderByOrderId(1);
+        System.out.println(order);
 //        int count = dao.countTotalOrderByCustomer("1");
 //        System.out.println(count);
     }

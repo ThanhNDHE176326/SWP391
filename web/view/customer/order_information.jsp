@@ -237,6 +237,10 @@
             [data-status="Canceled"] .update-link {
                 display: none;
             }
+            .feedback_button.disabled {
+                opacity: 0.5; /* Điều chỉnh độ mờ tùy ý */
+                pointer-events: none; /* Ngăn chặn người dùng chọn vào nút */
+            }
         </style>
     </head><!--/head-->
 
@@ -396,7 +400,6 @@
                                 <p data-status="${order.status_name}">
                                     Status: ${order.status_name}
                                     <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&cancelled=cancelled" class="cancel-link">Cancelled</a>
-                                    <a href="${pageContext.request.contextPath}/viewCartDetail" class="update-link">Update Order</a>
                                 </p>
                             </div>
 
@@ -430,7 +433,8 @@
                                                     <fmt:formatNumber value="${listProductOrder.unitprice}" type="number" maxFractionDigits="0" />
                                                 </td>
                                                 <td class="cart_stock">
-                                                    <p>${listProductOrder.category_name}</p>                                                     </td>
+                                                    <p>${listProductOrder.category_name}</p>                                                     
+                                                </td>
                                                 <td class="cart_quantity">
                                                     <p>${listProductOrder.quantity}</p>
                                                 </td>
@@ -438,10 +442,15 @@
                                                     <fmt:formatNumber value="${listProductOrder.unitprice * listProductOrder.quantity}" type="number" maxFractionDigits="0" />
                                                 </td>
                                                 <td class="cart_feedback">
-                                                    <a class="feedback_button">Feedback</a>
-                                                    <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${listProductOrder.product_id}" class="feedback_button">Repurchase</a>
+                                                    <c:if test="${order.status_name != 'Completed'}">
+                                                        <a class="feedback_button disabled">Feedback</a>
+                                                        <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${listProductOrder.product_id}" class="feedback_button disabled">Repurchase</a>
+                                                    </c:if>
+                                                    <c:if test="${order.status_name == 'Completed'}">
+                                                        <a class="feedback_button">Feedback</a>
+                                                        <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${listProductOrder.product_id}" class="feedback_button">Repurchase</a>
+                                                    </c:if>
                                                 </td>
-
                                             </tr>
                                         </c:forEach>
                                     </tbody>
