@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,6 +37,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.TimeZone;
 
 /**
  *
@@ -153,6 +155,11 @@ public class CartCompletionController extends HttpServlet {
             orderDAO.insertOrderDetail(orderID, productID, cartID);
         }
 
+        List<Product> listProduct = orderDAO.getProductByOrderID(orderID);
+        Order orderInfo = orderDAO.getInfoByOrderID(orderID);
+        session.setAttribute("listProduct", listProduct);
+        session.setAttribute("orderInfo", orderInfo);
+
         if (paymentID == 3) {
             processVnpayment(request, response, totalCost, orderID);
         } else {
@@ -172,17 +179,18 @@ public class CartCompletionController extends HttpServlet {
         String vnp_Command = "pay";
         String vnp_OrderInfo = "" + orderID;
         String orderType = "billpayment";
-        String vnp_TxnRef = orderID + "";
+        String vnp_TxnRef = String.valueOf(orderID);
         String vnp_IpAddr = Config.getIpAddress(request);
         String vnp_TmnCode = Config.vnp_TmnCode;
 
-        int amount = Math.round(total_cost) * 100;
+        int amount = total_cost * 100;
         Map<String, String> vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", vnp_Version);
         vnp_Params.put("vnp_Command", vnp_Command);
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
+
         String bank_code = "";
         if (bank_code != null && !bank_code.isEmpty()) {
             vnp_Params.put("vnp_BankCode", bank_code);
@@ -201,26 +209,29 @@ public class CartCompletionController extends HttpServlet {
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
         Date dt = new Date();
+        Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-        String dateString = formatter.format(dt);
-        String vnp_CreateDate = dateString;
-        String vnp_TransDate = vnp_CreateDate;
+        String vnp_CreateDate = formatter.format(cld.getTime());
         vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
+        cld.add(Calendar.MINUTE, 15);
+        String vnp_ExpireDate = formatter.format(cld.getTime());
+        vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
 
         // Build data to hash and querystring
         List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
         Collections.sort(fieldNames);
         StringBuilder hashData = new StringBuilder();
         StringBuilder query = new StringBuilder();
-        for (Iterator<String> itr = fieldNames.iterator(); itr.hasNext();) {
-            String fieldName = itr.next();
-            String fieldValue = vnp_Params.get(fieldName);
-            if (fieldValue != null && fieldValue.length() > 0) {
-                // Build hash data
+        Iterator itr = fieldNames.iterator();
+        while (itr.hasNext()) {
+            String fieldName = (String) itr.next();
+            String fieldValue = (String) vnp_Params.get(fieldName);
+            if ((fieldValue != null) && (fieldValue.length() > 0)) {
+                //Build hash data
                 hashData.append(fieldName);
                 hashData.append('=');
-                hashData.append(fieldValue);
-                // Build query
+                hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                //Build query
                 query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
                 query.append('=');
                 query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
@@ -231,30 +242,25 @@ public class CartCompletionController extends HttpServlet {
             }
         }
         String queryUrl = query.toString();
-        String vnp_SecureHash = Config.Sha256(Config.vnp_HashSecret + hashData.toString());
-        queryUrl += "&vnp_SecureHashType=SHA256&vnp_SecureHash=" + vnp_SecureHash;
+        String vnp_SecureHash = Config.hmacSHA512(Config.vnp_HashSecret, hashData.toString());
+        queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         String paymentUrl = Config.vnp_PayUrl + "?" + queryUrl;
-        response.sendRedirect(paymentUrl); // Ensure no further action after redirect
+        response.sendRedirect(paymentUrl);
     }
 
     private void processNonVnpayment(HttpServletRequest request, HttpServletResponse response, int orderID)
             throws ServletException, IOException {
-        OrderDAO orderDAO = new OrderDAO();
-        List<Product> listProduct = orderDAO.getProductByOrderID(orderID);
-        Order orderInfo = orderDAO.getInfoByOrderID(orderID);
+        HttpSession session = request.getSession();
+        List<Product> listProduct = (List<Product>) session.getAttribute("listProduct");
+        Order orderInfo = (Order) session.getAttribute("orderInfo");
         request.setAttribute("listProduct", listProduct);
         request.setAttribute("orderInfo", orderInfo);
         request.getRequestDispatcher("view/customer/cart-completion.jsp").forward(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    // Get method remains the same
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }
