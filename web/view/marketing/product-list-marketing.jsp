@@ -23,7 +23,23 @@
                 background-color: #f0f0f0;
                 border-color: #ccc;
             }
-
+            .add-product-button {
+                float: right;
+                margin: 10px 0;
+                padding: 10px 20px;
+                background-color: #0480be;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .add-product-button a {
+                color: white;
+                text-decoration: none;
+            }
+            .add-product-button:hover {
+                background-color: #036ca0;
+            }
         </style>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -100,41 +116,46 @@
                                 </select>  
                             </form>
                         </div>
+                        <div>
+                            <button class="add-product-button">
+                                <a href="createNewProductMarketing">ADD NEW PRODUCT</a>
+                            </button>
+                        </div>       
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table
                                     class="table table-bordered"
-                                    
+
                                     width="100%"
                                     cellspacing="0"
                                     >
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th><a href="sortList?listType=${listTypeFromServlet}&field=title&mode=${mode}">Title</a></th>
+                                            <th>Title</th>
                                             <th>Author</th>
                                             <th>Image</th>
-                                            <th><a href="sortList?listType=${listTypeFromServlet}&field=category&mode=${mode}&categoryID=${categoryID}">Category</a></th>
-                                            <th><a href="sortList?listType=${listTypeFromServlet}&field=original_price&mode=${mode}">Original Price</a></th>
-                                            <th><a href="sortList?listType=${listTypeFromServlet}&field=sale_price&mode=${mode}">Sale Price</a></th>
+                                            <th>Category</th>
+                                            <th>Original Price</th>
+                                            <th>Sale Price</th>
                                             <th>Stock</th>
                                             <!--<th>Brief Info</th>-->
-                                            <th><a href="sortList?listType=${listTypeFromServlet}&field=status&mode=${mode}&statusMode=${statusModeFromServlet}">Status</a></th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>ID</th>
-                                            <th><a href="sortList?listType=${listTypeFromServlet}&field=title&mode=${mode}">Title</a></th>
+                                            <th>Title</th>
                                             <th>Author</th>
                                             <th>Image</th>
-                                            <th><a href="sortList?listType=${listTypeFromServlet}&field=category&mode=${mode}&categoryID=${categoryID}">Category</a></th>
-                                            <th><a href="sortList?listType=${listTypeFromServlet}&field=original_price&mode=${mode}">Original Price</a></th>
-                                            <th><a href="sortList?listType=${listTypeFromServlet}&field=sale_price&mode=${mode}">Sale Price</a></th>
+                                            <th>Category</th>
+                                            <th>Original Price</th>
+                                            <th>Sale Price</th>
                                             <th>Stock</th>
                                             <!--<th>Brief Info</th>-->
-                                            <th><a href="sortList?listType=${listTypeFromServlet}&field=status&mode=${mode}&statusMode=${statusModeFromServlet}">Status</a></th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
@@ -142,7 +163,10 @@
 
                                         <c:forEach items="${listProduct}" var="product">
                                             <tr>
-                                                <td><input type="text" name="productID" readonly="" value="${product.id}"></td>
+                                                <td>
+                                                    ${product.id}
+                                                    <input type="hidden" name="productID" readonly="" value="${product.id}">
+                                                </td>
                                                 <td>${product.title}</td>
                                                 <td>${product.author}</td>
                                                 <td><img src="images/${product.image}" width="125px" height="125px"/></td>
