@@ -162,7 +162,21 @@
                 background-color: #dc3545;
                 color: white;
             }
-
+            .filter-form {
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+            .filter-form .form-group {
+                margin-right: 10px;
+                margin-bottom: 0;
+            }
+            .filter-form button {
+                height: 100%; /* Ensure button height matches input height */
+            }
+            .btn.btn-primary{
+                margin-top: 0px !important;
+            }
         </style>
     </head><!--/head-->
 
@@ -311,66 +325,85 @@
                                     <li class="active">My Orders</li>
                                 </ol>
                             </div>
-                                <div class="table-responsive cart_info" style="max-width: 1400px; margin-bottom: 20px;">
-                                    <table class="table table-condensed">
-                                        <thead>
-                                            <tr class="cart_menu">
-                                                <td class="select">ID</td>
-                                                <td class="description">Order Date</td>
-                                                <td class="description">Delivery Address</td>
-                                                <td class="price">Total Cost</td>
-                                                <td class="description">Status</td>
-                                                <td class="delete">Action</td>
+                                    <form action="${pageContext.request.contextPath}/filterOrderCustomer" method="get" class="filter-form">
+                                    <div class="form-group">
+                                        <input type="date" id="startDate" name="startDate" class="form-control" placeholder="mm/dd/yyyy">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="date" id="endDate" name="endDate" class="form-control" placeholder="mm/dd/yyyy">
+                                    </div>
+                                    <div class="form-group">
+                                        <select name="status" class="form-control">
+                                            <option value="">All Statuses</option>
+                                            <option value="Processing">Processing</option>
+                                            <option value="Confirmed">Confirmed</option>
+                                            <option value="Shipped">Shipped</option>
+                                            <option value="Delivered">Delivered</option>
+                                            <option value="Cancelled">Cancelled</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Filter</button>
+                                </form>
+                            <div class="table-responsive cart_info" style="max-width: 1400px; margin-bottom: 20px;">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr class="cart_menu">
+                                            <td class="select">ID</td>
+                                            <td class="description">Order Date</td>
+                                            <td class="description">Delivery Address</td>
+                                            <td class="price">Total Cost</td>
+                                            <td class="description">Status</td>
+                                            <td class="delete">Action</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="orderList" items="${orderList}">
+                                            <tr style="background-color: #f9f9f9;">
+                                                <td class="cart_select" style="padding: 10px; text-align: center;">
+                                                    <p style="color: #007bff; text-decoration: none;">${orderList.id}</p>
+                                                </td>
+                                                <td class="cart_description" style="padding: 10px;">
+                                                    <p style="margin: 0; font-size: 14px;">${orderList.orderDate}</p>
+                                                </td>
+                                                <td class="cart_description" style="padding: 10px;">
+                                                    <p style="margin: 0; font-size: 14px;">${orderList.address}</p>
+                                                </td>
+                                                <td class="cart_price" style="padding: 10px; text-align: center;">
+                                                    <fmt:formatNumber value="${orderList.totalCost}" type="number" maxFractionDigits="0" />
+                                                </td>
+                                                <td class="cart_description" style="padding: 10px;">
+                                                    <p style="margin: 0; font-size: 14px;">${orderList.status_name}</p>
+                                                </td>
+                                                <td class="cart_delete" style="padding: 10px; text-align: center;">
+                                                    <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${orderList.id}" class="view-button">View</a>
+                                                    <c:choose>
+                                                        <c:when test="${orderList.status_name == 'Processing' || orderList.status_name == 'Confirmed'}">
+                                                            <a href="${pageContext.request.contextPath}/listOrderCustomer?orderId=${orderList.id}" class="cancel-button">Cancelled</a>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <!-- Do nothing or add any alternative content if needed -->
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="orderList" items="${orderList}">
-                                                <tr style="background-color: #f9f9f9;">
-                                                    <td class="cart_select" style="padding: 10px; text-align: center;">
-                                                        <p style="color: #007bff; text-decoration: none;">${orderList.id}</p>
-                                                    </td>
-                                                    <td class="cart_description" style="padding: 10px;">
-                                                        <p style="margin: 0; font-size: 14px;">${orderList.orderDate}</p>
-                                                    </td>
-                                                    <td class="cart_description" style="padding: 10px;">
-                                                        <p style="margin: 0; font-size: 14px;">${orderList.address}</p>
-                                                    </td>
-                                                    <td class="cart_price" style="padding: 10px; text-align: center;">
-                                                        <fmt:formatNumber value="${orderList.totalCost}" type="number" maxFractionDigits="0" />
-                                                    </td>
-                                                    <td class="cart_description" style="padding: 10px;">
-                                                        <p style="margin: 0; font-size: 14px;">${orderList.status_name}</p>
-                                                    </td>
-                                                    <td class="cart_delete" style="padding: 10px; text-align: center;">
-                                                        <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${orderList.id}" class="view-button">View</a>
-                                                        <c:choose>
-                                                            <c:when test="${orderList.status_name == 'Processing' || orderList.status_name == 'Confirmed'}">
-                                                                <a href="${pageContext.request.contextPath}/listOrderCustomer?orderId=${orderList.id}" class="cancel-button">Cancelled</a>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <!-- Do nothing or add any alternative content if needed -->
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                    <ul class="pagination">
-                            <c:if test="${tag > 1}">
-                                <li><a href="?index=${tag - 1}">Previous</a></li>
-                                </c:if>
-                                <c:forEach begin="1" end="${endP}" var="i">
-                                <li class="${tag == i ? 'active' : ''}">
-                                    <a class="pagination-link" href="?index=${i}">${i}</a>
-                                </li>
-                            </c:forEach>
-                            <c:if test="${tag < endP}">
-                                <li><a href="?index=${tag + 1}">Next</a></li>
-                                </c:if>
-                        </ul>
-                                    
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <ul class="pagination">
+                                <c:if test="${tag > 1}">
+                                    <li><a href="?index=${tag - 1}">Previous</a></li>
+                                    </c:if>
+                                    <c:forEach begin="1" end="${endP}" var="i">
+                                    <li class="${tag == i ? 'active' : ''}">
+                                        <a class="pagination-link" href="?index=${i}">${i}</a>
+                                    </li>
+                                </c:forEach>
+                                <c:if test="${tag < endP}">
+                                    <li><a href="?index=${tag + 1}">Next</a></li>
+                                    </c:if>
+                            </ul>
+
                             <div class="recommended_items"><!--recommended_items-->
                                 <h2 class="title text-center">recommended items</h2>
 
