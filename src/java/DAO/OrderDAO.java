@@ -571,17 +571,17 @@ public class OrderDAO extends DBContext {
 
         List<Product> products = new ArrayList<>();
 
-        try (PreparedStatement stm = connection.prepareStatement(sql)) {
-            stm.setInt(1, orderId);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, orderId);
 
-            try (ResultSet rs = stm.executeQuery()) {
-                while (rs.next()) {
-                    String image = rs.getString("product_image");
-                    String title = rs.getString("product_title");
-                    String id = Integer.toString(rs.getInt("product_id"));
-                    String salePrice = Float.toString(rs.getFloat("sale_price"));
-                    String quantity = Integer.toString(rs.getInt("quantity"));
-                    float totalCost = rs.getFloat("total_cost");
+            try (ResultSet resultSET = preparedStatement.executeQuery()) {
+                while (resultSET.next()) {
+                    String image = resultSET.getString("product_image");
+                    String title = resultSET.getString("product_title");
+                    String id = Integer.toString(resultSET.getInt("product_id"));
+                    String salePrice = Float.toString(resultSET.getFloat("sale_price"));
+                    String quantity = Integer.toString(resultSET.getInt("quantity"));
+                    float totalCost = resultSET.getFloat("total_cost");
 
                     Product product = new Product(id, title, image, quantity, salePrice, totalCost);
                     products.add(product);
@@ -604,17 +604,17 @@ public class OrderDAO extends DBContext {
 
         Order order = null;
 
-        try (PreparedStatement stm = connection.prepareStatement(sql)) {
-            stm.setInt(1, orderId);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, orderId);
 
-            try (ResultSet rs = stm.executeQuery()) {
-                if (rs.next()) {
-                    String orderDate = rs.getString("order_date");
-                    String address = rs.getString("address");
-                    String phone = rs.getString("phone");
-                    String recipient_name = rs.getString("recipient_name");
-                    String recipient_gender = Boolean.toString(rs.getBoolean("recipient_gender"));
-                    String payment_name = rs.getString("payment_name");
+            try (ResultSet resultSET = preparedStatement.executeQuery()) {
+                if (resultSET.next()) {
+                    String orderDate = resultSET.getString("order_date");
+                    String address = resultSET.getString("address");
+                    String phone = resultSET.getString("phone");
+                    String recipient_name = resultSET.getString("recipient_name");
+                    String recipient_gender = Boolean.toString(resultSET.getBoolean("recipient_gender"));
+                    String payment_name = resultSET.getString("payment_name");
 
                     order = new Order(orderDate, address, phone, recipient_name, recipient_gender, payment_name) ;
                 }

@@ -25,8 +25,10 @@ public class CartProductDAO extends DBContext {
         String sql = "INSERT INTO [dbo].[CartProducts]\n"
                 + "           ([cart_id]\n"
                 + "           ,[product_id]\n"
-                + "           ,[quantity])\n"
-                + "     VALUES  (? ,? ,1)";
+                + "           ,[quantity]\n"
+                + "           ,[isDelete])\n"
+                + "     VALUES\n"
+                + "           (?,?,1,1)";
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, cartID);
@@ -34,12 +36,11 @@ public class CartProductDAO extends DBContext {
             stm.execute();
         } catch (SQLException e) {
             System.out.println("addToCartFirst: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
     public int getProductIDFromByCartID(int cartID, int productID) {
-        String sql = "SELECT * FROM CartProducts WHERE cart_id = ? AND product_id = ?";
+        String sql = "SELECT * FROM CartProducts WHERE cart_id = ? AND product_id = ? AND isDelete = 1";
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, cartID);
@@ -55,7 +56,7 @@ public class CartProductDAO extends DBContext {
     }
 
     public int getQuantityByCartIdAndProductID(int cartID, int productID) {
-        String sql = "SELECT * FROM CartProducts WHERE cart_id = ? AND product_id = ?";
+        String sql = "SELECT * FROM CartProducts WHERE cart_id = ? AND product_id = ? AND isDelete = 1";
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, cartID);
@@ -66,7 +67,6 @@ public class CartProductDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.out.println("getProductIDFromByCartID: " + e.getMessage());
-            e.printStackTrace();
         }
         return 0;
     }
@@ -90,7 +90,7 @@ public class CartProductDAO extends DBContext {
         List<Product> listProduct = new ArrayList<>();
         String sql = "SELECT p.id, p.title, p.image, p.sale_price, p.quantity, cp.quantity AS cart_quantity FROM Products p \n"
                 + "JOIN CartProducts cp ON p.id = cp.product_id\n"
-                + "WHERE p.isDelete = 1 AND p.status = 1 AND cp.cart_id = ?";
+                + "WHERE p.isDelete = 1 AND p.status = 1 AND cp.cart_id = ? AND cp.isDelete = 1";
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, cartID);
@@ -113,8 +113,9 @@ public class CartProductDAO extends DBContext {
     }
 
     public void deleteProductInCart(int cartID, int productID) {
-        String sql = "DELETE FROM [dbo].[CartProducts]\n"
-                + "      WHERE cart_id = ? AND product_id =?";
+        String sql = "UPDATE [dbo].[CartProducts]\n"
+                + "   SET [isDelete] = 0\n"
+                + " WHERE cart_id = ? AND product_id = ?";
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, cartID);
@@ -130,7 +131,7 @@ public class CartProductDAO extends DBContext {
         String sql = "SELECT p.id, p.title, p.image, p.quantity, p.sale_price, cp.quantity AS cart_quantity\n"
                 + "FROM Products p\n"
                 + "JOIN CartProducts cp ON p.id = cp.product_id\n"
-                + "WHERE p.isDelete = 1 AND p.status = 1 AND cp.cart_id = ? AND p.id = ?;";
+                + "WHERE p.isDelete = 1 AND p.status = 1 AND cp.cart_id = ? AND p.id = ? AND cp.isDelete = 1";
 
         try {
             stm = connection.prepareStatement(sql);
@@ -162,15 +163,15 @@ public class CartProductDAO extends DBContext {
     public int getCartIdByCustomerID(int customerID) {
         int cartID = -1; // Initialize with a default value indicating no cart found
         String sql = "SELECT id FROM Carts WHERE customer_id = ?";
-        ResultSet rs = null;
+        ResultSet resultSET = null;
 
         try {
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, customerID);
-            rs = stm.executeQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, customerID);
+            resultSET = preparedStatement.executeQuery();
 
-            if (rs.next()) {
-                cartID = rs.getInt("id");
+            if (resultSET.next()) {
+                cartID = resultSET.getInt("id");
             }
         } catch (SQLException e) {
             System.out.println("getCartIdByCustomerID: " + e.getMessage());
