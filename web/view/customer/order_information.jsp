@@ -447,11 +447,11 @@
                                                 </td>
                                                 <td class="cart_feedback">
                                                     <c:if test="${order.status_name != 'Completed'}">
-                                                        <a class="feedback_button disabled">Feedback</a>
+                                                        <a class="feedback_button disabled" " >Feedback</a>
                                                         <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${listProductOrder.product_id}" class="feedback_button disabled">Repurchase</a>
                                                     </c:if>
                                                     <c:if test="${order.status_name == 'Completed'}">
-                                                        <a class="feedback_button">Feedback</a>
+                                                        <a class="feedback_button" href="${pageContext.request.contextPath}/addfeedbackpublic?productId=${listProductOrder.product_id}">Feedback</a>
                                                         <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${listProductOrder.product_id}" class="feedback_button">Repurchase</a>
                                                     </c:if>
                                                 </td>

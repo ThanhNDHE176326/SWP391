@@ -75,7 +75,7 @@ public class AddUserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String id = request.getParameter("id");
+        
         String email = request.getParameter("email");
         String fullname = request.getParameter("fullname");
         String username = request.getParameter("username");
@@ -84,11 +84,11 @@ public class AddUserController extends HttpServlet {
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
         String role = request.getParameter("role");
-        String status = request.getParameter("status");
+        
         
         UserDAO da = new UserDAO();
         
-        da.add( email,  fullname,  username,  password,  gender,  phone,  address,  role,  status);
+        da.add( email,  fullname,  username,  password,  gender,  phone,  address,  role);
         ArrayList<Staff> listuser = da.getAllStaff();
         request.setAttribute("listuser", listuser);
         

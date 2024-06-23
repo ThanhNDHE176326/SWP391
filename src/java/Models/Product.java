@@ -60,6 +60,13 @@ public class Product {
         this.salePrice = salePrice;
     }
 
+    public Product(String title, String image, String description) {
+        this.title = title;
+        this.image = image;
+        this.description = description;
+    }
+
+    
     public Product(String id, String title, String image, String author, String quantity, String updateDate, String description, String category, String originalPrice, String salePrice) {
         this.id = id;
         this.title = title;
