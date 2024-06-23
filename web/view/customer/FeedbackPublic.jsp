@@ -79,7 +79,7 @@
                                 <span class="star" data-value="4">&#9733;</span>
                                 <span class="star" data-value="5">&#9733;</span>
                             </div>
-                            <input type="hidden" name="rateStar" id="rateStarInput" value="0"/>
+                            <input type="hidden" name="ratedStar" id="rateStarInput" value="0"/>
                         </div>
                         <div>
                             <label>Chất lượng sản phẩm:</label><br>
