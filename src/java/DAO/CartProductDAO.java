@@ -113,9 +113,8 @@ public class CartProductDAO extends DBContext {
     }
 
     public void deleteProductInCart(int cartID, int productID) {
-        String sql = "UPDATE [dbo].[CartProducts]\n"
-                + "   SET [isDelete] = 0\n"
-                + " WHERE cart_id = ? AND product_id = ?";
+        String sql = "DELETE FROM [dbo].[CartProducts]\n"
+                + "WHERE cart_id = ? AND product_id = ?";
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, cartID);
