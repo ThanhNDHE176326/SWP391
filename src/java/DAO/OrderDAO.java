@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -114,7 +115,29 @@ public class OrderDAO extends DBContext {
         }
         return order;
     }
+     public List<Order> getOrdersByDateRange(Date startDate, Date endDate) {
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT * FROM Orders WHERE order_date BETWEEN ? AND ? AND isDelete = 1";
 
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setDate(1, startDate);
+            stm.setDate(2, endDate);
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    Order order = new Order();
+                    order.setId(rs.getString("id"));
+                    order.setTotalCost(rs.getString("total_cost"));
+                    order.setOrderDate(rs.getString("order_date"));
+                    order.setStatus_id(rs.getString("status_id"));
+                    orders.add(order);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return orders;
+    }
     public List<Order> getOrdersByDateRange(LocalDate fromDate, LocalDate toDate) {
         List<Order> orders = new ArrayList<>();
 
@@ -630,5 +653,111 @@ public class OrderDAO extends DBContext {
         OrderDAO dao = new OrderDAO();
         Order order = dao.getInfoByOrderID(44);
         System.out.println(order);
+    }
+    
+    // cac method danh cho sale-admin
+    public int getTotalOrderCountByStatus(String statusId) {
+        String sql = "SELECT COUNT(*) AS total "
+                + "FROM Orders "
+                + "WHERE isDelete = 1 AND status_id = ?";
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setString(1, statusId);
+            try (ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("total");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public List<Order> getOrdersByCustomerName(String customerName) {
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT o.id,s.name AS status_name, c.name as customer_name,  o.total_cost, o.order_date "
+                + "FROM Orders o "
+                + "INNER JOIN Customers c ON o.customer_id = c.id "
+                + "INNER JOIN OrderStatus s ON o.status_id = s.id "
+                + "WHERE c.name LIKE ? AND o.isDelete = 1";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, "%" + customerName + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Order order = new Order();
+                order.setId(rs.getString("id"));
+                order.setCustomer_name(rs.getString("customer_name"));
+                order.setOrderDate(rs.getString("order_date"));
+                order.setTotalCost(rs.getString("total_cost"));
+                order.setStatus_name(rs.getString("status_name"));
+
+                orders.add(order);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return orders;
+    }
+
+    public List<Order> getOrdersWithPagination(int offset, int limit) {
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT o.*,st.fullname AS staff_name , s.name AS status_name, c.name AS customer_name "
+                + "FROM Orders o "
+                + "INNER JOIN OrderStatus s ON o.status_id = s.id "
+                + "INNER JOIN Customers c ON o.customer_id = c.id "
+                + "INNER JOIN Staffs st ON o.staff_id = st.id "
+                + "WHERE o.isDelete = 1 "
+                + "ORDER BY o.order_date DESC "
+                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setInt(1, offset);
+            stm.setInt(2, limit);
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    Order order = new Order();
+                    order.setId(rs.getString("id"));
+                    order.setCustomer_name(rs.getString("customer_name"));
+                    order.setTotalCost(rs.getString("total_cost"));
+                    order.setNote(rs.getString("note"));
+                    order.setOrderDate(rs.getString("order_date"));
+                    order.setAddress(rs.getString("address"));
+                    order.setPhone(rs.getString("phone"));
+                    order.setStatus_id(rs.getString("status_id"));
+                    order.setStatus_name(rs.getString("status_name"));
+                    order.setStaff_name(rs.getString("staff_name"));
+                    orders.add(order);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    public int getTotalOrderCount() {
+        String sql = "SELECT COUNT(*) AS total FROM Orders WHERE isDelete = 1";
+        try {
+            stm = connection.prepareStatement(sql);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public void updateOrderStaff(String orderId, String staffId) {
+        String sql = "UPDATE Orders SET staff_id = ? WHERE id = ?";
+
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setString(1, staffId);
+            stm.setString(2, orderId);
+            stm.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

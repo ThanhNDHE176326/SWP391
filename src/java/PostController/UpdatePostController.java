@@ -79,14 +79,14 @@ public class UpdatePostController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        String id = request.getParameter("id");
         String title = request.getParameter("title");
         String categoryBlogId = request.getParameter("category_blog_id");
         String image = request.getParameter("image");
         String description = request.getParameter("description");
         String content = request.getParameter("content");
         String status = request.getParameter("status");
-        Blog updatedPost = new Blog("", title, categoryBlogId, image, description, content, status);
+        Blog updatedPost = new Blog( id, title, categoryBlogId, image, description, content, status);
         postDAO postDAO = new postDAO();
         postDAO.updatePost(updatedPost);
 

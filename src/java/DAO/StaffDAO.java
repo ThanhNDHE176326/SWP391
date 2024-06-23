@@ -43,6 +43,30 @@ public class StaffDAO extends DBContext {
         return null;
     }
 
+    public List<Staff> getSalesStaffWithOrderCount() {
+        List<Staff> staffList = new ArrayList<>();
+        String sql = "SELECT s.id, s.fullname, COUNT(o.id) AS orderCount "
+                + "FROM Staffs s "
+                + "LEFT JOIN Orders o ON s.id = o.staff_id "
+                + "WHERE s.role_id = '2' "
+                + "GROUP BY s.id, s.fullname";  // Đảm bảo rằng s.fullname được đưa vào GROUP BY
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Staff staff = new Staff();
+                staff.setId(rs.getString("id"));
+                staff.setFullname(rs.getString("fullname"));
+                staff.setOrderCount(rs.getString("orderCount"));
+                staffList.add(staff);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return staffList;
+    }
+
     public Staff checkStaffAccountExits(String user) {
         String sql = "SELECT * FROM Staffs WHERE username = ?";
         try {
@@ -136,6 +160,7 @@ public class StaffDAO extends DBContext {
         }
         return listSaler;
     }
+
     public Staff getInformationStaff(String username) {
         String sql = "SELECT * FROM Staffs WHERE username=?";
         try {
@@ -160,8 +185,11 @@ public class StaffDAO extends DBContext {
         return null;
 
     }
+
     public static void main(String[] args) {
         StaffDAO dao = new StaffDAO();
         System.out.println(dao.getInformationStaff("nguyenvana"));
+        System.out.println(dao.getSalesStaffWithOrderCount());
+
     }
 }

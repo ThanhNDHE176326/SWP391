@@ -41,7 +41,7 @@
                 
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/saleorderlist">
+                <a class="nav-link" href="${pageContext.request.contextPath}/saleadminorderlist">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Order List</span></a>
             </li>

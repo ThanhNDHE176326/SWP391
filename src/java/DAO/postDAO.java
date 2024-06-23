@@ -9,21 +9,21 @@ import java.util.List;
 public class postDAO extends DBContext {
 
     private int noOfRecords;
-    
+
     public List<Blog> getFilteredAndSortedPosts(String searchTitle, String filterCategory, String filterStatus, String sortField, int page, int recordsPerPage) {
         List<Blog> posts = new ArrayList<>();
         int start = (page - 1) * recordsPerPage;
-        
+
         String query = "SELECT * FROM Blogs WHERE title LIKE ? AND category_blog_id LIKE ? AND isDelete LIKE ? ORDER BY "
                 + (sortField != null ? sortField : "id") + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-        
+
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, searchTitle != null ? "%" + searchTitle + "%" : "%");
             ps.setString(2, filterCategory != null && !filterCategory.isEmpty() ? filterCategory : "%");
             ps.setString(3, filterStatus != null && !filterStatus.isEmpty() ? filterStatus : "%");
             ps.setInt(4, start);
             ps.setInt(5, recordsPerPage);
-            
+
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     posts.add(mapResultSetToBlog(rs));
@@ -54,7 +54,7 @@ public class postDAO extends DBContext {
         }
         return posts;
     }
-    
+
     public int getTotalPosts() {
         String query = "SELECT COUNT(*) FROM Blogs WHERE isDelete = 0";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -68,7 +68,7 @@ public class postDAO extends DBContext {
         }
         return 0;
     }
-    
+
     public int getNoOfRecords() {
         String query = "SELECT COUNT(*) AS total FROM Blogs WHERE isDelete = 0";
         try (PreparedStatement ps = connection.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
@@ -95,7 +95,7 @@ public class postDAO extends DBContext {
         blog.setIsDelete(rs.getString("isDelete"));
         return blog;
     }
-    
+
     public void updatePostStatus(int id, boolean hide) {
         try {
             String query = "UPDATE Blogs SET isDelete = ? WHERE id = ?";
@@ -158,12 +158,12 @@ public class postDAO extends DBContext {
         try {
             PreparedStatement stm = connection.prepareStatement(query);
             stm.setString(1, post.getTitle());
-            stm.setString(2, post.getCategoryBlog());
+            stm.setInt(2, Integer.parseInt(post.getCategoryBlog()));
             stm.setString(3, post.getImage());
             stm.setString(4, post.getDescription());
             stm.setString(5, post.getContent());
-            stm.setString(6, post.getStatus());
-            stm.setString(7, post.getId());
+            stm.setInt(6, Integer.parseInt(post.getStatus()));  // Use setBoolean for bit fields
+            stm.setInt(7, Integer.parseInt(post.getId()));
             stm.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error updating post: " + e.getMessage());
@@ -182,10 +182,11 @@ public class postDAO extends DBContext {
         }
         return rowDeleted;
     }
+
     public static void main(String[] args) {
         postDAO dao = new postDAO();
         Blog blog = dao.getPostById(3);
         System.out.println(blog);
-        
+
     }
 }

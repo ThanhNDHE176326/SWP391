@@ -10,9 +10,33 @@ package Models;
  */
 public class Staff {
 
-    String id, fullname, username, password, email, gender, phone, address, role, isDelete, code, status;
+    String id, fullname, username, password, email, gender, phone, address, role, isDelete, code, status,orderCount;
 
     public Staff() {
+    }
+
+    public String getOrderCount() {
+        return orderCount;
+    }
+
+    public Staff(String id, String fullname, String username, String password, String email, String gender, String phone, String address, String role, String isDelete, String code, String status, String ordercount) {
+        this.id = id;
+        this.fullname = fullname;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.gender = gender;
+        this.phone = phone;
+        this.address = address;
+        this.role = role;
+        this.isDelete = isDelete;
+        this.code = code;
+        this.status = status;
+        this.orderCount = orderCount;
+    }
+
+    public void setOrderCount(String ordercount) {
+        this.orderCount = ordercount;
     }
 
     public Staff(String id, String fullname, String username, String password, String role, String isDelete) {
