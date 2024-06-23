@@ -239,7 +239,7 @@
                                                 <p style="display: none;">${product.id}</p>
                                                 <div class="button-container">
                                                     <a href="addToCart?productID=${product.id}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                    <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+<!--                                                    <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                 </div>
                                             </div>
                                             <div class="product-overlay">
@@ -248,7 +248,7 @@
                                                     <p>${product.description}</p>
                                                     <div class="button-container">
                                                         <a href="addToCart?productID=${product.id}&location=list" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                        <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>
+                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
                                                     </div>
                                                 </div>
                                             </div>
