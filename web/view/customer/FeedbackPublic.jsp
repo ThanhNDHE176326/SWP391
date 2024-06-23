@@ -65,6 +65,7 @@
                     <img src="${pageContext.request.contextPath}/images/${product.image}" alt="Product Image" width="800">
                     <br><br>
                     <p><strong>${product.title}</strong></p>
+                    <p><strong>${product.id}</strong></p>
                 </div>
 
                 <form action="addfeedbackpublic" method="post">

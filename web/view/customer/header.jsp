@@ -69,7 +69,7 @@
                                                 </ul>
                                             </li>
                                             <li><a href="${pageContext.request.contextPath}/listOrderCustomer"><i class="fa fa-star"></i> My Orders</a></li>
-                                            <li><a href="checkout.jsp"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                                            <!--<li><a href="checkout.jsp"><i class="fa fa-crosshairs"></i> Checkout</a></li>-->
                                             <li><a href="${pageContext.request.contextPath}/viewCartDetail"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                             </c:when>
                                             <c:otherwise>

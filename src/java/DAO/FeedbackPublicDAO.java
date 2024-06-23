@@ -14,7 +14,7 @@ public class FeedbackPublicDAO extends dal.DBContext {
     public Product getProductById(String id) {
         Product product = null;
         try {
-            String strSQL = "SELECT title, image, description FROM Products WHERE id = ?";
+            String strSQL = "SELECT id, title, image, description FROM Products WHERE id = ?";
             stm = connection.prepareStatement(strSQL);
             stm.setInt(1, Integer.parseInt(id));
 
@@ -23,8 +23,8 @@ public class FeedbackPublicDAO extends dal.DBContext {
                 String title = rs.getString("title");
                 String image = rs.getString("image");
                 String description = rs.getString("description");
-
-                product = new Product(title, image, description);
+                int productId = rs.getInt("id");
+                product = new Product(id, title, image, description);
             }
         } catch (SQLException | NumberFormatException e) {
             System.out.println("Lỗi khi lấy sản phẩm theo ID: " + e.getMessage());
@@ -34,7 +34,7 @@ public class FeedbackPublicDAO extends dal.DBContext {
         return product;
     }
 
-    public boolean add(int product_id, String customer_id, int ratedStar, String comment ) {
+    public boolean add(int product_id, String customer_id, int ratedStar, String comment) {
         boolean isSuccess = false;
         try {
             String strSQL = "INSERT INTO [dbo].[Feedbacks]\n"
@@ -52,9 +52,8 @@ public class FeedbackPublicDAO extends dal.DBContext {
             stm.setInt(1, Integer.parseInt(customer_id));
             stm.setInt(2, product_id);
             stm.setInt(3, ratedStar);
-            
-            stm.setString(4, comment); 
-            
+
+            stm.setString(4, comment);
 
             int rowsAffected = stm.executeUpdate();
 
@@ -86,9 +85,10 @@ public class FeedbackPublicDAO extends dal.DBContext {
             System.out.println("Lỗi khi đóng tài nguyên: " + e.getMessage());
         }
     }
-public static void main(String[] args){
-    FeedbackPublicDAO da = new FeedbackPublicDAO();
-    da.add(1, "2", 4, "Good");
-    System.out.println("oke");
-}
+
+    public static void main(String[] args) {
+        FeedbackPublicDAO da = new FeedbackPublicDAO();
+        Product product = da.getProductById("1");
+        System.out.println(product);
+    }
 }
