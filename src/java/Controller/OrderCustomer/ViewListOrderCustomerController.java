@@ -17,6 +17,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,42 +38,85 @@ public class ViewListOrderCustomerController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        OrderCustomerDAO dao = new OrderCustomerDAO();
-        ProductDAOByPublic ProductDAOByPublic = new ProductDAOByPublic();
-        String orderId = request.getParameter("orderId");
-        if (orderId != null) {
-            int order_id = Integer.parseInt(orderId);
-            dao.updateOrderStatus(order_id);
-        }
-        String customerName = (String) session.getAttribute("usernamecustomer");
-        String customer_id = String.valueOf(dao.getCustomerIdByUsername(customerName));
-        String indexPage = request.getParameter("index");
-        if (indexPage == null) {
-            indexPage = "1";
-        }
-        int index = Integer.parseInt(indexPage);
-        int count = dao.countTotalOrderByCustomer(customer_id);
-        int endPage = count / 5;
-        if (count % 5 != 0) {
-            endPage++;
+protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    response.setContentType("text/html;charset=UTF-8");
+    HttpSession session = request.getSession();
+    OrderCustomerDAO dao = new OrderCustomerDAO();
+    ProductDAOByPublic productDAO = new ProductDAOByPublic();
+
+    String orderId = request.getParameter("orderId");
+    if (orderId != null) {
+        int order_id = Integer.parseInt(orderId);
+        dao.updateOrderStatus(order_id);
+    }
+
+    String customerName = (String) session.getAttribute("usernamecustomer");
+    String customer_id = String.valueOf(dao.getCustomerIdByUsername(customerName));
+    String indexPage = request.getParameter("index");
+    if (indexPage == null) {
+        indexPage = "1";
+    }
+    int index = Integer.parseInt(indexPage);
+
+    String startDateParam = request.getParameter("startDate");
+    String endDateParam = request.getParameter("endDate");
+
+    LocalDate startDate = null;
+    LocalDate endDate = null;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    if (startDateParam != null && !startDateParam.isEmpty()) {
+        startDate = LocalDate.parse(startDateParam, formatter);
+    }
+    if (endDateParam != null && !endDateParam.isEmpty()) {
+        endDate = LocalDate.parse(endDateParam, formatter);
+    }
+
+    java.sql.Date startSqlDate = null;
+    java.sql.Date endSqlDate = null;
+
+    if (startDate != null) {
+        startSqlDate = java.sql.Date.valueOf(startDate.toString());
+    }
+    if (endDate != null) {
+        endSqlDate = java.sql.Date.valueOf(endDate.toString());
+    }
+
+    List<Order> orderList;
+    int endPage = 0;
+
+    try {
+        if (startSqlDate != null || endSqlDate != null) {
+            int count = dao.countFilterOrderByCustomer(customer_id, startSqlDate, endSqlDate);
+            endPage = count / 5;
+            if (count % 5 != 0) {
+                endPage++;
+            }
+            orderList = dao.getFilteredOrders(customer_id, startSqlDate, endSqlDate, index);
+        } else {
+            int count = dao.countTotalOrderByCustomer(customer_id);
+            endPage = count / 5;
+            if (count % 5 != 0) {
+                endPage++;
+            }
+            orderList = dao.getAllOrderById(customer_id, index);
         }
 
-        List<Product> listNewProduct = ProductDAOByPublic.getTop6ProductNew();
+        List<Product> listNewProduct = productDAO.getTop6ProductNew();
+        List<Category> categories = productDAO.getCategory();
 
-        List<Order> orderList = dao.getAllOrderById(customer_id, index);
-        List<Category> categories = ProductDAOByPublic.getCategory();
         request.setAttribute("categories", categories);
         request.setAttribute("listNewProduct", listNewProduct);
         request.setAttribute("orderList", orderList);
         request.setAttribute("endP", endPage);
         request.setAttribute("tag", index);
-        request.getRequestDispatcher("view/customer/MyOrders.jsp").forward(request, response);
-
+    } catch (Exception e) {
+        throw new ServletException("Error retrieving orders", e);
     }
+
+    request.getRequestDispatcher("view/customer/MyOrders.jsp").forward(request, response);
+}
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
