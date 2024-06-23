@@ -14,7 +14,7 @@ public class DBContext {
 
     public DBContext() {
         try {
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=SWP391_re25";
+            String url = "jdbc:sqlserver://DESKTOP-EM30SMM\\DATNGO:1433;databaseName=SWP391_re26";
             String username = "sa";
             String password = "123";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -23,10 +23,11 @@ public class DBContext {
             System.out.println(ex);
         }
     }
+
     public static void main(String[] args) {
-        if(new DBContext().connection != null){
+        if (new DBContext().connection != null) {
             System.out.println("connect okela!");
-        }else{
+        } else {
             System.out.println("connect fail!");
         }
     }
