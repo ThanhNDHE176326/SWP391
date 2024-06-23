@@ -40,11 +40,14 @@ public class ViewOrderInformationCustomerController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String orderId = request.getParameter("orderId");
         String cancelled = request.getParameter("cancelled");
+        String complete = request.getParameter("complete");
         int order_id = Integer.parseInt(orderId);
         OrderCustomerDAO dao = new OrderCustomerDAO();
         ProductDAOByPublic ProductDAOByPublic = new ProductDAOByPublic();
         if (cancelled != null) {
             dao.updateOrderStatus(order_id);
+        }else if (complete != null){
+            dao.updateOrderComplete(order_id);
         }
         List<OrderDetail> listProductOrder = dao.getProductByOrderId(order_id);
         List<Product> listNewProduct = ProductDAOByPublic.getTop6ProductNew();

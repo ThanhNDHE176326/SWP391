@@ -148,15 +148,105 @@ public class OrderCustomerDAO extends DBContext {
             System.err.println(e.getMessage());
         }
     }
+    
+    public void updateOrderComplete(int order_id) {
+        String sql = "UPDATE Orders SET status_id = 6 WHERE id = ?";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, order_id);
+
+            int rowsUpdated = stm.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public List<Order> getFilteredOrders(String customer_id, Date startDate, Date endDate, int index) {
+        List<Order> listOrder = new ArrayList<>();
+        String sql = "SELECT o.id, o.total_cost, o.order_date, o.address, o.phone, os.name "
+                + "FROM Orders o JOIN OrderStatus os ON o.status_id = os.id "
+                + "WHERE o.customer_id = ? AND (? IS NULL OR o.order_date >= ?) "
+                + "AND (? IS NULL OR o.order_date <= ?) ORDER BY o.id ASC "
+                + "OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, customer_id);
+            stm.setDate(2, startDate);
+            stm.setDate(3, startDate);
+            stm.setDate(4, endDate);
+            stm.setDate(5, endDate);
+            stm.setInt(6, (index - 1) * 5);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String id = Integer.toString(rs.getInt("id"));
+                String orderDate = rs.getDate("order_date").toString();
+                String totalCost = Integer.toString(rs.getInt("total_cost"));
+                String address = rs.getString("address");
+                String phone = rs.getString("phone");
+                String status = rs.getString("name");
+                Order order = new Order(id, totalCost, orderDate, address, status);
+                listOrder.add(order);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        return listOrder;
+    }
+
+    public int countFilterOrderByCustomer(String customer_id, Date startDate, Date endDate) {
+        String sql = "SELECT COUNT(*) FROM Orders o JOIN OrderStatus os ON o.status_id = os.id\n"
+                + "WHERE o.customer_id = ? AND (? IS NULL OR o.order_date >= ?)\n"
+                + "AND (? IS NULL OR o.order_date <= ?)";
+
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, customer_id);
+            if (startDate != null) {
+                stm.setDate(2, startDate);
+                stm.setDate(3, startDate);
+            } else {
+                stm.setNull(2, java.sql.Types.DATE);
+                stm.setNull(3, java.sql.Types.DATE);
+            }
+
+            if (endDate != null) {
+                stm.setDate(4, endDate);
+                stm.setDate(5, endDate);
+            } else {
+                stm.setNull(4, java.sql.Types.DATE);
+                stm.setNull(5, java.sql.Types.DATE);
+            }
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return 0;
+    }
 
     public static void main(String[] args) {
         OrderCustomerDAO dao = new OrderCustomerDAO();
-//         dao.updateOrderStatus(1, 4);
 
-        // In ra thông báo sau khi cập nhật thành công (hoặc thông báo lỗi trong trường hợp xảy ra ngoại lệ)
-        Order order = dao.getInfoOrderByOrderId(1);
-        System.out.println(order);
-//        int count = dao.countTotalOrderByCustomer("1");
-//        System.out.println(count);
+        // Chuyển đổi ngày từ String sang java.sql.Date
+        Date startDate = Date.valueOf("2024-05-01");
+        Date endDate = Date.valueOf("2024-05-22");
+
+        // Gọi phương thức getFilteredOrders với các tham số đã chuyển đổi
+        int count = dao.countFilterOrderByCustomer("1", startDate, endDate);
+        System.out.println(count);
     }
 }

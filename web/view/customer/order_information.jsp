@@ -234,7 +234,9 @@
                 text-decoration: none;
             }
             [data-status="Canceled"] .cancel-link,
-            [data-status="Canceled"] .update-link {
+            [data-status="Canceled"] .update-link,
+            [data-status="Completed"] .cancel-link,
+            [data-status="Completed"] .update-link {
                 display: none;
             }
             .feedback_button.disabled {
@@ -400,6 +402,7 @@
                                 <p data-status="${order.status_name}">
                                     Status: ${order.status_name}
                                     <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&cancelled=cancelled" class="cancel-link">Cancelled</a>
+                                    <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&complete=complete" class="cancel-link">Goods received</a>
                                 </p>
                             </div>
 
@@ -421,7 +424,8 @@
                                         <c:forEach var="listProductOrder" items="${listProductOrder}">
                                             <tr>
                                                 <td class="cart_select">
-                                                    <p>${listProductOrder.id}</p>                                                    </td>
+                                                    <p>${listProductOrder.id}</p>                                                    
+                                                </td>
                                                 <td class="cart_product">
                                                     <a href=""><img src="<c:url value='/images/${listProductOrder.image}'/>" alt=""></a>
                                                 </td>

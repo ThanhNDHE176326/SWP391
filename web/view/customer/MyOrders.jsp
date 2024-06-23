@@ -166,6 +166,8 @@
                 display: flex;
                 align-items: center;
                 margin-bottom: 20px;
+                margin-left: 100px;
+                margin-right: 100px;
             }
             .filter-form .form-group {
                 margin-right: 10px;
@@ -325,22 +327,12 @@
                                     <li class="active">My Orders</li>
                                 </ol>
                             </div>
-                                    <form action="${pageContext.request.contextPath}/filterOrderCustomer" method="get" class="filter-form">
+                                    <form action="${pageContext.request.contextPath}/listOrderCustomer?index=1" method="POST" class="filter-form">
                                     <div class="form-group">
                                         <input type="date" id="startDate" name="startDate" class="form-control" placeholder="mm/dd/yyyy">
                                     </div>
                                     <div class="form-group">
                                         <input type="date" id="endDate" name="endDate" class="form-control" placeholder="mm/dd/yyyy">
-                                    </div>
-                                    <div class="form-group">
-                                        <select name="status" class="form-control">
-                                            <option value="">All Statuses</option>
-                                            <option value="Processing">Processing</option>
-                                            <option value="Confirmed">Confirmed</option>
-                                            <option value="Shipped">Shipped</option>
-                                            <option value="Delivered">Delivered</option>
-                                            <option value="Cancelled">Cancelled</option>
-                                        </select>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Filter</button>
                                 </form>
