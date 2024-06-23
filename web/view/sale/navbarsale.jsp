@@ -33,13 +33,7 @@
         <!-- Sidebar -->
         <ul class="sidebar navbar-nav">
             
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="${pageContext.request.contextPath}/saledashboard" >
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Dashboard</span>
-                </a>
-                
-            </li>
+           
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/saleorderlist">
                     <i class="fas fa-fw fa-chart-area"></i>

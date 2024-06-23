@@ -40,7 +40,7 @@ public class OrderListController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
+        String username = (String) session.getAttribute("usernamestaff");
         StaffDAO dao = new StaffDAO();
         String id = dao.getInformationStaff(username).getId();
        
