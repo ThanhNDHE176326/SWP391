@@ -26,7 +26,6 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<c:url value='/images/ico/apple-touch-icon-114-precomposed.png'/>">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<c:url value='/images/ico/apple-touch-icon-72-precomposed.png'/>">
         <link rel="apple-touch-icon-precomposed" href="<c:url value='/images/ico/apple-touch-icon-57-precomposed.png'/>">
-
     </head>
     <body>
         <jsp:include page="header.jsp"/>
@@ -37,8 +36,8 @@
                         <div class="login-form"><!--login form-->
                             <h2>Login Customer</h2>
                             <form action="${pageContext.request.contextPath}/logincustomer" method="POST">
-                                <input name="username" type="text" placeholder="Username" />
-                                <input name="password" type="password" placeholder="Password" />
+                                <input name="username" type="text" placeholder="Username" required />
+                                <input name="password" type="password" placeholder="Password" required />
                                 <a href="${pageContext.request.contextPath}/view/customer/forgetpasswordcustomer.jsp">Forgot Password?</a>
                                 <button type="submit" class="btn btn-default">Login</button>
                                 <p style="color: #000000; font-weight: bold;">${error}</p>
@@ -66,14 +65,12 @@
         <script src="<c:url value='/js/price-range.js'/>"></script>
         <script src="<c:url value='/js/jquery.prettyPhoto.js'/>"></script>
         <script src="<c:url value='/js/main.js'/>"></script>
-
     </body>
     <style>
-        #form{
+        #form {
             margin-bottom: 50px !important;
             margin-top: -10px !important;
             margin-left: 150px !important;
         }
-
     </style>
 </html>

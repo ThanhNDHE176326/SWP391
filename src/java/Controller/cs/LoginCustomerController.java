@@ -84,21 +84,22 @@ public class LoginCustomerController extends HttpServlet {
             loginAttempts = 0;
         }
 
-// Check if login attempts exceed 5
+        // Check if login attempts exceed 5
         if (loginAttempts >= 5) {
             // Change isDelete to 0 if login attempts exceed 5
-            dao.updateIsDelete(username, 0);// Assuming updateIsDelete method exists
+            dao.updateIsDelete(username, 0);
             session.removeAttribute("loginAttempts");
             request.setAttribute("error", "You have exceeded the maximum number of login attempts. Your account has been locked.");
             request.getRequestDispatcher("view/customer/logincustomer.jsp").forward(request, response);
-            return; // Stop further execution
+            return;
         }
 
         if (c == null) {
             request.setAttribute("error", "Username or Password invalid");
             request.getRequestDispatcher("view/customer/logincustomer.jsp").forward(request, response);
-            return; // Stop further execution
+            return;
         }
+
         if (!"1".equals(c.getIsDelete())) {
             request.setAttribute("error", "Your account has been locked.");
             request.getRequestDispatcher("view/customer/logincustomer.jsp").forward(request, response);
@@ -110,27 +111,22 @@ public class LoginCustomerController extends HttpServlet {
             session.setAttribute("loginAttempts", loginAttempts);
             request.setAttribute("error", "You have entered the wrong password " + loginAttempts + " times");
             request.getRequestDispatcher("view/customer/logincustomer.jsp").forward(request, response);
-            return; // Stop further execution
+            return;
         }
 
-// Reset login attempts on successful login
+        // Reset login attempts on successful login
         session.removeAttribute("loginAttempts");
         session.setAttribute("acc", c);
-        session.setAttribute("usernamecustomer", username); // Set the username into session
-        session.setAttribute("passwordcustomer", password); // Set the password into session
-        session.setMaxInactiveInterval(1800); // 30'
+        session.setAttribute("usernamecustomer", username);
+        session.setAttribute("passwordcustomer", password);
+        session.setAttribute("userRole", "customer");
+        session.setMaxInactiveInterval(1800); // 30 minutes
         response.sendRedirect("view/customer/homepage.jsp");
-
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+        return "Login Customer Controller";
+    }
 
 }
