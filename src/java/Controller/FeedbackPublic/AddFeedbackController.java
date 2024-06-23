@@ -1,6 +1,8 @@
 package Controller.FeedbackPublic;
 
+import DAO.CustomerDAO;
 import DAO.FeedbackPublicDAO;
+import Models.Customer;
 import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -52,16 +54,35 @@ public class AddFeedbackController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String ratedStar = request.getParameter("ratedStar");
+
+        String ratedStarStr = request.getParameter("ratedStar");
         String comment = request.getParameter("comment");
-        String product = request.getParameter("productId");
+        String product_idStr = request.getParameter("productId");
+
+        int ratedStar = 0;
+        int product_id = 0;
+
+        try {
+            ratedStar = Integer.parseInt(ratedStarStr);
+            product_id = Integer.parseInt(product_idStr);
+        } catch (NumberFormatException e) {          
+            e.printStackTrace();
+            request.setAttribute("message", "Đánh giá không thành công. Vui lòng thử lại sau.");
+            request.getRequestDispatcher("/view/customer/FeedbackPublic.jsp").forward(request, response);
+            return;
+        }
 
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("usernamecustomer");
 
+        CustomerDAO dao = new CustomerDAO();
+
+        Customer customer = dao.getInformationCustomer(username);
+
+        String customer_id = customer.getId();
+
         FeedbackPublicDAO da = new FeedbackPublicDAO();
-        boolean isSuccess = da.add(ratedStar, comment, username, product);
+        boolean isSuccess = da.add(product_id,customer_id,ratedStar,comment);
 
         if (isSuccess) {
             request.setAttribute("message", "Đánh giá thành công.");
