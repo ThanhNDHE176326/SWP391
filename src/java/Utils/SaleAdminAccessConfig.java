@@ -17,7 +17,7 @@ public class SaleAdminAccessConfig {
             //jsp
             "/view/saleadmin/headersaleadmin.jsp", "/view/saleadmin/homedashboardsaleadmin.jsp", "/view/saleadmin/navbarsaleadmin.jsp", "/view/saleadmin/orderlistsale.jsp", "/view/saleadmin/saledashboard.jsp",
             //Servlet
-            "/saledashboard", "/saleadminorderlist","/saleorderlist"
+            "/saledashboard", "/saleadminorderlist","/saleorderlist","/logoutstaff"
     );
 
     public static List<String> getSaleAdminUrls() {

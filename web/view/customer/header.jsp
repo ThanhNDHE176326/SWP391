@@ -65,7 +65,7 @@
                                                 <ul role="menu" class="sub-menu">
                                                     <li><a href="${pageContext.request.contextPath}/informationuser" style="color: #333; display: block; padding: 10px 20px; text-decoration: none; transition: background-color 0.3s ease; border: none;">Personal Information</a></li>
                                                     <li><a href="${pageContext.request.contextPath}/view/customer/changepasswordcustomer.jsp" style="color: #333; display: block; padding: 10px 20px; text-decoration: none; transition: background-color 0.3s ease; border: none;">Password</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/logout" style="color: #333; display: block; padding: 10px 20px; text-decoration: none; transition: background-color 0.3s ease; border: none;">Logout</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/logoutcustomer" style="color: #333; display: block; padding: 10px 20px; text-decoration: none; transition: background-color 0.3s ease; border: none;">Logout</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="${pageContext.request.contextPath}/listOrderCustomer"><i class="fa fa-star"></i> My Orders</a></li>
