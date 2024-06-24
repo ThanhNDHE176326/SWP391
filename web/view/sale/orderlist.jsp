@@ -139,12 +139,12 @@
                     <table>
                         <thead>
                             <tr>
-                                <th style="color: black;">ID</th>
-                                <th style="color: black;">Customer</th>
-                                <th style="color: black;">Total Cost</th>
-                                <th style="color: black;">Order Date</th>
-                                <th style="color: black;">Actions</th>
-                                <th style="color: black;">Status</th>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Total Cost</th>
+                                <th>Order Date</th>
+                                <th>Actions</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
