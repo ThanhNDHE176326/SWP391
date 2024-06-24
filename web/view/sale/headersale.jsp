@@ -15,7 +15,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Admin - Dashboard</title>
+        <title>Sale - Dashboard</title>
 
         <!-- Bootstrap CSS -->
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
@@ -36,7 +36,7 @@
 
         <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-            <a class="navbar-brand mr-1" href="homedashboard.jsp">Admin</a>
+            <a class="navbar-brand mr-1" href="homedashboard.jsp">Sale</a>
 
             <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
                 <i class="fas fa-bars"></i>
