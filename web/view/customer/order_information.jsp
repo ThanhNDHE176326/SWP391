@@ -233,12 +233,7 @@
                 color: white;
                 text-decoration: none;
             }
-            [data-status="Canceled"] .cancel-link,
-            [data-status="Canceled"] .update-link,
-            [data-status="Completed"] .cancel-link,
-            [data-status="Completed"] .update-link {
-                display: none;
-            }
+
             .feedback_button.disabled {
                 opacity: 0.5; /* Điều chỉnh độ mờ tùy ý */
                 pointer-events: none; /* Ngăn chặn người dùng chọn vào nút */
@@ -401,9 +396,18 @@
                                 <p>Total Cost: ${order.totalCost} VNĐ</p>
                                 <p data-status="${order.status_name}">
                                     Status: ${order.status_name}
-                                    <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&cancelled=cancelled" class="cancel-link">Cancelled</a>
-                                    <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&complete=complete" class="cancel-link">Goods received</a>
+                                    <c:choose>
+                                        <c:when test="${order.status_name == 'Processing'}">
+                                            <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&cancelled=cancelled" class="cancel-link">Cancelled</a>
+                                        </c:when>
+                                        <c:when test="${order.status_name == 'Completed'}">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&complete=complete" class="cancel-link">Goods received</a>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </p>
+
                             </div>
 
                             <div class="table-responsive cart_info" style="max-width: 1400px; margin: auto;">
