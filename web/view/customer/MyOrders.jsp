@@ -369,7 +369,7 @@
                                                 <td class="cart_delete" style="padding: 10px; text-align: center;">
                                                     <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${orderList.id}" class="view-button">View</a>
                                                     <c:choose>
-                                                        <c:when test="${orderList.status_name == 'Processing' || orderList.status_name == 'Confirmed'}">
+                                                        <c:when test="${orderList.status_name == 'Processing'}">
                                                             <a href="${pageContext.request.contextPath}/listOrderCustomer?orderId=${orderList.id}" class="cancel-button">Cancelled</a>
                                                         </c:when>
                                                         <c:otherwise>
