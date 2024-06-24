@@ -16,6 +16,7 @@
         <meta name="author" content="">
 
         <title>SB Admin - Dashboard</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 
     </head>
@@ -73,6 +74,12 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/listfeedback">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Feedback</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="${pageContext.request.contextPath}/logoutstaff">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
             </li>
         </ul>
     </body>

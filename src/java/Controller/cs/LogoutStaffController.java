@@ -16,10 +16,10 @@ import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author admin
+ * @author HP
  */
-@WebServlet(name="LogoutController", urlPatterns={"/logout"})
-public class LogoutController extends HttpServlet {
+@WebServlet(name="LogoutStaff", urlPatterns={"/logoutstaff"})
+public class LogoutStaffController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,10 +36,10 @@ public class LogoutController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LogoutController</title>");  
+            out.println("<title>Servlet LogoutStaff</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LogoutController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet LogoutStaff at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +58,7 @@ public class LogoutController extends HttpServlet {
     throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.invalidate();
-        response.sendRedirect("view/customer/homepage.jsp");
+        response.sendRedirect("view/staff/loginstaff.jsp");
     } 
 
     /** 

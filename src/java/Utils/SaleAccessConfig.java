@@ -19,7 +19,7 @@ public class SaleAccessConfig {
             "/view/sale/saledashboard.jsp",
             //
             //Servlet
-            "/saleorderdetails", "/saleorderlist"
+            "/saleorderdetails", "/saleorderlist","/logoutstaff"
     );
 
     public static List<String> getSaleUrls() {

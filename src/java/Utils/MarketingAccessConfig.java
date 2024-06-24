@@ -25,7 +25,7 @@ public class MarketingAccessConfig {
             "/FilterFeedbackByStatus", "/listfeedback", "/searchfeedback", "/updatefeedback", "/CustomerList", "/StatusCustomer", "/AddCustomer", "/EditCustomer", "/UpdateCustomer",
             "/Pagination", "/SearchControl", "/CreatePost", "/deletePost", "/postlist", "/ShowHide", "/updatepost", "/viewPost", "/productListMarketing", "/changeStatus", "/sortList", "/productMarketingSearchByBriefInfo", "/productMarketingSearchByTitle",
             "/productMarketingFilterByStatus", "/productMarketingFilterByCategory", "/createNewProductMarketing", "/updateProductDetailMarketing",
-            "/viewProductDetailMarketing", "/marketingDashboard"
+            "/viewProductDetailMarketing", "/marketingDashboard","/logoutstaff"
     );
 
     public static List<String> getMarketingUrls() {
