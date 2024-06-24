@@ -123,10 +123,10 @@ public class LoginStaffController extends HttpServlet {
             response.sendRedirect("view/admin/homedashboardadmin.jsp");
         }
         if (s.getRole().equals("2")) {
-            response.sendRedirect("saleorderlist");
+            response.sendRedirect("saleorderlist");//sale
         }
         if (s.getRole().equals("3")) {
-            response.sendRedirect("saleadminorderlist");
+            response.sendRedirect("saleadminorderlist");//saleadmin
         }
         if (s.getRole().equals("4")) {
             response.sendRedirect("view/marketing/homedashboardmarketing.jsp");
