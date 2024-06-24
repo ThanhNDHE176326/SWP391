@@ -25,7 +25,7 @@ public class CustomerAccessConfig {
             "/logincustomer", "/marketingDashboard", "/listOrderCustomer", "/orderInformationCustomer", "/ProductPublicByCategory",
             "/ProductPublicByPrice", "/ProductDetailPublic", "/ProductListPublic", "/ProductListPublicByUpdateDate", "/SeachPopularProductPublic",
             "/SearchProductPulbic", "/addToCart", "/viewCartDetail", "/updateQuantityCartProduct", "/deleteCart", "/cartCompletion", "/addDeliveryAddress",
-            "/deleteDeliveryAddress", "/pushToCartContact", "/viewCartDetail"
+            "/deleteDeliveryAddress", "/pushToCartContact", "/viewCartDetail", "/addfeedbackpublic"
     );
 
     public static List<String> getCustomerUrls() {

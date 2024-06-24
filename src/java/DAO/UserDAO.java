@@ -256,7 +256,7 @@ public class UserDAO extends dal.DBContext {
     public ArrayList<Staff> getAdminUser() {
         ArrayList<Staff> listUserByRole = new ArrayList<Staff>();
         try {
-            String strSQL = "select id, fullname, email, gender,phone, role_id , status from Staffs where role_id = '1'";
+                String strSQL = "select id, fullname, email, gender,phone, role_id , status from Staffs where role_id = '1'";
             stm = connection.prepareStatement(strSQL);
             rs = stm.executeQuery();
 

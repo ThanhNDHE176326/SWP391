@@ -70,16 +70,16 @@ public class FilterUserByStatusController extends HttpServlet {
 
                 case "0":
                     listUserByStatus = da.getUserByInActiveStatus();
-                    statusModeFromServlet = "inactive";
+                    
                     break;
 
                 case "1":
                     listUserByStatus = da.getUserByActiveStatus();
-                    statusModeFromServlet = "active";
+                   
                     break;
                 case "all":
                     listUserByStatus = da.getAllUser();
-                    statusModeFromServlet = "all";
+                    
                     break;
                 default:
                     // Xử lý các giá trị không mong muốn nếu cần
@@ -88,7 +88,7 @@ public class FilterUserByStatusController extends HttpServlet {
         }
 
         request.setAttribute("listuser", listUserByStatus);
-        request.setAttribute("statusSearch", statusSearch);
+        
         request.setAttribute("statusModeFromServlet", statusModeFromServlet);
 
         request.getRequestDispatcher("view/admin/listuser.jsp").forward(request, response);

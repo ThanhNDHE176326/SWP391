@@ -53,6 +53,12 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>SignUp Staff</span></a>
             </li>
+            
+             <li class="nav-item active">
+                <a class="nav-link" href="${pageContext.request.contextPath}/listuser">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>List User</span></a>
+            </li>
 
         </ul>
         <!-- Scroll to Top Button-->
