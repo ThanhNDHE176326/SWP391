@@ -112,11 +112,7 @@ public class CartCompletionController extends HttpServlet {
         int customerID = Integer.parseInt(customerDAO.getInformationCustomer(customerName).getId());
         int cartID = cartDAO.getCartIdByCustomerID(customerID);
 
-        List<Staff> listSaler = staffDAO.getSalers();
-        Random random = new Random();
-        int randomIndex = random.nextInt(listSaler.size());
-        Staff salerRandom = listSaler.get(randomIndex);
-        int salerRandomID = Integer.parseInt(salerRandom.getId()); // staff_id in Orders
+        int salerOrderID = staffDAO.getIdStaffHasFewestOrder() ; // staff_id in Orders
 
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
@@ -139,9 +135,9 @@ public class CartCompletionController extends HttpServlet {
                 && newPhone != null && !newPhone.isEmpty()
                 && newAddress != null && !newAddress.isEmpty()
                 && newGender != null && !newGender.isEmpty()) {
-            orderDAO.insertOrder(customerID, totalCost, orderDate, newAddress, newPhone, newName, isMaleNew, paymentID, salerRandomID);
+            orderDAO.insertOrder(customerID, totalCost, orderDate, newAddress, newPhone, newName, isMaleNew, paymentID, salerOrderID);
         } else {
-            orderDAO.insertOrder(customerID, totalCost, orderDate, address, phone, name, isMale, paymentID, salerRandomID);
+            orderDAO.insertOrder(customerID, totalCost, orderDate, address, phone, name, isMale, paymentID, salerOrderID);
         }
 
         int orderID = orderDAO.getOrderIDByCustomerID(customerID);

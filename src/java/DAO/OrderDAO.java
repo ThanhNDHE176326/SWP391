@@ -529,7 +529,7 @@ public class OrderDAO extends DBContext {
         }
     }
 
-    public void insertOrder(int customerID, double totalCost, LocalDate orderDate, String addressOrder, String phoneOrder, String recipient_name, boolean isMale, int paymentID, int salerRandomID) {
+    public void insertOrder(int customerID, double totalCost, LocalDate orderDate, String addressOrder, String phoneOrder, String recipient_name, boolean isMale, int paymentID, int salerOrderID) {
         String sql = "INSERT INTO [Orders] "
                 + "([customer_id], [total_cost], [note], [order_date], [address], [phone], [recipient_name], [recipient_gender], [isDelete], [staff_id], [status_id], [payment_id]) "
                 + "VALUES (?, ?, N'Không có yêu cầu đặc biệt', ?, ?, ?, ?, ?, 1, ?, 1, ?)";
@@ -542,7 +542,7 @@ public class OrderDAO extends DBContext {
             ps.setString(5, phoneOrder);
             ps.setString(6, recipient_name);
             ps.setBoolean(7, isMale);
-            ps.setInt(8, salerRandomID);
+            ps.setInt(8, salerOrderID);
             ps.setInt(9, paymentID);
 
             ps.executeUpdate();
