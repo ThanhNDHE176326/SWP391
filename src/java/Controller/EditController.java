@@ -9,17 +9,25 @@ import Models.Slider;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**
  *
  * @author dat ngo huy
  */
-
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 2, // 2 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 50 // 50 MB
+)
 public class EditController extends HttpServlet {
 
     /**
@@ -79,26 +87,54 @@ public class EditController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String id = request.getParameter("id");
-        String title = request.getParameter("title");
-        String image = request.getParameter("image");
-        String note = request.getParameter("note");
-        String staff = request.getParameter("staff");
-        String startDate = request.getParameter("startDate");
-        String endDate = request.getParameter("endDate");
-        String isDelete = request.getParameter("isDelete");
-        String status = request.getParameter("status");
+    
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    String id = request.getParameter("id");
+    String title = request.getParameter("title");
+    String image = request.getParameter("image");
+    String note = request.getParameter("note");
+    String staff = request.getParameter("staff");
+    String startDate = request.getParameter("startDate");
+    String endDate = request.getParameter("endDate");
+    String status = request.getParameter("status");
+    String isDelete = request.getParameter("isDelete");
 
-        DAO da = new DAO();
+    if (id == null || id.isEmpty() || staff == null || staff.isEmpty()) {
+        // Xử lý lỗi hoặc chuyển hướng đến trang lỗi
+        request.setAttribute("error", "ID và Staff không được để trống");
+        request.getRequestDispatcher("view/marketing/editslider.jsp").forward(request, response);
+        return;
+    }
+
+    try {
+        int staffId = Integer.parseInt(staff);
+        int sliderId = Integer.parseInt(id);
+
         Slider s = new Slider(id, title, image, note, staff, startDate, endDate, isDelete, status);
+        DAO da = new DAO();
         da.update(s);
+
+        Part part = request.getPart("imageUpload");
+        if (part != null && part.getSize() > 0) {
+            String realPath = "C:\\Users\\84987\\Documents\\SU24\\SWP391\\SWP391\\web\\images";
+            Files.createDirectories(Paths.get(realPath)); // Tạo thư mục nếu chưa tồn tại
+            String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+            part.write(Paths.get(realPath, fileName).toString());
+            System.out.println("File Slider uploaded to: " + Paths.get(realPath, fileName).toString());
+            da.updateImageSlider(id, fileName);
+        }
+
         ArrayList<Slider> listslider = da.getSlider();
         request.setAttribute("listslider", listslider);
         request.getRequestDispatcher("view/marketing/listslider.jsp").forward(request, response);
 
+    } catch (NumberFormatException e) {
+        // Xử lý lỗi chuyển đổi số
+        request.setAttribute("error", "ID hoặc Staff không hợp lệ");
+        request.getRequestDispatcher("view/marketing/editslider.jsp").forward(request, response);
     }
+}
 
     /**
      * Returns a short description of the servlet.

@@ -65,7 +65,7 @@
                     <span>Post</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="${pageContext.request.contextPath}/slider">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Slider</span></a>
             </li>

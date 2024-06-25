@@ -39,7 +39,9 @@
                             Edit Slider
                         </div>
                         <div class="card-body">
-                            <form action="${pageContext.request.contextPath}/edit" method="post">
+                            <form action="${pageContext.request.contextPath}/edit" method="post" enctype="multipart/form-data">
+                                
+                                <input type="hidden" name="id" value="${slider.id}">
                                 <div class="form-group row">
                                     <label for="title" class="col-sm-2 col-form-label">Title</label>
                                     <div class="col-sm-10">
@@ -50,7 +52,8 @@
                                 <div class="form-group row">
                                     <label for="image" class="col-sm-2 col-form-label">Image</label>
                                     <div class="col-sm-10">
-                                        <img src="${slider.image}" alt="Image of Slider" class="img-fluid mb-3">
+                                        <img src="${pageContext.request.contextPath}/images/${slider.image}" alt="Image of Slider" class="img-fluid mb-3" width="400"><br/><br/>
+                                        <input type="file" name="imageUpload">
                                     </div>
                                 </div>
 
@@ -83,9 +86,9 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="isDelete" class="col-sm-2 col-form-label">Is Delete</label>
+                                    <!--<label for="isDelete" class="col-sm-2 col-form-label">Is Delete</label>-->
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="isDelete" value="${slider.isDelete}">
+                                        <input type="hidden" class="form-control" name="isDelete" value="${slider.isDelete}">
                                     </div>
                                 </div>
 
