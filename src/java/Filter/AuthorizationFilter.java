@@ -66,13 +66,13 @@
 //        if (userRole == null || "customer".equals(userRole)) {
 //            // Allow only customer URLs for guests or customers
 //            allowedUrls = customerUrls;
-//        } else if ("2".equals(userRole)) {
+//        } else if ("3".equals(userRole)) {
 //            allowedUrls = Stream.concat(customerUrls.stream(), saleUrls.stream())
 //                    .collect(Collectors.toList());
 //        } else if ("4".equals(userRole)) {
 //            allowedUrls = Stream.concat(customerUrls.stream(), marketingUrls.stream())
 //                    .collect(Collectors.toList());
-//        } else if ("3".equals(userRole)) {
+//        } else if ("2".equals(userRole)) {
 //            allowedUrls = Stream.concat(customerUrls.stream(), saleAdminUrls.stream())
 //                    .collect(Collectors.toList());
 //        } else if ("1".equals(userRole)) {

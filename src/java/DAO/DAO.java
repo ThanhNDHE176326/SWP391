@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import dal.DBContext;
+import java.sql.SQLException;
 
 /**
  *
@@ -76,36 +77,37 @@ public class DAO extends DBContext {
     }
 
     public void update(Slider s) {
-        try {
-            String strSQL = "UPDATE [dbo].[Sliders]\n"
-                    + "   SET [title] = ?\n"
-                    + "      ,[image] = ?\n"
-                    + "      ,[notes] = ?\n"
-                    + "      ,[staff_id] = ?\n"
-                    + "      ,[start_date] = ?\n"
-                    + "      ,[end_date] = ?\n"
-                    + "      ,[status] = ?\n"
-                    + " WHERE id = ?";
-            stm = connection.prepareStatement(strSQL);
+    try {
+        String strSQL = "UPDATE [dbo].[Sliders]\n"
+                + "   SET [title] = ?\n"
+                + "      ,[image] = ?\n"
+                + "      ,[notes] = ?\n"
+                + "      ,[staff_id] = ?\n"
+                + "      ,[start_date] = ?\n"
+                + "      ,[end_date] = ?\n"
+                + "      ,[status] = ?\n"
+                + " WHERE id = ?";
+        stm = connection.prepareStatement(strSQL);
 
-            stm.setString(1, s.getTitle());
-            stm.setString(2, s.getImage());
-            stm.setString(3, s.getNote());
-            stm.setString(4, s.getStaff());
-            stm.setString(5, s.getStartDate());
-            stm.setString(6, s.getEndDate());
-            stm.setString(7, s.getStatus());
-            stm.setInt(8, Integer.parseInt(s.getId()));
+        stm.setString(1, s.getTitle());
+        stm.setString(2, s.getImage());
+        stm.setString(3, s.getNote());
+        stm.setInt(4, Integer.parseInt(s.getStaff()));
+        stm.setString(5, s.getStartDate());
+        stm.setString(6, s.getEndDate());
+        stm.setInt(7    , Integer.parseInt(s.getStatus()));
 
-            stm.execute();
+        stm.setInt(8, Integer.parseInt(s.getId()));
 
-        } catch (Exception e) {
-            System.out.println("update:" + e.getMessage());
-        }
+        stm.executeUpdate();
+
+    } catch (SQLException e) {
+        System.out.println("update: " + e.getMessage());
     }
-    
-    
-      public int count(String txtSearch) {
+}
+
+
+    public int count(String txtSearch) {
         try {
             String strSQL = "select count(*) from Sliders where title like ?";
             stm = connection.prepareStatement(strSQL);
@@ -122,7 +124,7 @@ public class DAO extends DBContext {
     }
 
     public ArrayList<Slider> Search(String txtSearch, int index, int pageSize) {
-         ArrayList<Slider> list = new ArrayList<Slider>();
+        ArrayList<Slider> list = new ArrayList<Slider>();
         try {
             String strSQL = "with x as(select ROW_NUMBER() over ( order by id asc) as r,\n"
                     + "* from Sliders where title like ?) \n"
@@ -144,7 +146,7 @@ public class DAO extends DBContext {
                 String isDelete = rs.getString(9);
                 String status = rs.getString(10);
                 list.add(new Slider(id, title, image, note, staff, startDate, endDate, isDelete, status));
-                
+
             }
 
         } catch (Exception e) {
@@ -154,9 +156,8 @@ public class DAO extends DBContext {
 
     }
 
-  
     public ArrayList<Slider> getAllSlider() {
-             ArrayList<Slider> listSliderByStatus = new ArrayList<Slider>();
+        ArrayList<Slider> listSliderByStatus = new ArrayList<Slider>();
         try {
             String strSQL = "select * from Sliders";
             stm = connection.prepareStatement(strSQL);
@@ -184,7 +185,7 @@ public class DAO extends DBContext {
     }
 
     public ArrayList<Slider> getSliderByShowStatus() {
-         ArrayList<Slider> listSliderByStatus = new ArrayList<Slider>();
+        ArrayList<Slider> listSliderByStatus = new ArrayList<Slider>();
         try {
             String strSQL = "select * from Sliders where status = 1";
             stm = connection.prepareStatement(strSQL);
@@ -236,7 +237,18 @@ public class DAO extends DBContext {
         }
         return listSliderByStatus;
     }
+
+    public void updateImageSlider(String id, String fileName) {
+        String sql = "UPDATE [dbo].[Sliders]\n"
+                + "   SET [image] = ?\n"
+                + " WHERE id = ?";
+        try {
+            stm=connection.prepareStatement(sql);
+            stm.setString(1, fileName);
+            stm.setInt(2, Integer.parseInt(id));
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("updateImageSlider: " + e.getMessage());
+        }
     }
-
-
-
+}
