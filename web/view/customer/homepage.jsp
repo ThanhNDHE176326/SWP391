@@ -243,6 +243,11 @@
             .single-blog-post .post-meta ul li {
                 margin-right: 15px;
             }
+            .out-of-stock {
+                color: red;
+                font-weight: bold;
+                font-size: 20px;
+            }
         </style>
 
 
@@ -264,9 +269,17 @@
                                                     <img src="${pageContext.request.contextPath}/images/${product.image}" alt="${product.title}" />
                                                     <h2>${product.title}</h2>
                                                     <p>${product.description}</p>
+                                                    <p style="display: none;">${product.id}</p>
+                                                    <p style="display: none;">${product.quantity}</p>
                                                     <div class="button-container">
-                                                        <a href="${pageContext.request.contextPath}/addToCart?productID=${product.id}&location=home" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                        <c:if test="${product.quantity > 0}">
+                                                            <a href="addToCart?productID=${product.id}&location=list" class="btn btn-default add-to-cart">
+                                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                                            </a>
+                                                        </c:if>
+                                                        <c:if test="${product.quantity == 0}">
+                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                        </c:if>
                                                     </div>
                                                 </div>
                                                 <div class="product-overlay">
@@ -274,8 +287,14 @@
                                                         <h2>${product.title}</h2>
                                                         <p>${product.description}</p>
                                                         <div class="button-container">
-                                                            <a href="${pageContext.request.contextPath}/addToCart?productID=${product.id}&location=home" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                            <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                            <c:if test="${product.quantity > 0}">
+                                                                <a href="addToCart?productID=${product.id}&location=list" class="btn btn-default add-to-cart">
+                                                                    <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                </a>
+                                                            </c:if>
+                                                            <c:if test="${product.quantity == 0}">
+                                                                <span class="out-of-stock">Đã hết hàng</span>
+                                                            </c:if>
                                                         </div>
                                                     </div>
                                                 </div>

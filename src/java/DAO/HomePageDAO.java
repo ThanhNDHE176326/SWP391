@@ -107,13 +107,6 @@ public class HomePageDAO extends dal.DBContext {
 
     }
 
-    public static void main(String[] args) {
-        HomePageDAO da = new HomePageDAO();
-        da.getImage1ByShowStatus();
-        System.out.println("info:" + da.getImage1ByShowStatus());
-
-    }
-
     public Blog getTop1Blog() {
         try {
             String strSQL = "SELECT top 1 * FROM Blogs ORDER BY update_date DESC";
@@ -144,12 +137,13 @@ public class HomePageDAO extends dal.DBContext {
     public ArrayList<Product> getPopularProducts() {
         ArrayList<Product> list = new ArrayList<Product>();
         try {
-            String strSQL = "SELECT TOP 6 p.id, p.title, p.image, p.description, p.original_price, p.sale_price, \n"
-                    + "             COALESCE(SUM(od.quantity), 0) AS total_sold\n"
-                    + "FROM Products p \n"
-                    + "LEFT JOIN OrderDetails od ON p.id = od.product_id\n"
-                    + "GROUP BY p.id, p.title, p.image, p.description, p.original_price, p.sale_price\n"
-                    + "ORDER BY total_sold DESC;";
+            String strSQL = "SELECT TOP 6 p.id, p.title, p.image, p.description, p.original_price, p.sale_price, p.quantity, p.status, " +
+                "COALESCE(SUM(od.quantity), 0) AS total_sold " +
+                "FROM Products p " +
+                "LEFT JOIN OrderDetails od ON p.id = od.product_id " +
+                "GROUP BY p.id, p.title, p.image, p.description, p.original_price, p.sale_price, p.quantity, p.status " +
+                "ORDER BY total_sold DESC;";
+
             stm = connection.prepareStatement(strSQL);
             rs = stm.executeQuery();
             while (rs.next()) {
@@ -159,7 +153,9 @@ public class HomePageDAO extends dal.DBContext {
                 String description = rs.getString("description");
                 String originalPrice = String.valueOf(rs.getInt("original_price"));
                 String salePrice = String.valueOf(rs.getInt("sale_price"));
-                Product product = new Product(id, title, image, description, originalPrice, salePrice);
+                String quantity = String.valueOf(rs.getInt("quantity"));
+                String status = String.valueOf(rs.getInt("status"));
+                Product product = new Product(id, title, image, description, originalPrice, salePrice, quantity, status);
                 list.add(product);
             }
             return list;
@@ -167,5 +163,14 @@ public class HomePageDAO extends dal.DBContext {
             System.out.println("getPopularProducts:" + e.getMessage());
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        HomePageDAO da = new HomePageDAO();
+        ArrayList<Product> list = da.getPopularProducts();
+        for (Product product : list) {
+            System.out.println(product);
+        }
+
     }
 }

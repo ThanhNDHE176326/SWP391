@@ -133,32 +133,50 @@ public class StaffDAO extends DBContext {
         }
     }
 
-    public List<Staff> getSalers() {
-        List<Staff> listSaler = new ArrayList<>();
-        String sql = "SELECT s.id, s.email, s.fullname, s.username, s.password, s.gender, s.phone, s.address, s.isDelete, r.name AS role_name\n"
-                + "FROM Staffs s JOIN Roles r ON s.role_id = r.id\n"
-                + "WHERE role_id = 2";
+//    public List<Staff> getSalers() {
+//        List<Staff> listSaler = new ArrayList<>();
+//        String sql = "SELECT s.id, s.email, s.fullname, s.username, s.password, s.gender, s.phone, s.address, s.isDelete, r.name AS role_name\n"
+//                + "FROM Staffs s JOIN Roles r ON s.role_id = r.id\n"
+//                + "WHERE role_id = 2";
+//        try {
+//            stm = connection.prepareStatement(sql);
+//            resultSET = stm.executeQuery();
+//            while (resultSET.next()) {
+//                String id = String.valueOf(resultSET.getInt("id"));
+////                String email = resultSET.getString("email");
+//                String fullName = resultSET.getString("fullname");
+//                String userName = resultSET.getString("username");
+//                String password = resultSET.getString("password");
+//                String gender = String.valueOf(resultSET.getInt("gender"));
+//                String phone = resultSET.getString("phone");
+//                String address = resultSET.getString("address");
+//                String role = resultSET.getString("role_name");
+//                String isDelete = String.valueOf(resultSET.getInt("isDelete"));
+//                Staff saler = new Staff(id, fullName, userName, password, gender, phone, address, role, isDelete);
+//                listSaler.add(saler);
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("getSalers: " + e.getMessage());
+//        }
+//        return listSaler;
+//    }
+    public int getIdStaffHasFewestOrder() {
+        String sql = "SELECT TOP 1 O.staff_id "
+                + "FROM Orders O "
+                + "JOIN Staffs S ON O.staff_id = S.id "
+                + "WHERE S.role_id = 2 "
+                + "GROUP BY O.staff_id "
+                + "ORDER BY COUNT(*) ASC";
         try {
-            stm = connection.prepareStatement(sql);
-            resultSET = stm.executeQuery();
-            while (resultSET.next()) {
-                String id = String.valueOf(resultSET.getInt("id"));
-//                String email = resultSET.getString("email");
-                String fullName = resultSET.getString("fullname");
-                String userName = resultSET.getString("username");
-                String password = resultSET.getString("password");
-                String gender = String.valueOf(resultSET.getInt("gender"));
-                String phone = resultSET.getString("phone");
-                String address = resultSET.getString("address");
-                String role = resultSET.getString("role_name");
-                String isDelete = String.valueOf(resultSET.getInt("isDelete"));
-                Staff saler = new Staff(id, fullName, userName, password, gender, phone, address, role, isDelete);
-                listSaler.add(saler);
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("staff_id");
             }
         } catch (SQLException e) {
-            System.out.println("getSalers: " + e.getMessage());
+            e.printStackTrace();
         }
-        return listSaler;
+        return 0;
     }
 
     public Staff getInformationStaff(String username) {

@@ -18,7 +18,19 @@
         <meta name="author" content="">
 
         <title>Marketing - Dashboard</title>
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+        <!-- Custom fonts for this template-->
+        <link href="<c:url value='/vendor/fontawesome-free/css/all.min.css' />" rel="stylesheet" type="text/css">
+
+        <!-- Page level plugin CSS-->
+        <link href="<c:url value='/vendor/datatables/dataTables.bootstrap4.css' />" rel="stylesheet">
+
+        <!-- Custom styles for this template-->
+        <link href="<c:url value='/css/sb-admin.css' />" rel="stylesheet">
+
+        <link rel="stylesheet" href="<c:url value='/css/colReorder-bootstrap4.css' />">
         <!-- Custom fonts for this template-->
 
     </head>

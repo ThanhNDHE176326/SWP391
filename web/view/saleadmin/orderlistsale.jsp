@@ -183,11 +183,11 @@
 
 <body id="page-top">
 
-    <jsp:include page="headersaleadmin.jsp" />
+    <jsp:include page="headershiper.jsp" />
 
     <div id="wrapper">
         <!-- Sidebar -->
-        <jsp:include page="navbarsaleadmin.jsp" />
+        <jsp:include page="navbarshiper.jsp" />
 
         <div id="content-wrapper">
             <div class="container">

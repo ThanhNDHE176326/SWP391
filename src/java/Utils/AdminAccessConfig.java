@@ -18,7 +18,8 @@ public class AdminAccessConfig {
             "/view/admin/addnewuser.jsp", "/view/admin/edituser.jsp", "/view/admin/headeradmin.jsp", "/view/admin/homedashboardadmin.jsp", "/view/admin/listuser.jsp",
             "/view/admin/navbaradmin.jsp", "/view/admin/searchuser.jsp", "/view/admin/signupstaff.jsp", "/view/admin/userdetail.jsp",
             // Servlet
-            "/listuser", "/adduser" , "/edituser" , "/FilterUserByGender" , "/FilterUserByRole", "/FilterUserByStatus", "/searchuser", "/addfeedbackpublic"
+            "/listuser", "/adduser", "/edituser", "/FilterUserByGender", "/FilterUserByRole", "/FilterUserByStatus", "/searchuser", "/addfeedbackpublic",
+            "/logoutstaff"
     );
 
     public static List<String> getAdminUrls() {

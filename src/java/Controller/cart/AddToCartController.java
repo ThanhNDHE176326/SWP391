@@ -8,6 +8,7 @@ import DAO.CartDAO;
 import DAO.CartProductDAO;
 import DAO.CustomerDAO;
 import Models.Cart;
+import Models.Customer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -66,9 +67,16 @@ public class AddToCartController extends HttpServlet {
         CustomerDAO customerDAO = new CustomerDAO();
         CartDAO cartDAO = new CartDAO();
         CartProductDAO cartProductDAO = new CartProductDAO();
-
+        String orderId = request.getParameter("orderId");
         int productID = Integer.parseInt(request.getParameter("productID"));
         String customerName = (String) session.getAttribute("usernamecustomer");
+        Customer customer = customerDAO.getInformationCustomer(customerName);
+
+        // Kiểm tra nếu customer là null
+        if (customer == null) {
+            response.sendRedirect("view/customer/logincustomer.jsp");
+            return;
+        }
         String customerID_STR = customerDAO.getInformationCustomer(customerName).getId();
         int customerID = Integer.parseInt(customerID_STR);
         Cart cartCustomer = cartDAO.getCartByCustomerID(customerID);
@@ -117,8 +125,8 @@ public class AddToCartController extends HttpServlet {
 
         }
         if (location.equals("orderinfo")) {
-            response.sendRedirect("orderInformationCustomer");
-
+            String redirectUrl = "orderInformationCustomer?orderId=" + orderId;
+            response.sendRedirect(redirectUrl);
         }
         if (location.equals("home")) {
             response.sendRedirect("view/customer/homepage.jsp");

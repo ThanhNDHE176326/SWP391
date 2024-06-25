@@ -27,25 +27,34 @@
         <link href="<c:url value='/css/sb-admin.css'/>" rel="stylesheet">
 
         <link rel="stylesheet" href="<c:url value='/css/colReorder-bootstrap4.css'/>">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 
     </head>
     <body>
         <!-- Sidebar -->
         <ul class="sidebar navbar-nav">
-            
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="${pageContext.request.contextPath}/saledashboard" >
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Dashboard</span>
                 </a>
-                
+
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/saleadminorderlist">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Order List</span></a>
             </li>
-            
+            <li class="nav-item active">
+                <a class="nav-link" href="${pageContext.request.contextPath}/logoutstaff">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+
+
         </ul>
     </body>
 </html>

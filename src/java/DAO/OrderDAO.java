@@ -115,7 +115,8 @@ public class OrderDAO extends DBContext {
         }
         return order;
     }
-     public List<Order> getOrdersByDateRange(Date startDate, Date endDate) {
+
+    public List<Order> getOrdersByDateRange(Date startDate, Date endDate) {
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM Orders WHERE order_date BETWEEN ? AND ? AND isDelete = 1";
 
@@ -138,6 +139,7 @@ public class OrderDAO extends DBContext {
 
         return orders;
     }
+
     public List<Order> getOrdersByDateRange(LocalDate fromDate, LocalDate toDate) {
         List<Order> orders = new ArrayList<>();
 
@@ -529,7 +531,7 @@ public class OrderDAO extends DBContext {
         }
     }
 
-    public void insertOrder(int customerID, double totalCost, LocalDate orderDate, String addressOrder, String phoneOrder, String recipient_name, boolean isMale, int paymentID, int salerRandomID) {
+    public void insertOrder(int customerID, double totalCost, LocalDate orderDate, String addressOrder, String phoneOrder, String recipient_name, boolean isMale, int paymentID, int salerOrderID) {
         String sql = "INSERT INTO [Orders] "
                 + "([customer_id], [total_cost], [note], [order_date], [address], [phone], [recipient_name], [recipient_gender], [isDelete], [staff_id], [status_id], [payment_id]) "
                 + "VALUES (?, ?, N'Không có yêu cầu đặc biệt', ?, ?, ?, ?, ?, 1, ?, 1, ?)";
@@ -542,7 +544,7 @@ public class OrderDAO extends DBContext {
             ps.setString(5, phoneOrder);
             ps.setString(6, recipient_name);
             ps.setBoolean(7, isMale);
-            ps.setInt(8, salerRandomID);
+            ps.setInt(8, salerOrderID);
             ps.setInt(9, paymentID);
 
             ps.executeUpdate();
@@ -617,13 +619,12 @@ public class OrderDAO extends DBContext {
         return products;
     }
 
-    
     public Order getInfoByOrderID(int orderId) {
-        String sql = "SELECT o.order_date AS order_date, o.address AS address, o.phone AS phone, " +
-                     "o.recipient_name AS recipient_name, o.recipient_gender AS recipient_gender, pm.name AS payment_name " +
-                     "FROM Orders o " +
-                     "INNER JOIN Payments pm ON o.payment_id = pm.id " +
-                     "WHERE o.id = ? AND o.isDelete = 1";
+        String sql = "SELECT o.order_date AS order_date, o.address AS address, o.phone AS phone, "
+                + "o.recipient_name AS recipient_name, o.recipient_gender AS recipient_gender, pm.name AS payment_name "
+                + "FROM Orders o "
+                + "INNER JOIN Payments pm ON o.payment_id = pm.id "
+                + "WHERE o.id = ? AND o.isDelete = 1";
 
         Order order = null;
 
@@ -639,7 +640,7 @@ public class OrderDAO extends DBContext {
                     String recipient_gender = Boolean.toString(resultSET.getBoolean("recipient_gender"));
                     String payment_name = resultSET.getString("payment_name");
 
-                    order = new Order(orderDate, address, phone, recipient_name, recipient_gender, payment_name) ;
+                    order = new Order(orderDate, address, phone, recipient_name, recipient_gender, payment_name);
                 }
             }
         } catch (SQLException e) {
@@ -648,13 +649,13 @@ public class OrderDAO extends DBContext {
 
         return order;
     }
-    
+
     public static void main(String[] args) {
         OrderDAO dao = new OrderDAO();
         Order order = dao.getInfoByOrderID(44);
         System.out.println(order);
     }
-    
+
     // cac method danh cho sale-admin
     public int getTotalOrderCountByStatus(String statusId) {
         String sql = "SELECT COUNT(*) AS total "
@@ -759,5 +760,101 @@ public class OrderDAO extends DBContext {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Order> getConfirmedOrdersForWarehouse(int offset, int limit) {
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT o.*, s.name AS status_name, c.name AS customer_name "
+                + "FROM Orders o "
+                + "INNER JOIN OrderStatus s ON o.status_id = s.id "
+                + "INNER JOIN Customers c ON o.customer_id = c.id "
+                + "WHERE o.isDelete = 1 AND o.status_id IN (2, 3 ,4 ) "
+                + "ORDER BY o.order_date DESC "
+                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setInt(1, offset);
+            stm.setInt(2, limit);
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    Order order = new Order();
+                    order.setId(rs.getString("id"));
+                    order.setCustomer_name(rs.getString("customer_name"));
+                    order.setTotalCost(rs.getString("total_cost"));
+                    order.setNote(rs.getString("note"));
+                    order.setOrderDate(rs.getString("order_date"));
+                    order.setAddress(rs.getString("address"));
+                    order.setPhone(rs.getString("phone"));
+                    order.setStatus_id(rs.getString("status_id"));
+                    order.setStatus_name(rs.getString("status_name"));
+                    order.setStaff(rs.getString("staff_id"));
+                    orders.add(order);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    public int getTotalConfirmedOrderCountForWarehouse() {
+        String sql = "SELECT COUNT(*) AS total FROM Orders WHERE isDelete = 1 AND status_id = 2";
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            try (ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("total");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
+    public List<Order> getPackedOrdersForWarehouse(int offset, int limit) {
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT o.*, s.name AS status_name, c.name AS customer_name "
+                + "FROM Orders o "
+                + "INNER JOIN OrderStatus s ON o.status_id = s.id "
+                + "INNER JOIN Customers c ON o.customer_id = c.id "
+                + "WHERE o.isDelete = 1 AND o.status_id IN (4, 5 ,6, 7) "
+                + "ORDER BY o.order_date DESC "
+                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setInt(1, offset);
+            stm.setInt(2, limit);
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    Order order = new Order();
+                    order.setId(rs.getString("id"));
+                    order.setCustomer_name(rs.getString("customer_name"));
+                    order.setTotalCost(rs.getString("total_cost"));
+                    order.setNote(rs.getString("note"));
+                    order.setOrderDate(rs.getString("order_date"));
+                    order.setAddress(rs.getString("address"));
+                    order.setPhone(rs.getString("phone"));
+                    order.setStatus_id(rs.getString("status_id"));
+                    order.setStatus_name(rs.getString("status_name"));
+                    order.setStaff(rs.getString("staff_id"));
+                    orders.add(order);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    public int getTotalPackedOrderCountForWarehouse() {
+        String sql = "SELECT COUNT(*) AS total FROM Orders WHERE isDelete = 1 AND status_id = 4";
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            try (ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("total");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
