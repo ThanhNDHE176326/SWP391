@@ -87,6 +87,13 @@ public class OrderDetail {
         this.isDelete = isDelete;
     }
 
+    public OrderDetail(String id, String quantity, String product_id) {
+        this.id = id;
+        this.quantity = quantity;
+        this.product_id = product_id;
+    }
+
+    
     public String getId() {
         return id;
     }

@@ -148,7 +148,7 @@ public class OrderCustomerDAO extends DBContext {
             System.err.println(e.getMessage());
         }
     }
-    
+
     public void updateOrderComplete(int order_id) {
         String sql = "UPDATE Orders SET status_id = 6 WHERE id = ?";
         try {
@@ -238,15 +238,48 @@ public class OrderCustomerDAO extends DBContext {
         return 0;
     }
 
+    public List<Integer> getOrderDetailIdsByOrderId(int orderId) {
+        List<Integer> orderDetailIds = new ArrayList<>();
+        String sql = "SELECT id FROM OrderDetails WHERE order_id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                orderDetailIds.add(rs.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return orderDetailIds;
+    }
+
+    public OrderDetail getOrderDetailById(int orderDetailId) {
+        OrderDetail orderDetail = null;
+        String sql = "SELECT id, product_id, quantity FROM OrderDetails WHERE id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, orderDetailId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String id = Integer.toString(rs.getInt("id"));
+                String productId = Integer.toString(rs.getInt("product_id"));
+                String quantity = Integer.toString(rs.getInt("quantity"));
+                orderDetail = new OrderDetail(id, quantity, productId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return orderDetail;
+    }
+
     public static void main(String[] args) {
         OrderCustomerDAO dao = new OrderCustomerDAO();
-
-        // Chuyển đổi ngày từ String sang java.sql.Date
-        Date startDate = Date.valueOf("2024-05-01");
-        Date endDate = Date.valueOf("2024-05-22");
-
-        // Gọi phương thức getFilteredOrders với các tham số đã chuyển đổi
-        int count = dao.countFilterOrderByCustomer("1", startDate, endDate);
-        System.out.println(count);
+        OrderDetail orderDetail = dao.getOrderDetailById(1);
+        System.out.println(orderDetail);
     }
 }
