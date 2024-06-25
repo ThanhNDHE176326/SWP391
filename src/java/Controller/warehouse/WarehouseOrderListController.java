@@ -1,9 +1,15 @@
-package Controller.sale.order;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+
+package Controller.warehouse;
 
 import DAO.OrderDAO;
 import DAO.StaffDAO;
 import Models.Order;
 import Models.OrderStatus;
+import Models.Staff;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@WebServlet(name = "OrderListController", urlPatterns = {"/saleorderlist"})
-public class OrderListController extends HttpServlet {
+@WebServlet(name = "WarehouseOrderListController", urlPatterns = {"/warehouseorderlist"})
+public class WarehouseOrderListController extends HttpServlet {
 
     private static final int ORDERS_PER_PAGE = 10;
 
@@ -28,10 +34,10 @@ public class OrderListController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet OrderListController</title>");
+            out.println("<title>Servlet WarehouseOrderListController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet OrderListController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet WarehouseOrderListController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -40,18 +46,8 @@ public class OrderListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("usernamestaff");
-        StaffDAO dao = new StaffDAO();
-        String id = dao.getInformationStaff(username).getId();
-
-        // Ensure the staffId is available
-        if (id == null) {
-            response.sendRedirect("view/staff/loginstaff.jsp"); // Redirect to login if not logged in
-            return;
-        }
-
-        OrderDAO orderDAO = new OrderDAO();
+OrderDAO orderDAO = new OrderDAO();
+        StaffDAO staffDAO = new StaffDAO();
         int page = 1;
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
@@ -68,45 +64,47 @@ public class OrderListController extends HttpServlet {
 
         if (orderId != null && !orderId.isEmpty()) {
             // Lọc theo orderId nếu được chỉ định
-            Order order = orderDAO.getOrderByIdAndStaff(orderId, id);
+            Order order = orderDAO.getOrderById(orderId);
             orders = (order != null) ? List.of(order) : List.of();
             totalOrders = orders.size();
         } else if (statusId != null && !statusId.isEmpty()) {
             // Lọc theo statusId nếu được chỉ định
-            orders = orderDAO.getOrdersByStatusAndStaffWithPagination(statusId, id, offset, ORDERS_PER_PAGE);
-            totalOrders = orderDAO.getTotalOrderCountByStatusAndStaff(statusId, id);
+            orders = orderDAO.getOrdersByStatusWithPagination(statusId, offset, ORDERS_PER_PAGE);
+            totalOrders = orderDAO.getTotalOrderCountByStatus(statusId);
         } else if (customerName != null && !customerName.isEmpty()) {
             // Lọc theo customerName nếu được chỉ định
-            orders = orderDAO.getOrdersByCustomerNameAndStaff(customerName, id);
+            orders = orderDAO.getOrdersByCustomerName(customerName);
             totalOrders = orders.size();
         } else {
             // Lấy danh sách đơn hàng bình thường
-            orders = orderDAO.getOrdersByStaffWithPagination(id, offset, ORDERS_PER_PAGE);
-            totalOrders = orderDAO.getTotalOrderCountByStaff(id);
+            orders = orderDAO.getConfirmedOrdersForWarehouse(offset, ORDERS_PER_PAGE);
+            totalOrders = orderDAO.getTotalConfirmedOrderCountForWarehouse();
         }
 
         int totalPages = (int) Math.ceil(totalOrders / (double) ORDERS_PER_PAGE);
+        List<Staff> staffList = staffDAO.getSalesStaffWithOrderCount();
 
         request.setAttribute("orders", orders);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
+        request.setAttribute("staffList", staffList);
 
-        List<OrderStatus> orderStatusList = orderDAO.getAllOrderStatus();
-        List<OrderStatus> filteredStatusList = new ArrayList<>();
-        for (OrderStatus status : orderStatusList) {
-            if (status.getId().equals("1") || status.getId().equals("2") || status.getId().equals("9")) {
-                filteredStatusList.add(status);
-            }
-        }
-
-        request.setAttribute("orderStatusList", filteredStatusList);
+        
 
         // Đảm bảo rằng các tham số lọc được truyền tiếp qua request dispatcher
+       
+
+        List<OrderStatus> orderStatusList = orderDAO.getAllOrderStatus();
+        List<OrderStatus> warehouseOrderStatusList = orderStatusList.stream()
+                .filter(status -> List.of("2","3", "4").contains(status.getId()))
+                .collect(Collectors.toList());
+        request.setAttribute("orderStatusList", warehouseOrderStatusList);
+
         request.setAttribute("statusId", statusId);
         request.setAttribute("orderId", orderId);
         request.setAttribute("customerName", customerName);
 
-        request.getRequestDispatcher("view/sale/orderlist.jsp").forward(request, response);
+        request.getRequestDispatcher("view/warehouse/orderlistwarehouse.jsp").forward(request, response);
     }
 
     @Override
@@ -118,11 +116,11 @@ public class OrderListController extends HttpServlet {
         OrderDAO dao = new OrderDAO();
         dao.updateOrderStatus(orderId, statusId);
 
-        response.sendRedirect(request.getContextPath() + "/saleorderlist");
+        response.sendRedirect(request.getContextPath() + "/warehouseorderlist");
     }
 
     @Override
     public String getServletInfo() {
-        return "Order List Controller";
+        return "Warehouse Order List Controller";
     }
 }
