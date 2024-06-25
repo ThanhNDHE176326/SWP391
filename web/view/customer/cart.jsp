@@ -153,6 +153,15 @@
                 background-color: #FE980F;
                 transform: scale(1.05);
             }
+            .out-of-stock {
+                color: red;
+                font-weight: bold;
+                font-size: 20px;
+            }
+            .disabled {
+                color: grey;
+                pointer-events: none;
+            }
         </style>
     </head><!--/head-->
 
@@ -166,9 +175,7 @@
                         <div class="left-sidebar">
                             <jsp:include page="leftsidebar.jsp"/>  
                         </div>
-
                     </div>
-
                     <div class="col-sm-9 padding-right">
                         <div id="cart_items">
                             <div class="breadcrumbs">
@@ -177,7 +184,7 @@
                                     <li class="active">Cart Detail</li>
                                 </ol>
                             </div>
-                            <form action="${pageContext.request.contextPath}/pushToCartContact" method="POST">
+                            <form id="cartForm" action="${pageContext.request.contextPath}/pushToCartContact" method="POST" onsubmit="return validateSelection()">
                                 <div class="table-responsive cart_info" style="max-width: 1400px; margin: auto;">
                                     <table class="table table-condensed">
                                         <thead>
@@ -196,7 +203,7 @@
                                             <c:forEach var="product" items="${listProduct}">
                                                 <tr>
                                                     <td class="cart_select">
-                                                        <input type="checkbox" name="selectedProducts" value="${product.id}" data-price="${product.salePrice}" data-quantity="${product.quantity}" class="product-checkbox">
+                                                        <input type="checkbox" name="selectedProducts" value="${product.id}" data-price="${product.salePrice}" data-quantity="${product.quantity}" data-stock="${product.stock}" class="product-checkbox">
                                                     </td>
                                                     <td class="cart_product">
                                                         <a href=""><img src="<c:url value='/images/${product.image}'/>" alt=""></a>
@@ -214,7 +221,7 @@
                                                     <td class="cart_quantity">
                                                         <div class="cart_quantity_button">
                                                             <a class="cart_quantity_down" href="updateQuantityCartProduct?productID=${product.id}&mode=tru"> - </a>
-                                                            <input class="cart_quantity_input" type="text" name="quantity" value="${product.quantity}" autocomplete="off" size="2" data-stock="${product.stock}">
+                                                            <input class="cart_quantity_input" type="text" name="quantity" readonly="" value="${product.quantity}" autocomplete="off" size="2" data-stock="${product.stock}">
                                                             <a class="cart_quantity_up" href="updateQuantityCartProduct?productID=${product.id}&mode=cong"> + </a>
                                                         </div>
                                                     </td>
@@ -232,57 +239,12 @@
                                 <div id="total-amount" style="text-align: right; margin: 15px; font-size: 1.3em; font-weight: bold;">
                                     Total Cost: $0
                                 </div>
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function () {
-                                        const checkboxes = document.querySelectorAll('.product-checkbox');
-                                        const totalAmountElement = document.getElementById('total-amount');
-
-                                        function calculateTotal() {
-                                            let total = 0;
-                                            checkboxes.forEach(checkbox => {
-                                                if (checkbox.checked) {
-                                                    const price = parseFloat(checkbox.getAttribute('data-price'));
-                                                    const quantity = parseInt(checkbox.getAttribute('data-quantity'));
-                                                    total += price * quantity;
-                                                }
-                                            });
-                                            totalAmountElement.textContent = 'Total Cost: ' + total.toLocaleString('en-US') + ' VNĐ';
-                                        }
-
-                                        function updateQuantityButtons() {
-                                            const quantityInputs = document.querySelectorAll('.cart_quantity_input');
-                                            quantityInputs.forEach(input => {
-                                                const quantity = parseInt(input.value);
-                                                const stock = parseInt(input.getAttribute('data-stock'));
-                                                const plusButton = input.nextElementSibling;
-                                                if (quantity >= stock) {
-                                                    plusButton.style.display = 'none';
-                                                } else {
-                                                    plusButton.style.display = 'inline';
-                                                }
-                                            });
-                                        }
-
-                                        checkboxes.forEach(checkbox => {
-                                            checkbox.addEventListener('change', calculateTotal);
-                                        });
-
-                                        const quantityInputs = document.querySelectorAll('.cart_quantity_input');
-                                        quantityInputs.forEach(input => {
-                                            input.addEventListener('input', updateQuantityButtons);
-                                        });
-
-                                        calculateTotal(); // Initial calculation in case some checkboxes are pre-selected
-                                        updateQuantityButtons(); // Initial check for quantity vs. stock
-                                    });
-                                </script>   
                                 <div class="button-container">
                                     <input type="submit" value="Create Order" class="styled-button">
                                 </div>
                             </form>
                             <div class="recommended_items"><!--recommended_items-->
                                 <h2 class="title text-center">recommended items</h2>
-
                                 <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
                                     <div class="carousel-inner">
                                         <div class="item active">	
@@ -296,9 +258,16 @@
                                                                     <h2>${listNewProduct.title}</h2>
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.quantity}</p>
                                                                     <div class="button-container">
-                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                        <c:if test="${listNewProduct.quantity > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart">
+                                                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                            </a>
+                                                                        </c:if>
+                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                        </c:if>
                                                                     </div>
                                                                 </div>
                                                                 <div class="product-overlay">
@@ -306,8 +275,14 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                            <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                            <c:if test="${listNewProduct.quantity > 0}">
+                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart">
+                                                                                    <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                                </a>
+                                                                            </c:if>
+                                                                            <c:if test="${listNewProduct.quantity == 0}">
+                                                                                <span class="out-of-stock">Đã hết hàng</span>
+                                                                            </c:if>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -333,9 +308,16 @@
                                                                     <h2>${listNewProduct.title}</h2>
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.quantity}</p>
                                                                     <div class="button-container">
-                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                        <c:if test="${listNewProduct.quantity > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart">
+                                                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                            </a>
+                                                                        </c:if>
+                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                        </c:if>
                                                                     </div>
                                                                 </div>
                                                                 <div class="product-overlay">
@@ -343,8 +325,14 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                            <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                            <c:if test="${listNewProduct.quantity > 0}">
+                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart">
+                                                                                    <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                                </a>
+                                                                            </c:if>
+                                                                            <c:if test="${listNewProduct.quantity == 0}">
+                                                                                <span class="out-of-stock">Đã hết hàng</span>
+                                                                            </c:if>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -370,9 +358,16 @@
                                                                     <h2>${listNewProduct.title}</h2>
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.quantity}</p>
                                                                     <div class="button-container">
-                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                        <c:if test="${listNewProduct.quantity > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart">
+                                                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                            </a>
+                                                                        </c:if>
+                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                        </c:if>
                                                                     </div>
                                                                 </div>
                                                                 <div class="product-overlay">
@@ -380,8 +375,14 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                            <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                            <c:if test="${listNewProduct.quantity > 0}">
+                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart">
+                                                                                    <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                                </a>
+                                                                            </c:if>
+                                                                            <c:if test="${listNewProduct.quantity == 0}">
+                                                                                <span class="out-of-stock">Đã hết hàng</span>
+                                                                            </c:if>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -409,9 +410,16 @@
                                                                     <h2>${listNewProduct.title}</h2>
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.quantity}</p>
                                                                     <div class="button-container">
-                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                        <c:if test="${listNewProduct.quantity > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart">
+                                                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                            </a>
+                                                                        </c:if>
+                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                        </c:if>
                                                                     </div>
                                                                 </div>
                                                                 <div class="product-overlay">
@@ -419,8 +427,14 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                            <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                            <c:if test="${listNewProduct.quantity > 0}">
+                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart">
+                                                                                    <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                                </a>
+                                                                            </c:if>
+                                                                            <c:if test="${listNewProduct.quantity == 0}">
+                                                                                <span class="out-of-stock">Đã hết hàng</span>
+                                                                            </c:if>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -446,9 +460,16 @@
                                                                     <h2>${listNewProduct.title}</h2>
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.quantity}</p>
                                                                     <div class="button-container">
-                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                        <c:if test="${listNewProduct.quantity > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart">
+                                                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                            </a>
+                                                                        </c:if>
+                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                        </c:if>
                                                                     </div>
                                                                 </div>
                                                                 <div class="product-overlay">
@@ -456,8 +477,14 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                            <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                            <c:if test="${listNewProduct.quantity > 0}">
+                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart">
+                                                                                    <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                                </a>
+                                                                            </c:if>
+                                                                            <c:if test="${listNewProduct.quantity == 0}">
+                                                                                <span class="out-of-stock">Đã hết hàng</span>
+                                                                            </c:if>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -483,9 +510,16 @@
                                                                     <h2>${listNewProduct.title}</h2>
                                                                     <p>${listNewProduct.description}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.quantity}</p>
                                                                     <div class="button-container">
-                                                                        <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                        <c:if test="${listNewProduct.quantity > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart">
+                                                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                            </a>
+                                                                        </c:if>
+                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                        </c:if>
                                                                     </div>
                                                                 </div>
                                                                 <div class="product-overlay">
@@ -493,8 +527,14 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                                            <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                                            <c:if test="${listNewProduct.quantity > 0}">
+                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=cart" class="btn btn-default add-to-cart">
+                                                                                    <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                                </a>
+                                                                            </c:if>
+                                                                            <c:if test="${listNewProduct.quantity == 0}">
+                                                                                <span class="out-of-stock">Đã hết hàng</span>
+                                                                            </c:if>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -535,6 +575,90 @@
                     });
                 });
             });
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const checkboxes = document.querySelectorAll('.product-checkbox');
+                const totalAmountElement = document.getElementById('total-amount');
+
+                function calculateTotal() {
+                    let total = 0;
+                    checkboxes.forEach(checkbox => {
+                        if (checkbox.checked) {
+                            const price = parseFloat(checkbox.getAttribute('data-price'));
+                            const quantity = parseInt(checkbox.getAttribute('data-quantity'));
+                            total += price * quantity;
+                        }
+                    });
+                    totalAmountElement.textContent = 'Total Cost: ' + total.toLocaleString('en-US') + ' VNĐ';
+                }
+
+                function updateQuantityButtons() {
+                    const quantityInputs = document.querySelectorAll('.cart_quantity_input');
+                    quantityInputs.forEach(input => {
+                        const quantity = parseInt(input.value);
+                        const stock = parseInt(input.getAttribute('data-stock'));
+                        const plusButton = input.nextElementSibling;
+                        const minusButton = input.previousElementSibling;
+
+                        if (quantity >= stock) {
+                            plusButton.classList.add('disabled');
+                            plusButton.style.pointerEvents = 'none';
+                        } else {
+                            plusButton.classList.remove('disabled');
+                            plusButton.style.pointerEvents = 'auto';
+                        }
+
+                        if (quantity <= 0) {
+                            minusButton.classList.add('disabled');
+                            minusButton.style.pointerEvents = 'none';
+                        } else {
+                            minusButton.classList.remove('disabled');
+                            minusButton.style.pointerEvents = 'auto';
+                        }
+                    });
+                }
+
+                checkboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', function () {
+                        const stock = parseInt(checkbox.getAttribute('data-stock'));
+                        const isChecked = checkbox.checked;
+                        if (isChecked) {
+                            const quantityInput = checkbox.parentElement.parentElement.querySelector('.cart_quantity_input');
+                            const quantity = parseInt(quantityInput.value);
+                            if (quantity > stock) {
+                                checkbox.checked = false;
+                                alert('The quantity selected exceeds available stock.');
+                            }
+                        }
+                        calculateTotal();
+                    });
+                });
+
+                const quantityInputs = document.querySelectorAll('.cart_quantity_input');
+                quantityInputs.forEach(input => {
+                    input.addEventListener('input', updateQuantityButtons);
+                });
+
+                calculateTotal(); // Initial calculation in case some checkboxes are pre-selected
+                updateQuantityButtons(); // Initial check for quantity vs. stock
+            });
+
+            function validateSelection() {
+                const checkboxes = document.querySelectorAll('.product-checkbox');
+                for (const checkbox of checkboxes) {
+                    if (checkbox.checked) {
+                        const quantity = parseInt(checkbox.getAttribute('data-quantity'));
+                        if (quantity > 0) {
+                            return true;
+                        } else {
+                            alert('Please select the quantity of products to buy');
+                            return false;
+                        }
+                    }
+                }
+                alert('Please select at least one product before creating an order.');
+                return false;
+            }
         </script>
         <jsp:include page="footer.jsp"/>
 
