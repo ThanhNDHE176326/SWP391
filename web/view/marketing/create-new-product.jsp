@@ -12,6 +12,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Update Product Details</title>
     <style>
+        /* Your existing CSS styles */
         body {
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
@@ -104,15 +105,33 @@
             text-align: center;
         }
     </style>
+    <script>
+        function checkFileType(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const fileType = file.type;
+                const fileName = file.name;
+                const validFileType = /^image\/jpeg$/;
+
+                if (!validFileType.test(fileType) || !fileName.toLowerCase().endsWith('.jpg')) {
+                    alert('Please upload a JPG image file.');
+                    event.target.value = ''; // Clear the input
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const imageInput = document.getElementById('imageFile');
+            imageInput.addEventListener('change', checkFileType);
+        });
+    </script>
 </head>
 <body>
     <a href="productListMarketing" class="back-button">Back</a>
     <div class="product-details">
         <h1>Create New Product</h1>
         <div class="form-container">
-            <!--<img src="${pageContext.request.contextPath}/images/${product.image}" width="350" height="350">-->
             <form action="${pageContext.request.contextPath}/createNewProductMarketing" method="post" enctype="multipart/form-data">
-                <!--<input type="hidden" name="id" value="${product.id}">-->
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title">
 
@@ -140,12 +159,10 @@
 
                 <label for="imageFile">Image:</label>
                 <input type="file" id="imageFile" name="imageFile">
-                
-                
+
                 <input type="submit" value="CREATE PRODUCT">
             </form>
         </div>
     </div>
 </body>
 </html>
-

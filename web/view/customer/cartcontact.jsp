@@ -628,7 +628,7 @@
                                         <div class="payment-option">
                                             <input type="radio" id="payment_gateway" name="paymentMethod" value="3">
                                             <label for="payment_gateway"> 
-                                                <img src="<c:url value='/images/payGateway.jpg'/>" alt="VNPay">
+                                                <img src="<c:url value='/images/VnPay.jpg'/>" alt="VNPay">
                                                 <div class="name-pay">
                                                     Thẻ ATM / Internet Banking<br>
                                                     Thẻ tín dụng (Credit card) <br> 
@@ -640,7 +640,7 @@
                                         <div class="payment-option">
                                             <input type="radio" id="cod" name="paymentMethod" value="1">
                                             <label for="cod">
-                                                <img src="<c:url value='/images/payCOD.png'/>" alt="COD">
+                                                <img src="<c:url value='/images/COD.jpg'/>" alt="COD">
                                                 <div class="name-pay">
                                                     COD<br>
                                                     Payment on delivery
