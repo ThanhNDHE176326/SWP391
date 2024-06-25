@@ -647,7 +647,7 @@
                                                 </div>
                                             </label>
                                         </div>
-                                        <div class="payment-option">
+<!--                                        <div class="payment-option">
                                             <input type="radio" id="bank_transfer" name="paymentMethod" value="2">
                                             <label for="bank_transfer">
                                                 <img src="<c:url value='/images/payBank.jpg'/>" alt="Bank Transfer">
@@ -655,7 +655,7 @@
                                                     Pay via transfer bank account
                                                 </div>
                                             </label>
-                                        </div>
+                                        </div>-->
                                     </div>
 
                                 </div>
