@@ -250,8 +250,6 @@
             }
         </style>
 
-
-        <br><br>                      
         <section>
             <div class="container">
                 <div class="row">
@@ -259,7 +257,6 @@
                     <div class="col-sm-12 padding-right">
                         <div class="features_items">
                             <h2 class="title text-center">Features Items</h2>
-
                             <div class="row">
                                 <c:forEach var="product" items="${t.popularProducts}">
                                     <div class="col-sm-4">
@@ -273,7 +270,7 @@
                                                     <p style="display: none;">${product.quantity}</p>
                                                     <div class="button-container">
                                                         <c:if test="${product.quantity > 0}">
-                                                            <a href="addToCart?productID=${product.id}&location=list" class="btn btn-default add-to-cart">
+                                                            <a href="${pageContext.request.contextPath}/addToCart?productID=${product.id}&location=home" class="btn btn-default add-to-cart">
                                                                 <i class="fa fa-shopping-cart"></i>Add to cart
                                                             </a>
                                                         </c:if>
@@ -288,7 +285,7 @@
                                                         <p>${product.description}</p>
                                                         <div class="button-container">
                                                             <c:if test="${product.quantity > 0}">
-                                                                <a href="addToCart?productID=${product.id}&location=list" class="btn btn-default add-to-cart">
+                                                                <a href="${pageContext.request.contextPath}/addToCart?productID=${product.id}&location=home" class="btn btn-default add-to-cart">
                                                                     <i class="fa fa-shopping-cart"></i>Add to cart
                                                                 </a>
                                                             </c:if>

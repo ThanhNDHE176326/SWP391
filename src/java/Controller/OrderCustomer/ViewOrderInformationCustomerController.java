@@ -5,6 +5,7 @@
 package Controller.OrderCustomer;
 
 import DAO.OrderCustomerDAO;
+import DAO.ProductDAO;
 import DAO.ProductDAOByPublic;
 import Models.Category;
 import Models.Order;
@@ -43,10 +44,28 @@ public class ViewOrderInformationCustomerController extends HttpServlet {
         String complete = request.getParameter("complete");
         int order_id = Integer.parseInt(orderId);
         OrderCustomerDAO dao = new OrderCustomerDAO();
+        ProductDAO productDAO = new ProductDAO();
         ProductDAOByPublic ProductDAOByPublic = new ProductDAOByPublic();
         if (cancelled != null) {
             dao.updateOrderStatus(order_id);
-        }else if (complete != null){
+            //từ order_id lấy ra list order_detail
+            List<Integer> orderDetailIds = dao.getOrderDetailIdsByOrderId(order_id);
+            // dùng for each lặp qua order_detail lấy id, quantity product
+            for (int orderDetailId : orderDetailIds) {
+                OrderDetail orderDetail = dao.getOrderDetailById(orderDetailId);
+                String id = orderDetail.getId();
+                String productId = orderDetail.getProduct_id();
+                int productID = Integer.parseInt(productId);
+                String quantity = orderDetail.getQuantity();
+                int quantityInOrderProduct = Integer.parseInt(quantity);
+                //lấy ra quantity của product trong kho
+                int quantityInProducts = productDAO.getQuantityByProductID(productID);
+                //tình toán lại quantity
+                int quantityChanged = quantityInProducts + quantityInOrderProduct;
+                //update quantity mới vào product
+                productDAO.updateQuantityAfterCart(productID, quantityChanged);
+            }
+        } else if (complete != null) {
             dao.updateOrderComplete(order_id);
         }
         List<OrderDetail> listProductOrder = dao.getProductByOrderId(order_id);
