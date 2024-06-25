@@ -51,13 +51,15 @@ public class Product {
         this.status = status;
     }
 
-    public Product(String id, String title, String image, String description, String originalPrice, String salePrice) {
+    public Product(String id, String title, String image, String description, String originalPrice, String salePrice, String quantity, String status) {
         this.id = id;
         this.title = title;
         this.image = image;
         this.description = description;
         this.originalPrice = originalPrice;
         this.salePrice = salePrice;
+        this.quantity = quantity;
+        this.status = status;
     }
 
     public Product(String title, String image, String description) {

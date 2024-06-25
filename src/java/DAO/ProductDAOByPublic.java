@@ -53,7 +53,7 @@ public class ProductDAOByPublic extends DBContext {
         //- connect with DB
         connection = connection;
         //- chuẩn bị câu lệnh SQL
-        String sql = "select id,title,image,description,original_price,sale_price from Products order by id desc "
+        String sql = "select id,title,image,description,original_price,sale_price,quantity,status from Products order by id desc "
                 + "offset ? rows fetch next 6 rows only";
 
         try {
@@ -67,7 +67,9 @@ public class ProductDAOByPublic extends DBContext {
                 String description = rs.getString("description");
                 String originalPrice = String.valueOf(rs.getInt("original_price"));
                 String salePrice = String.valueOf(rs.getInt("sale_price"));
-                Product product = new Product(id, title, image, description, originalPrice, salePrice);
+                String quantity = String.valueOf(rs.getInt("quantity"));
+                String status = String.valueOf(rs.getInt("status"));
+                Product product = new Product(id, title, image, description, originalPrice, salePrice, quantity, status);
                 listFound.add(product);
             }
         } catch (SQLException e) {
@@ -96,7 +98,7 @@ public class ProductDAOByPublic extends DBContext {
     public List<Product> searchProductPublic(String txtSearch, int index) {
         List<Product> listFound = new ArrayList<>();
         connection = connection;
-        String sql = "SELECT id, title, image, description, original_price, sale_price FROM Products \n"
+        String sql = "SELECT id, title, image, description, original_price, sale_price, quantity,status FROM Products \n"
                 + "WHERE title LIKE ? \n"
                 + "ORDER BY id DESC OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY;";
 
@@ -113,7 +115,9 @@ public class ProductDAOByPublic extends DBContext {
                 String description = rs.getString("description");
                 String originalPrice = String.valueOf(rs.getInt("original_price"));
                 String salePrice = String.valueOf(rs.getInt("sale_price"));
-                Product product = new Product(id, title, image, description, originalPrice, salePrice);
+                String quantity = String.valueOf(rs.getInt("quantity"));
+                String status = String.valueOf(rs.getInt("status"));
+                Product product = new Product(id, title, image, description, originalPrice, salePrice, quantity, status);
                 listFound.add(product);
             }
         } catch (SQLException e) {
@@ -161,7 +165,7 @@ public class ProductDAOByPublic extends DBContext {
     public List<Product> filterProductPublicByCatgory(String category, int index) {
         List<Product> listFound = new ArrayList<>();
         connection = connection;
-        String sql = "SELECT p.id, p.title, p.description, p.image, p.original_price, p.sale_price FROM Products p JOIN Categories c ON p.category_id = c.id\n"
+        String sql = "SELECT p.id, p.title, p.description, p.image, p.original_price, p.sale_price,quantity,status FROM Products p JOIN Categories c ON p.category_id = c.id\n"
                 + "WHERE c.name = N'" + category + "' \n"
                 + "ORDER BY p.id DESC OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY;";
 
@@ -177,7 +181,9 @@ public class ProductDAOByPublic extends DBContext {
                 String description = rs.getString("description");
                 String originalPrice = String.valueOf(rs.getInt("original_price"));
                 String salePrice = String.valueOf(rs.getInt("sale_price"));
-                Product product = new Product(id, title, image, description, originalPrice, salePrice);
+                String quantity = String.valueOf(rs.getInt("quantity"));
+                String status = String.valueOf(rs.getInt("status"));
+                Product product = new Product(id, title, image, description, originalPrice, salePrice, quantity, status);
                 listFound.add(product);
             }
         } catch (SQLException e) {
@@ -191,11 +197,14 @@ public class ProductDAOByPublic extends DBContext {
         //- connect with DB
         connection = connection;
         //- chuẩn bị câu lệnh SQL
-        String sql = "SELECT p.id, p.title, p.image, p.description, \n"
-                + "p.original_price, p.sale_price, COALESCE(SUM(od.quantity), 0) AS total_sold\n"
-                + "FROM Products p LEFT JOIN OrderDetails od ON p.id = od.product_id\n"
-                + "GROUP BY p.id, p.title, p.image, p.description, p.original_price, p.sale_price\n"
-                + "ORDER BY total_sold DESC OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY;";
+        String sql = "SELECT p.id, p.title, p.image, p.description, p.original_price, p.sale_price, p.quantity, p.status, " +
+             "COALESCE(SUM(od.quantity), 0) AS total_sold " +
+             "FROM Products p " +
+             "LEFT JOIN OrderDetails od ON p.id = od.product_id " +
+             "GROUP BY p.id, p.title, p.image, p.description, p.original_price, p.sale_price, p.quantity, p.status " +
+             "ORDER BY total_sold DESC " +
+             "OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY;";
+
 
         try {
             stm = connection.prepareStatement(sql);
@@ -208,7 +217,9 @@ public class ProductDAOByPublic extends DBContext {
                 String description = rs.getString("description");
                 String originalPrice = String.valueOf(rs.getInt("original_price"));
                 String salePrice = String.valueOf(rs.getInt("sale_price"));
-                Product product = new Product(id, title, image, description, originalPrice, salePrice);
+                String quantity = String.valueOf(rs.getInt("quantity"));
+                String status = String.valueOf(rs.getInt("status"));
+                Product product = new Product(id, title, image, description, originalPrice, salePrice, quantity, status);
                 listFound.add(product);
             }
         } catch (SQLException e) {
@@ -220,7 +231,7 @@ public class ProductDAOByPublic extends DBContext {
     public List<Product> filterProductPublicByPrice(String sort, int index) {
         List<Product> listFound = new ArrayList<>();
         connection = connection;
-        String sql = "SELECT id, title, image, description, original_price, sale_price FROM Products";
+        String sql = "SELECT id, title, image, description, original_price, sale_price,quantity,status FROM Products";
 
         if (sort.equalsIgnoreCase("asc")) {
             sql += " ORDER BY sale_price ASC";
@@ -242,7 +253,9 @@ public class ProductDAOByPublic extends DBContext {
                 String description = rs.getString("description");
                 String originalPrice = String.valueOf(rs.getInt("original_price"));
                 String salePrice = String.valueOf(rs.getInt("sale_price"));
-                Product product = new Product(id, title, image, description, originalPrice, salePrice);
+                String quantity = String.valueOf(rs.getInt("quantity"));
+                String status = String.valueOf(rs.getInt("status"));
+                Product product = new Product(id, title, image, description, originalPrice, salePrice, quantity, status);
                 listFound.add(product);
             }
         } catch (SQLException e) {
@@ -254,7 +267,7 @@ public class ProductDAOByPublic extends DBContext {
     public List<Product> filterProductPublicByUpdateDate(String filter, int index) {
         List<Product> listFound = new ArrayList<>();
         connection = connection;
-        String sql = "SELECT id, title, image, description, original_price, sale_price FROM Products";
+        String sql = "SELECT id, title, image, description, original_price, sale_price,quantity,status FROM Products";
 
         if (filter.equalsIgnoreCase("asc")) {
             sql += " ORDER BY update_date ASC";
@@ -276,7 +289,9 @@ public class ProductDAOByPublic extends DBContext {
                 String description = rs.getString("description");
                 String originalPrice = String.valueOf(rs.getInt("original_price"));
                 String salePrice = String.valueOf(rs.getInt("sale_price"));
-                Product product = new Product(id, title, image, description, originalPrice, salePrice);
+                String quantity = String.valueOf(rs.getInt("quantity"));
+                String status = String.valueOf(rs.getInt("status"));
+                Product product = new Product(id, title, image, description, originalPrice, salePrice, quantity, status);
                 listFound.add(product);
             }
         } catch (SQLException e) {
@@ -365,7 +380,7 @@ public class ProductDAOByPublic extends DBContext {
         //- connect with DB
         connection = connection;
         //- chuẩn bị câu lệnh SQL
-        String sql = "SELECT TOP 6 id,title,image,description,original_price,sale_price\n"
+        String sql = "SELECT TOP 6 id,title,image,description,original_price,sale_price,quantity,status\n"
                 + "FROM Products ORDER BY update_date DESC;";
 
         try {
@@ -378,7 +393,9 @@ public class ProductDAOByPublic extends DBContext {
                 String description = rs.getString("description");
                 String originalPrice = String.valueOf(rs.getInt("original_price"));
                 String salePrice = String.valueOf(rs.getInt("sale_price"));
-                Product product = new Product(id, title, image, description, originalPrice, salePrice);
+                String quantity = String.valueOf(rs.getInt("quantity"));
+                String status = String.valueOf(rs.getInt("status"));
+                Product product = new Product(id, title, image, description, originalPrice, salePrice, quantity, status);
                 listFound.add(product);
             }
         } catch (SQLException e) {
@@ -389,9 +406,9 @@ public class ProductDAOByPublic extends DBContext {
 
     public static void main(String[] args) {
         ProductDAOByPublic dao = new ProductDAOByPublic();
-        List<Feedback> feedback = dao.getFeedbackByIdProduct(18, 1);
-        for (Feedback feedback1 : feedback) {
-            System.out.println(feedback1);
+        List<Product> listFound = dao.getPopularProducts(1);
+        for (Product product : listFound) {
+            System.out.println(product);
         }
     }
 }

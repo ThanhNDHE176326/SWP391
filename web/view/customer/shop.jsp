@@ -201,6 +201,12 @@
                                 .product-item {
                                     cursor: pointer;
                                 }
+                                .out-of-stock {
+                                    color: red;
+                                    font-weight: bold;
+                                    font-size: 20px;
+                                }
+
                             </style>
                             <c:if test="${not empty param.category}">
                                 <div class="alert alert-info">
@@ -237,9 +243,16 @@
                                                 <h2>${product.title}</h2>
                                                 <p>${product.description}</p>
                                                 <p style="display: none;">${product.id}</p>
+                                                <p style="display: none;">${product.quantity}</p>
                                                 <div class="button-container">
-                                                    <a href="addToCart?productID=${product.id}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-<!--                                                    <a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                    <c:if test="${product.quantity > 0}">
+                                                        <a href="addToCart?productID=${product.id}&location=list" class="btn btn-default add-to-cart">
+                                                            <i class="fa fa-shopping-cart"></i>Add to cart
+                                                        </a>
+                                                    </c:if>
+                                                    <c:if test="${product.quantity == 0}">
+                                                        <span class="out-of-stock">Đã hết hàng</span>
+                                                    </c:if>
                                                 </div>
                                             </div>
                                             <div class="product-overlay">
@@ -247,8 +260,14 @@
                                                     <h2>${product.title}</h2>
                                                     <p>${product.description}</p>
                                                     <div class="button-container">
-                                                        <a href="addToCart?productID=${product.id}&location=list" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                        <!--<a href="#" class="btn btn-default buy-now"><i class="fa fa-bolt"></i>Buy</a>-->
+                                                        <c:if test="${product.quantity > 0}">
+                                                            <a href="addToCart?productID=${product.id}&location=list" class="btn btn-default add-to-cart">
+                                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                                            </a>
+                                                        </c:if>
+                                                        <c:if test="${product.quantity == 0}">
+                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                        </c:if>
                                                     </div>
                                                 </div>
                                             </div>
