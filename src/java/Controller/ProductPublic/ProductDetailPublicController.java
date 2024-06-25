@@ -66,14 +66,14 @@ public class ProductDetailPublicController extends HttpServlet {
             Product product = dao.getProductPublicDetail(indexId);
             List<Category> categories = dao.getCategory();
             List<Feedback> feedback = dao.getFeedbackByIdProduct(indexId, index);
-            List<Product> listProduct = dao.getTop6ProductNew();
+            List<Product> listNewProduct = dao.getTop6ProductNew();
             request.setAttribute("categories", categories);
             request.setAttribute("product", product);
             request.setAttribute("feedback", feedback);
             request.setAttribute("endP", endPage);
             request.setAttribute("tag", index);
             request.setAttribute("count", count);
-            request.setAttribute("listProduct", listProduct);
+            request.setAttribute("listNewProduct", listNewProduct);
             RequestDispatcher dispatcher = request.getRequestDispatcher("view/customer/product-details.jsp");
             dispatcher.forward(request, response);
 
