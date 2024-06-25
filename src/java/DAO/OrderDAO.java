@@ -809,4 +809,52 @@ public class OrderDAO extends DBContext {
         }
         return 0;
     }
+    
+    public List<Order> getPackedOrdersForWarehouse(int offset, int limit) {
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT o.*, s.name AS status_name, c.name AS customer_name "
+                + "FROM Orders o "
+                + "INNER JOIN OrderStatus s ON o.status_id = s.id "
+                + "INNER JOIN Customers c ON o.customer_id = c.id "
+                + "WHERE o.isDelete = 1 AND o.status_id IN (4, 5 ,6, 7) "
+                + "ORDER BY o.order_date DESC "
+                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setInt(1, offset);
+            stm.setInt(2, limit);
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    Order order = new Order();
+                    order.setId(rs.getString("id"));
+                    order.setCustomer_name(rs.getString("customer_name"));
+                    order.setTotalCost(rs.getString("total_cost"));
+                    order.setNote(rs.getString("note"));
+                    order.setOrderDate(rs.getString("order_date"));
+                    order.setAddress(rs.getString("address"));
+                    order.setPhone(rs.getString("phone"));
+                    order.setStatus_id(rs.getString("status_id"));
+                    order.setStatus_name(rs.getString("status_name"));
+                    order.setStaff(rs.getString("staff_id"));
+                    orders.add(order);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    public int getTotalPackedOrderCountForWarehouse() {
+        String sql = "SELECT COUNT(*) AS total FROM Orders WHERE isDelete = 1 AND status_id = 4";
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            try (ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("total");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
