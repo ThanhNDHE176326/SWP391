@@ -4,22 +4,34 @@
  */
 package PostController;
 
+import DAO.CategoryBlogDAO;
 import DAO.postDAO;
 import Models.Blog;
+import Models.CategoryBlog;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 /**
  *
  * @author Acer
  */
 @WebServlet(name = "UpdatePostController", urlPatterns = {"/updatepost"})
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 2, // 2 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 50 // 50 MB
+)
 public class UpdatePostController extends HttpServlet {
 
     /**
@@ -62,7 +74,12 @@ public class UpdatePostController extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         postDAO postDAO = new postDAO();
+        CategoryBlogDAO categoryBlogDAO = new CategoryBlogDAO();
+        
+        List<CategoryBlog> listCategoryBlog = categoryBlogDAO.getAllCategories();
         Blog post = postDAO.getPostById(id);
+        
+        request.setAttribute("listCategoryBlog", listCategoryBlog);
         request.setAttribute("post", post);
         request.getRequestDispatcher("view/marketing/updatepost.jsp").forward(request, response);
 
@@ -81,12 +98,21 @@ public class UpdatePostController extends HttpServlet {
             throws ServletException, IOException {
         String id = request.getParameter("id");
         String title = request.getParameter("title");
-        String categoryBlogId = request.getParameter("category_blog_id");
-        String image = request.getParameter("image");
+        String categoryBlogId = request.getParameter("category");
+//        String image = request.getParameter("image");
         String description = request.getParameter("description");
         String content = request.getParameter("content");
         String status = request.getParameter("status");
-        Blog updatedPost = new Blog( id, title, categoryBlogId, image, description, content, status);
+        Part part = request.getPart("imageFile");
+        String fileName ="";
+        if (part != null && part.getSize() > 0) {
+            String realPath = "D:\\Web_Project_Java\\SWP391\\web\\images";
+            Files.createDirectories(Paths.get(realPath)); // Tạo thư mục nếu chưa tồn tại
+            fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+            part.write(Paths.get(realPath, fileName).toString());
+            System.out.println("File uploaded to: " + Paths.get(realPath, fileName).toString());
+        }
+        Blog updatedPost = new Blog( id, title, categoryBlogId, fileName, description, content, status);
         postDAO postDAO = new postDAO();
         postDAO.updatePost(updatedPost);
 
