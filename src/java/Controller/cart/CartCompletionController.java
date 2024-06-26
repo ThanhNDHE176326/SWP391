@@ -162,6 +162,7 @@ public class CartCompletionController extends HttpServlet {
         // 1 - COD
         if (paymentID == 3) {
             processVnPayment(request, response, totalCost, orderID);
+            orderDAO.updateOrderStatusConfirmById(orderID);
         } else if(paymentID == 1) {
             processNonVnPayment(request, response, orderID);
         }
