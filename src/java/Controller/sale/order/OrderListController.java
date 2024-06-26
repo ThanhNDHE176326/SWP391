@@ -1,8 +1,11 @@
 package Controller.sale.order;
 
+import DAO.OrderCustomerDAO;
 import DAO.OrderDAO;
+import DAO.ProductDAO;
 import DAO.StaffDAO;
 import Models.Order;
+import Models.OrderDetail;
 import Models.OrderStatus;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -113,11 +116,30 @@ public class OrderListController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String orderId = request.getParameter("orderId");
+        int order_id = Integer.parseInt(orderId);
         String statusId = request.getParameter("statusId");
-
+        OrderCustomerDAO orderCustomerDAO = new OrderCustomerDAO();
+        ProductDAO productDAO = new ProductDAO();
         OrderDAO dao = new OrderDAO();
         dao.updateOrderStatus(orderId, statusId);
-
+        if (statusId.equals("9")) {
+            List<Integer> orderDetailIds = orderCustomerDAO.getOrderDetailIdsByOrderId(order_id);
+            // dùng for each lặp qua order_detail lấy id, quantity product
+            for (int orderDetailId : orderDetailIds) {
+                OrderDetail orderDetail = orderCustomerDAO.getOrderDetailById(orderDetailId);
+                String id = orderDetail.getId();
+                String productId = orderDetail.getProduct_id();
+                int productID = Integer.parseInt(productId);
+                String quantity = orderDetail.getQuantity();
+                int quantityInOrderProduct = Integer.parseInt(quantity);
+                //lấy ra quantity của product trong kho
+                int quantityInProducts = productDAO.getQuantityByProductID(productID);
+                //tình toán lại quantity
+                int quantityChanged = quantityInProducts + quantityInOrderProduct;
+                //update quantity mới vào product
+                productDAO.updateQuantityAfterCart(productID, quantityChanged);
+            }
+        }
         response.sendRedirect(request.getContextPath() + "/saleorderlist");
     }
 

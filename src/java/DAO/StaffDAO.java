@@ -161,12 +161,12 @@ public class StaffDAO extends DBContext {
 //        return listSaler;
 //    }
     public int getIdStaffHasFewestOrder() {
-        String sql = "SELECT TOP 1 O.staff_id "
-                + "FROM Orders O "
-                + "JOIN Staffs S ON O.staff_id = S.id "
-                + "WHERE S.role_id = 2 "
-                + "GROUP BY O.staff_id "
-                + "ORDER BY COUNT(*) ASC";
+        String sql = "SELECT TOP 1 S.id AS staff_id\n"
+                + "FROM Staffs S\n"
+                + "LEFT JOIN Orders O ON S.id = O.staff_id\n"
+                + "WHERE S.role_id = 2\n"
+                + "GROUP BY S.id\n"
+                + "ORDER BY COUNT(O.id) ASC;";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -206,8 +206,8 @@ public class StaffDAO extends DBContext {
 
     public static void main(String[] args) {
         StaffDAO dao = new StaffDAO();
-        System.out.println(dao.getInformationStaff("nguyenvana"));
-        System.out.println(dao.getSalesStaffWithOrderCount());
+        int id = dao.getIdStaffHasFewestOrder();
+        System.out.println(id);
 
     }
 }
