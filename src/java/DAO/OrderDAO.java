@@ -857,4 +857,18 @@ public class OrderDAO extends DBContext {
         }
         return 0;
     }
+    
+    public boolean updateOrderStatusConfirmById(int orderID) {
+    String sql = "UPDATE Orders SET status_id = 2 WHERE id = ?";
+    try {
+        stm = connection.prepareStatement(sql);
+        stm.setInt(1, orderID);
+        int rowsAffected = stm.executeUpdate();
+        return rowsAffected > 0;  // Return true if the update was successful
+    } catch (SQLException e) {
+        System.out.println("updateOrderStatusById:" + e.getMessage());
+    }
+    return false;  // Return false if there was an error
+}
+
 }
