@@ -579,9 +579,9 @@ public class OrderDAO extends DBContext {
 
             int rowsAffected = stm.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("Đã thêm chi tiết đơn hàng thành công.");
+                System.out.println("Add Order Details Susscesfully!");
             } else {
-                System.out.println("Không thể thêm chi tiết đơn hàng.");
+                System.out.println("Add Order Details failed!");
             }
         } catch (SQLException e) {
             e.printStackTrace();

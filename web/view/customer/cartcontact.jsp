@@ -311,7 +311,7 @@
                 color: red; /* Hover color for Delete link */
             }
 
-                  .cart_product {
+            .cart_product {
                 display: flex !important;
                 justify-content: center !important; /* Căn giữa theo chiều ngang */
                 align-items: center !important; /* Căn giữa theo chiều dọc */
@@ -577,7 +577,6 @@
                                                 <td class="total">Total</td>
                                             </tr>
                                         </thead>
-
                                         <tbody>
                                             <c:forEach var="product" items="${selectedProducts}">
                                                 <tr>
@@ -602,22 +601,21 @@
                                             </c:forEach>
                                         </tbody>
                                         <tfoot>
-                            <tr>
-                                <td colspan="4"></td> <!-- Dùng cột trống để đẩy phần tử sang bên phải -->
-                                <td class="cart_total_price">
-                                    <p class="total_price_label">Total Price:</p>
-                                    <c:set var="totalPrice" value="0" />
-                                    <c:forEach var="product" items="${selectedProducts}">
-                                        <c:set var="totalPrice" value="${totalPrice + (product.salePrice * product.quantity)}" />
-                                    </c:forEach>
-                                    <fmt:formatNumber value="${totalPrice}" type="number" maxFractionDigits="0" />
-                                    <input type="hidden" name="totalCost" value="${totalPrice}">
-                                </td>
-                            </tr>
-                        </tfoot>
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="cart_total_price">
+                                                    <p class="total_price_label">Total Price:</p>
+                                                    <c:set var="totalPrice" value="0" />
+                                                    <c:forEach var="product" items="${selectedProducts}">
+                                                        <c:set var="totalPrice" value="${totalPrice + (product.salePrice * product.quantity)}" />
+                                                    </c:forEach>
+                                                    <fmt:formatNumber value="${totalPrice}" type="number" maxFractionDigits="0" />
+                                                    <input type="hidden" name="totalCost" value="${totalPrice}">
+                                                </td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
-
                                 <p class="error-message">${mess}</p>
                                 <span id="phone-error" class="error-message"></span><br>
 
@@ -647,21 +645,11 @@
                                                 </div>
                                             </label>
                                         </div>
-<!--                                        <div class="payment-option">
-                                            <input type="radio" id="bank_transfer" name="paymentMethod" value="2">
-                                            <label for="bank_transfer">
-                                                <img src="<c:url value='/images/payBank.jpg'/>" alt="Bank Transfer">
-                                                <div class="name-pay">
-                                                    Pay via transfer bank account
-                                                </div>
-                                            </label>
-                                        </div>-->
                                     </div>
-
                                 </div>
                                 <!-- End of Payment Methods Section -->
                                 <div class="button-containerner">
-                                    <button type="submit" class="styled-button">Checkout</button>
+                                    <button type="submit" class="styled-button" onclick="validatePaymentMethod(event)">Checkout</button>
                                 </div>
                             </div>
                         </div>
@@ -671,6 +659,24 @@
         </section>
 
         <script>
+            function validatePaymentMethod(event) {
+                // Kiểm tra nếu không có phương thức thanh toán nào được chọn
+                const paymentMethods = document.getElementsByName('paymentMethod');
+                let isPaymentMethodSelected = false;
+
+                for (const method of paymentMethods) {
+                    if (method.checked) {
+                        isPaymentMethodSelected = true;
+                        break;
+                    }
+                }
+
+                // Nếu không có phương thức nào được chọn, ngăn việc submit và hiển thị thông báo
+                if (!isPaymentMethodSelected) {
+                    event.preventDefault();
+                    alert('Vui lòng chọn một phương thức thanh toán.');
+                }
+            }
             document.addEventListener('DOMContentLoaded', function () {
                 var productItems = document.querySelectorAll('.product-item');
                 productItems.forEach(function (item) {
