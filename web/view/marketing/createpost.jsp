@@ -103,6 +103,26 @@
                 background-color: #2e59d9;
             }
         </style>
+        <script>
+            function checkFileType(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const fileType = file.type;
+                    const fileName = file.name;
+                    const validFileType = /^image\/jpeg$/;
+
+                    if (!validFileType.test(fileType) || !fileName.toLowerCase().endsWith('.jpg')) {
+                        alert('Please upload a JPG image file.');
+                        event.target.value = ''; // Clear the input
+                    }
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const imageInput = document.getElementById('imageFile');
+                imageInput.addEventListener('change', checkFileType);
+            });
+        </script>
     </head>
 
     <body id="page-top">
@@ -118,27 +138,31 @@
                 <header>
                     <h1>Add New Post</h1>
                 </header>
-                <form action="CreatePost" method="post">
-                    <div>
-                        <label for="staff">Staff ID:</label>
-                        <input type="text" name="staff" id="staff" required />
-                    </div>
+                <form action="CreatePost" method="post" enctype="multipart/form-data">
+                    <!--                    <div>
+                                            <label for="staff">Staff ID:</label>
+                                            <input type="text" name="staff" id="staff" required />
+                                        </div>-->
                     <div>
                         <label for="title">Title:</label>
                         <input type="text" name="title" id="title" required />
                     </div>
                     <div>
-                        <label for="categoryBlogId">Category:</label>
-                        <input type="text" name="categoryBlogId" id="categoryBlogId" required />
+                        <label for="category">Category:</label>
+                        <select name="category" id="category">
+                            <c:forEach items="${listCategoryBlog}" var="category">
+                                <option value="${category.id}">${category.name}</option>
+                            </c:forEach>
+                        </select>
                     </div>
                     <div>
                         <label for="image">Image:</label>
-                        <input type="text" name="image" id="image" required />
+                        <input type="file" name="imageFile" id="imageFile" required />
                     </div>
-                    <div>
+<!--                    <div>
                         <label for="updateDate">Update Date:</label>
                         <input type="date" name="updateDate" id="updateDate" required />
-                    </div>
+                    </div>-->
                     <div>
                         <label for="description">Description:</label>
                         <textarea name="description" id="description" required></textarea>
@@ -147,10 +171,10 @@
                         <label for="content">Content:</label>
                         <textarea name="content" id="content" required></textarea>
                     </div>
-                    <div>
-                        <label for="status">Status:</label>
-                        <input type="text" name="status" id="status" required />
-                    </div>
+                    <!--                    <div>
+                                            <label for="status">Status:</label>
+                                            <input type="text" name="status" id="status" required />
+                                        </div>-->
                     <button type="submit">Add Post</button>
                 </form>
             </div>
