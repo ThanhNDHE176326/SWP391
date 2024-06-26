@@ -27,7 +27,7 @@ public class CategoryBlogDAO extends DBContext {
                 categories.add(new CategoryBlog(id, name));
             }
         } catch (SQLException e) {
-            System.out.println("Error fetching categories: " + e.getMessage());
+            System.out.println("getAllCategories: " + e.getMessage());
             e.printStackTrace();
         }
         return categories;

@@ -101,6 +101,7 @@
             background-color: #2e59d9;
         }
     </style>
+    
 </head>
 
 <body id="page-top">
@@ -116,17 +117,23 @@
             <header>
                 <h1>Update Post</h1>
             </header>
-            <form action="updatepost" method="post">
+            <img src="${pageContext.request.contextPath}/images/${post.image}" alt="alt"/>
+            <form action="updatepost" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="${post.id}"/>
                 
                 <label for="title">Title:</label>
                 <input type="text" name="title" id="title" value="${post.title}" required/>
                 
-                <label for="category_blog_id">Category:</label>
-                <input type="text" name="category_blog_id" id="category_blog_id" value="${post.categoryBlog}" required/>
+                <label for="category">Category:</label>
+                <select name="category">
+                    <c:forEach items="${listCategoryBlog}" var="category">
+                        <option value="${category.id}" ${category.id eq post.categoryBlog ? "selected" : ""}>${category.name}</option>
+                    </c:forEach>
+                </select>
+                
                 
                 <label for="image">Image:</label>
-                <input type="text" name="image" id="image" value="${post.image}" required/>
+                <input type="file" name="imageFile">
                 
                 <label for="description">Description:</label>
                 <textarea name="description" id="description" required>${post.description}</textarea>
