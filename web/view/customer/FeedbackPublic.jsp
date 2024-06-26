@@ -23,21 +23,11 @@
 
     <style>
         body {
-            background-color: #f9f9f9;
+            background-color: white;
             margin-top: 100px;
-            font-family: 'Arial', sans-serif;
         }
         .container {
-            margin: auto;
             padding: 20px;
-            max-width: 800px;
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 20px;
         }
         .product img {
             width: 100%;
@@ -109,47 +99,46 @@
 <body>
     <jsp:include page="header.jsp"/>
     <div class="container">
-        <h1>Đánh Giá Sản Phẩm</h1>
+        <h1 class="text-center">Đánh Giá Sản Phẩm</h1>
 
         <c:if test="${not empty error}">
             <p class="error">${error}</p>
         </c:if>
 
         <c:if test="${not empty product}">
-            <div class="product">
+            <div class="product text-center">
                 <img src="${pageContext.request.contextPath}/images/${product.image}" alt="Product Image">
                 <br><br>
                 <p><strong>${product.title}</strong></p>
                 <p><strong>ID sản phẩm: ${product.id}</strong></p>
             </div>
 
-            <form action="addfeedbackpublic" method="post">
-                <input type="hidden" name="productId" value="${product.id}" />
-                <div class="review">
-                    <h2>Chất lượng sản phẩm</h2>
-                    <div class="rating">
-                        <div class="stars" id="rateStar">
-                            <span class="star" data-value="1">&#9733;</span>
-                            <span class="star" data-value="2">&#9733;</span>
-                            <span class="star" data-value="3">&#9733;</span>
-                            <span class="star" data-value="4">&#9733;</span>
-                            <span class="star" data-value="5">&#9733;</span>
-                        </div>
-                        <input type="hidden" name="ratedStar" id="rateStarInput" value="0"/>
+            <div class="review">
+                <h2 class="text-center">Chất lượng sản phẩm</h2>
+                <div class="rating text-center">
+                    <div class="stars" id="rateStar">
+                        <span class="star" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                        <span class="star" data-value="4">&#9733;</span>
+                        <span class="star" data-value="5">&#9733;</span>
                     </div>
-                    <div>
-                        <label for="comment">Nhận xét về sản phẩm:</label>
-                        <textarea rows="4" cols="50" name="comment" id="comment" placeholder="Nhập nhận xét của bạn..."></textarea>
-                    </div>
+                    <input type="hidden" name="ratedStar" id="rateStarInput" value="0"/>
                 </div>
-                <button type="submit">Hoàn Thành</button>
-            </form>
+                <div class="form-group">
+                    <label for="comment">Nhận xét về sản phẩm:</label>
+                    <textarea rows="4" cols="50" name="comment" id="comment" placeholder="Nhập nhận xét của bạn..." class="form-control"></textarea>
+                </div>
+                <button type="submit" class="btn btn-success btn-block">Hoàn Thành</button>
+            </div>
         </c:if>
 
         <c:if test="${not empty message}">
             <p class="message">${message}</p>
         </c:if>
     </div>
+
+    <jsp:include page="footer.jsp"/>
 
     <script src="<c:url value='/js/jquery.js'/>"></script>
     <script src="<c:url value='/js/bootstrap.min.js'/>"></script>
