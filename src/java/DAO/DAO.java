@@ -77,35 +77,34 @@ public class DAO extends DBContext {
     }
 
     public void update(Slider s) {
-    try {
-        String strSQL = "UPDATE [dbo].[Sliders]\n"
-                + "   SET [title] = ?\n"
-                + "      ,[image] = ?\n"
-                + "      ,[notes] = ?\n"
-                + "      ,[staff_id] = ?\n"
-                + "      ,[start_date] = ?\n"
-                + "      ,[end_date] = ?\n"
-                + "      ,[status] = ?\n"
-                + " WHERE id = ?";
-        stm = connection.prepareStatement(strSQL);
+        try {
+            String strSQL = "UPDATE [dbo].[Sliders]\n"
+                    + "   SET [title] = ?\n"
+                    + "      ,[image] = ?\n"
+                    + "      ,[notes] = ?\n"
+                    + "      ,[staff_id] = ?\n"
+                    + "      ,[start_date] = ?\n"
+                    + "      ,[end_date] = ?\n"
+                    + "      ,[status] = ?\n"
+                    + " WHERE id = ?";
+            stm = connection.prepareStatement(strSQL);
 
-        stm.setString(1, s.getTitle());
-        stm.setString(2, s.getImage());
-        stm.setString(3, s.getNote());
-        stm.setInt(4, Integer.parseInt(s.getStaff()));
-        stm.setString(5, s.getStartDate());
-        stm.setString(6, s.getEndDate());
-        stm.setInt(7    , Integer.parseInt(s.getStatus()));
+            stm.setString(1, s.getTitle());
+            stm.setString(2, s.getImage());
+            stm.setString(3, s.getNote());
+            stm.setInt(4, Integer.parseInt(s.getStaff()));
+            stm.setString(5, s.getStartDate());
+            stm.setString(6, s.getEndDate());
+            stm.setInt(7, Integer.parseInt(s.getStatus()));
 
-        stm.setInt(8, Integer.parseInt(s.getId()));
+            stm.setInt(8, Integer.parseInt(s.getId()));
 
-        stm.executeUpdate();
+            stm.executeUpdate();
 
-    } catch (SQLException e) {
-        System.out.println("update: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("update: " + e.getMessage());
+        }
     }
-}
-
 
     public int count(String txtSearch) {
         try {
@@ -243,12 +242,40 @@ public class DAO extends DBContext {
                 + "   SET [image] = ?\n"
                 + " WHERE id = ?";
         try {
-            stm=connection.prepareStatement(sql);
+            stm = connection.prepareStatement(sql);
             stm.setString(1, fileName);
             stm.setInt(2, Integer.parseInt(id));
             stm.execute();
         } catch (SQLException e) {
             System.out.println("updateImageSlider: " + e.getMessage());
+        }
+    }
+
+    public void insertNewSlider(Slider slider) {
+        String sql = "INSERT INTO [dbo].[Sliders]\n"
+                + "           ([title]\n"
+                + "           ,[image]\n"
+                + "           ,[note]\n"
+                + "           ,[staff_id]\n"
+                + "           ,[start_date]\n"
+                + "           ,[end_date]\n"
+                + "           ,[status]\n"
+                + "           ,[isDelete])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,?,?,?)";
+        try {
+            stm=connection.prepareStatement(sql);
+            stm.setString(1, slider.getTitle());
+            stm.setString(2, slider.getImage());
+            stm.setString(3, slider.getNote());
+            stm.setInt(4, Integer.parseInt(slider.getStaff()));
+            stm.setString(5, slider.getStartDate());
+            stm.setString(6, slider.getEndDate());
+            stm.setInt(7, Integer.parseInt(slider.getStatus()));
+            stm.setInt(8, Integer.parseInt(slider.getIsDelete()));
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("insertNewSlider: " +e.getMessage());
         }
     }
 }

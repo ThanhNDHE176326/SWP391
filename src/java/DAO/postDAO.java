@@ -187,6 +187,5 @@ public class postDAO extends DBContext {
         postDAO dao = new postDAO();
         Blog blog = dao.getPostById(3);
         System.out.println(blog);
-
     }
 }
