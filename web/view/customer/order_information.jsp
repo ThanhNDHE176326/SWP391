@@ -402,10 +402,10 @@
                                 <p data-status="${order.status_name}">
                                     Status: ${order.status_name}
                                     <c:choose>
-                                        <c:when test="${order.status_name == 'Processing'}">
+                                        <c:when test="${order.status_name == 'Chờ xửa lý'}">
                                             <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&cancelled=cancelled" class="cancel-link">Cancelled</a>
                                         </c:when>
-                                        <c:when test="${order.status_name == 'Completed'}">
+                                        <c:when test="${order.status_name == 'Nhận hàng thành công'}">
                                         </c:when>
                                         <c:otherwise>
                                             <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&complete=complete" class="cancel-link">Goods received</a>
@@ -455,11 +455,11 @@
                                                     <fmt:formatNumber value="${listProductOrder.unitprice * listProductOrder.quantity}" type="number" maxFractionDigits="0" />
                                                 </td>
                                                 <td class="cart_feedback">
-                                                    <c:if test="${order.status_name != 'Completed'}">
+                                                    <c:if test="${order.status_name != 'Nhận hàng thành công'}">
                                                         <a class="feedback_button disabled" " >Feedback</a>
                                                         <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${listProductOrder.product_id}" class="feedback_button disabled">Repurchase</a>
                                                     </c:if>
-                                                    <c:if test="${order.status_name == 'Completed'}">
+                                                    <c:if test="${order.status_name == 'Nhận hàng thành công'}">
                                                         <a class="feedback_button" href="${pageContext.request.contextPath}/addfeedbackpublic?productId=${listProductOrder.product_id}">Feedback</a>
                                                         <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${listProductOrder.product_id}" class="feedback_button">Repurchase</a>
                                                     </c:if>

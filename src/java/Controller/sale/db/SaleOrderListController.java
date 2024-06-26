@@ -4,9 +4,12 @@
  */
 package Controller.sale.db;
 
+import DAO.OrderCustomerDAO;
 import DAO.OrderDAO;
+import DAO.ProductDAO;
 import DAO.StaffDAO;
 import Models.Order;
+import Models.OrderDetail;
 import Models.OrderStatus;
 import Models.Staff;
 import java.io.IOException;
@@ -16,6 +19,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -109,7 +113,13 @@ public class SaleOrderListController extends HttpServlet {
         request.setAttribute("staffList", staffList);
 
         List<OrderStatus> orderStatusList = orderDAO.getAllOrderStatus();
-        request.setAttribute("orderStatusList", orderStatusList);
+        List<OrderStatus> filteredStatusList = new ArrayList<>();
+        for (OrderStatus status : orderStatusList) {
+            if (status.getId().equals("1") || status.getId().equals("2") || status.getId().equals("9")) {
+                filteredStatusList.add(status);
+            }
+        }
+        request.setAttribute("orderStatusList", filteredStatusList);
 
         // Đảm bảo rằng các tham số lọc được truyền tiếp qua request dispatcher
         request.setAttribute("statusId", statusId);
@@ -132,12 +142,33 @@ public class SaleOrderListController extends HttpServlet {
             throws ServletException, IOException {
         OrderDAO orderDAO = new OrderDAO();
         StaffDAO staffDAO = new StaffDAO();
+        OrderCustomerDAO orderCustomerDAO = new OrderCustomerDAO();
+        ProductDAO productDAO = new ProductDAO();
         String orderId = request.getParameter("orderId");
+        int order_id = Integer.parseInt(orderId);
         String statusId = request.getParameter("statusId");
         String staffId = request.getParameter("staffId");
 
         if (orderId != null && statusId != null) {
             orderDAO.updateOrderStatus(orderId, statusId);
+            if (statusId.equals("9")) {
+            List<Integer> orderDetailIds = orderCustomerDAO.getOrderDetailIdsByOrderId(order_id);
+            // dùng for each lặp qua order_detail lấy id, quantity product
+            for (int orderDetailId : orderDetailIds) {
+                OrderDetail orderDetail = orderCustomerDAO.getOrderDetailById(orderDetailId);
+                String id = orderDetail.getId();
+                String productId = orderDetail.getProduct_id();
+                int productID = Integer.parseInt(productId);
+                String quantity = orderDetail.getQuantity();
+                int quantityInOrderProduct = Integer.parseInt(quantity);
+                //lấy ra quantity của product trong kho
+                int quantityInProducts = productDAO.getQuantityByProductID(productID);
+                //tình toán lại quantity
+                int quantityChanged = quantityInProducts + quantityInOrderProduct;
+                //update quantity mới vào product
+                productDAO.updateQuantityAfterCart(productID, quantityChanged);
+            }
+        }
         }
 
         if (orderId != null && staffId != null) {
