@@ -76,7 +76,7 @@ public class DAO extends DBContext {
 
     }
 
-    public void update(Slider s) {
+    public void update(String title, String image, String note, String staff, String startDate, String endDate, String status, String id) {
         try {
             String strSQL = "UPDATE [dbo].[Sliders]\n"
                     + "   SET [title] = ?\n"
@@ -89,15 +89,15 @@ public class DAO extends DBContext {
                     + " WHERE id = ?";
             stm = connection.prepareStatement(strSQL);
 
-            stm.setString(1, s.getTitle());
-            stm.setString(2, s.getImage());
-            stm.setString(3, s.getNote());
-            stm.setInt(4, Integer.parseInt(s.getStaff()));
-            stm.setString(5, s.getStartDate());
-            stm.setString(6, s.getEndDate());
-            stm.setInt(7, Integer.parseInt(s.getStatus()));
+            stm.setString(1, title);
+            stm.setString(2, image);
+            stm.setString(3, note);
+            stm.setInt(4, Integer.parseInt(staff));
+            stm.setString(5, startDate);
+            stm.setString(6, endDate);
+            stm.setInt(7, Integer.parseInt(status));
 
-            stm.setInt(8, Integer.parseInt(s.getId()));
+            stm.setInt(8, Integer.parseInt(id));
 
             stm.executeUpdate();
 

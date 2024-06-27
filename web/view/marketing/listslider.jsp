@@ -40,7 +40,7 @@
                             <i class="fas fa-images"></i>
                             Slider List
                         </div>
-                        <a href="view/marketing/addslider.jsp" class="btn btn-success btn-sm">Add New Slider</a>
+                        <a href="view/marketing/create-new-slider.jsp" class="btn btn-success btn-sm">Add New Slider</a>
                     </div>
                     <div class="card-body">
                         <form action="${pageContext.request.contextPath}/search?index=1" method="post" class="form-inline mb-3">
