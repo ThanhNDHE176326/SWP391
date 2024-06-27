@@ -4,9 +4,7 @@
  */
 package Controller.cs;
 
-import DAO.CustomerDAO;
 import DAO.StaffDAO;
-import Models.Customer;
 import Models.Staff;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,8 +19,8 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author HP
  */
-@WebServlet(name = "InformationStaffController", urlPatterns = {"/informationstaff"})
-public class InformationStaffController extends HttpServlet {
+@WebServlet(name = "ChangePasswordStaffController", urlPatterns = {"/changepasswordstaff"})
+public class ChangePasswordStaffController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +39,10 @@ public class InformationStaffController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet InformationStaffController</title>");
+            out.println("<title>Servlet ChangePasswordStaffController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet InformationStaffController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ChangePasswordStaffController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,28 +60,7 @@ public class InformationStaffController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("usernamestaff");
-        String password = (String) session.getAttribute("passwordstaff");
-        StaffDAO dao = new StaffDAO();
-        Staff staff = dao.getInformationStaff(username);
-        request.setAttribute("staffs", staff);
-        request.setAttribute("message", session.getAttribute("mess"));
-        if (staff.getRole().equals("1")) {
-            request.getRequestDispatcher("view/admin/profileadmin.jsp").forward(request, response);
-        }
-        if (staff.getRole().equals("2")) {
-            request.getRequestDispatcher("view/sale/profilesale.jsp").forward(request, response);
-        }
-        if (staff.getRole().equals("3")) {
-            request.getRequestDispatcher("view/saleadmin/profilesaleadmin.jsp").forward(request, response);
-        }
-        if (staff.getRole().equals("4")) {
-            request.getRequestDispatcher("view/marketing/profilemarketing.jsp").forward(request, response);
-        }
-        if (staff.getRole().equals("5")) {
-            response.sendRedirect("view/warehouse/homedashboardwarehouse.jsp");
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -97,7 +74,52 @@ public class InformationStaffController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("usernamestaff");
+        String oldpassword = request.getParameter("currentPassword");
+        String newpassword = request.getParameter("newPassword");
+        String confirmpassword = request.getParameter("confirmPassword");
+        StaffDAO dao = new StaffDAO();
+        String role = dao.getInformationStaff(username).getRole();
+        if (!oldpassword.equals((String) session.getAttribute("passwordstaff"))) {
+            request.setAttribute("message", "Incorrect old password.");
+            if (role.equals("1")) {
+                request.getRequestDispatcher("view/admin/changepasswordadmin.jsp").forward(request, response);
+                return;
+            }
+            if (role.equals("2")) {
+                request.getRequestDispatcher("view/sale/changepasswordsale.jsp").forward(request, response);
+                return;
+            }
+            if (role.equals("3")) {
+                request.getRequestDispatcher("view/saleadmin/changepasswordsaleadmin.jsp").forward(request, response);
+                return;
+            }
+            if (role.equals("4")) {
+                request.getRequestDispatcher("view/marketing/changepasswordmarketing.jsp").forward(request, response);
+                return;
+            }
+
+        }
+        dao.changePassword(newpassword, username);
+        session.setAttribute("passwordstaff", newpassword);
+        request.setAttribute("message", "Password changed successfully");
+        if (role.equals("1")) {
+            request.getRequestDispatcher("view/admin/changepasswordadmin.jsp").forward(request, response);
+            return;
+        }
+        if (role.equals("2")) {
+            request.getRequestDispatcher("view/sale/changepasswordsale.jsp").forward(request, response);
+            return;
+        }
+        if (role.equals("3")) {
+            request.getRequestDispatcher("view/saleadmin/changepasswordsaleadmin.jsp").forward(request, response);
+            return;
+        }
+        if (role.equals("4")) {
+            request.getRequestDispatcher("view/marketing/changepasswordmarketing.jsp").forward(request, response);
+            return;
+        }
     }
 
     /**
