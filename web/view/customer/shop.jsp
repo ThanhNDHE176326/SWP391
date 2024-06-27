@@ -241,6 +241,7 @@
                                             <div class="productinfo text-center">
                                                 <img src="images/${product.image}" alt="" />
                                                 <h2>${product.title}</h2>
+                                                <p>Stock: ${product.quantity}</p>
                                                 <p>${product.description}</p>
                                                 <p style="display: none;">${product.id}</p>
                                                 <p style="display: none;">${product.quantity}</p>

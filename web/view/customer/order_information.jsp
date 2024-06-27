@@ -403,13 +403,12 @@
                                     Status: ${order.status_name}
                                     <c:choose>
                                         <c:when test="${order.status_name == 'Chờ xửa lý'}">
-                                            <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&cancelled=cancelled" class="cancel-link">Cancelled</a>
+                                            <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&cancelled=cancelled" class="cancel-link">Hủy đơn hàng</a>
                                         </c:when>
-                                        <c:when test="${order.status_name == 'Nhận hàng thành công'}">
+                                        <c:when test="${order.status_name == 'Đã giao hàng'}">
+                                            <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&complete=complete" class="cancel-link">Nhận hàng thành công</a>
                                         </c:when>
-                                        <c:otherwise>
-                                            <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&complete=complete" class="cancel-link">Goods received</a>
-                                        </c:otherwise>
+                                        
                                     </c:choose>
                                 </p>
 
