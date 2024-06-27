@@ -19,13 +19,13 @@ public class MarketingAccessConfig {
             "/view/marketing/detailslider.jsp", "/view/marketing/editslider.jsp", "/view/marketing/feedbackdetail.jsp", "/view/marketing/headermarketing.jsp", "/view/marketing/homedashboardmarketing.jsp",
             "/view/marketing/listfeedback.jsp", "/view/marketing/listslider.jsp", "/view/marketing/navbarmarketing.jsp", "/view/marketing/postlist.jsp", "/view/marketing/product-detail-marketing.jsp",
             "/view/marketing/product-list-marketing.jsp", "/view/marketing/profilemarketing.jsp", "/view/marketing/searchfeedback.jsp", "/view/marketing/searchslider.jsp", "/view/marketing/update-product-detail-marketing.jsp",
-            "/view/marketing/updatepost.jsp", "/view/marketing/viewpost.jsp",
+            "/view/marketing/updatepost.jsp", "/view/marketing/viewpost.jsp", "/view/marketing/addslider.jsp",
             //Servlet
             "/marketingDashboard", "/detail", "/edit", "/filter", "/search", "/slider", "/FilterFeedbackByCategories", "/FilterFeedbackByStar",
             "/FilterFeedbackByStatus", "/listfeedback", "/searchfeedback", "/updatefeedback", "/CustomerList", "/StatusCustomer", "/AddCustomer", "/EditCustomer", "/UpdateCustomer",
             "/Pagination", "/SearchControl", "/CreatePost", "/deletePost", "/postlist", "/ShowHide", "/updatepost", "/viewPost", "/productListMarketing", "/changeStatus", "/sortList", "/productMarketingSearchByBriefInfo", "/productMarketingSearchByTitle",
             "/productMarketingFilterByStatus", "/productMarketingFilterByCategory", "/createNewProductMarketing", "/updateProductDetailMarketing",
-            "/viewProductDetailMarketing", "/marketingDashboard","/logoutstaff"
+            "/viewProductDetailMarketing", "/marketingDashboard","/logoutstaff", "addnewslider"
     );
 
     public static List<String> getMarketingUrls() {

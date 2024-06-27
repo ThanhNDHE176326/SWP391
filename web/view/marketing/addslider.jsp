@@ -1,128 +1,101 @@
 <%-- 
-    Document   : addnewuser
-    Created on : 19 June 2024, 11:15:20 am
+    Document   : addSlider
+    Created on : 26 June 2024
     Author     : dat ngo huy
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Add New User</title>
+    <title>Add Slider</title>
 </head>
+
 <body id="page-top">
-    <jsp:include page="headeradmin.jsp"/>
+    <jsp:include page="headermarketing.jsp"/>
 
     <div id="wrapper">
         <!-- Sidebar -->
-        <jsp:include page="navbaradmin.jsp"/>
+        <jsp:include page="navbarmarketing.jsp"/>
 
         <div id="content-wrapper">
             <div class="container-fluid">
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="homedashboardadmin.jsp">Dashboard</a>
+                        <a href="homedashboard.jsp">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">Add New User</li>
+                    <li class="breadcrumb-item active">Add Slider</li>
                 </ol>
 
-                <!-- Add User Form -->
+                <!-- Add Form -->
                 <div class="card mb-3">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                            <div>
-                                <i class="fas fa-user-plus"></i>
-                                Add New User
-                            </div>
-                        </div>
+                    <div class="card-header">
+                        <i class="fas fa-plus"></i>
+                        Add Slider
+                    </div>
                     <div class="card-body">
-                        <form action="${pageContext.request.contextPath}/adduser" method="post">
-                            <!-- Remove the ID field as it should not be editable for new user -->
-                            
-                            
+                        <form action="${pageContext.request.contextPath}/addnewslider" method="get" enctype="multipart/form-data">
                             
                             <div class="form-group row">
-                                <label for="email" class="col-sm-2 col-form-label">Email</label>
+                                <label for="title" class="col-sm-2 col-form-label">Title</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control" name="email" required>
+                                    <input type="text" class="form-control" name="title" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="fullname" class="col-sm-2 col-form-label">Full Name</label>
+                                <label for="image" class="col-sm-2 col-form-label">Image</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="fullname" required>
+                                    <input type="file" name="imageUpload" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="username" class="col-sm-2 col-form-label">Username</label>
+                                <label for="note" class="col-sm-2 col-form-label">Note</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="username" required>
+                                    <input type="text" class="form-control" name="note">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="password" class="col-sm-2 col-form-label">Password</label>
+                                <label for="staff" class="col-sm-2 col-form-label">Staff</label>
                                 <div class="col-sm-10">
-                                    <input type="password" class="form-control" name="password" required>
+                                    <input type="text" class="form-control" name="staff">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="gender" class="col-sm-2 col-form-label">Gender</label>
+                                <label for="startDate" class="col-sm-2 col-form-label">Start Date</label>
                                 <div class="col-sm-10">
-                                    <select name="gender" class="form-control">
-                                        <option value="0">Male</option>
-                                        <option value="1">Female</option>
-                                    </select>
+                                    <input type="date" class="form-control" name="startDate">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+                                <label for="endDate" class="col-sm-2 col-form-label">End Date</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="phone" required>
+                                    <input type="date" class="form-control" name="endDate">
                                 </div>
                             </div>
-
-                            <div class="form-group row">
-                                <label for="address" class="col-sm-2 col-form-label">Address</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="address" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="role" class="col-sm-2 col-form-label">Role</label>
-                                <div class="col-sm-10">
-                                    
-                                    <select name="role" class="form-control">
-                                        <c:forEach items="${listrole}" var="role" >
-                                        <option value="${role.id}">${role.name}</option>
-                                        
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                            </div>
-
+                           
                             <div class="form-group row">
                                 <label for="status" class="col-sm-2 col-form-label">Status</label>
                                 <div class="col-sm-10">
                                     <select name="status" class="form-control">
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
+                                        <option value="1">Show</option>
+                                        <option value="0">Hide</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-sm-10 offset-sm-2">
-                                    <button type="submit" class="btn btn-primary">Add User</button>
+                                    <button type="submit" class="btn btn-primary">Add</button>
                                 </div>
                             </div>
                         </form>
@@ -168,5 +141,5 @@
         </div>
     </div>
 </body>
-</html>
 
+</html>

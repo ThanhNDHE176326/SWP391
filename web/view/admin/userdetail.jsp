@@ -78,7 +78,7 @@
                                     <thead>
                                         <tr>
 
-                                            <th>ID</th>
+                                            <th>ID</th>                                           
                                             <th>Full Name</th>
                                             <th>UserName</th>
                                             <th>Password</th>
@@ -95,7 +95,7 @@
                                         <c:forEach var="user" items="${userdetail}">
                                             <tr>
 
-                                                <td>${user.id}</td>
+                                                <td>${user.id}</td>                                               
                                                 <td>${user.fullname}</td>
                                                 <td>${user.username}</td>
                                                 <td>${user.password}</td>         

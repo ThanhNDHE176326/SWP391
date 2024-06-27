@@ -45,6 +45,7 @@ public class UserDAO extends dal.DBContext {
             while (rs.next()) {
 
                 String id = String.valueOf(rs.getInt("id"));
+
                 String fullname = rs.getString("fullname");
                 String email = rs.getString("email");
                 String gender = rs.getString("gender");
@@ -124,6 +125,7 @@ public class UserDAO extends dal.DBContext {
             while (rs.next()) {
 
                 String id = String.valueOf(rs.getInt("id"));
+
                 String fullname = rs.getString("fullname");
                 String email = rs.getString("email");
                 String gender = rs.getString("gender");
@@ -158,6 +160,7 @@ public class UserDAO extends dal.DBContext {
             while (rs.next()) {
 
                 String id = String.valueOf(rs.getInt("id"));
+
                 String fullname = rs.getString("fullname");
                 String email = rs.getString("email");
                 String gender = rs.getString("gender");
@@ -184,6 +187,7 @@ public class UserDAO extends dal.DBContext {
             while (rs.next()) {
 
                 String id = String.valueOf(rs.getInt("id"));
+
                 String fullname = rs.getString("fullname");
                 String email = rs.getString("email");
                 String gender = rs.getString("gender");
@@ -210,6 +214,7 @@ public class UserDAO extends dal.DBContext {
             while (rs.next()) {
 
                 String id = String.valueOf(rs.getInt("id"));
+
                 String fullname = rs.getString("fullname");
                 String email = rs.getString("email");
                 String gender = rs.getString("gender");
@@ -237,6 +242,7 @@ public class UserDAO extends dal.DBContext {
             while (rs.next()) {
 
                 String id = String.valueOf(rs.getInt("id"));
+
                 String fullname = rs.getString("fullname");
                 String email = rs.getString("email");
                 String gender = rs.getString("gender");
@@ -256,13 +262,14 @@ public class UserDAO extends dal.DBContext {
     public ArrayList<Staff> getAdminUser() {
         ArrayList<Staff> listUserByRole = new ArrayList<Staff>();
         try {
-                String strSQL = "select id, fullname, email, gender,phone, role_id , status from Staffs where role_id = '1'";
+            String strSQL = "select id, fullname, email, gender,phone, role_id , status from Staffs where role_id = '1'";
             stm = connection.prepareStatement(strSQL);
             rs = stm.executeQuery();
 
             while (rs.next()) {
 
                 String id = String.valueOf(rs.getInt("id"));
+
                 String fullname = rs.getString("fullname");
                 String email = rs.getString("email");
                 String gender = rs.getString("gender");
@@ -289,6 +296,7 @@ public class UserDAO extends dal.DBContext {
             while (rs.next()) {
 
                 String id = String.valueOf(rs.getInt("id"));
+
                 String fullname = rs.getString("fullname");
                 String email = rs.getString("email");
                 String gender = rs.getString("gender");
@@ -315,6 +323,7 @@ public class UserDAO extends dal.DBContext {
             while (rs.next()) {
 
                 String id = String.valueOf(rs.getInt("id"));
+
                 String fullname = rs.getString("fullname");
                 String email = rs.getString("email");
                 String gender = rs.getString("gender");
@@ -341,6 +350,7 @@ public class UserDAO extends dal.DBContext {
             while (rs.next()) {
 
                 String id = String.valueOf(rs.getInt("id"));
+
                 String fullname = rs.getString("fullname");
                 String email = rs.getString("email");
                 String gender = rs.getString("gender");
@@ -388,6 +398,7 @@ public class UserDAO extends dal.DBContext {
             while (rs.next()) {
 
                 String id = String.valueOf(rs.getInt("id"));
+
                 String fullname = rs.getString("fullname");
                 String email = rs.getString("email");
                 String gender = rs.getString("gender");
@@ -414,6 +425,7 @@ public class UserDAO extends dal.DBContext {
             while (rs.next()) {
 
                 String id = String.valueOf(rs.getInt("id"));
+
                 String fullname = rs.getString("fullname");
                 String email = rs.getString("email");
                 String gender = rs.getString("gender");
@@ -430,42 +442,37 @@ public class UserDAO extends dal.DBContext {
         return listUserByGender;
     }
 
-    public void updateUser(String email, String fullname, String username, String password, String gender, String phone, String address, String role, String status, String id) {
+    public void updateUser( String role, String status, String id) {
         try {
             String strSQL = "UPDATE [dbo].[Staffs]\n"
-                    + "   SET [email] = ?\n"
-                    + "      ,[fullname] = ?\n"
-                    + "      ,[username] = ?\n"
-                    + "      ,[password] = ?\n"
-                    + "      ,[gender] = ?\n"
-                    + "      ,[phone] = ?\n"
-                    + "      ,[address] = ?\n"
-                    + "      ,[role_id] = ?   \n"
+                    + "   SET"
+                    
+                   
+                    
+            
+                    
+                    
+                    + "      [role_id] = ?\n"
+                    + "      ,[isDelete] = 1\n"
                     + "      ,[status] = ?\n"
                     + " WHERE id = ?";
             stm = connection.prepareStatement(strSQL);
 
-            stm.setString(1, email);
-
-            stm.setString(2, fullname);
-            stm.setString(3, username);
-            stm.setString(4, password);
-            stm.setString(5, gender);
-            stm.setString(6, phone);
-            stm.setString(7, address);
-            stm.setString(8, role);
-            stm.setString(9, status);
-            stm.setString(10, id);
+            stm.setInt(1,Integer.parseInt(role) );
+            stm.setInt(2, Integer.parseInt(status));
+             stm.setInt(3, Integer.parseInt(id));
+          
             stm.execute();
         } catch (Exception e) {
             System.out.println("getFeMaleUser:" + e.getMessage());
         }
-//    public static void main(String[] args) {
-//        UserDAO dao = new UserDAO();
-//        dao.updateUser("231231", "nnn", "sdafwqe", "321", "1" ,"0987556384", "hanoi", "3", "1", "1");
-//        System.out.println("okey");
-//    }
 
+    }
+
+    public static void main(String[] args) {
+        UserDAO dao = new UserDAO();
+        dao.updateUser("3", "1", "42");
+        System.out.println("okey");
     }
 
     public Staff getStaffById(String id) {
@@ -497,139 +504,141 @@ public class UserDAO extends dal.DBContext {
         return null;
     }
 
-//    public void add(String email, String fullname, String username, String password, String gender, String phone, String address, String role, String status ) {
-//        try {
-//            String strSQL = "INSERT INTO [dbo].[Staffs]\n"
-//                    + "           ([email]\n"
-//                    + "           ,[fullname]\n"
-//                    + "           ,[username]\n"
-//                    + "           ,[password]\n"
-//                    + "           ,[gender]\n"
-//                    + "           ,[phone]\n"
-//                    + "           ,[address]\n"
-//                    + "           ,[role_id]           \n"
-//                    + "           ,[status])\n"
-//                    + "     VALUES ?,?,?,?,?,?,?,?,?";
-//            stm = connection.prepareStatement(strSQL);
-//            stm.setString(1,email);
-//            stm.setString(2,fullname);
-//            stm.setString(3,username);
-//            stm.setString(4,password);
-//            stm.setString(5,gender);
-//            stm.setString(6,phone);
-//            stm.setString(7,address);
-//            stm.setString(8,role);
-//            stm.setString(9,status);
-//                                           
-//            stm.executeQuery();
-//        } catch (Exception e) {
-//            System.out.println("add:" + e.getMessage());
-//        }
-//
-//    }    
-    
-    
-public void add(String email, String fullname, String username, String password, String gender, String phone, String address, String role) {
-    try {
-        // Kiểm tra username
-        if (isUsernameExists(username)) {
-            System.out.println("Username đã tồn tại trong hệ thống.");
-            return;
-        }
-        
-        // Kiểm tra email
-        if (isEmailExists(email)) {
-            System.out.println("Email đã tồn tại trong hệ thống.");
-            return;
-        }
-        
-        // Kiểm tra phone
-        if (isPhoneExists(phone)) {
-            System.out.println("Số điện thoại đã tồn tại trong hệ thống.");
-            return;
-        }
-        
-        // Nếu không có trùng lặp, thực hiện INSERT
-        String strSQL = "INSERT INTO [dbo].[Staffs] " +
-                        "([email], [fullname], [username], [password], [gender], [phone], [address], [role_id], [status], [isDelete]) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, 1)";
-        stm = connection.prepareStatement(strSQL);
-        stm.setString(1, email);
-        stm.setString(2, fullname);
-        stm.setString(3, username);
-        stm.setString(4, password);
-        stm.setString(5, gender);
-        stm.setString(6, phone);
-        stm.setString(7, address);
-        stm.setString(8, role);
-
-        int affectedRows = stm.executeUpdate();
-
-        if (affectedRows > 0) {
-            System.out.println("Thêm thành công.");
-        } else {
-            System.out.println("Thêm không thành công.");
-        }
-   
-    } catch (Exception e) {
-        System.out.println("Lỗi khi thêm: " + e.getMessage());
-    } finally {
+    public void add(String email, String fullname, String username, String password, String gender, String phone, String address, String role, String status) {
         try {
-            if (stm != null) stm.close();
-            if (connection != null) connection.close();
-        } catch (Exception ex) {
-            System.out.println("Lỗi khi đóng tài nguyên: " + ex.getMessage());
+            String strSQL = "INSERT INTO [dbo].[Staffs]\n"
+                    + "           ([email]\n"
+                    + "           ,[fullname]\n"
+                    + "           ,[username]\n"
+                    + "           ,[password]\n"
+                    + "           ,[gender]\n"
+                    + "           ,[phone]\n"
+                    + "           ,[address]\n"
+                    + "           ,[role_id]\n"
+                    + "           ,[isDelete]\n"
+                    + "           ,[status])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,1\n"
+                    + "           ,?)";
+            stm = connection.prepareStatement(strSQL);
+
+            stm.setString(1, email);
+            stm.setString(2, fullname);
+            stm.setString(3, username);
+            stm.setString(4, password);
+            stm.setString(5, gender);
+            stm.setString(6, phone);
+            stm.setString(7, address);
+            stm.setInt(8, Integer.parseInt(role));
+            stm.setInt(9, Integer.parseInt(status));
+
+            stm.executeQuery();
+        } catch (Exception e) {
+            System.out.println("add:" + e.getMessage());
         }
+
     }
+
 }
 
-// Phương thức kiểm tra username đã tồn tại
-private boolean isUsernameExists(String username) throws Exception {
-    String query = "SELECT COUNT(*) FROM [dbo].[Staffs] WHERE [username] = ?";
-    PreparedStatement stmt = connection.prepareStatement(query);
-    stmt.setString(1, username);
-    ResultSet rs = stmt.executeQuery();
-    if (rs.next()) {
-        int count = rs.getInt(1);
-        return count > 0;
-    }
-    return false;
-}
-
-// Phương thức kiểm tra email đã tồn tại
-private boolean isEmailExists(String email) throws Exception {
-    String query = "SELECT COUNT(*) FROM [dbo].[Staffs] WHERE [email] = ?";
-    PreparedStatement stmt = connection.prepareStatement(query);
-    stmt.setString(1, email);
-    ResultSet rs = stmt.executeQuery();
-    if (rs.next()) {
-        int count = rs.getInt(1);
-        return count > 0;
-    }
-    return false;
-}
-
-// Phương thức kiểm tra phone đã tồn tại
-private boolean isPhoneExists(String phone) throws Exception {
-    String query = "SELECT COUNT(*) FROM [dbo].[Staffs] WHERE [phone] = ?";
-    PreparedStatement stmt = connection.prepareStatement(query);
-    stmt.setString(1, phone);
-    ResultSet rs = stmt.executeQuery();
-    if (rs.next()) {
-        int count = rs.getInt(1);
-        return count > 0;
-    }
-    return false;
-}
-
-
-   
- 
-    public static void main(String[] args){
-                
-       UserDAO dao = new UserDAO();
-      dao.add("dathnd22@gmail.com", "levandat", "datlevan123", "123", "0" ,"09872556384", "hanoi", "3");
-       System.out.println("okey");
-            }    
-}
+//public void add(String email, String fullname, String username, String password, String gender, String phone, String address, String role) {
+//    try {
+//        // Kiểm tra username
+//        if (isUsernameExists(username)) {
+//            System.out.println("Username đã tồn tại trong hệ thống.");
+//            return;
+//        }
+//        
+//        // Kiểm tra email
+//        if (isEmailExists(email)) {
+//            System.out.println("Email đã tồn tại trong hệ thống.");
+//            return;
+//        }
+//        
+//        // Kiểm tra phone
+//        if (isPhoneExists(phone)) {
+//            System.out.println("Số điện thoại đã tồn tại trong hệ thống.");
+//            return;
+//        }
+//        
+//        // Nếu không có trùng lặp, thực hiện INSERT
+//        String strSQL = "INSERT INTO [dbo].[Staffs] " +
+//                        "([email], [fullname], [username], [password], [gender], [phone], [address], [role_id], [status], [isDelete]) " +
+//                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, 1)";
+//        stm = connection.prepareStatement(strSQL);
+//        stm.setString(1, email);
+//        stm.setString(2, fullname);
+//        stm.setString(3, username);
+//        stm.setString(4, password);
+//        stm.setString(5, gender);
+//        stm.setString(6, phone);
+//        stm.setString(7, address);
+//        stm.setString(8, role);
+//
+//        int affectedRows = stm.executeUpdate();
+//
+//        if (affectedRows > 0) {
+//            System.out.println("Thêm thành công.");
+//        } else {
+//            System.out.println("Thêm không thành công.");
+//        }
+//   
+//    } catch (Exception e) {
+//        System.out.println("Lỗi khi thêm: " + e.getMessage());
+//    } finally {
+//        try {
+//            if (stm != null) stm.close();
+//            if (connection != null) connection.close();
+//        } catch (Exception ex) {
+//            System.out.println("Lỗi khi đóng tài nguyên: " + ex.getMessage());
+//        }
+//    }
+//}
+//
+//// Phương thức kiểm tra username đã tồn tại
+//private boolean isUsernameExists(String username) throws Exception {
+//    String query = "SELECT COUNT(*) FROM [dbo].[Staffs] WHERE [username] = ?";
+//    PreparedStatement stmt = connection.prepareStatement(query);
+//    stmt.setString(1, username);
+//    ResultSet rs = stmt.executeQuery();
+//    if (rs.next()) {
+//        int count = rs.getInt(1);
+//        return count > 0;
+//    }
+//    return false;
+//}
+//
+//// Phương thức kiểm tra email đã tồn tại
+//private boolean isEmailExists(String email) throws Exception {
+//    String query = "SELECT COUNT(*) FROM [dbo].[Staffs] WHERE [email] = ?";
+//    PreparedStatement stmt = connection.prepareStatement(query);
+//    stmt.setString(1, email);
+//    ResultSet rs = stmt.executeQuery();
+//    if (rs.next()) {
+//        int count = rs.getInt(1);
+//        return count > 0;
+//    }
+//    return false;
+//}
+//
+//// Phương thức kiểm tra phone đã tồn tại
+//private boolean isPhoneExists(String phone) throws Exception {
+//    String query = "SELECT COUNT(*) FROM [dbo].[Staffs] WHERE [phone] = ?";
+//    PreparedStatement stmt = connection.prepareStatement(query);
+//    stmt.setString(1, phone);
+//    ResultSet rs = stmt.executeQuery();
+//    if (rs.next()) {
+//        int count = rs.getInt(1);
+//        return count > 0;
+//    }
+//    return false;
+//}
 

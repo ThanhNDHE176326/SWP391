@@ -90,15 +90,15 @@ public class EditController extends HttpServlet {
     
 protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    String id = request.getParameter("id");
+    String id = request.getParameter("idS");
     String title = request.getParameter("title");
-    String image = request.getParameter("image");
+    String image = request.getParameter("imageUpload");
     String note = request.getParameter("note");
     String staff = request.getParameter("staff");
     String startDate = request.getParameter("startDate");
     String endDate = request.getParameter("endDate");
     String status = request.getParameter("status");
-    String isDelete = request.getParameter("isDelete");
+   
 
     if (id == null || id.isEmpty() || staff == null || staff.isEmpty()) {
         // Xử lý lỗi hoặc chuyển hướng đến trang lỗi
@@ -108,12 +108,9 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     }
 
     try {
-        int staffId = Integer.parseInt(staff);
-        int sliderId = Integer.parseInt(id);
-
-        Slider s = new Slider(id, title, image, note, staff, startDate, endDate, isDelete, status);
+             
         DAO da = new DAO();
-        da.update(s);
+        da.update(title, image, note, staff, startDate, endDate,status,id);
 
         Part part = request.getPart("imageUpload");
         if (part != null && part.getSize() > 0) {
