@@ -82,7 +82,7 @@ public class AddDeliveryAddressController extends HttpServlet {
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
         String recipient_gender = request.getParameter("gender");
-        boolean isMale = "male".equalsIgnoreCase(recipient_gender); // true nếu là "male", false nếu là "female"
+        boolean isMale = "1".equalsIgnoreCase(recipient_gender); // true nếu là "male", false nếu là "female"
 // saai day ne
         dao.addDeliveryAddress(customer_id, address, phone, recipient_name, isMale);
         request.getRequestDispatcher("pushToCartContact").forward(request, response);
