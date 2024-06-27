@@ -12,10 +12,19 @@ import java.time.LocalDate;
  */
 public class Order {
 
-    String id, customer, totalCost, note, orderDate, address, phone, isDelete, staff,status_id,status_name, customer_name,staff_name, recipient_name, recipient_gender,payment_name;
+    String id, customer, totalCost, note, orderDate, address, phone, isDelete, staff,status_id,status_name, customer_name,staff_name, recipient_name, recipient_gender,payment_name,nextStatusName;
 
     public Order() {
     }
+
+    public String getNextStatusName() {
+        return nextStatusName;
+    }
+
+    public void setNextStatusName(String nextStatusName) {
+        this.nextStatusName = nextStatusName;
+    }
+    
 
     public Order(String id, String customer, String totalCost, String note, String orderDate, String address, String phone, String isDelete, String staff, String status_id, String status_name, String customer_name) {
         this.id = id;

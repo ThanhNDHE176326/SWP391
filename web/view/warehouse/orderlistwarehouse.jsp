@@ -143,9 +143,9 @@
                                 <th >Customer</th>
                                 <th >Total Cost</th>
                                 <th >Order Date</th>
-                                <<th>Action</th>
-                                <th >Update Status</th>
+                                <th>Action</th>
                                 <th >Status</th>
+                                <th >Update Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -156,18 +156,28 @@
                                     <td>${order.totalCost}</td>
                                     <td>${order.orderDate}</td>
                                     <td><a href="saleorderdetails?id=${order.id}" class="btn btn-info">View Details</a></td>
+
+                                    <td>${order.status_name}</td>
                                     <td>
                                         <form action="${pageContext.request.contextPath}/warehouseorderlist" method="post">
                                             <input type="hidden" name="orderId" value="${order.id}">
-                                            <select name="statusId">
-                                                <c:forEach var="status" items="${orderStatusList}">
-                                                    <option value="${status.id}" ${order.status_id == status.id ? 'selected' : ''}>${status.name}</option>
-                                                </c:forEach>
-                                            </select>
-                                            <button type="submit">Update</button>
+                                            <c:choose>
+                                                <c:when test="${order.status_id == '2'}">
+                                                    <button type="submit" name="statusId" value="3">Đang đóng gói </button>
+                                                </c:when>
+                                                <c:when test="${order.status_id == '3'}">
+                                                    <button type="submit" name="statusId" value="4">Đã đóng gói  </button>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <button type="button" disabled>
+                                                        <c:choose>
+                                                            <c:when test="${order.status_id == '4'}">Đã đóng gói </c:when>
+                                                        </c:choose>
+                                                    </button>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </form>
                                     </td>
-                                    <td>${order.status_name}</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
