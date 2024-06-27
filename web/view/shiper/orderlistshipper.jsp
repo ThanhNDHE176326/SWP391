@@ -144,8 +144,9 @@
                                 <th >Total Cost</th>
                                 <th >Order Date</th>
                                 <<th>Action</th>
-                                <th >Update Status</th>
                                 <th >Status</th>
+                                <th >Update Status</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -156,18 +157,31 @@
                                     <td>${order.totalCost}</td>
                                     <td>${order.orderDate}</td>
                                     <td><a href="saleorderdetails?id=${order.id}" class="btn btn-info">View Details</a></td>
+                                    <td>${order.status_name}</td>
                                     <td>
                                         <form action="${pageContext.request.contextPath}/shipperorderlist" method="post">
                                             <input type="hidden" name="orderId" value="${order.id}">
-                                            <select name="statusId">
-                                                <c:forEach var="status" items="${orderStatusList}">
-                                                    <option value="${status.id}" ${order.status_id == status.id ? 'selected' : ''}>${status.name}</option>
-                                                </c:forEach>
-                                            </select>
-                                            <button type="submit">Update</button>
+                                            <c:choose>
+                                                <c:when test="${order.status_id == '4'}">
+                                                    <button type="submit" name="newStatus" value="5">Đang giao hàng</button>
+                                                </c:when>
+                                                <c:when test="${order.status_id == '5'}">
+                                                    <button type="submit" name="newStatus" value="6">Đã giao hàng</button>
+                                                    <button type="submit" name="newStatus" value="7">Giao hàng thất bại</button>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <button type="button" disabled>
+                                                        <c:choose>
+                                                            <c:when test="${order.status_id == '6'}">Đã giao hàng</c:when>
+                                                            <c:when test="${order.status_id == '7'}">Giao hàng thất bại</c:when>
+                                                            
+                                                        </c:choose>
+                                                    </button>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </form>
                                     </td>
-                                    <td>${order.status_name}</td>
+                                    
                                 </tr>
                             </c:forEach>
                         </tbody>

@@ -5,7 +5,9 @@
 
 package Controller.warehouse;
 
+import DAO.OrderCustomerDAO;
 import DAO.OrderDAO;
+import DAO.ProductDAO;
 import DAO.StaffDAO;
 import Models.Order;
 import Models.OrderStatus;
@@ -111,8 +113,10 @@ OrderDAO orderDAO = new OrderDAO();
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String orderId = request.getParameter("orderId");
+        int order_id = Integer.parseInt(orderId);
         String statusId = request.getParameter("statusId");
-
+        OrderCustomerDAO orderCustomerDAO = new OrderCustomerDAO();
+        ProductDAO productDAO = new ProductDAO();
         OrderDAO dao = new OrderDAO();
         dao.updateOrderStatus(orderId, statusId);
 

@@ -109,11 +109,17 @@ public class ShipperOrderListController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String orderId = request.getParameter("orderId");
-        String statusId = request.getParameter("statusId");
+//        
+String orderId = request.getParameter("orderId");
+    String newStatus = request.getParameter("newStatus");
 
-        OrderDAO dao = new OrderDAO();
-        dao.updateOrderStatus(orderId, statusId);
+    OrderDAO dao = new OrderDAO();
+    Order order = dao.getOrderById(orderId);
+
+    // Cập nhật trạng thái nếu đơn hàng chưa hoàn thành
+    if (!"7".equals(order.getStatus_id())) {
+        dao.updateOrderStatus(orderId, newStatus);
+    }
 
         response.sendRedirect(request.getContextPath() + "/shipperorderlist");
     }

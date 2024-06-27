@@ -809,7 +809,7 @@ public class OrderDAO extends DBContext {
         }
         return 0;
     }
-    
+
     public List<Order> getPackedOrdersForWarehouse(int offset, int limit) {
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT o.*, s.name AS status_name, c.name AS customer_name "
@@ -857,18 +857,51 @@ public class OrderDAO extends DBContext {
         }
         return 0;
     }
-    
+
     public boolean updateOrderStatusConfirmById(int orderID) {
-    String sql = "UPDATE Orders SET status_id = 2 WHERE id = ?";
-    try {
-        stm = connection.prepareStatement(sql);
-        stm.setInt(1, orderID);
-        int rowsAffected = stm.executeUpdate();
-        return rowsAffected > 0;  // Return true if the update was successful
-    } catch (SQLException e) {
-        System.out.println("updateOrderStatusById:" + e.getMessage());
+        String sql = "UPDATE Orders SET status_id = 2 WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, orderID);
+            int rowsAffected = stm.executeUpdate();
+            return rowsAffected > 0;  // Return true if the update was successful
+        } catch (SQLException e) {
+            System.out.println("updateOrderStatusById:" + e.getMessage());
+        }
+        return false;  // Return false if there was an error
     }
-    return false;  // Return false if there was an error
-}
+
+    public OrderStatus getNextStatus(String currentStatusId) {
+        switch (currentStatusId) {
+            case "4":
+                return getOrderStatusById("5");
+            case "5":
+                return getOrderStatusById("6");
+            case "6":
+                return getOrderStatusById("7");
+            case "7":
+                return null; // or return the same status if there's no next status
+            default:
+                return null;
+        }
+    }
+
+    public OrderStatus getOrderStatusById(String statusId) {
+        OrderStatus status = null;
+        try {
+            String sql = "SELECT * FROM OrderStatus WHERE id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, statusId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                status = new OrderStatus();
+                status.setId(rs.getString("id"));
+                status.setName(rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
 
 }
