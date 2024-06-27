@@ -261,7 +261,7 @@
                             <c:forEach var="product" items="${listProduct}">
                                 <tr>
                                     <td class="cart_product">
-                                        <a href=""><img src="<c:url value='/images/${product.image}'/>" alt=""></a>
+                                        <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${product.id}"><img src="<c:url value='/images/${product.image}'/>" alt=""></a>
                                     </td>
                                     <td class="cart_description">
                                         <h4><a href="">${product.title}</a></h4>
