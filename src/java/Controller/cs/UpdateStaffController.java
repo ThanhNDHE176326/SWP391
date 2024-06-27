@@ -6,8 +6,6 @@ package Controller.cs;
 
 import DAO.CustomerDAO;
 import DAO.StaffDAO;
-import Models.Customer;
-import Models.Staff;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,8 +19,8 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author HP
  */
-@WebServlet(name = "InformationStaffController", urlPatterns = {"/informationstaff"})
-public class InformationStaffController extends HttpServlet {
+@WebServlet(name = "UpdateStaffController", urlPatterns = {"/updatestaff"})
+public class UpdateStaffController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +39,10 @@ public class InformationStaffController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet InformationStaffController</title>");
+            out.println("<title>Servlet UpdateStaffController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet InformationStaffController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateStaffController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,28 +60,7 @@ public class InformationStaffController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("usernamestaff");
-        String password = (String) session.getAttribute("passwordstaff");
-        StaffDAO dao = new StaffDAO();
-        Staff staff = dao.getInformationStaff(username);
-        request.setAttribute("staffs", staff);
-        request.setAttribute("message", session.getAttribute("mess"));
-        if (staff.getRole().equals("1")) {
-            request.getRequestDispatcher("view/admin/profileadmin.jsp").forward(request, response);
-        }
-        if (staff.getRole().equals("2")) {
-            request.getRequestDispatcher("view/sale/profilesale.jsp").forward(request, response);
-        }
-        if (staff.getRole().equals("3")) {
-            request.getRequestDispatcher("view/saleadmin/profilesaleadmin.jsp").forward(request, response);
-        }
-        if (staff.getRole().equals("4")) {
-            request.getRequestDispatcher("view/marketing/profilemarketing.jsp").forward(request, response);
-        }
-        if (staff.getRole().equals("5")) {
-            response.sendRedirect("view/warehouse/homedashboardwarehouse.jsp");
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -97,7 +74,17 @@ public class InformationStaffController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String name = request.getParameter("name");
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
+        String gender = request.getParameter("gender");
+        StaffDAO dao = new StaffDAO();
+        dao.updateInformationStaff(username, email, name, address, phone, gender);
+        HttpSession session = request.getSession();
+        session.setAttribute("mess", "Update successful");
+        response.sendRedirect("informationstaff");
     }
 
     /**

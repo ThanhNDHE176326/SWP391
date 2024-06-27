@@ -210,4 +210,40 @@ public class StaffDAO extends DBContext {
         System.out.println(id);
 
     }
+
+    public void updateInformationStaff(String username, String email, String name, String address, String phone, String gender) {
+        String sql = "UPDATE [dbo].[Staffs]\n"
+                + "SET [fullname] = ?,\n"
+                + "    [email] = ?,\n"
+                + "    [phone] = ?,\n"
+                + "    [address] = ?,\n"
+                + "    [gender] = ?\n"
+                + "WHERE [username] = ?";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setString(2, email);
+            ps.setString(3, phone);
+            ps.setString(4, address);
+            ps.setInt(5, Integer.parseInt(gender));
+            ps.setString(6, username);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void changePassword(String password, String username) {
+        String sql = "UPDATE Staffs SET password = ? WHERE username = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, password);
+            ps.setString(2, username);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }

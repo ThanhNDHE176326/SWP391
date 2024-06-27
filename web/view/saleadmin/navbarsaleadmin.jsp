@@ -17,17 +17,19 @@
 
         <title>Sale Admin - Dashboard</title>
 
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
         <!-- Custom fonts for this template-->
-        <link href="<c:url value='/vendor/fontawesome-free/css/all.min.css'/>" rel="stylesheet" type="text/css">
+        <link href="<c:url value='/vendor/fontawesome-free/css/all.min.css' />" rel="stylesheet" type="text/css">
 
         <!-- Page level plugin CSS-->
-        <link href="<c:url value='/vendor/datatables/dataTables.bootstrap4.css'/>" rel="stylesheet">
+        <link href="<c:url value='/vendor/datatables/dataTables.bootstrap4.css' />" rel="stylesheet">
 
         <!-- Custom styles for this template-->
-        <link href="<c:url value='/css/sb-admin.css'/>" rel="stylesheet">
+        <link href="<c:url value='/css/sb-admin.css' />" rel="stylesheet">
 
-        <link rel="stylesheet" href="<c:url value='/css/colReorder-bootstrap4.css'/>">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link rel="stylesheet" href="<c:url value='/css/colReorder-bootstrap4.css' />">
 
 
     </head>
@@ -41,6 +43,16 @@
                     <span>Dashboard</span>
                 </a>
 
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Account</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/informationstaff">Personal Information</a>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/view/saleadmin/changepasswordsaleadmin.jsp">Password</a>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/saleadminorderlist">
@@ -57,4 +69,34 @@
 
         </ul>
     </body>
+    <!-- Bootstrap core JavaScript-->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="<c:url value='/vendor/jquery/jquery.min.js' />"></script>
+    <script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js' />"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="<c:url value='/vendor/jquery-easing/jquery.easing.min.js' />"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="<c:url value='/vendor/chart.js/Chart.min.js' />"></script>
+    <script src="<c:url value='/vendor/datatables/jquery.dataTables.js' />"></script>
+    <script src="<c:url value='/vendor/datatables/dataTables.bootstrap4.js' />"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="<c:url value='/js/sb-admin.min.js' />"></script>
+    <script src="<c:url value='/js/colReorder-bootstrap4-min.js' />"></script>
+    <script src="<c:url value='/js/colReorder-dataTables-min.js' />"></script>
+
+    <!-- Demo scripts for this page-->
+    <script src="<c:url value='/js/demo/datatables-demo.js' />"></script>
+    <script src="<c:url value='/js/demo/chart-area-demo.js' />"></script>
+
+    <!-- Initialize Bootstrap's dropdown -->
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-toggle').dropdown();
+        });
+    </script>
 </html>
