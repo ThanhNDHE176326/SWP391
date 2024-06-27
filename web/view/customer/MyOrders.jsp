@@ -380,10 +380,10 @@
                                                     </td>
                                                     <td class="cart_delete" style="padding: 10px;
                                                         text-align: center;">
-                                                        <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${orderList.id}" class="view-button">View</a>
+                                                        <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${orderList.id}" class="view-button">Xem</a>
                                                         <c:choose>
                                                             <c:when test="${orderList.status_name == 'Chờ xửa lý'}">
-                                                                <a href="${pageContext.request.contextPath}/listOrderCustomer?orderId=${orderList.id}" class="cancel-button">Cancelled</a>
+                                                                <a href="${pageContext.request.contextPath}/listOrderCustomer?orderId=${orderList.id}" class="cancel-button">Hủy</a>
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <!-- Do nothing or add any alternative content if needed -->

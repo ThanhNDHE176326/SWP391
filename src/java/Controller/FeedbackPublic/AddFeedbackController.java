@@ -2,6 +2,8 @@ package Controller.FeedbackPublic;
 
 import DAO.CustomerDAO;
 import DAO.FeedbackPublicDAO;
+import DAO.ProductDAOByPublic;
+import Models.Category;
 import Models.Customer;
 import Models.Product;
 import java.io.IOException;
@@ -12,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
@@ -42,8 +45,11 @@ public class AddFeedbackController extends HttpServlet {
         String id = request.getParameter("productId");
         FeedbackPublicDAO da = new FeedbackPublicDAO();
         Product product = da.getProductById(id); // Chỉ trả về một đối tượng Product
-
+        ProductDAOByPublic productDAOByPublic = new ProductDAOByPublic();
+        List<Category> categories = productDAOByPublic.getCategory();
+        request.setAttribute("categories", categories);
         if (product != null) {
+
             request.setAttribute("product", product);
         } else {
             request.setAttribute("error", "Sản phẩm không tồn tại.");
@@ -65,7 +71,7 @@ public class AddFeedbackController extends HttpServlet {
         try {
             ratedStar = Integer.parseInt(ratedStarStr);
             product_id = Integer.parseInt(product_idStr);
-        } catch (NumberFormatException e) {          
+        } catch (NumberFormatException e) {
             e.printStackTrace();
             request.setAttribute("message", "Đánh giá không thành công. Vui lòng thử lại sau.");
             request.getRequestDispatcher("/view/customer/FeedbackPublic.jsp").forward(request, response);
@@ -82,9 +88,12 @@ public class AddFeedbackController extends HttpServlet {
         String customer_id = customer.getId();
 
         FeedbackPublicDAO da = new FeedbackPublicDAO();
-        boolean isSuccess = da.add(product_id,customer_id,ratedStar,comment);
-
+        ProductDAOByPublic productDAOByPublic = new ProductDAOByPublic();
+        boolean isSuccess = da.add(product_id, customer_id, ratedStar, comment);
+        List<Category> categories = productDAOByPublic.getCategory();
+        request.setAttribute("categories", categories);
         if (isSuccess) {
+
             request.setAttribute("message", "Đánh giá thành công.");
         } else {
             request.setAttribute("message", "Đánh giá không thành công. Vui lòng thử lại sau.");
