@@ -1,46 +1,142 @@
-<%-- 
-    Document   : create-new-slider
-    Created on : Jun 27, 2024, 5:21:31 AM
-    Author     : admin
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <script>
-            function checkFileType(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const fileType = file.type;
-                    const fileName = file.name;
-                    const validFileType = /^image\/jpeg$/;
+<html lang="en">
 
-                    if (!validFileType.test(fileType) || !fileName.toLowerCase().endsWith('.jpg')) {
-                        alert('Please upload a JPG image file.');
-                        event.target.value = ''; // Clear the input
-                    }
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Create New Slider</title>
+    <script>
+        function checkFileType(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const fileType = file.type;
+                const fileName = file.name;
+                const validFileType = /^image\/jpeg$/;
+
+                if (!validFileType.test(fileType) || !fileName.toLowerCase().endsWith('.jpg')) {
+                    alert('Please upload a JPG image file.');
+                    event.target.value = ''; // Clear the input
                 }
             }
+        }
 
-            document.addEventListener('DOMContentLoaded', () => {
-                const imageInput = document.getElementById('imageFile');
-                imageInput.addEventListener('change', checkFileType);
-            });
-        </script>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-        <form action="${pageContext.request.contextPath}/createNewSlider" method="post" enctype="multipart/form-data">
-            Title: <input type="text" name="title"required=""><br/><br/>
-            Image: <input type="file" id="imageFile" name="imageFile" required=""><br/><br/>
-            Note: <input type="text" name="note" required=""><br/><br/>
-            Start Date: <input type="date" name="startDate"> 
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            End Date: <input type="date" name="endDate"><br/><br/>
-            <input type="submit" value="CREATE">
-        </form>
-    </body>
+        document.addEventListener('DOMContentLoaded', () => {
+            const imageInput = document.getElementById('imageFile');
+            imageInput.addEventListener('change', checkFileType);
+        });
+    </script>
+</head>
+
+<body id="page-top">
+    <jsp:include page="headermarketing.jsp"/>
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <jsp:include page="navbarmarketing.jsp"/>
+
+        <div id="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="homedashboard.jsp">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Create New Slider</li>
+                </ol>
+
+                <!-- Add Form -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-plus"></i>
+                        Create New Slider
+                    </div>
+                    <div class="card-body">
+                        <form action="${pageContext.request.contextPath}/createNewSlider" method="post" enctype="multipart/form-data">
+                            
+                            <div class="form-group row">
+                                <label for="title" class="col-sm-2 col-form-label">Title</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="title" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="imageFile" class="col-sm-2 col-form-label">Image</label>
+                                <div class="col-sm-10">
+                                    <input type="file" class="form-control" id="imageFile" name="imageFile" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="note" class="col-sm-2 col-form-label">Note</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="note" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="startDate" class="col-sm-2 col-form-label">Start Date</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" name="startDate">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="endDate" class="col-sm-2 col-form-label">End Date</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" name="endDate">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-10 offset-sm-2">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © Your Website 2024</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- /.content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>

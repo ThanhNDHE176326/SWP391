@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 /**
  *
@@ -80,7 +81,7 @@ public class CreateNewSliderController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+   protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAO sliderDAO = new DAO();
         
@@ -90,7 +91,7 @@ public class CreateNewSliderController extends HttpServlet {
         String endDate = request.getParameter("endDate");
         
         Part part = request.getPart("imageFile");
-        String realPath = "D:\\Web_Project_Java\\SWP391\\web\\images";
+        String realPath = "C:\\Users\\84987\\Documents\\SU24\\SWP391\\SWP391\\web\\images";
         Files.createDirectories(Paths.get(realPath)); // Tạo thư mục nếu chưa tồn tại
         String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
         part.write(Paths.get(realPath, fileName).toString());
@@ -98,7 +99,10 @@ public class CreateNewSliderController extends HttpServlet {
         
         Slider slider = new Slider("", title, fileName, note, "4", startDate, endDate, "1", "1");
         sliderDAO.insertNewSlider(slider);
-        response.sendRedirect("#"); // tu dien link response vao day
+        DAO da = new DAO();                       
+        ArrayList<Slider> listslider = da.getSlider();
+        request.setAttribute("listslider", listslider);
+        request.getRequestDispatcher("view/marketing/listslider.jsp").forward(request, response); // tu dien link response vao day
     }
 
     /**
