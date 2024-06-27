@@ -175,14 +175,14 @@
 
                             <a href="${pageContext.request.contextPath}/CreatePost" class="btn btn-primary">Create New Post</a>
 
-                            <aside>
+<!--                            <aside>
                                 <h2>Categories</h2>
                                 <ul>
                                     <c:forEach var="category" items="${categories}">
                                         <li>${category.name}</li>
                                         </c:forEach>
                                 </ul>
-                            </aside>
+                            </aside>-->
 
                             <!-- Post list -->
                             <table>

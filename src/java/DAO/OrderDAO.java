@@ -89,10 +89,12 @@ public class OrderDAO extends DBContext {
     public Order getOrderById(String id) {
         Order order = null;
         try {
-            String sql = "SELECT o.*, c.name AS customer_name "
-                    + "FROM Orders o "
-                    + "INNER JOIN Customers c ON o.customer_id = c.id "
-                    + "WHERE o.id = ?";
+            String sql = "SELECT o.*, st.fullname AS staff_name, c.name AS customer_name,  s.name AS status_name  "
+                    + " FROM Orders o "
+                    + " INNER JOIN OrderStatus s ON o.status_id = s.id "
+                    + " INNER JOIN Customers c ON o.customer_id = c.id "
+                    + " INNER JOIN Staffs st ON o.staff_id = st.id "
+                    + " WHERE o.id = ? AND o.isDelete = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, id);
             ResultSet rs = stm.executeQuery();
@@ -107,7 +109,9 @@ public class OrderDAO extends DBContext {
                 order.setPhone(rs.getString("phone"));
                 order.setIsDelete(rs.getString("isDelete"));
                 order.setStaff(rs.getString("staff_id"));
+                order.setStatus_name(rs.getString("status_name"));
                 order.setStatus_id(rs.getString("status_id"));
+                order.setStaff_name(rs.getString("staff_name"));
 
             }
         } catch (SQLException e) {
@@ -362,8 +366,9 @@ public class OrderDAO extends DBContext {
     public Order getOrderByIdAndStaff(String id, String staffId) {
         Order order = null;
         try {
-            String sql = "SELECT o.*, c.name AS customer_name "
+            String sql = "SELECT o.*, c.name AS customer_name, s.name AS status_name "
                     + "FROM Orders o "
+                    + "INNER JOIN OrderStatus s ON o.status_id = s.id "
                     + "INNER JOIN Customers c ON o.customer_id = c.id "
                     + "WHERE o.id = ? AND o.staff_id = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -381,6 +386,7 @@ public class OrderDAO extends DBContext {
                 order.setPhone(rs.getString("phone"));
                 order.setIsDelete(rs.getString("isDelete"));
                 order.setStaff(rs.getString("staff_id"));
+                order.setStatus_name(rs.getString("status_name"));
                 order.setStatus_id(rs.getString("status_id"));
             }
         } catch (SQLException e) {
@@ -416,20 +422,19 @@ public class OrderDAO extends DBContext {
         }
     }
 
-    public List<Order> getOrdersByStatusAndStaffWithPagination(String statusId, String staffId, int offset, int limit) {
+    public List<Order> getOrdersByStatusWithPagination(String statusId, int offset, int limit) {
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT o.*, s.name AS status_name, c.name AS customer_name "
                 + "FROM Orders o "
                 + "INNER JOIN OrderStatus s ON o.status_id = s.id "
                 + "INNER JOIN Customers c ON o.customer_id = c.id "
-                + "WHERE o.isDelete = 1 AND o.status_id = ? AND o.staff_id = ? "
+                + "WHERE o.isDelete = 1 AND o.status_id = ? "
                 + "ORDER BY o.order_date DESC "
                 + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
             stm.setString(1, statusId);
-            stm.setString(2, staffId);
-            stm.setInt(3, offset);
-            stm.setInt(4, limit);
+            stm.setInt(2, offset);
+            stm.setInt(3, limit);
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
                     Order order = new Order();
@@ -452,19 +457,20 @@ public class OrderDAO extends DBContext {
         return orders;
     }
 
-    public List<Order> getOrdersByStatusWithPagination(String statusId, int offset, int limit) {
+    public List<Order> getOrdersByStatusAndStaffWithPagination(String statusId, String staffId, int offset, int limit) {
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT o.*, s.name AS status_name, c.name AS customer_name "
                 + "FROM Orders o "
                 + "INNER JOIN OrderStatus s ON o.status_id = s.id "
                 + "INNER JOIN Customers c ON o.customer_id = c.id "
-                + "WHERE o.isDelete = 1 AND o.status_id = ? "
+                + "WHERE o.isDelete = 1 AND o.status_id = ? AND o.staff_id = ? "
                 + "ORDER BY o.order_date DESC "
                 + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
             stm.setString(1, statusId);
-            stm.setInt(2, offset);
-            stm.setInt(3, limit);
+            stm.setString(2, staffId);
+            stm.setInt(3, offset);
+            stm.setInt(4, limit);
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
                     Order order = new Order();
@@ -652,7 +658,7 @@ public class OrderDAO extends DBContext {
 
     public static void main(String[] args) {
         OrderDAO dao = new OrderDAO();
-        Order order = dao.getInfoByOrderID(44);
+        List<Order> order = dao.getOrdersByStatusWithPagination("1", 0, 5);
         System.out.println(order);
     }
 
@@ -676,10 +682,11 @@ public class OrderDAO extends DBContext {
 
     public List<Order> getOrdersByCustomerName(String customerName) {
         List<Order> orders = new ArrayList<>();
-        String sql = "SELECT o.id,s.name AS status_name, c.name as customer_name,  o.total_cost, o.order_date "
+        String sql = "SELECT o.id, st.fullname AS staff_name,  s.name AS status_name, c.name as customer_name,  o.total_cost, o.order_date "
                 + "FROM Orders o "
                 + "INNER JOIN Customers c ON o.customer_id = c.id "
                 + "INNER JOIN OrderStatus s ON o.status_id = s.id "
+                + "INNER JOIN Staffs st ON o.staff_id = st.id "
                 + "WHERE c.name LIKE ? AND o.isDelete = 1";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -692,6 +699,7 @@ public class OrderDAO extends DBContext {
                 order.setOrderDate(rs.getString("order_date"));
                 order.setTotalCost(rs.getString("total_cost"));
                 order.setStatus_name(rs.getString("status_name"));
+                order.setStaff_name(rs.getString("staff_name"));
 
                 orders.add(order);
             }

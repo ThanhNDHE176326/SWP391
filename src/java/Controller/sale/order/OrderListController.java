@@ -94,6 +94,8 @@ public class OrderListController extends HttpServlet {
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
 
+        
+        List<OrderStatus> OrderStatusList = orderDAO.getAllOrderStatus();
         List<OrderStatus> orderStatusList = orderDAO.getAllOrderStatus();
         List<OrderStatus> filteredStatusList = new ArrayList<>();
         for (OrderStatus status : orderStatusList) {
@@ -101,6 +103,9 @@ public class OrderListController extends HttpServlet {
                 filteredStatusList.add(status);
             }
         }
+        
+        
+        request.setAttribute("OrderStatusList", OrderStatusList);
 
         request.setAttribute("orderStatusList", filteredStatusList);
 
@@ -111,6 +116,7 @@ public class OrderListController extends HttpServlet {
 
         request.getRequestDispatcher("view/sale/orderlist.jsp").forward(request, response);
     }
+   
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

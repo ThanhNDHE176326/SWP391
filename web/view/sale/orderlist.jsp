@@ -111,7 +111,7 @@
                         <label for="statusId">Status:</label>
                         <select class="form-control" id="statusId" name="statusId">
                             <option value="">All</option>
-                            <c:forEach var="status" items="${orderStatusList}">
+                            <c:forEach var="status" items="${OrderStatusList}">
                                 <option value="${status.id}" ${param.statusId == status.id ? 'selected' : ''}>${status.name}</option>
                             </c:forEach>
                         </select>
@@ -166,13 +166,13 @@
                                 <c:choose>
                                     <c:when test="${order.status_id == '1'}">
                                         <button type="submit" name="statusId" value="2">Đã Xác Nhận</button>
-                                    </c:when>
-                                    <c:when test="${order.status_id == '2'}">
                                         <button type="submit" name="statusId" value="9">Hủy Đơn Hàng </button>
                                     </c:when>
+                                    
                                     <c:otherwise>
                                         <button type="button" disabled>
                                             <c:choose>
+                                                <c:when test="${order.status_id == '2'}">Đã Xác Nhận</c:when>
                                                 <c:when test="${order.status_id == '9'}">Hủy Đơn Hàng</c:when>
                                             </c:choose>
                                         </button>

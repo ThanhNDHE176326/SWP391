@@ -190,20 +190,19 @@
             <jsp:include page="navbarsaleadmin.jsp" />
 
             <div id="content-wrapper">
-                <div class="container">
+                <div class="container-fluid">
                     <h1>Orders List</h1>
-                    <form action="${pageContext.request.contextPath}/saleadminorderlist" method="get" class="filter-form">
+                    <form action="${pageContext.request.contextPath}/saleadminorderlist" method="get" style="margin-bottom: 20px;">
                         <div class="form-row justify-content-center">
-                            <div class="form-group">
+                            <div class="form-group col-md-3">
                                 <label for="orderId">Order ID:</label>
-                                <input type="text" class="form-control" id="orderId" name="orderId"
-                                       value="${param.orderId}">
+                                <input type="text" class="form-control" id="orderId" name="orderId" value="${param.orderId}">
                             </div>
                             <div class="form-group">
                                 <label for="statusId">Status:</label>
                                 <select class="form-control" id="statusId" name="statusId">
                                     <option value="">All</option>
-                                    <c:forEach var="status" items="${orderStatusList}">
+                                    <c:forEach var="status" items="${OrderStatusList}">
                                         <option value="${status.id}" ${param.statusId == status.id ? 'selected' : ''}>${status.name}</option>
                                     </c:forEach>
                                 </select>
@@ -266,13 +265,13 @@
                                                 <c:choose>
                                                     <c:when test="${order.status_id == '1'}">
                                                         <button type="submit" name="statusId" value="2">Đã Xác Nhận</button>
-                                                    </c:when>
-                                                    <c:when test="${order.status_id == '2'}">
                                                         <button type="submit" name="statusId" value="9">Hủy Đơn Hàng </button>
                                                     </c:when>
+
                                                     <c:otherwise>
                                                         <button type="button" disabled>
                                                             <c:choose>
+                                                                <c:when test="${order.status_id == '2'}">Đã Xác Nhận</c:when>
                                                                 <c:when test="${order.status_id == '9'}">Hủy Đơn Hàng</c:when>
                                                             </c:choose>
                                                         </button>
@@ -290,7 +289,7 @@
                                 <a href="${pageContext.request.contextPath}/saleadminorderlist?page=${currentPage - 1}&statusId=${statusId}&orderId=${orderId}">Previous</a>
                             </c:if>
                             <c:forEach begin="1" end="${totalPages}" var="i">
-                                <c:url var="pageUrl" value="/saleorderlist">
+                                <c:url var="pageUrl" value="/saleadminorderlist">
                                     <c:param name="page" value="${i}" />
                                     <c:if test="${not empty statusId}">
                                         <c:param name="statusId" value="${statusId}" />
