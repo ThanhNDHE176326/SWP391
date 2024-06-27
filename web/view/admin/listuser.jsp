@@ -76,7 +76,7 @@
                                 <table id="userTable" class="table table-bordered" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
+                                            <th>ID</th>                                          
                                             <th>Full Name</th>
                                             <th>Email</th>
                                             <th>Gender</th>
@@ -89,7 +89,7 @@
                                     <tbody id="tableBody">
                                         <c:forEach var="user" items="${listuser}">
                                             <tr>
-                                                <td>${user.id}</td>
+                                                <td>${user.id}</td>                                                
                                                 <td>${user.fullname}</td>
                                                 <td>${user.email}</td>
                                                 <td>

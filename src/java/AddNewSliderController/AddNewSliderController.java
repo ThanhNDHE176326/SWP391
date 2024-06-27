@@ -3,10 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller.User;
+package AddNewSliderController;
 
-import DAO.UserDAO;
-import Models.Staff;
+import DAO.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,14 +13,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 
 /**
  *
  * @author dat ngo huy
  */
-@WebServlet(name="EditUserController", urlPatterns={"/edituser"})
-public class EditUserController extends HttpServlet {
+@WebServlet(name="AddNewSliderController", urlPatterns={"/addnewslider"})
+public class AddNewSliderController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +36,10 @@ public class EditUserController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditUserController</title>");  
+            out.println("<title>Servlet AddNewSliderController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditUserController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet AddNewSliderController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,12 +56,24 @@ public class EditUserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String id = request.getParameter("id");
-        UserDAO da = new UserDAO();
+        String title = request.getParameter("title");
+        String image = request.getParameter("imageUpload");
+        String note = request.getParameter("note");
+        String staff = request.getParameter("staff");
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+        String status = request.getParameter("status");
         
-        Staff staff = da.getStaffById(id);
-        request.setAttribute("user", staff);
-        request.getRequestDispatcher("view/admin/edituser.jsp").forward(request, response);
+        
+        DAO da = new DAO();
+        boolean isSuccess = da.addslider(title,image,note,staff,startDate,endDate,status);
+        
+        if (isSuccess) {
+            request.setAttribute("message", "Tạo Slider Thành Công.");
+        } else {
+            request.setAttribute("message", "Tạo Thêm SLider không thành công. Vui lòng thử lại sau.");
+        }
+        request.getRequestDispatcher("view/marketing/addslider.jsp").forward(request, response);
     } 
 
     /** 
@@ -76,19 +86,7 @@ public class EditUserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String id = request.getParameter("id");
-       
-      
-        String role = request.getParameter("role");
-        String status = request.getParameter("status");
-        
-        UserDAO da = new UserDAO();
-        da.updateUser( role, status,id);
-        ArrayList<Staff> listuser = da.getAllStaff();
-        request.setAttribute("listuser", listuser);
-        request.getRequestDispatcher("view/admin/listuser.jsp").forward(request, response);
-            
-        
+        processRequest(request, response);
     }
 
     /** 

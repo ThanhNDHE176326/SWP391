@@ -39,7 +39,7 @@
                             Edit Slider
                         </div>
                         <div class="card-body">
-                            <form action="${pageContext.request.contextPath}/edit" method="post" enctype="multipart/form-data">
+                            <form action="${pageContext.request.contextPath}/edit?idS=${slider.id}" method="post" enctype="multipart/form-data">
                                 
                                 <input type="hidden" name="id" value="${slider.id}">
                                 <div class="form-group row">
@@ -83,21 +83,14 @@
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="endDate" value="${slider.endDate}">
                                     </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <!--<label for="isDelete" class="col-sm-2 col-form-label">Is Delete</label>-->
-                                    <div class="col-sm-10">
-                                        <input type="hidden" class="form-control" name="isDelete" value="${slider.isDelete}">
-                                    </div>
-                                </div>
+                                </div>                              
 
                                 <div class="form-group row">
                                     <label for="status" class="col-sm-2 col-form-label">Status</label>
                                     <div class="col-sm-10">
                                         <select name="status" class="form-control">
-                                            <option value="1" ${slider.status == 1 ? "selected" : ""}>Show</option>
-                                            <option value="0" ${slider.status == 0 ? "selected" : ""}>Hide</option>
+                                            <option value="1" ${slider.status == '1' ? "selected" : ""}>Show</option>
+                                            <option value="0" ${slider.status == '0' ? "selected" : ""}>Hide</option>
                                         </select>
                                     </div>
                                 </div>
