@@ -160,7 +160,7 @@
                         <td>${order.orderDate}</td>
                         <td><a href="saleorderdetails?id=${order.id}" class="btn btn-info">View Details</a></td>
                         <td>${order.status_name}</td>
-                         <td>
+                        <td>
                             <form action="${pageContext.request.contextPath}/saleorderlist" method="post">
                                 <input type="hidden" name="orderId" value="${order.id}">
                                 <c:choose>
@@ -168,7 +168,9 @@
                                         <button type="submit" name="statusId" value="2">Đã Xác Nhận</button>
                                         <button type="submit" name="statusId" value="9">Hủy Đơn Hàng </button>
                                     </c:when>
-                                    
+                                    <c:when test="${order.status_id == '7'}">
+                                    <button type="submit" name="statusId" value="9">Hủy Đơn Hàng </button>
+                                    </c:when>
                                     <c:otherwise>
                                         <button type="button" disabled>
                                             <c:choose>

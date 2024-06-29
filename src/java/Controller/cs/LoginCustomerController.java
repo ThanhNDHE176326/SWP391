@@ -120,7 +120,7 @@ public class LoginCustomerController extends HttpServlet {
         session.setAttribute("usernamecustomer", username);
         session.setAttribute("passwordcustomer", password);
         session.setAttribute("userRole", "customer");
-        session.setMaxInactiveInterval(1800); // 30 minutes
+        session.setMaxInactiveInterval(3600); // 30 minutes
         response.sendRedirect("view/customer/homepage.jsp");
     }
 

@@ -105,33 +105,35 @@ public class StaffDAO extends DBContext {
     }
 
     public void singUpStaff(String fullname, String username, String password, String email, String phone, String address, String gender, String role) {
-        String sql = "INSERT INTO [dbo].[Staffs]\n"
-                + "           ([email]\n"
-                + "           ,[fullname]\n"
-                + "           ,[username]\n"
-                + "           ,[password]\n"
-                + "           ,[gender]\n"
-                + "           ,[phone]\n"
-                + "           ,[address]\n"
-                + "           ,[role_id]\n"
-                + "           ,[isDelete])\n"
-                + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?,?,1)";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, email);
-            st.setString(2, fullname);
-            st.setString(3, username);
-            st.setString(4, password);
-            st.setInt(5, Integer.parseInt(gender));
-            st.setString(6, phone);
-            st.setString(7, address);
-            st.setInt(8, Integer.parseInt(role));
-            st.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+    String sql = "INSERT INTO [dbo].[Staffs]\n"
+            + "           ([email]\n"
+            + "           ,[fullname]\n"
+            + "           ,[username]\n"
+            + "           ,[password]\n"
+            + "           ,[gender]\n"
+            + "           ,[phone]\n"
+            + "           ,[address]\n"
+            + "           ,[role_id]\n"
+            + "           ,[isDelete]\n"
+            + "           ,[status])\n"
+            + "     VALUES\n"
+            + "           (?,?,?,?,?,?,?,?,1,1)";
+    try {
+        PreparedStatement st = connection.prepareStatement(sql);
+        st.setString(1, email);
+        st.setString(2, fullname);
+        st.setString(3, username);
+        st.setString(4, password);
+        st.setInt(5, Integer.parseInt(gender));
+        st.setString(6, phone);
+        st.setString(7, address);
+        st.setInt(8, Integer.parseInt(role));
+        st.executeUpdate();
+    } catch (SQLException e) {
+        System.out.println(e);
     }
+}
+
 
 //    public List<Staff> getSalers() {
 //        List<Staff> listSaler = new ArrayList<>();
