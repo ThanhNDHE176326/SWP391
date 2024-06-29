@@ -12,7 +12,6 @@ public class Customer {
 
     String id, name, username, password, email, phone, address, gender, customerType, isDelete, code;
 
-
     public Customer() {
     }
 
@@ -20,6 +19,11 @@ public class Customer {
         this.username = username;
         this.email = email;
         this.code = code;
+    }
+
+    public Customer(String username, String email) {
+        this.username = username;
+        this.email = email;
     }
 
     public String getIsDelete() {
@@ -44,7 +48,6 @@ public class Customer {
         this.password = password;
         this.isDelete = isDelete;
     }
-    
 
     public Customer(String id, String name, String username, String password, String email, String phone, String address, String gender, String customerType) {
         this.id = id;
@@ -135,7 +138,4 @@ public class Customer {
         return "Customer{" + "id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + ", email=" + email + ", phone=" + phone + ", address=" + address + ", gender=" + gender + ", customerType=" + customerType + '}';
     }
 
-    
-
-    
 }

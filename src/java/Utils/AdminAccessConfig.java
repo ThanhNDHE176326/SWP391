@@ -16,7 +16,7 @@ public class AdminAccessConfig {
     private static final List<String> adminUrls = Arrays.asList(
             // jsp
             "/view/admin/addnewuser.jsp", "/view/admin/edituser.jsp", "/view/admin/headeradmin.jsp", "/view/admin/homedashboardadmin.jsp", "/view/admin/listuser.jsp",
-            "/view/admin/navbaradmin.jsp", "/view/admin/searchuser.jsp", "/view/admin/signupstaff.jsp", "/view/admin/userdetail.jsp",
+            "/view/admin/navbaradmin.jsp", "/view/admin/searchuser.jsp", "/view/admin/signupstaff.jsp", "/view/admin/userdetail.jsp","/view/admin/profileadmin.jsp","/view/admin/changepasswordadmin.jsp",
             // Servlet
             "/listuser", "/adduser", "/edituser", "/FilterUserByGender", "/FilterUserByRole", "/FilterUserByStatus", "/searchuser", "/addfeedbackpublic",
             "/logoutstaff"
