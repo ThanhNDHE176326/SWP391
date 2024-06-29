@@ -90,9 +90,11 @@ public class ForgetPasswordController extends HttpServlet {
         session.setAttribute("username", username);
         SendMail sm = new SendMail();
         String code = sm.getRandom();
+        String subject = "User Email Verification";
+        String content = "Registered successfully. Please verify your account using this code: " + code;
         Customer user = new Customer(username, email, code);
 
-        boolean test = sm.sendEmail(user);
+        boolean test = sm.sendEmail(user, subject, content);
         if (test) {
             session.setAttribute("authcode", user);
             response.sendRedirect("view/customer/verifyresetpasswordcustomer.jsp");

@@ -10,12 +10,12 @@ import DAO.CustomerDAO;
 import DAO.DeliveryAddressDAO;
 import DAO.OrderDAO;
 import DAO.ProductDAO;
+import DAO.SendMail;
 import DAO.StaffDAO;
 import Models.Config;
 import Models.Customer;
 import Models.Order;
 import Models.Product;
-import Models.Staff;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.TimeZone;
 
 /**
@@ -112,7 +111,7 @@ public class CartCompletionController extends HttpServlet {
         int customerID = Integer.parseInt(customerDAO.getInformationCustomer(customerName).getId());
         int cartID = cartDAO.getCartIdByCustomerID(customerID);
 
-        int salerOrderID = staffDAO.getIdStaffHasFewestOrder() ; // staff_id in Orders
+        int salerOrderID = staffDAO.getIdStaffHasFewestOrder(); // staff_id in Orders
 
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
@@ -156,14 +155,14 @@ public class CartCompletionController extends HttpServlet {
         Order orderInfo = orderDAO.getInfoByOrderID(orderID);
         session.setAttribute("listProduct", listProduct);
         session.setAttribute("orderInfo", orderInfo);
-        
+
         // 3 - VN_Pay
         // 2 - QR Code(chua co)
         // 1 - COD
         if (paymentID == 3) {
             processVnPayment(request, response, totalCost, orderID);
             orderDAO.updateOrderStatusConfirmById(orderID);
-        } else if(paymentID == 1) {
+        } else if (paymentID == 1) {
             processNonVnPayment(request, response, orderID);
         }
 
@@ -254,6 +253,19 @@ public class CartCompletionController extends HttpServlet {
         HttpSession session = request.getSession();
         List<Product> listProduct = (List<Product>) session.getAttribute("listProduct");
         Order orderInfo = (Order) session.getAttribute("orderInfo");
+        CustomerDAO customerdao = new CustomerDAO();
+        SendMail sm = new SendMail();
+        String usernamecustomer = (String) session.getAttribute("usernamecustomer");
+        String email = customerdao.getInformationCustomer(usernamecustomer).getEmail();
+
+        String subject = "From BookHaven With Love <3";
+        String content = "ORDER CONFIRMED\n\n"
+                + "Thank you for choosing our product\n"
+                + "The product will be delivered to you as soon as possible\n"
+                + "We hope you have a wonderful experience with our product";
+
+        Customer user = new Customer(usernamecustomer, email);
+        boolean test = sm.sendEmail(user, subject, content);
         request.setAttribute("listProduct", listProduct);
         request.setAttribute("orderInfo", orderInfo);
         request.getRequestDispatcher("view/customer/cart-completion.jsp").forward(request, response);
