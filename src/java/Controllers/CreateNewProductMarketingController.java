@@ -100,7 +100,7 @@ public class CreateNewProductMarketingController extends HttpServlet {
         String salePrice = request.getParameter("salePrice");
         //handle File image
         Part part = request.getPart("imageFile");
-        String realPath = "D:\\Web_Project_Java\\SWP391\\web\\images";
+        String realPath = "C:\\Users\\Admin\\OneDrive\\Documents\\ProgramJavaWeb\\SWP391\\web\\images";
         Files.createDirectories(Paths.get(realPath)); // Tạo thư mục nếu chưa tồn tại
         String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
         part.write(Paths.get(realPath, fileName).toString());

@@ -78,7 +78,7 @@
                                             <option value="2">Sale</option>
                                             <option value="3">Sale Admin</option>
                                             <option value="4">Marketing</option>
-                                            <option value="5">Delive</option>
+                                            <option value="5">Store Staff</option>
                                         </select>
                                     </div>
                                 </div>
@@ -161,7 +161,7 @@
     </script>
     <style>
         #form{
-            margin-top: -1000px !important;
+            margin-top: -900px !important;
             margin-left: 300px !important;
         }
 
