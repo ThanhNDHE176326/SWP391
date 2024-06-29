@@ -3,7 +3,7 @@
     Created on : 24 May 2024, 4:32:56 pm
     Author     : dat ngo huy
 --%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +13,37 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Edit Slider</title>
+        <script>
+            function validateDates() {
+                var startDate = document.getElementById("startDate").value;
+                var endDate = document.getElementById("endDate").value;
+
+                if (new Date(startDate) >= new Date(endDate)) {
+                    alert("Start Date must be earlier than End Date.");
+                    return false;
+                }
+                return true;
+            }
+
+            function checkFileType(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const fileType = file.type;
+                    const fileName = file.name;
+                    const validFileType = /^image\/jpeg$/;
+
+                    if (!validFileType.test(fileType) || !fileName.toLowerCase().endsWith('.jpg')) {
+                        alert('Please upload a JPG image file.');
+                        event.target.value = ''; // Clear the input
+                    }
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const imageInput = document.getElementById('imageUpload');
+                imageInput.addEventListener('change', checkFileType);
+            });
+        </script>
     </head>
 
     <body id="page-top">
@@ -39,8 +70,8 @@
                             Edit Slider
                         </div>
                         <div class="card-body">
-                            <form action="${pageContext.request.contextPath}/edit?idS=${slider.id}" method="post" enctype="multipart/form-data">
-                                
+                            <form action="${pageContext.request.contextPath}/edit" method="post" enctype="multipart/form-data" onsubmit="return validateDates()">
+
                                 <input type="hidden" name="id" value="${slider.id}">
                                 <div class="form-group row">
                                     <label for="title" class="col-sm-2 col-form-label">Title</label>
@@ -50,10 +81,10 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="image" class="col-sm-2 col-form-label">Image</label>
+                                    <label for="imageUpload" class="col-sm-2 col-form-label">Image</label>
                                     <div class="col-sm-10">
                                         <img src="${pageContext.request.contextPath}/images/${slider.image}" alt="Image of Slider" class="img-fluid mb-3" width="400"><br/><br/>
-                                        <input type="file" name="imageUpload">
+                                        <input type="file" id="imageUpload" name="imageUpload">
                                     </div>
                                 </div>
 
@@ -65,23 +96,16 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="staff" class="col-sm-2 col-form-label">Staff</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="staff" value="${slider.staff}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
                                     <label for="startDate" class="col-sm-2 col-form-label">Start Date</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="startDate" value="${slider.startDate}">
+                                        <input type="date" id="startDate" class="form-control" name="startDate" value="${slider.startDate}">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="endDate" class="col-sm-2 col-form-label">End Date</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="endDate" value="${slider.endDate}">
+                                        <input type="date" id="endDate" class="form-control" name="endDate" value="${slider.endDate}">
                                     </div>
                                 </div>                              
 
@@ -89,9 +113,13 @@
                                     <label for="status" class="col-sm-2 col-form-label">Status</label>
                                     <div class="col-sm-10">
                                         <select name="status" class="form-control">
-                                            <option value="1" ${slider.status == '1' ? "selected" : ""}>Show</option>
-                                            <option value="0" ${slider.status == '0' ? "selected" : ""}>Hide</option>
+                                            <option value="1" ${slider.status eq "1" ? 'selected' : ''}>Show</option>
+                                            <option value="0" ${slider.status eq "0" ? 'selected' : ''}>Hide</option>
                                         </select>
+
+
+
+
                                     </div>
                                 </div>
 

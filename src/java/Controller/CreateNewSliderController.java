@@ -91,7 +91,7 @@ public class CreateNewSliderController extends HttpServlet {
         String endDate = request.getParameter("endDate");
         
         Part part = request.getPart("imageFile");
-        String realPath = "C:\\Users\\84987\\Documents\\SU24\\SWP391\\SWP391\\web\\images";
+        String realPath = "D:\\Web_Project_Java\\SWP391\\web\\images";
         Files.createDirectories(Paths.get(realPath)); // Tạo thư mục nếu chưa tồn tại
         String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
         part.write(Paths.get(realPath, fileName).toString());
