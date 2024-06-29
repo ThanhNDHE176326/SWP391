@@ -8,6 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Create New Slider</title>
     <script>
+        function validateDates() {
+            var startDate = document.getElementById("startDate").value;
+            var endDate = document.getElementById("endDate").value;
+
+            if (new Date(startDate) >= new Date(endDate)) {
+                alert("Start Date must be earlier than End Date.");
+                return false;
+            }
+            return true;
+        }
         function checkFileType(event) {
             const file = event.target.files[0];
             if (file) {
@@ -53,7 +63,7 @@
                         Create New Slider
                     </div>
                     <div class="card-body">
-                        <form action="${pageContext.request.contextPath}/createNewSlider" method="post" enctype="multipart/form-data">
+                        <form action="${pageContext.request.contextPath}/createNewSlider" method="post" enctype="multipart/form-data" onsubmit="return validateDates()">
                             
                             <div class="form-group row">
                                 <label for="title" class="col-sm-2 col-form-label">Title</label>
@@ -79,14 +89,14 @@
                             <div class="form-group row">
                                 <label for="startDate" class="col-sm-2 col-form-label">Start Date</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control" name="startDate">
+                                    <input type="date" id="startDate" class="form-control" name="startDate">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="endDate" class="col-sm-2 col-form-label">End Date</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control" name="endDate">
+                                    <input type="date" id="endDate" class="form-control" name="endDate">
                                 </div>
                             </div>
 

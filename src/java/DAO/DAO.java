@@ -81,7 +81,7 @@ public class DAO extends DBContext {
             String strSQL = "UPDATE [dbo].[Sliders]\n"
                     + "   SET [title] = ?\n"
                     + "      ,[image] = ?\n"
-                    + "      ,[notes] = ?\n"
+                    + "      ,[note] = ?\n"
                     + "      ,[staff_id] = ?\n"
                     + "      ,[start_date] = ?\n"
                     + "      ,[end_date] = ?\n"
@@ -264,7 +264,7 @@ public class DAO extends DBContext {
                 + "     VALUES\n"
                 + "           (?,?,?,?,?,?,?,?)";
         try {
-            stm=connection.prepareStatement(sql);
+            stm = connection.prepareStatement(sql);
             stm.setString(1, slider.getTitle());
             stm.setString(2, slider.getImage());
             stm.setString(3, slider.getNote());
@@ -275,7 +275,77 @@ public class DAO extends DBContext {
             stm.setInt(8, Integer.parseInt(slider.getIsDelete()));
             stm.execute();
         } catch (SQLException e) {
-            System.out.println("insertNewSlider: " +e.getMessage());
+            System.out.println("insertNewSlider: " + e.getMessage());
+        }
+    }
+
+    public void updateTitleOfSlider(String id, String title) {
+        String sql = "UPDATE [dbo].[Sliders]\n"
+                + "   SET [title] = ?      \n"
+                + " WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, title);
+            stm.setInt(2, Integer.parseInt(id));
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("updateTitleOfSlider: " + e.getMessage());
+        }
+    }
+
+    public void updateNoteOfSlider(String id, String note) {
+        String sql = "UPDATE [dbo].[Sliders]\n"
+                + "   SET [note] = ?      \n"
+                + " WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, note);
+            stm.setInt(2, Integer.parseInt(id));
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("updateNoteOfSlider: " + e.getMessage());
+        }
+    }
+
+    public void updateStartDateOfSlider(String id, String startDate) {
+        String sql = "UPDATE [dbo].[Sliders]\n"
+                + "   SET [start_date] = ?      \n"
+                + " WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, startDate);
+            stm.setInt(2, Integer.parseInt(id));
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("updateStartDateOfSlider: " + e.getMessage());
+        }
+    }
+
+    public void updateEndDateOfSlider(String id, String endDate) {
+        String sql = "UPDATE [dbo].[Sliders]\n"
+                + "   SET [end_date] = ?      \n"
+                + " WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, endDate);
+            stm.setInt(2, Integer.parseInt(id));
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("updateEndDateOfSlider: " + e.getMessage());
+        }
+    }
+
+    public void updateStatusOfSlider(String id, String status) {
+        String sql = "UPDATE [dbo].[Sliders]\n"
+                + "   SET [status] = ?      \n"
+                + " WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, Integer.parseInt(status));
+            stm.setInt(2, Integer.parseInt(id));
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("updateStatusOfSlider: " + e.getMessage());
         }
     }
 }
