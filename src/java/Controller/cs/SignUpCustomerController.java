@@ -97,23 +97,20 @@ public class SignUpCustomerController extends HttpServlet {
         // Check if username already exists
         Customer a = dao.checkCustomerAccountExits(username);
         if (a == null) {
-            // Uncomment the following lines if you want to enable sign-up
-            // dao.singUp(name, username, password, email, phone, address, true, true);
-            // request.setAttribute("messen", "Sign Up Success");
-            // request.getRequestDispatcher("login.jsp").forward(request, response);
-
             SendMail sm = new SendMail();
             String code = sm.getRandom();
+            String subject = "User Email Verification";
+            String content = "Registered successfully. Please verify your account using this code: " + code;
             Customer user = new Customer(username, email, code);
+            // Proceed with your logic here
 
-            boolean test = sm.sendEmail(user);
+            boolean test = sm.sendEmail(user, subject, content);
             if (test) {
                 session.setAttribute("authcode", user);
                 response.sendRedirect("view/customer/verifysignupcustomer.jsp");
             }
         } else {
             request.setAttribute("messen", "Username exist");
-            // response.sendRedirect("Signup.jsp");
             request.getRequestDispatcher("view/customer/signupcustomer.jsp").forward(request, response);
         }
 
