@@ -18,7 +18,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -39,11 +42,15 @@ public class ViewOrderInformationCustomerController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        OrderCustomerDAO dao = new OrderCustomerDAO();
+        String customerName = (String) session.getAttribute("usernamecustomer");
+        int customer_id = dao.getCustomerIdByUsername(customerName);
         String orderId = request.getParameter("orderId");
         String cancelled = request.getParameter("cancelled");
         String complete = request.getParameter("complete");
         int order_id = Integer.parseInt(orderId);
-        OrderCustomerDAO dao = new OrderCustomerDAO();
+
         ProductDAO productDAO = new ProductDAO();
         ProductDAOByPublic ProductDAOByPublic = new ProductDAOByPublic();
         if (cancelled != null) {
@@ -69,9 +76,17 @@ public class ViewOrderInformationCustomerController extends HttpServlet {
             dao.updateOrderComplete(order_id);
         }
         List<OrderDetail> listProductOrder = dao.getProductByOrderId(order_id);
+        Map<Integer, Integer> feedbackCounts = new HashMap<>();
+        for (OrderDetail orderDetail : listProductOrder) {
+            String productOrderId = orderDetail.getProduct_id();
+            int productID = Integer.parseInt(productOrderId);
+            int countFeedback = dao.countFeedbackProductByCustomer(customer_id, productID);
+            feedbackCounts.put(productID, countFeedback);
+        }
         List<Product> listNewProduct = ProductDAOByPublic.getTop6ProductNew();
         List<Category> category = ProductDAOByPublic.getCategory();
         Order order = dao.getInfoOrderByOrderId(order_id);
+        request.setAttribute("feedbackCounts", feedbackCounts);
         request.setAttribute("listNewProduct", listNewProduct);
         request.setAttribute("listProductOrder", listProductOrder);
         request.setAttribute("categories", category);

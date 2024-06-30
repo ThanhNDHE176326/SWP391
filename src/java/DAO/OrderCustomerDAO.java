@@ -277,9 +277,28 @@ public class OrderCustomerDAO extends DBContext {
         return orderDetail;
     }
 
+    public int countFeedbackProductByCustomer(int customer_id, int product_id) {
+        String sql = "SELECT COUNT(*) AS feedback_count FROM Feedbacks\n"
+                + "WHERE product_id = ? AND customer_id = ?";
+
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, product_id);
+            stm.setInt(2, customer_id);
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
         OrderCustomerDAO dao = new OrderCustomerDAO();
-        OrderDetail orderDetail = dao.getOrderDetailById(1);
-        System.out.println(orderDetail);
+        int count = dao.countFeedbackProductByCustomer(1, 1);
+        System.out.println(count);
     }
 }
