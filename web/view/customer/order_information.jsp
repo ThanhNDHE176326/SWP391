@@ -408,7 +408,7 @@
                                         <c:when test="${order.status_name == 'Đã giao hàng'}">
                                             <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&complete=complete" class="cancel-link">Nhận hàng thành công</a>
                                         </c:when>
-                                        
+
                                     </c:choose>
                                 </p>
 
@@ -429,39 +429,50 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach var="listProductOrder" items="${listProductOrder}">
+                                        <c:forEach var="orderDetail" items="${listProductOrder}">
                                             <tr>
                                                 <td class="cart_select">
-                                                    <p>${listProductOrder.id}</p>                                                    
+                                                    <p>${orderDetail.id}</p>
                                                 </td>
                                                 <td class="cart_product">
-                                                    <a href=""><img src="<c:url value='/images/${listProductOrder.image}'/>" alt=""></a>
+                                                    <a href=""><img src="<c:url value='/images/${orderDetail.image}'/>" alt=""></a>
                                                 </td>
                                                 <td class="cart_description">
-                                                    <h4><a href="">${listProductOrder.product_name}</a></h4>
-                                                    <p>ID: ${listProductOrder.product_id}</p>
+                                                    <h4><a href="">${orderDetail.product_name}</a></h4>
+                                                    <p>ID: ${orderDetail.product_id}</p>
                                                 </td>
                                                 <td class="cart_price">
-                                                    <fmt:formatNumber value="${listProductOrder.unitprice}" type="number" maxFractionDigits="0" />
+                                                    <fmt:formatNumber value="${orderDetail.unitprice}" type="number" maxFractionDigits="0" />
                                                 </td>
                                                 <td class="cart_stock">
-                                                    <p>${listProductOrder.category_name}</p>                                                     
+                                                    <p>${orderDetail.category_name}</p>
                                                 </td>
                                                 <td class="cart_quantity">
-                                                    <p>${listProductOrder.quantity}</p>
+                                                    <p>${orderDetail.quantity}</p>
                                                 </td>
                                                 <td class="cart_total">
-                                                    <fmt:formatNumber value="${listProductOrder.unitprice * listProductOrder.quantity}" type="number" maxFractionDigits="0" />
+                                                    <fmt:formatNumber value="${orderDetail.unitprice * orderDetail.quantity}" type="number" maxFractionDigits="0" />
                                                 </td>
                                                 <td class="cart_feedback">
-                                                    <c:if test="${order.status_name != 'Nhận hàng thành công'}">
-                                                        <a class="feedback_button disabled" " >Feedback</a>
-                                                        <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${listProductOrder.product_id}" class="feedback_button disabled">Repurchase</a>
-                                                    </c:if>
-                                                    <c:if test="${order.status_name == 'Nhận hàng thành công'}">
-                                                        <a class="feedback_button" href="${pageContext.request.contextPath}/addfeedbackpublic?productId=${listProductOrder.product_id}">Feedback</a>
-                                                        <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${listProductOrder.product_id}" class="feedback_button">Repurchase</a>
-                                                    </c:if>
+                                                    <c:forEach var="entry" items="${feedbackCounts}">
+                                                        <c:if test="${entry.key eq orderDetail.product_id}">
+                                                            <c:set var="countFeedback" value="${entry.value}" />
+                                                            <c:choose>
+                                                                <c:when test="${not empty orderDetail && order.status_name ne 'Nhận hàng thành công'}">
+                                                                    <a class="feedback_button disabled">Send Feedback</a>
+                                                                    <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${orderDetail.product_id}" class="feedback_button disabled">Rebuy</a>
+                                                                </c:when>
+                                                                <c:when test="${order.status_name eq 'Nhận hàng thành công' && countFeedback == 0}">
+                                                                    <a class="feedback_button" href="${pageContext.request.contextPath}/addfeedbackpublic?productId=${orderDetail.product_id}">Send Feedback</a>
+                                                                    <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${orderDetail.product_id}" class="feedback_button">Rebuy</a>
+                                                                </c:when>
+                                                                <c:when test="${order.status_name eq 'Nhận hàng thành công' && countFeedback > 0}">
+                                                                    <a class="feedback_button" href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${orderDetail.product_id}">View Feedback</a>
+                                                                    <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${orderDetail.product_id}" class="feedback_button">Rebuy</a>
+                                                                </c:when>
+                                                            </c:choose>
+                                                        </c:if>
+                                                    </c:forEach>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -475,20 +486,35 @@
                                 <h2 class="title text-center">recommended items</h2>
 
                                 <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-                                        <div class="carousel-inner">
-                                            <div class="item active">	
-                                                <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
-                                                    <c:if test="${loop.index == 0}">
-                                                        <div class="col-sm-4">
-                                                            <div class="product-image-wrapper">
-                                                                <div class="single-products  product-item" data-id="${listNewProduct.id}">
-                                                                    <div class="productinfo text-center">
-                                                                        <img src="images/${listNewProduct.image}" alt="" />
+                                    <div class="carousel-inner">
+                                        <div class="item active">	
+                                            <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
+                                                <c:if test="${loop.index == 0}">
+                                                    <div class="col-sm-4">
+                                                        <div class="product-image-wrapper">
+                                                            <div class="single-products  product-item" data-id="${listNewProduct.id}">
+                                                                <div class="productinfo text-center">
+                                                                    <img src="images/${listNewProduct.image}" alt="" />
+                                                                    <h2>${listNewProduct.title}</h2>
+                                                                    <p>${listNewProduct.description}</p>
+                                                                    <p style="display: none;">${order.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.quantity}</p>
+                                                                    <div class="button-container">
+                                                                        <c:if test="${listNewProduct.quantity > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                            </a>
+                                                                        </c:if>
+                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                        </c:if>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-overlay">
+                                                                    <div class="overlay-content">
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
-                                                                        <p style="display: none;">${order.id}</p>
-                                                                        <p style="display: none;">${listNewProduct.id}</p>
-                                                                        <p style="display: none;">${listNewProduct.quantity}</p>
                                                                         <div class="button-container">
                                                                             <c:if test="${listNewProduct.quantity > 0}">
                                                                                 <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
@@ -500,46 +526,46 @@
                                                                             </c:if>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="product-overlay">
-                                                                        <div class="overlay-content">
-                                                                            <h2>${listNewProduct.title}</h2>
-                                                                            <p>${listNewProduct.description}</p>
-                                                                            <div class="button-container">
-                                                                                <c:if test="${listNewProduct.quantity > 0}">
-                                                                                    <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
-                                                                                        <i class="fa fa-shopping-cart"></i>Add to cart
-                                                                                    </a>
-                                                                                </c:if>
-                                                                                <c:if test="${listNewProduct.quantity == 0}">
-                                                                                    <span class="out-of-stock">Đã hết hàng</span>
-                                                                                </c:if>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="choose">
-                                                                    <ul class="nav nav-pills nav-justified">
-                                                                        <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
-                                                                        <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
-                                                                    </ul>
                                                                 </div>
                                                             </div>
+                                                            <div class="choose">
+                                                                <ul class="nav nav-pills nav-justified">
+                                                                    <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                    <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
-                                                    </c:if>
-                                                </c:forEach>
+                                                    </div>
+                                                </c:if>
+                                            </c:forEach>
 
-                                                <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
-                                                    <c:if test="${loop.index == 1}">
-                                                        <div class="col-sm-4">
-                                                            <div class="product-image-wrapper">
-                                                                <div class="single-products  product-item" data-id="${listNewProduct.id}">
-                                                                    <div class="productinfo text-center">
-                                                                        <img src="images/${listNewProduct.image}" alt="" />
+                                            <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
+                                                <c:if test="${loop.index == 1}">
+                                                    <div class="col-sm-4">
+                                                        <div class="product-image-wrapper">
+                                                            <div class="single-products  product-item" data-id="${listNewProduct.id}">
+                                                                <div class="productinfo text-center">
+                                                                    <img src="images/${listNewProduct.image}" alt="" />
+                                                                    <h2>${listNewProduct.title}</h2>
+                                                                    <p>${listNewProduct.description}</p>
+                                                                    <p style="display: none;">${order.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.quantity}</p>
+                                                                    <div class="button-container">
+                                                                        <c:if test="${listNewProduct.quantity > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                            </a>
+                                                                        </c:if>
+                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                        </c:if>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-overlay">
+                                                                    <div class="overlay-content">
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
-                                                                        <p style="display: none;">${order.id}</p>
-                                                                        <p style="display: none;">${listNewProduct.id}</p>
-                                                                        <p style="display: none;">${listNewProduct.quantity}</p>
                                                                         <div class="button-container">
                                                                             <c:if test="${listNewProduct.quantity > 0}">
                                                                                 <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
@@ -551,46 +577,46 @@
                                                                             </c:if>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="product-overlay">
-                                                                        <div class="overlay-content">
-                                                                            <h2>${listNewProduct.title}</h2>
-                                                                            <p>${listNewProduct.description}</p>
-                                                                            <div class="button-container">
-                                                                                <c:if test="${listNewProduct.quantity > 0}">
-                                                                                    <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
-                                                                                        <i class="fa fa-shopping-cart"></i>Add to cart
-                                                                                    </a>
-                                                                                </c:if>
-                                                                                <c:if test="${listNewProduct.quantity == 0}">
-                                                                                    <span class="out-of-stock">Đã hết hàng</span>
-                                                                                </c:if>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="choose">
-                                                                    <ul class="nav nav-pills nav-justified">
-                                                                        <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
-                                                                        <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
-                                                                    </ul>
                                                                 </div>
                                                             </div>
+                                                            <div class="choose">
+                                                                <ul class="nav nav-pills nav-justified">
+                                                                    <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                    <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
-                                                    </c:if>
-                                                </c:forEach>
+                                                    </div>
+                                                </c:if>
+                                            </c:forEach>
 
-                                                <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
-                                                    <c:if test="${loop.index == 2}">
-                                                        <div class="col-sm-4">
-                                                            <div class="product-image-wrapper">
-                                                                <div class="single-products  product-item" data-id="${listNewProduct.id}">
-                                                                    <div class="productinfo text-center">
-                                                                        <img src="images/${listNewProduct.image}" alt="" />
+                                            <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
+                                                <c:if test="${loop.index == 2}">
+                                                    <div class="col-sm-4">
+                                                        <div class="product-image-wrapper">
+                                                            <div class="single-products  product-item" data-id="${listNewProduct.id}">
+                                                                <div class="productinfo text-center">
+                                                                    <img src="images/${listNewProduct.image}" alt="" />
+                                                                    <h2>${listNewProduct.title}</h2>
+                                                                    <p>${listNewProduct.description}</p>
+                                                                    <p style="display: none;">${order.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.quantity}</p>
+                                                                    <div class="button-container">
+                                                                        <c:if test="${listNewProduct.quantity > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                            </a>
+                                                                        </c:if>
+                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                        </c:if>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-overlay">
+                                                                    <div class="overlay-content">
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
-                                                                        <p style="display: none;">${order.id}</p>
-                                                                        <p style="display: none;">${listNewProduct.id}</p>
-                                                                        <p style="display: none;">${listNewProduct.quantity}</p>
                                                                         <div class="button-container">
                                                                             <c:if test="${listNewProduct.quantity > 0}">
                                                                                 <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
@@ -602,190 +628,175 @@
                                                                             </c:if>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="product-overlay">
-                                                                        <div class="overlay-content">
-                                                                            <h2>${listNewProduct.title}</h2>
-                                                                            <p>${listNewProduct.description}</p>
-                                                                            <div class="button-container">
-                                                                                <c:if test="${listNewProduct.quantity > 0}">
-                                                                                    <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
-                                                                                        <i class="fa fa-shopping-cart"></i>Add to cart
-                                                                                    </a>
-                                                                                </c:if>
-                                                                                <c:if test="${listNewProduct.quantity == 0}">
-                                                                                    <span class="out-of-stock">Đã hết hàng</span>
-                                                                                </c:if>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="choose">
-                                                                    <ul class="nav nav-pills nav-justified">
-                                                                        <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
-                                                                        <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
-                                                                    </ul>
                                                                 </div>
                                                             </div>
+                                                            <div class="choose">
+                                                                <ul class="nav nav-pills nav-justified">
+                                                                    <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                    <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
-                                                    </c:if>
-                                                </c:forEach>
+                                                    </div>
+                                                </c:if>
+                                            </c:forEach>
 
-                                            </div>
-                                            <div class="item">	
-                                                <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
-                                                    <c:if test="${loop.index == 3}">
-                                                        <div class="col-sm-4">
-                                                            <div class="product-image-wrapper">
-                                                                <div class="single-products  product-item" data-id="${listNewProduct.id}">
-                                                                    <div class="productinfo text-center">
-                                                                        <img src="images/${listNewProduct.image}" alt="" />
-                                                                        <h2>${listNewProduct.title}</h2>
-                                                                        <p>${listNewProduct.description}</p>
-                                                                        <p style="display: none;">${order.id}</p>
-                                                                        <p style="display: none;">${listNewProduct.id}</p>
-                                                                        <p style="display: none;">${listNewProduct.quantity}</p>
-                                                                        <div class="button-container">
-                                                                            <c:if test="${listNewProduct.quantity > 0}">
-                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
-                                                                                    <i class="fa fa-shopping-cart"></i>Add to cart
-                                                                                </a>
-                                                                            </c:if>
-                                                                            <c:if test="${listNewProduct.quantity == 0}">
-                                                                                <span class="out-of-stock">Đã hết hàng</span>
-                                                                            </c:if>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-overlay">
-                                                                        <div class="overlay-content">
-                                                                            <h2>${listNewProduct.title}</h2>
-                                                                            <p>${listNewProduct.description}</p>
-                                                                            <div class="button-container">
-                                                                                <c:if test="${listNewProduct.quantity > 0}">
-                                                                                    <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
-                                                                                        <i class="fa fa-shopping-cart"></i>Add to cart
-                                                                                    </a>
-                                                                                </c:if>
-                                                                                <c:if test="${listNewProduct.quantity == 0}">
-                                                                                    <span class="out-of-stock">Đã hết hàng</span>
-                                                                                </c:if>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="choose">
-                                                                    <ul class="nav nav-pills nav-justified">
-                                                                        <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
-                                                                        <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </c:if>
-                                                </c:forEach>
-
-                                                <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
-                                                    <c:if test="${loop.index == 4}">
-                                                        <div class="col-sm-4">
-                                                            <div class="product-image-wrapper">
-                                                                <div class="single-products  product-item" data-id="${listNewProduct.id}">
-                                                                    <div class="productinfo text-center">
-                                                                        <img src="images/${listNewProduct.image}" alt="" />
-                                                                        <h2>${listNewProduct.title}</h2>
-                                                                        <p>${listNewProduct.description}</p>
-                                                                        <p style="display: none;">${order.id}</p>
-                                                                        <p style="display: none;">${listNewProduct.id}</p>
-                                                                        <p style="display: none;">${listNewProduct.quantity}</p>
-                                                                        <div class="button-container">
-                                                                            <c:if test="${listNewProduct.quantity > 0}">
-                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
-                                                                                    <i class="fa fa-shopping-cart"></i>Add to cart
-                                                                                </a>
-                                                                            </c:if>
-                                                                            <c:if test="${listNewProduct.quantity == 0}">
-                                                                                <span class="out-of-stock">Đã hết hàng</span>
-                                                                            </c:if>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-overlay">
-                                                                        <div class="overlay-content">
-                                                                            <h2>${listNewProduct.title}</h2>
-                                                                            <p>${listNewProduct.description}</p>
-                                                                            <div class="button-container">
-                                                                                <c:if test="${listNewProduct.quantity > 0}">
-                                                                                    <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
-                                                                                        <i class="fa fa-shopping-cart"></i>Add to cart
-                                                                                    </a>
-                                                                                </c:if>
-                                                                                <c:if test="${listNewProduct.quantity == 0}">
-                                                                                    <span class="out-of-stock">Đã hết hàng</span>
-                                                                                </c:if>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="choose">
-                                                                    <ul class="nav nav-pills nav-justified">
-                                                                        <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
-                                                                        <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </c:if>
-                                                </c:forEach>
-
-                                                <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
-                                                    <c:if test="${loop.index == 5}">
-                                                        <div class="col-sm-4">
-                                                            <div class="product-image-wrapper">
-                                                                <div class="single-products  product-item" data-id="${listNewProduct.id}">
-                                                                    <div class="productinfo text-center">
-                                                                        <img src="images/${listNewProduct.image}" alt="" />
-                                                                        <h2>${listNewProduct.title}</h2>
-                                                                        <p>${listNewProduct.description}</p>
-                                                                        <p style="display: none;">${order.id}</p>
-                                                                        <p style="display: none;">${listNewProduct.id}</p>
-                                                                        <p style="display: none;">${listNewProduct.quantity}</p>
-                                                                        <div class="button-container">
-                                                                            <c:if test="${listNewProduct.quantity > 0}">
-                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
-                                                                                    <i class="fa fa-shopping-cart"></i>Add to cart
-                                                                                </a>
-                                                                            </c:if>
-                                                                            <c:if test="${listNewProduct.quantity == 0}">
-                                                                                <span class="out-of-stock">Đã hết hàng</span>
-                                                                            </c:if>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-overlay">
-                                                                        <div class="overlay-content">
-                                                                            <h2>${listNewProduct.title}</h2>
-                                                                            <p>${listNewProduct.description}</p>
-                                                                            <div class="button-container">
-                                                                                <c:if test="${listNewProduct.quantity > 0}">
-                                                                                    <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
-                                                                                        <i class="fa fa-shopping-cart"></i>Add to cart
-                                                                                    </a>
-                                                                                </c:if>
-                                                                                <c:if test="${listNewProduct.quantity == 0}">
-                                                                                    <span class="out-of-stock">Đã hết hàng</span>
-                                                                                </c:if>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="choose">
-                                                                    <ul class="nav nav-pills nav-justified">
-                                                                        <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
-                                                                        <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </c:if>
-                                                </c:forEach>
-                                            </div>
                                         </div>
+                                        <div class="item">	
+                                            <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
+                                                <c:if test="${loop.index == 3}">
+                                                    <div class="col-sm-4">
+                                                        <div class="product-image-wrapper">
+                                                            <div class="single-products  product-item" data-id="${listNewProduct.id}">
+                                                                <div class="productinfo text-center">
+                                                                    <img src="images/${listNewProduct.image}" alt="" />
+                                                                    <h2>${listNewProduct.title}</h2>
+                                                                    <p>${listNewProduct.description}</p>
+                                                                    <p style="display: none;">${order.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.quantity}</p>
+                                                                    <div class="button-container">
+                                                                        <c:if test="${listNewProduct.quantity > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                            </a>
+                                                                        </c:if>
+                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                        </c:if>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-overlay">
+                                                                    <div class="overlay-content">
+                                                                        <h2>${listNewProduct.title}</h2>
+                                                                        <p>${listNewProduct.description}</p>
+                                                                        <div class="button-container">
+                                                                            <c:if test="${listNewProduct.quantity > 0}">
+                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                                    <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                                </a>
+                                                                            </c:if>
+                                                                            <c:if test="${listNewProduct.quantity == 0}">
+                                                                                <span class="out-of-stock">Đã hết hàng</span>
+                                                                            </c:if>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="choose">
+                                                                <ul class="nav nav-pills nav-justified">
+                                                                    <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                    <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                            </c:forEach>
+
+                                            <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
+                                                <c:if test="${loop.index == 4}">
+                                                    <div class="col-sm-4">
+                                                        <div class="product-image-wrapper">
+                                                            <div class="single-products  product-item" data-id="${listNewProduct.id}">
+                                                                <div class="productinfo text-center">
+                                                                    <img src="images/${listNewProduct.image}" alt="" />
+                                                                    <h2>${listNewProduct.title}</h2>
+                                                                    <p>${listNewProduct.description}</p>
+                                                                    <p style="display: none;">${order.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.quantity}</p>
+                                                                    <div class="button-container">
+                                                                        <c:if test="${listNewProduct.quantity > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                            </a>
+                                                                        </c:if>
+                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                        </c:if>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-overlay">
+                                                                    <div class="overlay-content">
+                                                                        <h2>${listNewProduct.title}</h2>
+                                                                        <p>${listNewProduct.description}</p>
+                                                                        <div class="button-container">
+                                                                            <c:if test="${listNewProduct.quantity > 0}">
+                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                                    <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                                </a>
+                                                                            </c:if>
+                                                                            <c:if test="${listNewProduct.quantity == 0}">
+                                                                                <span class="out-of-stock">Đã hết hàng</span>
+                                                                            </c:if>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="choose">
+                                                                <ul class="nav nav-pills nav-justified">
+                                                                    <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                    <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                            </c:forEach>
+
+                                            <c:forEach var="listNewProduct" items="${listNewProduct}" varStatus="loop">
+                                                <c:if test="${loop.index == 5}">
+                                                    <div class="col-sm-4">
+                                                        <div class="product-image-wrapper">
+                                                            <div class="single-products  product-item" data-id="${listNewProduct.id}">
+                                                                <div class="productinfo text-center">
+                                                                    <img src="images/${listNewProduct.image}" alt="" />
+                                                                    <h2>${listNewProduct.title}</h2>
+                                                                    <p>${listNewProduct.description}</p>
+                                                                    <p style="display: none;">${order.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.id}</p>
+                                                                    <p style="display: none;">${listNewProduct.quantity}</p>
+                                                                    <div class="button-container">
+                                                                        <c:if test="${listNewProduct.quantity > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                            </a>
+                                                                        </c:if>
+                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                        </c:if>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-overlay">
+                                                                    <div class="overlay-content">
+                                                                        <h2>${listNewProduct.title}</h2>
+                                                                        <p>${listNewProduct.description}</p>
+                                                                        <div class="button-container">
+                                                                            <c:if test="${listNewProduct.quantity > 0}">
+                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                                    <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                                </a>
+                                                                            </c:if>
+                                                                            <c:if test="${listNewProduct.quantity == 0}">
+                                                                                <span class="out-of-stock">Đã hết hàng</span>
+                                                                            </c:if>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="choose">
+                                                                <ul class="nav nav-pills nav-justified">
+                                                                    <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                    <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
                                     <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
                                         <i class="fa fa-angle-left"></i>
                                     </a>

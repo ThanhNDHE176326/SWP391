@@ -284,10 +284,25 @@ public class CustomerDAO extends DBContext {
         }
         return null;
     }
+    
+    public void updateAddressDefault(String name, String phone, String address, String gender, String username) {
+        String sql = "UPDATE Customers SET name = ?, phone = ?, address = ?, gender = ? WHERE username = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, name);
+            st.setString(2, phone);
+            st.setString(3, address);
+            st.setString(4, gender);
+            st.setString(5, username);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 
     public static void main(String[] args) {
         CustomerDAO dao = new CustomerDAO();
-        dao.addDeliveryAddress(1, "thái bình", "0987654321", "Nguyễn Trọng Hải", true);
+        dao.updateAddressDefault("Nguyễn Trọng Hải", "0987654321", "phúc thành", "1", "nguyenvane");
     }
 }
 
