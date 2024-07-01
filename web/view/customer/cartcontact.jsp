@@ -426,6 +426,17 @@
                 text-align: center; /* Căn giữa nội dung */
                 font-size: 17px;
             }
+            /* Tùy chỉnh nút tích màu xanh nếu cần */
+            .btn-success {
+                background-color: #28a745; /* Màu xanh mặc định của Bootstrap */
+                border-color: #28a745;
+            }
+
+            .btn-success:hover {
+                background-color: #218838; /* Màu xanh khi hover */
+                border-color: #1e7e34;
+            }
+
         </style>
     </head><!--/head-->
 
@@ -492,7 +503,8 @@
                                                         <th>Phone</th>
                                                         <th>Receiver</th>
                                                         <th>Gender</th>
-                                                        <th>Action</th>
+                                                        <th>Delete</th>
+                                                        <th>Default settings</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -514,6 +526,13 @@
                                                                     <i class="fa fa-times"></i>
                                                                 </a>
                                                             </td>
+                                                            <td>
+                                                                <a class="btn btn-success btn-sm" href="${pageContext.request.contextPath}/updateAddressDefault?id=${shippingaddress.id}&name=${shippingaddress.recipient_name}&gender=${shippingaddress.recipient_gender}
+                                                                   &phone=${shippingaddress.phone}&address=${shippingaddress.address}">
+                                                                    <i class="fa fa-check"></i>
+                                                                </a>
+                                                            </td>
+
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
