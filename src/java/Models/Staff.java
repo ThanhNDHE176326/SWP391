@@ -10,7 +10,8 @@ package Models;
  */
 public class Staff {
 
-    String id, fullname, username, password, email, gender, phone, address, role, isDelete, code, status,orderCount;
+    String id, fullname, username, password, email, 
+            gender, phone, address, role, isDelete, code, status,orderCount;
 
     public Staff() {
     }

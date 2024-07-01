@@ -108,6 +108,7 @@ public class SaleOrderListController extends HttpServlet {
     System.out.println("Total Orders: " + totalOrders + ", Total Pages: " + totalPages);
 
     List<Staff> staffList = staffDAO.getSalesStaffWithOrderCount();
+    
     request.setAttribute("orders", orders);
     request.setAttribute("currentPage", page);
     request.setAttribute("totalPages", totalPages);
@@ -120,7 +121,7 @@ public class SaleOrderListController extends HttpServlet {
             filteredStatusList.add(status);
         }
     }
-    request.setAttribute("orderStatusList", filteredStatusList);
+    request.setAttribute("OrderStatusList", filteredStatusList);
 
     // Đảm bảo rằng các tham số lọc được truyền tiếp qua request dispatcher
     request.setAttribute("statusId", statusId);
