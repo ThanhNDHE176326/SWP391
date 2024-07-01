@@ -178,6 +178,9 @@
             a.btn:hover {
                 background-color: #2e59d9;
             }
+            .titleTable{
+                color: #0056b3;
+            }
         </style>
     </head>
 
@@ -222,15 +225,15 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Customer</th>
-                                    <th>Total Cost</th>
-                                    <th>Order Date</th>
-                                    <th>View Details</th>
-                                    <th>Staff</th>
-                                    <th>Change</th>
-                                    <th>Status</th>
-                                    <th> Update Status</th>
+                                    <th class="titleTable">ID</th>
+                                    <th class="titleTable">Customer</th>
+                                    <th class="titleTable">Total Cost</th>
+                                    <th class="titleTable">Order Date</th>
+                                    <th class="titleTable">View Details</th>
+                                    <th class="titleTable">Staff</th>
+                                    <!--<th>Change</th>-->
+                                    <th class="titleTable">Status</th>
+                                    <th class="titleTable"> Update Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -244,18 +247,18 @@
                                                 Details</a></td>
 
 
-                                        <td>${order.staff_name}</td>
+                                        <!--<td>${order.staff_name}</td>-->
                                         <td >
-                                            <form action="${pageContext.request.contextPath}/saleadminorderlist" method="post">
+                                            <form action="${pageContext.request.contextPath}/saleadminorderlist" method="post" id="staffSubmit">
                                                 <input type="hidden" name="orderId" value="${order.id}">
-                                                <select name="staffId">
+                                                <select name="staffId" onchange="document.getElementById('staffSubmit').submit()">
                                                     <c:forEach var="staff" items="${staffList}">
-                                                        <option value="${staff.id}" ${order.staff.id == staff.id ? 'selected' : ''}>
+                                                        <option value="${staff.id}" ${order.staff_name eq staff.fullname ? "selected" : ""}>
                                                             ${staff.fullname} (${staff.orderCount} orders)
                                                         </option>
                                                     </c:forEach>
                                                 </select>
-                                                <button type="submit">Change</button>
+                                                <!--<button type="submit">Change</button>-->
                                             </form>
                                         </td>
                                         <td>${order.status_name}</td>

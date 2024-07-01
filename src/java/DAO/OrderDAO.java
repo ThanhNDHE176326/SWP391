@@ -719,27 +719,27 @@ public class OrderDAO extends DBContext {
                 + "WHERE o.isDelete = 1 "
                 + "ORDER BY o.order_date DESC "
                 + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-        try (PreparedStatement stm = connection.prepareStatement(sql)) {
-            stm.setInt(1, offset);
-            stm.setInt(2, limit);
-            try (ResultSet rs = stm.executeQuery()) {
-                while (rs.next()) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, offset);
+            preparedStatement.setInt(2, limit);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
                     Order order = new Order();
-                    order.setId(rs.getString("id"));
-                    order.setCustomer_name(rs.getString("customer_name"));
-                    order.setTotalCost(rs.getString("total_cost"));
-                    order.setNote(rs.getString("note"));
-                    order.setOrderDate(rs.getString("order_date"));
-                    order.setAddress(rs.getString("address"));
-                    order.setPhone(rs.getString("phone"));
-                    order.setStatus_id(rs.getString("status_id"));
-                    order.setStatus_name(rs.getString("status_name"));
-                    order.setStaff_name(rs.getString("staff_name"));
+                    order.setId(resultSet.getString("id"));
+                    order.setCustomer_name(resultSet.getString("customer_name"));
+                    order.setTotalCost(resultSet.getString("total_cost"));
+                    order.setNote(resultSet.getString("note"));
+                    order.setOrderDate(resultSet.getString("order_date"));
+                    order.setAddress(resultSet.getString("address"));
+                    order.setPhone(resultSet.getString("phone"));
+                    order.setStatus_id(resultSet.getString("status_id"));
+                    order.setStatus_name(resultSet.getString("status_name"));
+                    order.setStaff_name(resultSet.getString("staff_name"));
                     orders.add(order);
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("getOrdersWithPagination: " + e.getMessage());
         }
         return orders;
     }

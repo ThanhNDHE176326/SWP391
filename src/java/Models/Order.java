@@ -12,7 +12,7 @@ import java.time.LocalDate;
  */
 public class Order {
 
-    String id, customer, totalCost, note, orderDate, address, phone, isDelete, staff,status_id,status_name, customer_name,staff_name, recipient_name, recipient_gender,payment_name,nextStatusName;
+    String id, customer, totalCost, note, orderDate, address, phone, isDelete, staff, status_id, status_name, customer_name, staff_name, recipient_name, recipient_gender, payment_name, nextStatusName;
 
     public Order() {
     }
@@ -24,7 +24,6 @@ public class Order {
     public void setNextStatusName(String nextStatusName) {
         this.nextStatusName = nextStatusName;
     }
-    
 
     public Order(String id, String customer, String totalCost, String note, String orderDate, String address, String phone, String isDelete, String staff, String status_id, String status_name, String customer_name) {
         this.id = id;
@@ -68,12 +67,9 @@ public class Order {
         this.payment_name = payment_name;
     }
 
-    
 //    public Order(String id, String totalCost, LocalDate orderDate, String addressOrder, String phoneOrder, int salerRandomID) {
 //        this
 //    }
-    
-
     public String getCustomer_name() {
         return customer_name;
     }
@@ -103,7 +99,6 @@ public class Order {
         this.status_id = status_id;
         this.status_name = status_name;
     }
-    
 
     public String getStatus_id() {
         return status_id;
@@ -144,9 +139,6 @@ public class Order {
     public void setPayment_name(String payment_name) {
         this.payment_name = payment_name;
     }
-
-  
-    
 
     public Order(String id, String customer, String totalCost, String note, String orderDate, String address, String phone, String isDelete, String staff) {
         this.id = id;
@@ -237,7 +229,4 @@ public class Order {
         return "Order{" + "id=" + id + ", customer=" + customer + ", totalCost=" + totalCost + ", note=" + note + ", orderDate=" + orderDate + ", address=" + address + ", phone=" + phone + ", isDelete=" + isDelete + ", staff=" + staff + ", status_id=" + status_id + ", status_name=" + status_name + ", customer_name=" + customer_name + ", staff_name=" + staff_name + ", recipient_name=" + recipient_name + ", recipient_gender=" + recipient_gender + ", payment_name=" + payment_name + '}';
     }
 
-    
-
-    
 }
