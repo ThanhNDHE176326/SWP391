@@ -259,10 +259,14 @@ public class CartCompletionController extends HttpServlet {
         String email = customerdao.getInformationCustomer(usernamecustomer).getEmail();
 
         String subject = "From BookHaven With Love <3";
-        String content = "ORDER CONFIRMED\n\n"
-                + "Thank you for choosing our product\n"
-                + "The product will be delivered to you as soon as possible\n"
-                + "We hope you have a wonderful experience with our product";
+        String content = "ORDER PENDING CONFIRMATION\n\n"
+                + "Dear Customer,\n\n"
+                + "Thank you for choosing our product.\n"
+                + "Your order is currently being processed and is awaiting confirmation.\n"
+                + "We will notify you once the order is confirmed and ready for delivery.\n\n"
+                + "We hope you have a wonderful experience with our product.\n\n"
+                + "Best regards,\n"
+                + "The BookHaven Team";
 
         Customer user = new Customer(usernamecustomer, email);
         boolean test = sm.sendEmail(user, subject, content);

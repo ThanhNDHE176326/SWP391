@@ -13,7 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
@@ -910,6 +909,25 @@ public class OrderDAO extends DBContext {
             e.printStackTrace();
         }
         return status;
+    }
+
+    public String getCustomerIdByOrderId(int orderId) {
+        String sql = "SELECT customer_id FROM Orders WHERE id = ?";
+        String customer_id = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, orderId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    customer_id = resultSet.getString("customer_id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return customer_id;
     }
 
 }
