@@ -4,9 +4,9 @@
  */
 package Controller.cs;
 
-import Models.Customer;
-import DAO.CustomerDAO;
 import DAO.SendMail;
+import DAO.StaffDAO;
+import Models.Staff;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,8 +20,8 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author HP
  */
-@WebServlet(name = "ForgetPasswordController", urlPatterns = {"/forgetpassword"})
-public class ForgetPasswordController extends HttpServlet {
+@WebServlet(name = "ForgotPasswordStaffController", urlPatterns = {"/forgotpasswordstaff"})
+public class ForgotPasswordStaffController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +40,10 @@ public class ForgetPasswordController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ForgetPasswordController</title>");
+            out.println("<title>Servlet ForgotPasswordStaffController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ForgetPasswordController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ForgotPasswordStaffController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -77,29 +77,28 @@ public class ForgetPasswordController extends HttpServlet {
             throws ServletException, IOException {
         String username = request.getParameter("username");
         String email = request.getParameter("email");
-        CustomerDAO dao = new CustomerDAO();
-        Customer c = dao.checkCustomerAccountExits(username);
+        StaffDAO dao = new StaffDAO();
+        Staff s = dao.checkStaffAccountExits(username);
 
-        if (c == null || !c.getEmail().equals(email)) {
+        if (s == null || !s.getEmail().equals(email)) {
             request.setAttribute("error", "Account does not exist");
-            request.getRequestDispatcher("view/customer/forgetpasswordcustomer.jsp").forward(request, response);
+            request.getRequestDispatcher("view/staff/forgetpasswordstaff.jsp").forward(request, response);
             return;
         }
 
         HttpSession session = request.getSession();
-        session.setAttribute("usernamecustomer", username);
+        session.setAttribute("usernamestaff", username);
         SendMail sm = new SendMail();
         String code = sm.getRandom();
         String subject = "User Email Verification";
         String content = "Registered successfully. Please verify your account using this code: " + code;
-        Customer user = new Customer(username, email, code);
+        Staff staff = new Staff(username, email, code);
 
-        boolean test = sm.sendEmail(user, subject, content);
+        boolean test = sm.sendEmailStaff(staff, subject, content);
         if (test) {
-            session.setAttribute("authcode", user);
-            response.sendRedirect("view/customer/verifyresetpasswordcustomer.jsp");
+            session.setAttribute("authcode", staff);
+            response.sendRedirect("view/staff/verifyresetpasswordstaff.jsp");
         }
-
     }
 
     /**

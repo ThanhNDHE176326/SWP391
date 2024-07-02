@@ -101,7 +101,7 @@ public class ChangePasswordStaffController extends HttpServlet {
             }
 
         }
-        dao.changePassword(newpassword, username);
+        dao.changePasswordStaff(newpassword, username);
         session.setAttribute("passwordstaff", newpassword);
         request.setAttribute("message", "Password changed successfully");
         if (role.equals("1")) {
