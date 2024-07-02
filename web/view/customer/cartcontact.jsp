@@ -707,8 +707,8 @@
                 console.log("Selected Payment Method:", selectedMethod);
 
                 // Validate the payment method based on the total cost
-                if (totalCost > 1000000 && selectedMethod != 3) {
-                    alert("For orders over 1,000,000, please use VN Pay.");
+                if (totalCost > 1000000 && selectedMethod != 3 && selectedMethod != 2) {
+                    alert("For orders over 1,000,000, please use VN Pay or QR Code.");
                     event.preventDefault(); // Prevent form submission
                     return false;
                 }
