@@ -138,7 +138,7 @@ public class OrderCustomerDAO extends DBContext {
     }
 
     public void updateOrderStatus(int order_id) {
-        String sql = "UPDATE Orders SET status_id = 3 WHERE id = ?";
+        String sql = "UPDATE Orders SET status_id = 9 WHERE id = ?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, order_id);

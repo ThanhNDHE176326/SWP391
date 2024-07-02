@@ -558,7 +558,7 @@ public class OrderDAO extends DBContext {
         }
     }
 
-    public int getOrderIDByCustomerID(int customerID) {
+    public int getOrderIDLatestByCustomerID(int customerID) {
         String sql = "SELECT MAX(id) AS latest_order_id FROM Orders\n"
                 + "WHERE customer_id = ? AND isDelete = 1; ";
         try {
