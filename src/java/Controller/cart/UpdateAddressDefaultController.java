@@ -33,14 +33,22 @@ public class UpdateAddressDefaultController extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
+        CustomerDAO dao = new CustomerDAO();
         String username = (String) session.getAttribute("usernamecustomer");
+        String idCustomer = dao.getInformationCustomer(username).getId();
+        int customer_id = Integer.parseInt(idCustomer);
         String id = request.getParameter("id");
         int Id = Integer.parseInt(id);
         String name = request.getParameter("name");
         String gender = request.getParameter("gender");
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
-        CustomerDAO dao = new CustomerDAO();
+        String nameDF = request.getParameter("nameDF");
+        String phoneDF = request.getParameter("phoneDF");
+        String genderDF = request.getParameter("genderDF");
+        String addressDF = request.getParameter("addressDF");
+        boolean isMale = "1".equalsIgnoreCase(genderDF);
+        dao.addDeliveryAddress(customer_id, addressDF, phoneDF, nameDF, isMale);
         dao.updateAddressDefault(name, phone, address, gender, username);
         dao.deleteDeliveryAddress(Id);
         response.sendRedirect(request.getContextPath() + "/pushToCartContact");
