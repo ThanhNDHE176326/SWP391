@@ -496,8 +496,8 @@ public class FeedbackDAO extends DBContext {
                 + " WHERE id = ?";
         stm = connection.prepareStatement(strSQL);
 
-        stm.setString(1, status);
-        stm.setString(2, id);
+        stm.setInt(1, Integer.parseInt(status));
+        stm.setInt(2, Integer.parseInt(id));
 
         stm.executeUpdate();
 

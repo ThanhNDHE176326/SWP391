@@ -34,13 +34,7 @@ public class UpdateFeedbackController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String status = request.getParameter("status");
-        String id = request.getParameter("id");
-        FeedbackDAO da = new FeedbackDAO();
-        da.update(status, id);
-        ArrayList<Feedback> feedbackdetail = da.getFeedbackDetailById(id);
-        request.setAttribute("feedbackdetail", feedbackdetail);
-        request.getRequestDispatcher("view/marketing/feedbackdetail.jsp").forward(request, response);
+      
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,8 +49,17 @@ public class UpdateFeedbackController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String status = request.getParameter("newStatus");
+        String id = request.getParameter("id");
+
+        FeedbackDAO da = new FeedbackDAO();
+        da.update(status, id);
+
+        ArrayList<Feedback> allfeedback = da.getAllFeedback();
+        request.setAttribute("allfeedback", allfeedback);
+        request.getRequestDispatcher("view/marketing/listfeedback.jsp").forward(request, response);
     }
+    
 
     /**
      * Handles the HTTP <code>POST</code> method.
