@@ -83,7 +83,8 @@ public class CartCompletionController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //handle QR Code
+        request.getRequestDispatcher("view/customer/cart-completion.jsp").forward(request, response);
     }
 
     /**
@@ -164,6 +165,8 @@ public class CartCompletionController extends HttpServlet {
             orderDAO.updateOrderStatusConfirmById(orderID);
         } else if (paymentID == 1) {
             processNonVnPayment(request, response, orderID);
+        } else if (paymentID == 2) {
+            processQRCodePayment(request, response, totalCost, orderID);
         }
 
         // Ensure no forwarding after sendRedirect
@@ -279,5 +282,14 @@ public class CartCompletionController extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
+    }
+
+    private void processQRCodePayment(HttpServletRequest request, HttpServletResponse response, double totalCost, int orderID) throws ServletException, IOException {
+        OrderDAO orderDAO = new OrderDAO();
+        String phone = orderDAO.getInfoByOrderID(orderID).getPhone();
+
+        request.setAttribute("phone", phone);
+        request.setAttribute("totalCost", totalCost);
+        request.getRequestDispatcher("view/customer/paymen-QRCode.jsp").forward(request, response);
     }
 }
