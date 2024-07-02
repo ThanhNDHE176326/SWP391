@@ -630,6 +630,7 @@
                                                     </c:forEach>
                                                     <fmt:formatNumber value="${totalPrice}" type="number" maxFractionDigits="0" />
                                                     <input type="hidden" name="totalCost" value="${totalPrice}">
+                                                    <input type="hidden" id="totalCost" value="${totalPrice}">
                                                 </td>
                                             </tr>
                                         </tfoot>
@@ -654,7 +655,7 @@
                                                 </div>
                                             </label>
                                         </div>
-                                                <div class="payment-option">
+                                        <div class="payment-option">
                                             <input type="radio" name="paymentMethod" value="2">
                                             <div class="name-pay">
                                                 QR Code<br>
@@ -675,7 +676,7 @@
                                 </div>
                                 <!-- End of Payment Methods Section -->
                                 <div class="button-containerner">
-                                    <button type="submit" class="styled-button" onclick="validatePaymentMethod(event)">Checkout</button>
+                                    <button type="submit" class="styled-button" onclick="validatePaymentMethod(event)" >Checkout</button>
                                 </div>
                             </div>
                         </div>
@@ -686,33 +687,41 @@
 
         <script>
             function validatePaymentMethod(event) {
-                // Kiểm tra nếu không có phương thức thanh toán nào được chọn
-                const paymentMethods = document.getElementsByName('paymentMethod');
-                let isPaymentMethodSelected = false;
+                // Retrieve the total cost and payment methods
+                var totalCost = parseInt(document.getElementById("totalCost").value, 10);
+                var paymentMethods = document.getElementsByName("paymentMethod");
+                var selectedMethod = null;
 
-                for (const method of paymentMethods) {
-                    if (method.checked) {
-                        isPaymentMethodSelected = true;
+                // Log the total cost for debugging
+                console.log("Total Cost:", totalCost);
+
+                // Check which payment method is selected
+                for (var i = 0; i < paymentMethods.length; i++) {
+                    if (paymentMethods[i].checked) {
+                        selectedMethod = paymentMethods[i].value;
                         break;
                     }
                 }
 
-                // Nếu không có phương thức nào được chọn, ngăn việc submit và hiển thị thông báo
-                if (!isPaymentMethodSelected) {
-                    event.preventDefault();
-                    alert('Vui lòng chọn một phương thức thanh toán.');
+                // Log the selected payment method for debugging
+                console.log("Selected Payment Method:", selectedMethod);
+
+                // Validate the payment method based on the total cost
+                if (totalCost > 1000000 && selectedMethod != 3) {
+                    alert("For orders over 1,000,000, please use VN Pay.");
+                    event.preventDefault(); // Prevent form submission
+                    return false;
                 }
+
+                return true;
             }
+
             document.addEventListener('DOMContentLoaded', function () {
-                var productItems = document.querySelectorAll('.product-item');
-                productItems.forEach(function (item) {
-                    item.addEventListener('click', function () {
-                        var productId = this.getAttribute('data-id');
-                        window.location.href = '${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=' + productId;
-                    });
-                });
+                var checkoutButton = document.querySelector('.button-containerner button[type="submit"]');
+                checkoutButton.addEventListener('click', validatePaymentMethod);
             });
         </script>
+
         <jsp:include page="footer.jsp"/>
 
 
@@ -731,6 +740,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     </body>
     <script>
+
             window.onload = function () {
                 document.getElementById("profileForm").addEventListener("submit", function (event) {
                     var phone = document.getElementsByName("phone")[0].value;
