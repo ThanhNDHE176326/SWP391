@@ -74,7 +74,7 @@ public class SaleOrderDetailsController extends HttpServlet {
         request.setAttribute("orderDetails", orderDetails);
         request.setAttribute("orderStatusList", orderStatusList);
 
-        request.getRequestDispatcher("view/saleadmin/orderdetailsaleadmin.jsp").forward(request, response);
+        request.getRequestDispatcher("view/saleadmin/orderdetailssaleadmin.jsp").forward(request, response);
     }
 
     @Override
