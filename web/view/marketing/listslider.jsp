@@ -1,9 +1,3 @@
-<%-- 
-    Document   : listSlider
-    Created on : 24 May 2024, 3:11:56 pm
-    Author     : dat ngo huy
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,6 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Slider List</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 
 <body id="page-top">
@@ -58,7 +54,7 @@
                         </form>
 
                         <div class="table-responsive">
-                            <table class="table table-bordered" width="100%" cellspacing="0">
+                            <table id="sliderTable" class="table table-bordered" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>Title</th>
@@ -69,7 +65,7 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tableBody">
                                     <c:forEach items="${listslider}" var="q">
                                         <tr>
                                             <td>${q.getTitle()}</td>
@@ -85,6 +81,7 @@
                                     </c:forEach>
                                 </tbody>
                             </table>
+                            <div id="pagination" class="mt-3"></div>
                         </div>
                     </div>
                 </div>
@@ -128,25 +125,58 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
+    <!-- jQuery, Popper.js, Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="<c:url value='/vendor/jquery/jquery.min.js'/>"></script>
-    <script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js'/>"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="<c:url value='/vendor/jquery-easing/jquery.easing.min.js'/>"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const table = document.getElementById('sliderTable');
+            const tableBody = document.getElementById('tableBody');
+            const pagination = document.getElementById('pagination');
+            const rowsPerPage = 5;
+            let currentPage = 1;
 
-    <!-- Page level plugin JavaScript-->
-    <script src="<c:url value='/vendor/datatables/jquery.dataTables.js'/>"></script>
-    <script src="<c:url value='/vendor/datatables/dataTables.bootstrap4.js'/>"></script>
+            function displayTable(page) {
+                const rows = tableBody.getElementsByTagName('tr');
+                const totalRows = rows.length;
+                const totalPages = Math.ceil(totalRows / rowsPerPage);
 
-    <!-- Custom scripts for all pages-->
-    <script src="<c:url value='/js/sb-admin.min.js'/>"></script>
+                for (let i = 0; i < totalRows; i++) {
+                    rows[i].style.display = 'none';
+                }
 
-    <!-- Demo scripts for this page-->
-    <script src="<c:url value='/js/demo/datatables-demo.js'/>"></script>
+                const start = (page - 1) * rowsPerPage;
+                const end = Math.min(start + rowsPerPage, totalRows);
+
+                for (let i = start; i < end; i++) {
+                    rows[i].style.display = '';
+                }
+
+                displayPagination(totalPages);
+            }
+
+            function displayPagination(totalPages) {
+                pagination.innerHTML = '';
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageLink = document.createElement('a');
+                    pageLink.href = '#';
+                    pageLink.innerText = i;
+                    pageLink.className = 'page-link';
+                    pageLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        currentPage = i;
+                        displayTable(currentPage);
+                    });
+                    pagination.appendChild(pageLink);
+                }
+            }
+
+            displayTable(currentPage);
+        });
+    </script>
+
 </body>
 
 </html>

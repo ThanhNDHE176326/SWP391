@@ -94,7 +94,14 @@
                                                 <td>${feedback.customer}</td>
                                                 <td>${feedback.product}</td>
                                                 <td>${feedback.ratedStar}</td>
-                                                <td>${feedback.status}</td>
+                                                <td><c:choose>
+                                                        <c:when test="${feedback.status == 1}">
+                                                            Show
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            Hide
+                                                        </c:otherwise>
+                                                    </c:choose></td>
                                                 <td>
                                                     <a href="${pageContext.request.contextPath}/listfeedback?mode=4&id=${feedback.getId()}" class="btn btn-info btn-sm">View Detail</a>
                                                 </td>

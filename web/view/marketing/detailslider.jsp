@@ -69,7 +69,14 @@
                                             <td>${slider.getStaff()}</td>
                                             <td>${slider.getStartDate()}</td>
                                             <td>${slider.getEndDate()}</td>
-                                            <td>${slider.getStatus()}</td>
+                                            <td><c:choose>
+                                                        <c:when test="${slider.status == 1}">
+                                                            Show
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            Hide
+                                                        </c:otherwise>
+                                                    </c:choose></td>
                                         </tr>
                                     </tbody>
                                 </table>
