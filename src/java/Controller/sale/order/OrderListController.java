@@ -1,9 +1,12 @@
 package Controller.sale.order;
 
+import DAO.CustomerDAO;
 import DAO.OrderCustomerDAO;
 import DAO.OrderDAO;
 import DAO.ProductDAO;
+import DAO.SendMail;
 import DAO.StaffDAO;
+import Models.Customer;
 import Models.Order;
 import Models.OrderDetail;
 import Models.OrderStatus;
@@ -94,7 +97,6 @@ public class OrderListController extends HttpServlet {
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
 
-        
         List<OrderStatus> OrderStatusList = orderDAO.getAllOrderStatus();
         List<OrderStatus> orderStatusList = orderDAO.getAllOrderStatus();
         List<OrderStatus> filteredStatusList = new ArrayList<>();
@@ -104,8 +106,7 @@ public class OrderListController extends HttpServlet {
                 filteredStatusList.add(status);
             }
         }
-        
-        
+
         request.setAttribute("OrderStatusList", OrderStatusList);
 
         request.setAttribute("orderStatusList", filteredStatusList);
@@ -117,7 +118,6 @@ public class OrderListController extends HttpServlet {
 
         request.getRequestDispatcher("view/sale/orderlist.jsp").forward(request, response);
     }
-   
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -146,7 +146,46 @@ public class OrderListController extends HttpServlet {
                 //update quantity mới vào product
                 productDAO.updateQuantityAfterCart(productID, quantityChanged);
             }
+            String customer_id = dao.getCustomerIdByOrderId(order_id);
+            CustomerDAO customerdao = new CustomerDAO();
+            String usernamecustomer = customerdao.getUsernameCustomer(customer_id);
+            SendMail sm = new SendMail();
+            String email = customerdao.getInformationCustomer(usernamecustomer).getEmail();
+
+            String subject = "Order Cancellation from BookHaven";
+            String content = "Dear Customer,\n\n"
+                    + "We regret to inform you that your order with ID: " + orderId + " has been cancelled.\n\n"
+                    + "Thank you for choosing our product.\n"
+                    + "We apologize for any inconvenience this may have caused.\n"
+                    + "If you have any questions or need further assistance, please feel free to contact our support team.\n\n"
+                    + "Best regards,\n"
+                    + "The BookHaven Team";
+
+            Customer user = new Customer(usernamecustomer, email);
+            boolean test = sm.sendEmail(user, subject, content);
+
         }
+        if (statusId.equals("2")) {
+            String customer_id = dao.getCustomerIdByOrderId(order_id);
+            CustomerDAO customerdao = new CustomerDAO();
+            String usernamecustomer = customerdao.getUsernameCustomer(customer_id);
+            SendMail sm = new SendMail();
+            String email = customerdao.getInformationCustomer(usernamecustomer).getEmail();
+
+            String subject = "From BookHaven With Love <3";
+            String content = "ORDER CONFIRMED\n\n"
+                    + "Dear Customer,\n\n"
+                    + "We are pleased to inform you that your order with ID: " + orderId + " has been confirmed.\n\n"
+                    + "Thank you for choosing our product.\n"
+                    + "The product will be delivered to you as soon as possible.\n"
+                    + "We hope you have a wonderful experience with our product.\n\n"
+                    + "Best regards,\n"
+                    + "The BookHaven Team";
+
+            Customer user = new Customer(usernamecustomer, email);
+            boolean test = sm.sendEmail(user, subject, content);
+        }
+
         response.sendRedirect(request.getContextPath() + "/saleorderlist");
     }
 

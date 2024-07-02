@@ -238,7 +238,7 @@ public class CustomerDAO extends DBContext {
 
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("addDeliveryAddress: " + e.getMessage());
         }
     }
 
@@ -252,8 +252,6 @@ public class CustomerDAO extends DBContext {
             e.printStackTrace();
         }
     }
-
-    
 
     public String getAddressByCustomerId(int customerID) {
         String sql = "SELECT * FROM Customers WHERE id = ?";
@@ -284,7 +282,7 @@ public class CustomerDAO extends DBContext {
         }
         return null;
     }
-    
+
     public void updateAddressDefault(String name, String phone, String address, String gender, String username) {
         String sql = "UPDATE Customers SET name = ?, phone = ?, address = ?, gender = ? WHERE username = ?";
         try {
@@ -300,9 +298,27 @@ public class CustomerDAO extends DBContext {
         }
     }
 
+    public String getUsernameCustomer(String customerid) {
+        String sql = "SELECT username FROM Customers WHERE id = ?";
+        String username = null;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, customerid);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    username = resultSet.getString("username");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return username;
+    }
+
     public static void main(String[] args) {
         CustomerDAO dao = new CustomerDAO();
-        dao.updateAddressDefault("Nguyễn Trọng Hải", "0987654321", "phúc thành", "1", "nguyenvane");
+        dao.addDeliveryAddress(21, "hn", "0987654321", "hải", true);
     }
 }
-

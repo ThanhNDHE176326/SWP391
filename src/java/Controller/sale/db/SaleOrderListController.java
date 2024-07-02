@@ -4,10 +4,13 @@
  */
 package Controller.sale.db;
 
+import DAO.CustomerDAO;
 import DAO.OrderCustomerDAO;
 import DAO.OrderDAO;
 import DAO.ProductDAO;
+import DAO.SendMail;
 import DAO.StaffDAO;
+import Models.Customer;
 import Models.Order;
 import Models.OrderDetail;
 import Models.OrderStatus;
@@ -19,6 +22,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,8 +72,8 @@ public class SaleOrderListController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    OrderDAO orderDAO = new OrderDAO();
+            throws ServletException, IOException {
+       OrderDAO orderDAO = new OrderDAO();
     StaffDAO staffDAO = new StaffDAO();
     int page = 1;
     if (request.getParameter("page") != null) {
@@ -130,7 +134,7 @@ public class SaleOrderListController extends HttpServlet {
     request.setAttribute("customerName", customerName);
 
     request.getRequestDispatcher("view/saleadmin/orderlistsale.jsp").forward(request, response);
-}
+    }
 //      public static void main(String[] args) {
 //        OrderDAO dao = new OrderDAO();
 //        Order order = dao.getOrderById("1");
@@ -176,6 +180,44 @@ public class SaleOrderListController extends HttpServlet {
                     //update quantity mới vào product
                     productDAO.updateQuantityAfterCart(productID, quantityChanged);
                 }
+                OrderDAO dao = new OrderDAO();
+                String customer_id = dao.getCustomerIdByOrderId(order_id);
+                CustomerDAO customerdao = new CustomerDAO();
+                String usernamecustomer = customerdao.getUsernameCustomer(customer_id);
+                SendMail sm = new SendMail();
+                String email = customerdao.getInformationCustomer(usernamecustomer).getEmail();
+
+                String subject = "Order Cancellation from BookHaven";
+                String content = "Dear Customer,\n\n"
+                        + "We regret to inform you that your order with ID: " + orderId + " has been cancelled.\n\n"
+                        + "Thank you for choosing our product.\n"
+                        + "We apologize for any inconvenience this may have caused.\n"
+                        + "If you have any questions or need further assistance, please feel free to contact our support team.\n\n"
+                        + "Best regards,\n"
+                        + "The BookHaven Team";
+
+                Customer user = new Customer(usernamecustomer, email);
+                boolean test = sm.sendEmail(user, subject, content);
+            } else {
+                OrderDAO dao = new OrderDAO();
+                String customer_id = dao.getCustomerIdByOrderId(order_id);
+                CustomerDAO customerdao = new CustomerDAO();
+                String usernamecustomer = customerdao.getUsernameCustomer(customer_id);
+                SendMail sm = new SendMail();
+                String email = customerdao.getInformationCustomer(usernamecustomer).getEmail();
+
+                String subject = "From BookHaven With Love <3";
+                String content = "ORDER CONFIRMED\n\n"
+                        + "Dear Customer,\n\n"
+                        + "We are pleased to inform you that your order with ID: " + orderId + " has been confirmed.\n\n"
+                        + "Thank you for choosing our product.\n"
+                        + "The product will be delivered to you as soon as possible.\n"
+                        + "We hope you have a wonderful experience with our product.\n\n"
+                        + "Best regards,\n"
+                        + "The BookHaven Team";
+
+                Customer user = new Customer(usernamecustomer, email);
+                boolean test = sm.sendEmail(user, subject, content);
             }
         }
 

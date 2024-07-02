@@ -528,7 +528,7 @@
                                                             </td>
                                                             <td>
                                                                 <a class="btn btn-success btn-sm" href="${pageContext.request.contextPath}/updateAddressDefault?id=${shippingaddress.id}&name=${shippingaddress.recipient_name}&gender=${shippingaddress.recipient_gender}
-                                                                   &phone=${shippingaddress.phone}&address=${shippingaddress.address}">
+                                                                   &phone=${shippingaddress.phone}&address=${shippingaddress.address}&nameDF=${userCreateOrder.name}&phoneDF=${userCreateOrder.phone}&genderDF=${userCreateOrder.gender}&addressDF=${userCreateOrder.address}">
                                                                     <i class="fa fa-check"></i>
                                                                 </a>
                                                             </td>
@@ -645,7 +645,7 @@
                                         <div class="payment-option">
                                             <input type="radio" id="payment_gateway" name="paymentMethod" value="3">
                                             <label for="payment_gateway"> 
-                                                <img src="<c:url value='/images/VnPay.jpg'/>" alt="VNPay">
+                                                <!--<img src="<c:url value='/images/VnPay.jpg'/>" alt="VNPay">-->
                                                 <div class="name-pay">
                                                     Thẻ ATM / Internet Banking<br>
                                                     Thẻ tín dụng (Credit card) <br> 
@@ -654,10 +654,17 @@
                                                 </div>
                                             </label>
                                         </div>
+                                                <div class="payment-option">
+                                            <input type="radio" name="paymentMethod" value="2">
+                                            <div class="name-pay">
+                                                QR Code<br>
+                                                Pay by QR Code transfer
+                                            </div>
+                                        </div>
                                         <div class="payment-option">
                                             <input type="radio" id="cod" name="paymentMethod" value="1">
                                             <label for="cod">
-                                                <img src="<c:url value='/images/COD.jpg'/>" alt="COD">
+                                                <!--<img src="<c:url value='/images/COD.jpg'/>" alt="COD">-->
                                                 <div class="name-pay">
                                                     COD<br>
                                                     Payment on delivery
