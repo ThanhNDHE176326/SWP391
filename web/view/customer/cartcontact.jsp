@@ -367,32 +367,33 @@
             }
             /* Payment Methods Section Styles */
             #payment_methods {
-                margin-top: 0px;
-                border: 1px solid #ccc;
-                border-radius: 8px;
-                padding: 20px;
+                margin-top: 10px;
+                border-radius: 3px;
                 background-color: #f9f9f9;
             }
 
             #payment_methods h2 {
-                font-size: 24px;
+                font-size: 25px;
                 margin-bottom: 50px;
+                text-align: center;
             }
 
             .payment-options {
                 display: flex;
-                flex-direction: column;
-                margin-bottom: 25px !important;
+                justify-content: space-between;
+                margin-bottom: 15px;
             }
 
             .payment-option {
                 display: flex;
                 align-items: center;
-                margin-bottom: 5px;
-                padding: 10px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                background-color: #f9f9f9;
+                padding: 8px;
+                flex: 1;
+                margin-right: 10px; /* Add some space between each option */
+            }
+
+            .payment-option:last-child {
+                margin-right: 0; /* Remove right margin for the last item */
             }
 
             .payment-option input[type="radio"] {
@@ -403,40 +404,37 @@
                 display: flex;
                 align-items: center;
                 cursor: pointer;
+                width: 100%;
             }
 
-            .payment-option img {
-                margin-right: 10px;
-                margin-right: 100px;
-                margin-left: 50px;
-                width: 200px;
+            .name-pay {
+                padding: 5px 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                width: 100%;
+                font-family: Arial, sans-serif;
+                text-align: left;
+                font-size: 15px;
             }
 
-            .button-containerner {
+            .button-container-new {
                 text-align: center;
-                margin-top: 20px;
                 margin-bottom: 20px;
             }
-            .name-pay {
-                background-color: lightblue; /* Màu nền */
-                padding: 10px; /* Khoảng cách giữa nội dung và viền của div */
-                border: 1px solid #ccc; /* Viền */
-                width: 400px; /* Độ rộng của div */
-                font-family: Arial, sans-serif; /* Font chữ */
-                text-align: center; /* Căn giữa nội dung */
-                font-size: 17px;
-            }
-            /* Tùy chỉnh nút tích màu xanh nếu cần */
-            .btn-success {
-                background-color: #28a745; /* Màu xanh mặc định của Bootstrap */
-                border-color: #28a745;
+
+            .styled-button {
+                padding: 4px 8px;
+                font-size: 16px;
+                border: none;
+                border-radius: 5px;
+                background-color: #007bff;
+                color: white;
+                cursor: pointer;
             }
 
-            .btn-success:hover {
-                background-color: #218838; /* Màu xanh khi hover */
-                border-color: #1e7e34;
+            .styled-button:hover {
+                background-color: #0056b3;
             }
-
         </style>
     </head><!--/head-->
 
@@ -648,19 +646,19 @@
                                             <label for="payment_gateway"> 
                                                 <!--<img src="<c:url value='/images/VnPay.jpg'/>" alt="VNPay">-->
                                                 <div class="name-pay">
-                                                    Thẻ ATM / Internet Banking<br>
-                                                    Thẻ tín dụng (Credit card) <br> 
-                                                    Thẻ ghi nợ (Debit card)<br>
-                                                    VNPay QR
+                                                    VNPAY<br>
+                                                    Cổng thanh toán VNPAY
                                                 </div>
                                             </label>
                                         </div>
                                         <div class="payment-option">
-                                            <input type="radio" name="paymentMethod" value="2">
-                                            <div class="name-pay">
-                                                QR Code<br>
-                                                Pay by QR Code transfer
-                                            </div>
+                                            <input type="radio" id="payment_ORcode" name="paymentMethod" value="2">
+                                            <label for="payment_ORcode">
+                                                <div class="name-pay">
+                                                    QR Code<br>
+                                                    Pay by QR Code transfer
+                                                </div>
+                                            </label>
                                         </div>
                                         <div class="payment-option">
                                             <input type="radio" id="cod" name="paymentMethod" value="1">
@@ -675,9 +673,10 @@
                                     </div>
                                 </div>
                                 <!-- End of Payment Methods Section -->
-                                <div class="button-containerner">
-                                    <button type="submit" class="styled-button" onclick="validatePaymentMethod(event)" >Checkout</button>
+                                <div class="button-container-new">
+                                    <button type="submit" class="styled-button" onclick="validatePaymentMethod(event)">Checkout</button>
                                 </div>
+
                             </div>
                         </div>
                     </div>
