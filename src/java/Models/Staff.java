@@ -10,8 +10,8 @@ package Models;
  */
 public class Staff {
 
-    String id, fullname, username, password, email, 
-            gender, phone, address, role, isDelete, code, status,orderCount;
+    String id, fullname, username, password, email,
+            gender, phone, address, role, isDelete, code, status, orderCount;
 
     public Staff() {
     }
@@ -20,8 +20,14 @@ public class Staff {
         return orderCount;
     }
 
+    public Staff(String username, String email, String code) {
+        this.username = username;
+        this.email = email;
+        this.code = code;
+    }
+
     public Staff(String id, String fullname, String username, String password, String email, String gender, String phone, String address, String role, String isDelete, String code, String status, String orderCount) {
-        this.id = id;    
+        this.id = id;
         this.fullname = fullname;
         this.username = username;
         this.password = password;
@@ -78,7 +84,7 @@ public class Staff {
 
     public Staff(String id, String fullname, String email, String gender, String phone, String role, String status) {
         this.id = id;
-        
+
         this.fullname = fullname;
         this.email = email;
         this.gender = gender;
@@ -86,7 +92,7 @@ public class Staff {
         this.role = role;
         this.status = status;
     }
-      
+
     public Staff(String fullname, String username, String password, String role, String isDelete) {
         this.fullname = fullname;
         this.username = username;
@@ -97,7 +103,7 @@ public class Staff {
 
     public Staff(String id, String fullname, String username, String password, String email, String gender, String phone, String address, String role, String status) {
         this.id = id;
-        
+
         this.fullname = fullname;
         this.username = username;
         this.password = password;
@@ -108,8 +114,20 @@ public class Staff {
         this.role = role;
         this.status = status;
     }
-      
-    
+
+    public Staff(String id, String fullname, String username, String password, String email, String gender, String phone, String address, String role, String isDelete, String status) {
+        this.id = id;
+        this.fullname = fullname;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.gender = gender;
+        this.phone = phone;
+        this.address = address;
+        this.role = role;
+        this.isDelete = isDelete;
+        this.status = status;
+    }
 
     public String getEmail() {
         return email;
@@ -206,7 +224,5 @@ public class Staff {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    
 
 }

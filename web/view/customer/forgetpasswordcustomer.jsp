@@ -115,6 +115,5 @@
         <script src="<c:url value='/js/price-range.js'/>"></script>
         <script src="<c:url value='/js/jquery.prettyPhoto.js'/>"></script>
         <script src="<c:url value='/js/main.js'/>"></script>
-
     </body>
 </html>

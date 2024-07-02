@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Login 04</title>
+        <title>Login Staff</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -48,7 +48,7 @@
                                     <p style="color: #000000; font-weight: bold;">${error}</p>
                                     <div class="form-group d-md-flex">
                                         <div>
-                                            <a href="#">Forgot Password</a>
+                                            <a href="forgotpasswordstaff.jsp">Forgot Password</a>
                                         </div>
                                     </div>
                                 </form>
@@ -67,3 +67,4 @@
     </body>
 </html>
 
+z

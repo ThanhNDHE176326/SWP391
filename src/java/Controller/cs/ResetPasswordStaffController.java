@@ -4,9 +4,7 @@
  */
 package Controller.cs;
 
-import Models.Customer;
-import DAO.CustomerDAO;
-import DAO.SendMail;
+import DAO.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,8 +18,8 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author HP
  */
-@WebServlet(name = "ForgetPasswordController", urlPatterns = {"/forgetpassword"})
-public class ForgetPasswordController extends HttpServlet {
+@WebServlet(name = "ResetPasswordStaffController", urlPatterns = {"/resetpasswordstaff"})
+public class ResetPasswordStaffController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +38,10 @@ public class ForgetPasswordController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ForgetPasswordController</title>");
+            out.println("<title>Servlet ResetPasswordStaffController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ForgetPasswordController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ResetPasswordStaffController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -75,31 +73,14 @@ public class ForgetPasswordController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String email = request.getParameter("email");
-        CustomerDAO dao = new CustomerDAO();
-        Customer c = dao.checkCustomerAccountExits(username);
-
-        if (c == null || !c.getEmail().equals(email)) {
-            request.setAttribute("error", "Account does not exist");
-            request.getRequestDispatcher("view/customer/forgetpasswordcustomer.jsp").forward(request, response);
-            return;
-        }
-
         HttpSession session = request.getSession();
-        session.setAttribute("usernamecustomer", username);
-        SendMail sm = new SendMail();
-        String code = sm.getRandom();
-        String subject = "User Email Verification";
-        String content = "Registered successfully. Please verify your account using this code: " + code;
-        Customer user = new Customer(username, email, code);
-
-        boolean test = sm.sendEmail(user, subject, content);
-        if (test) {
-            session.setAttribute("authcode", user);
-            response.sendRedirect("view/customer/verifyresetpasswordcustomer.jsp");
-        }
-
+        String usernamestaff = (String) session.getAttribute("usernamestaff");
+        String newpassword = request.getParameter("newPassword");
+        String confirmpassword = request.getParameter("confirmPassword");
+        StaffDAO dao = new StaffDAO();
+        dao.changePasswordStaff(newpassword, usernamestaff);
+        request.setAttribute("error", "Password changed successfully");
+        request.getRequestDispatcher("view/staff/resetpasswordstaff.jsp").forward(request, response);
     }
 
     /**

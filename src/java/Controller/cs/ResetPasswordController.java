@@ -72,11 +72,11 @@ public class ResetPasswordController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         HttpSession session=request.getSession();
-        String username= (String) session.getAttribute("username");
+        String usernamecustomer= (String) session.getAttribute("usernamecustomer");
         String newpassword =request.getParameter("newPassword");
         String confirmpassword=request.getParameter("confirmPassword");
          CustomerDAO dao = new CustomerDAO();
-        dao.changePassword(newpassword, username);
+        dao.changePassword(newpassword, usernamecustomer);
         request.setAttribute("error", "Password changed successfully");
         request.getRequestDispatcher("view/customer/resetpasswordcustomer.jsp").forward(request, response);
     }
