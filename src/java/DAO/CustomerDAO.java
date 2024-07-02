@@ -238,7 +238,7 @@ public class CustomerDAO extends DBContext {
 
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("addDeliveryAddress: " + e.getMessage());
         }
     }
 
@@ -319,6 +319,6 @@ public class CustomerDAO extends DBContext {
 
     public static void main(String[] args) {
         CustomerDAO dao = new CustomerDAO();
-        dao.updateAddressDefault("Nguyễn Trọng Hải", "0987654321", "phúc thành", "1", "nguyenvane");
+        dao.addDeliveryAddress(21, "hn", "0987654321", "hải", true);
     }
 }
