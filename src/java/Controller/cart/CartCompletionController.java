@@ -140,7 +140,7 @@ public class CartCompletionController extends HttpServlet {
             orderDAO.insertOrder(customerID, totalCost, orderDate, address, phone, name, isMale, paymentID, salerOrderID);
         }
 
-        int orderID = orderDAO.getOrderIDByCustomerID(customerID);
+        int orderID = orderDAO.getOrderIDLatestByCustomerID(customerID);
         String[] productIds = request.getParameterValues("productId");
         for (String productId : productIds) {
             int productID = Integer.parseInt(productId);
@@ -162,7 +162,6 @@ public class CartCompletionController extends HttpServlet {
         // 1 - COD
         if (paymentID == 3) {
             processVnPayment(request, response, totalCost, orderID);
-            orderDAO.updateOrderStatusConfirmById(orderID);
         } else if (paymentID == 1) {
             processNonVnPayment(request, response, orderID);
         } else if (paymentID == 2) {
@@ -248,6 +247,9 @@ public class CartCompletionController extends HttpServlet {
         String vnp_SecureHash = Config.hmacSHA512(Config.vnp_HashSecret, hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         String paymentUrl = Config.vnp_PayUrl + "?" + queryUrl;
+        request.setAttribute("code", "00");
+                request.setAttribute("message", "success");
+                request.setAttribute("data", paymentUrl);
         response.sendRedirect(paymentUrl);
     }
 

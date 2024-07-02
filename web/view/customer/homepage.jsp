@@ -107,6 +107,40 @@
                 background: rgba(0, 0, 0, 0.3);
                 height: 35px;
             }
+            .single-blog-post {
+                display: flex;
+                align-items: center;
+            }
+            .single-blog-post img {
+                width: 100%;
+                height: auto;
+            }
+            .single-blog-post .post-meta ul {
+                display: flex;
+                list-style: none;
+                padding: 0;
+            }
+            .single-blog-post .post-meta ul li {
+                margin-right: 15px;
+            }
+            .out-of-stock {
+                color: red;
+                font-weight: bold;
+                font-size: 20px;
+            }
+            .alert {
+            display: flex;
+            justify-content: center; /* Căn giữa theo chiều ngang */
+            align-items: center;    /* Căn giữa theo chiều dọc */
+            text-align: center;     /* Căn giữa nội dung văn bản */
+            margin: 20px auto;      /* Khoảng cách trên dưới và tự động căn giữa theo chiều ngang */
+            padding: 10px;          /* Khoảng cách bên trong */
+            width: 50%;             /* Độ rộng */
+            background-color: #f8d7da; /* Màu nền (có thể thay đổi tùy ý) */
+            color: #721c24;         /* Màu chữ (có thể thay đổi tùy ý) */
+            border: 1px solid #f5c6cb; /* Đường viền (có thể thay đổi tùy ý) */
+            border-radius: 5px;     /* Bo góc */
+        }
         </style>
 
 
@@ -115,6 +149,11 @@
     <body>
         <jsp:include page="header.jsp"/>
         <jsp:useBean id="t" class="DAO.HomePageDAO" scope="request" />
+        <c:if test="${not empty message}">
+        <div class="alert alert-warning">
+            ${message}
+        </div>
+    </c:if>
         <!-- Slider Section -->
         <section id="slider">
             <div class="container">
@@ -151,50 +190,6 @@
             </div>
         </section><!--/slider-->
 
-        <script>
-            const previous = document.querySelector('.previous');
-            const next = document.querySelector('.next');
-            const images = document.querySelector('.slider-carousel').children;
-            const totalImages = images.length;
-            let currentIndex = 0;
-
-            // Event Listeners to previous and next buttons
-            previous.addEventListener('click', () => {
-                previousImage();
-            });
-
-            next.addEventListener('click', () => {
-                nextImage();
-            });
-
-            setInterval(() => {
-                nextImage();
-            }, 4000);
-
-            // Function to go to next Image
-            function nextImage() {
-                images[currentIndex].classList.remove('main');
-                if (currentIndex == totalImages - 1) {
-                    currentIndex = 0;
-                } else {
-                    currentIndex++;
-                }
-                images[currentIndex].classList.add('main');
-            }
-
-            // Function to go to previous Image
-            function previousImage() {
-                images[currentIndex].classList.remove('main');
-                if (currentIndex == 0) {
-                    currentIndex = totalImages - 1;
-                } else {
-                    currentIndex--;
-                }
-                images[currentIndex].classList.add('main');
-            }
-        </script> 
-
-
         <section id="blog"><!--/#blog-->
             <div class="container">
                 <div class="row">
@@ -225,31 +220,6 @@
                 </div>
             </div>
         </section><!--/#blog-->
-
-        <style>
-            .single-blog-post {
-                display: flex;
-                align-items: center;
-            }
-            .single-blog-post img {
-                width: 100%;
-                height: auto;
-            }
-            .single-blog-post .post-meta ul {
-                display: flex;
-                list-style: none;
-                padding: 0;
-            }
-            .single-blog-post .post-meta ul li {
-                margin-right: 15px;
-            }
-            .out-of-stock {
-                color: red;
-                font-weight: bold;
-                font-size: 20px;
-            }
-        </style>
-
         <section>
             <div class="container">
                 <div class="row">
@@ -309,6 +279,46 @@
                         </div>
                     </div>
                     <script>
+                        const previous = document.querySelector('.previous');
+                        const next = document.querySelector('.next');
+                        const images = document.querySelector('.slider-carousel').children;
+                        const totalImages = images.length;
+                        let currentIndex = 0;
+
+                        // Event Listeners to previous and next buttons
+                        previous.addEventListener('click', () => {
+                            previousImage();
+                        });
+
+                        next.addEventListener('click', () => {
+                            nextImage();
+                        });
+
+                        setInterval(() => {
+                            nextImage();
+                        }, 4000);
+
+                        // Function to go to next Image
+                        function nextImage() {
+                            images[currentIndex].classList.remove('main');
+                            if (currentIndex == totalImages - 1) {
+                                currentIndex = 0;
+                            } else {
+                                currentIndex++;
+                            }
+                            images[currentIndex].classList.add('main');
+                        }
+
+                        // Function to go to previous Image
+                        function previousImage() {
+                            images[currentIndex].classList.remove('main');
+                            if (currentIndex == 0) {
+                                currentIndex = totalImages - 1;
+                            } else {
+                                currentIndex--;
+                            }
+                            images[currentIndex].classList.add('main');
+                        }
                         document.addEventListener('DOMContentLoaded', function () {
                             var productItems = document.querySelectorAll('.product-item');
                             productItems.forEach(function (item) {
