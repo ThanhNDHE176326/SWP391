@@ -101,7 +101,7 @@ public class OrderListController extends HttpServlet {
         List<OrderStatus> orderStatusList = orderDAO.getAllOrderStatus();
         List<OrderStatus> filteredStatusList = new ArrayList<>();
         for (OrderStatus status : orderStatusList) {
-            if (status.getId().equals("1") || status.getId().equals("2") || status.getId().equals("9") 
+            if (status.getId().equals("1") || status.getId().equals("2") || status.getId().equals("3") || status.getId().equals("9") 
                     || status.getId().equals("4") || status.getId().equals("5") || status.getId().equals("6") || status.getId().equals("7"))  {
                 filteredStatusList.add(status);
             }
