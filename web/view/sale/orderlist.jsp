@@ -172,7 +172,7 @@
                                     <button type="submit" name="statusId" value="9">Hủy Đơn Hàng </button>
                                     </c:when>
                                     <c:when test="${order.status_id == '2'}">
-                                    <button type="submit" name="statusId" value="4">Đang giao hàng </button>
+                                    <button type="submit" name="statusId" value="5">Đang giao hàng </button>
                                     </c:when>
                                     <c:when test="${order.status_id == '5'}">
                                     <button type="submit" name="statusId" value="6">Đã giao hàng </button>

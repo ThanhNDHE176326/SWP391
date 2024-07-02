@@ -100,11 +100,11 @@
     </head>
 
     <body id="page-top">
-        <jsp:include page="headersale.jsp"/>
+        <jsp:include page="headersaleadmin.jsp"/>
 
         <div id="wrapper">
             <!-- Sidebar -->
-            <jsp:include page="navbarsale.jsp"/>
+            <jsp:include page="navbarsaleadmin.jsp"/>
 
             <div class="container">
                 <h1>Order Details</h1>

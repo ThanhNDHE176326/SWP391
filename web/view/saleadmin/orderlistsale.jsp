@@ -248,10 +248,10 @@
 
 
                                         <!--<td>${order.staff_name}</td>-->
-                                        <td >
-                                            <form action="${pageContext.request.contextPath}/saleadminorderlist" method="post" id="staffSubmit">
+                                        <td>
+                                            <form action="${pageContext.request.contextPath}/saleadminorderlist" method="post" id="staffSubmit_${order.id}">
                                                 <input type="hidden" name="orderId" value="${order.id}">
-                                                <select name="staffId" onchange="document.getElementById('staffSubmit').submit()">
+                                                <select name="staffId" onchange="document.getElementById('staffSubmit_${order.id}').submit()">
                                                     <c:forEach var="staff" items="${staffList}">
                                                         <option value="${staff.id}" ${order.staff_name eq staff.fullname ? "selected" : ""}>
                                                             ${staff.fullname} (${staff.orderCount} orders)
@@ -263,39 +263,39 @@
                                         </td>
                                         <td>${order.status_name}</td>
                                         <td>
-                            <form action="${pageContext.request.contextPath}/saleorderlist" method="post">
-                                <input type="hidden" name="orderId" value="${order.id}">
-                                <c:choose>
-                                    <c:when test="${order.status_id == '1'}">
-                                        <button type="submit" name="statusId" value="2">Đã Xác Nhận</button>
-                                        <button type="submit" name="statusId" value="9">Hủy Đơn Hàng </button>
-                                    </c:when>
-                                    <c:when test="${order.status_id == '7'}">
-                                    <button type="submit" name="statusId" value="9">Hủy Đơn Hàng </button>
-                                    </c:when>
-                                    <c:when test="${order.status_id == '2'}">
-                                    <button type="submit" name="statusId" value="4">Đang giao hàng </button>
-                                    </c:when>
-                                    <c:when test="${order.status_id == '5'}">
-                                    <button type="submit" name="statusId" value="6">Đã giao hàng </button>
-                                     <c:when test="${order.status_id == '6'}">
-                                    <button type="submit" name="statusId" value="7">Giao hàng thất bại </button>
-                                     <c:when test="${order.status_id == '7'}">
-                                    <button type="submit" name="statusId" value="9">Hủy dơn hàng </button>
-                                    </c:when>
-                                    </c:when>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <button type="button" disabled>
-                                            <c:choose>
-                                                
-                                                <c:when test="${order.status_id == '9'}">Hủy Đơn Hàng</c:when>
-                                            </c:choose>
-                                        </button>
-                                    </c:otherwise>
-                                </c:choose>
-                            </form>
-                        </td>
+                                            <form action="${pageContext.request.contextPath}/saleadminorderlist" method="post">
+                                                <input type="hidden" name="orderId" value="${order.id}">
+                                                <c:choose>
+                                                    <c:when test="${order.status_id == '1'}">
+                                                        <button type="submit" name="statusId" value="2">Đã Xác Nhận</button>
+                                                        <button type="submit" name="statusId" value="9">Hủy Đơn Hàng </button>
+                                                    </c:when>
+                                                    <c:when test="${order.status_id == '7'}">
+                                                        <button type="submit" name="statusId" value="9">Hủy Đơn Hàng </button>
+                                                    </c:when>
+                                                    <c:when test="${order.status_id == '3'}">
+                                                        <button type="submit" name="statusId" value="5">Đang giao hàng </button>
+                                                    </c:when>
+                                                    <c:when test="${order.status_id == '5'}">
+                                                        <button type="submit" name="statusId" value="6">Đã giao hàng </button>
+                                                        <c:when test="${order.status_id == '6'}">
+                                                            <button type="submit" name="statusId" value="7">Giao hàng thất bại </button>
+                                                            <c:when test="${order.status_id == '7'}">
+                                                                <button type="submit" name="statusId" value="9">Hủy dơn hàng </button>
+                                                            </c:when>
+                                                        </c:when>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <button type="button" disabled>
+                                                            <c:choose>
+
+                                                                <c:when test="${order.status_id == '9'}">Hủy Đơn Hàng</c:when>
+                                                            </c:choose>
+                                                        </button>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </form>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
