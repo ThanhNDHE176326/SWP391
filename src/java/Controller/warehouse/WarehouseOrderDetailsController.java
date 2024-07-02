@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.sale.order;
+package Controller.warehouse;
 
+import Controller.sale.order.*;
 import DAO.OrderDAO;
 import Models.Order;
 import Models.OrderDetail;
@@ -22,8 +23,8 @@ import java.util.List;
  *
  * @author Acer
  */
-@WebServlet(name = "OrderDetailsController", urlPatterns = {"/saleorderdetails"})
-public class OrderDetailsController extends HttpServlet {
+@WebServlet(name = "OrderDetailsController", urlPatterns = {"/warehouseorderdetails"})
+public class WarehouseOrderDetailsController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -74,7 +75,7 @@ public class OrderDetailsController extends HttpServlet {
         request.setAttribute("orderDetails", orderDetails);
         request.setAttribute("orderStatusList", orderStatusList);
 
-        request.getRequestDispatcher("view/sale/orderdetails.jsp").forward(request, response);
+        request.getRequestDispatcher("view/warehouse/orderdetailswarehouse.jsp").forward(request, response);
     }
 
     @Override
@@ -94,8 +95,7 @@ public class OrderDetailsController extends HttpServlet {
         List<OrderStatus> orderStatusList = orderDAO.getAllOrderStatus();
 List<OrderStatus> filteredStatusList = new ArrayList<>();
         for (OrderStatus status : orderStatusList) {
-           if (status.getId().equals("1") || status.getId().equals("2") || status.getId().equals("9") 
-                    || status.getId().equals("4") || status.getId().equals("5") || status.getId().equals("6") || status.getId().equals("7"))  {
+            if (status.getId().equals("1") || status.getId().equals("2") || status.getId().equals("9")) {
                 filteredStatusList.add(status);
             }
         }
@@ -104,7 +104,7 @@ List<OrderStatus> filteredStatusList = new ArrayList<>();
         request.setAttribute("orderDetails", orderDetails);
         request.setAttribute("orderStatusList", filteredStatusList);
 
-        request.getRequestDispatcher("view/sale/orderdetails.jsp").forward(request, response);
+        request.getRequestDispatcher("view/warehouse/orderdetailswarehouse.jsp").forward(request, response);
     }
 
     /**

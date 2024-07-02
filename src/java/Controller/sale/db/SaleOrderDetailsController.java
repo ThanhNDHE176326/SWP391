@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.sale.order;
+package Controller.sale.db;
 
+import Controller.sale.order.*;
 import DAO.OrderDAO;
 import Models.Order;
 import Models.OrderDetail;
@@ -15,15 +16,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author Acer
  */
-@WebServlet(name = "OrderDetailsController", urlPatterns = {"/saleorderdetails"})
-public class OrderDetailsController extends HttpServlet {
+@WebServlet(name = "OrderDetailsController", urlPatterns = {"/saleadminorderdetails"})
+public class SaleOrderDetailsController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -74,7 +74,7 @@ public class OrderDetailsController extends HttpServlet {
         request.setAttribute("orderDetails", orderDetails);
         request.setAttribute("orderStatusList", orderStatusList);
 
-        request.getRequestDispatcher("view/sale/orderdetails.jsp").forward(request, response);
+        request.getRequestDispatcher("view/saleadmin/orderdetailsaleadmin.jsp").forward(request, response);
     }
 
     @Override
@@ -92,19 +92,12 @@ public class OrderDetailsController extends HttpServlet {
         Order order = orderDAO.getOrderById(id_1);
         List<OrderDetail> orderDetails = orderDAO.getOrderDetailsByOrderId(id_1);
         List<OrderStatus> orderStatusList = orderDAO.getAllOrderStatus();
-List<OrderStatus> filteredStatusList = new ArrayList<>();
-        for (OrderStatus status : orderStatusList) {
-           if (status.getId().equals("1") || status.getId().equals("2") || status.getId().equals("9") 
-                    || status.getId().equals("4") || status.getId().equals("5") || status.getId().equals("6") || status.getId().equals("7"))  {
-                filteredStatusList.add(status);
-            }
-        }
-        
+
         request.setAttribute("order", order);
         request.setAttribute("orderDetails", orderDetails);
-        request.setAttribute("orderStatusList", filteredStatusList);
+        request.setAttribute("orderStatusList", orderStatusList);
 
-        request.getRequestDispatcher("view/sale/orderdetails.jsp").forward(request, response);
+        request.getRequestDispatcher("view/saleadmin/saleadminorderdetails.jsp").forward(request, response);
     }
 
     /**

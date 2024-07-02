@@ -171,10 +171,22 @@
                                     <c:when test="${order.status_id == '7'}">
                                     <button type="submit" name="statusId" value="9">Hủy Đơn Hàng </button>
                                     </c:when>
+                                    <c:when test="${order.status_id == '2'}">
+                                    <button type="submit" name="statusId" value="4">Đang giao hàng </button>
+                                    </c:when>
+                                    <c:when test="${order.status_id == '5'}">
+                                    <button type="submit" name="statusId" value="6">Đã giao hàng </button>
+                                     <c:when test="${order.status_id == '6'}">
+                                    <button type="submit" name="statusId" value="7">Giao hàng thất bại </button>
+                                     <c:when test="${order.status_id == '7'}">
+                                    <button type="submit" name="statusId" value="9">Hủy dơn hàng </button>
+                                    </c:when>
+                                    </c:when>
+                                    </c:when>
                                     <c:otherwise>
                                         <button type="button" disabled>
                                             <c:choose>
-                                                <c:when test="${order.status_id == '2'}">Đã Xác Nhận</c:when>
+                                                
                                                 <c:when test="${order.status_id == '9'}">Hủy Đơn Hàng</c:when>
                                             </c:choose>
                                         </button>

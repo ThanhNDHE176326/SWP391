@@ -155,7 +155,7 @@
                                     <td>${order.customer_name}</td>
                                     <td>${order.totalCost}</td>
                                     <td>${order.orderDate}</td>
-                                    <td><a href="saleorderdetails?id=${order.id}" class="btn btn-info">View Details</a></td>
+                                    <td><a href="warehouseorderdetails?id=${order.id}" class="btn btn-info">View Details</a></td>
 
                                     <td>${order.status_name}</td>
                                     <td>
