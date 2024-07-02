@@ -151,7 +151,7 @@
                         <tbody>
                             <c:forEach var="order" items="${orders}">
                                 <tr>
-                                    <td><a href="saleorderdetails?id=${order.id}">${order.id}</a></td>
+                                    <td><a href="warehouseorderdetails?id=${order.id}">${order.id}</a></td>
                                     <td>${order.customer_name}</td>
                                     <td>${order.totalCost}</td>
                                     <td>${order.orderDate}</td>

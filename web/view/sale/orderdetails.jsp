@@ -115,7 +115,8 @@
                     <p><strong>Order Date:</strong> ${order.orderDate}</p>
                     <p><strong>Address:</strong> ${order.address}</p>
                     <p><strong>Phone:</strong> ${order.phone}</p>
-                    <form action="${pageContext.request.contextPath}/saleorderdetails" method="post" class="form-inline">
+                    <p><strong>Status : </strong> ${order.status_name}</p>
+<!--                    <form action="${pageContext.request.contextPath}/saleorderdetails" method="post" class="form-inline">
                         <input type="hidden" name="orderId" value="${order.id}">
                         <div class="form-group">
                             <label for="statusId" class="mr-2">Status:</label>
@@ -126,7 +127,7 @@
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Update Status</button>
-                    </form>
+                    </form>-->
                 </div>
 
                 <h2>Order Items</h2>

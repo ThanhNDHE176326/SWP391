@@ -23,7 +23,7 @@ import java.util.List;
  *
  * @author Acer
  */
-@WebServlet(name = "OrderDetailsController", urlPatterns = {"/warehouseorderdetails"})
+@WebServlet(name = "WareOrderDetailsController", urlPatterns = {"/warehouseorderdetails"})
 public class WarehouseOrderDetailsController extends HttpServlet {
 
     /**
