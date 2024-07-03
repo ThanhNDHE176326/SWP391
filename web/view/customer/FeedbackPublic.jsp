@@ -275,7 +275,7 @@
                             <div class="table-responsive cart_info" style="max-width: 1400px;
                                  margin-bottom: 20px;">
                                 <div class="feedback">
-                                    <h1>Đánh Giá Sản Phẩm</h1>
+                                    <h1>Product Reviews</h1>
 
                                     <c:if test="${not empty error}">
                                         <p class="error">${error}</p>
@@ -286,13 +286,13 @@
                                             <img src="${pageContext.request.contextPath}/images/${product.image}" alt="Product Image">
                                             <br><br>
                                             <p><strong>${product.title}</strong></p>
-                                            <p><strong>ID sản phẩm: ${product.id}</strong></p>
+                                            <p><strong>ID Product: ${product.id}</strong></p>
                                         </div>
 
                                         <form action="addfeedbackpublic" method="post">
                                             <input type="hidden" name="productId" value="${product.id}" />
                                             <div class="review">
-                                                <h2>Chất lượng sản phẩm</h2>
+                                                <h2>Product quality</h2>
                                                 <div class="rating">
                                                     <div class="stars" id="rateStar">
                                                         <span class="star" data-value="1">&#9733;</span>
@@ -304,11 +304,11 @@
                                                     <input type="hidden" name="ratedStar" id="rateStarInput" value="0"/>
                                                 </div>
                                                 <div>
-                                                    <label for="comment">Nhận xét về sản phẩm:</label>
+                                                    <label for="comment">Product reviews:</label>
                                                     <textarea rows="4" cols="50" name="comment" id="comment" placeholder="Nhập nhận xét của bạn..."></textarea>
                                                 </div>
                                             </div>
-                                            <button type="submit">Hoàn Thành</button>
+                                            <button type="submit">Complete</button>
                                         </form>
                                     </c:if>
 

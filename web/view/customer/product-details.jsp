@@ -169,7 +169,7 @@
                                                 </button>
                                             </c:when>
                                             <c:otherwise>
-                                                <span style="color: red; font-weight: bold; font-size: 20px;">Đã hết hàng</span>
+                                                <span style="color: red; font-weight: bold; font-size: 20px;">Out of stock</span>
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
@@ -259,7 +259,7 @@
                                                                         </a>
                                                                     </c:if>
                                                                     <c:if test="${listNewProduct.quantity == 0}">
-                                                                        <span class="out-of-stock">Đã hết hàng</span>
+                                                                        <span class="out-of-stock">Out of stock</span>
                                                                     </c:if>
                                                                 </div>
                                                             </div>
@@ -274,7 +274,7 @@
                                                                             </a>
                                                                         </c:if>
                                                                         <c:if test="${listNewProduct.quantity == 0}">
-                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                            <span class="out-of-stock">Out of stock</span>
                                                                         </c:if>
                                                                     </div>
                                                                 </div>
@@ -309,7 +309,7 @@
                                                                         </a>
                                                                     </c:if>
                                                                     <c:if test="${listNewProduct.quantity == 0}">
-                                                                        <span class="out-of-stock">Đã hết hàng</span>
+                                                                        <span class="out-of-stock">Out of stock</span>
                                                                     </c:if>
                                                                 </div>
                                                             </div>
@@ -324,7 +324,7 @@
                                                                             </a>
                                                                         </c:if>
                                                                         <c:if test="${listNewProduct.quantity == 0}">
-                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                            <span class="out-of-stock">Out of stock</span>
                                                                         </c:if>
                                                                     </div>
                                                                 </div>
@@ -359,7 +359,7 @@
                                                                         </a>
                                                                     </c:if>
                                                                     <c:if test="${listNewProduct.quantity == 0}">
-                                                                        <span class="out-of-stock">Đã hết hàng</span>
+                                                                        <span class="out-of-stock">Out of stock</span>
                                                                     </c:if>
                                                                 </div>
                                                             </div>
@@ -374,7 +374,7 @@
                                                                             </a>
                                                                         </c:if>
                                                                         <c:if test="${listNewProduct.quantity == 0}">
-                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                            <span class="out-of-stock">Out of stock</span>
                                                                         </c:if>
                                                                     </div>
                                                                 </div>
@@ -411,7 +411,7 @@
                                                                         </a>
                                                                     </c:if>
                                                                     <c:if test="${listNewProduct.quantity == 0}">
-                                                                        <span class="out-of-stock">Đã hết hàng</span>
+                                                                        <span class="out-of-stock">Out of stock</span>
                                                                     </c:if>
                                                                 </div>
                                                             </div>
@@ -426,7 +426,7 @@
                                                                             </a>
                                                                         </c:if>
                                                                         <c:if test="${listNewProduct.quantity == 0}">
-                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                            <span class="out-of-stock">Out of stock</span>
                                                                         </c:if>
                                                                     </div>
                                                                 </div>
@@ -461,7 +461,7 @@
                                                                         </a>
                                                                     </c:if>
                                                                     <c:if test="${listNewProduct.quantity == 0}">
-                                                                        <span class="out-of-stock">Đã hết hàng</span>
+                                                                        <span class="out-of-stock">Out of stock</span>
                                                                     </c:if>
                                                                 </div>
                                                             </div>
@@ -476,7 +476,7 @@
                                                                             </a>
                                                                         </c:if>
                                                                         <c:if test="${listNewProduct.quantity == 0}">
-                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                            <span class="out-of-stock">Out of stock</span>
                                                                         </c:if>
                                                                     </div>
                                                                 </div>
@@ -511,7 +511,7 @@
                                                                         </a>
                                                                     </c:if>
                                                                     <c:if test="${listNewProduct.quantity == 0}">
-                                                                        <span class="out-of-stock">Đã hết hàng</span>
+                                                                        <span class="out-of-stock">Out of stock</span>
                                                                     </c:if>
                                                                 </div>
                                                             </div>
@@ -526,7 +526,7 @@
                                                                             </a>
                                                                         </c:if>
                                                                         <c:if test="${listNewProduct.quantity == 0}">
-                                                                            <span class="out-of-stock">Đã hết hàng</span>
+                                                                            <span class="out-of-stock">Out of stock</span>
                                                                         </c:if>
                                                                     </div>
                                                                 </div>
