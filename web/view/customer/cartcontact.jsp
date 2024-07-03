@@ -674,7 +674,7 @@
                                 </div>
                                 <!-- End of Payment Methods Section -->
                                 <div class="button-container-new">
-                                    <button type="submit" class="styled-button" onclick="validatePaymentMethod(event)">Checkout</button>
+                                    <button type="submit" class="styled-button" onclick="validatePaymentMethod(event)">Create Order</button>
                                 </div>
 
                             </div>
