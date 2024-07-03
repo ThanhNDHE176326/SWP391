@@ -84,7 +84,7 @@
                         </td>
                     </tr>
                 </table>
-                <input type="submit" value="Xác nhận chuyển khoản" class="submit-btn">
+                <input type="submit" value="Confirm transfer" class="submit-btn">
             </form>
         </div>
     </body>
