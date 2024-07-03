@@ -237,11 +237,11 @@
                 </div>
 
                 <div class="confirmation-page">
-                    <div class="main-title">BẠN ĐÃ ĐẶT HÀNG THÀNH CÔNG</div>
+                    <div class="main-title">YOU HAVE SUCCESSFULLY ORDERED</div>
                     <div class="message">
-                        Cảm ơn bạn đã lựa chọn sản phẩm của chúng tôi<br>
-                        Sản phẩm sẽ được chuyển đến bạn trong thời gian sớm nhất<br>
-                        Chúc bạn có trải nghiệm sản phẩm tuyệt vời
+                        Thank you for choosing our products<br>
+                        The product will be delivered to you as soon as possible<br>
+                        Wishing you a great product experience
                     </div>
                     <div class="signature">From Shop With Love &lt;3</div>
                 </div>
