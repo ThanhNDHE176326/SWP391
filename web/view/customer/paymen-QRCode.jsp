@@ -35,8 +35,8 @@
                 margin-bottom: 30px;
             }
             img {
-                width: 250px;
-                height: 250px;
+                width: 325px;
+                height: 325px;
                 display: block;
                 margin: 0 auto;
             }
@@ -77,9 +77,10 @@
                             <img src="<c:url value='/images/QR.jpg'/>" alt="QRCode"/>
                         </td>
                         <td class="details">
-                            <p>Nội dung chuyển khoản: ${phone}</p>
-                            <p>Số tiền chuyển khoản: ${totalCost}</p>
-                            <p>Thời gian chuyển khoản trong vòng 24h. Nếu sau 24h không nhận được thông tin chuyển khoản, đơn hàng sẽ được hủy.</p>
+                            <p>Transfer content: <b>${phone}</b></p>
+                            <p>Transfer amount: <b>${totalCost} VND</b></p>
+                            <p><i>Transfer time within 24 hours. 
+                               If after 24 hours you do not receive transfer information, the order will be canceled.</i></p>
                         </td>
                     </tr>
                 </table>

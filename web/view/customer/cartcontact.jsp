@@ -492,7 +492,7 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <button type="button" class="back-button" onclick="redirectToCartContact()">Cancel</button>
-                                            <h4>Thay Đổi Địa Chỉ Nhận Hàng</h4>
+                                            <h4>Change Delivery Address</h4>
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
@@ -647,7 +647,7 @@
                                                 <!--<img src="<c:url value='/images/VnPay.jpg'/>" alt="VNPay">-->
                                                 <div class="name-pay">
                                                     VNPAY<br>
-                                                    Cổng thanh toán VNPAY
+                                                    VNPAY payment gateway
                                                 </div>
                                             </label>
                                         </div>
