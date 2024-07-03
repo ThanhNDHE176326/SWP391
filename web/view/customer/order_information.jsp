@@ -402,11 +402,11 @@
                                 <p data-status="${order.status_name}">
                                     Status: ${order.status_name}
                                     <c:choose>
-                                        <c:when test="${order.status_name == 'Chờ xửa lý'}">
+                                        <c:when test="${order.status_name == 'Processing'}">
                                             <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&cancelled=cancelled" class="cancel-link">Cancel order</a>
                                         </c:when>
-                                        <c:when test="${order.status_name == 'Đã giao hàng'}">
-                                            <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&complete=complete" class="cancel-link">Received goods successfully</a>
+                                        <c:when test="${order.status_name == 'Delivered'}">
+                                            <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${order.id}&complete=complete" class="cancel-link">Received successfully</a>
                                         </c:when>
 
                                     </c:choose>
@@ -458,15 +458,15 @@
                                                         <c:if test="${entry.key eq orderDetail.product_id}">
                                                             <c:set var="countFeedback" value="${entry.value}" />
                                                             <c:choose>
-                                                                <c:when test="${not empty orderDetail && order.status_name ne 'Nhận hàng thành công'}">
+                                                                <c:when test="${not empty orderDetail && order.status_name ne 'Received successfully'}">
                                                                     <a class="feedback_button disabled">Send Feedback</a>
                                                                     <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${orderDetail.product_id}" class="feedback_button disabled">Rebuy</a>
                                                                 </c:when>
-                                                                <c:when test="${order.status_name eq 'Nhận hàng thành công' && countFeedback == 0}">
+                                                                <c:when test="${order.status_name eq 'Received successfully' && countFeedback == 0}">
                                                                     <a class="feedback_button" href="${pageContext.request.contextPath}/addfeedbackpublic?productId=${orderDetail.product_id}">Send Feedback</a>
                                                                     <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${orderDetail.product_id}" class="feedback_button">Rebuy</a>
                                                                 </c:when>
-                                                                <c:when test="${order.status_name eq 'Nhận hàng thành công' && countFeedback > 0}">
+                                                                <c:when test="${order.status_name eq 'Received successfully' && countFeedback > 0}">
                                                                     <a class="feedback_button" href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${orderDetail.product_id}">View Feedback</a>
                                                                     <a href="${pageContext.request.contextPath}/ProductDetailPublic?index=1&productId=${orderDetail.product_id}" class="feedback_button">Rebuy</a>
                                                                 </c:when>

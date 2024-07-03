@@ -72,7 +72,7 @@ public class CheckOutSuccessfully extends HttpServlet {
                 //update quantity mới vào product
                 productDAO.updateQuantityAfterCart(productID, quantityChanged);
             }
-            request.setAttribute("message", "Payment failed, please try again.");
+            request.setAttribute("message", "Payment failed");
             request.getRequestDispatcher("view/customer/homepage.jsp").forward(request, response);
         }
     }

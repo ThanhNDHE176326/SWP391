@@ -382,7 +382,7 @@
                                                     text-align: center;">
                                                     <a href="${pageContext.request.contextPath}/orderInformationCustomer?orderId=${orderList.id}" class="view-button">View</a>
                                                     <c:choose>
-                                                        <c:when test="${orderList.status_name == 'Chờ xửa lý'}">
+                                                        <c:when test="${orderList.status_name == 'Processing'}">
                                                             <a href="${pageContext.request.contextPath}/listOrderCustomer?orderId=${orderList.id}" class="cancel-button">Cancel</a>
                                                         </c:when>
                                                         <c:otherwise>

@@ -82,6 +82,9 @@
                 color: white;
                 background-color: #2e59d9;
             }
+            .titleTable{
+                color: #0056b3;
+            }
         </style>
 
     </head>
@@ -139,13 +142,13 @@
                     <table>
                         <thead>
                             <tr>
-                                <th >ID</th>
-                                <th >Customer</th>
-                                <th >Total Cost</th>
-                                <th >Order Date</th>
-                                <th>Action</th>
-                                <th >Status</th>
-                                <th >Update Status</th>
+                                <th class="titleTable">ID</th>
+                                <th class="titleTable">Customer</th>
+                                <th class="titleTable">Total Cost</th>
+                                <th class="titleTable">Order Date</th>
+                                <th class="titleTable">Action</th>
+                                <th class="titleTable">Status</th>
+                                <th class="titleTable">Update Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -163,15 +166,15 @@
                                             <input type="hidden" name="orderId" value="${order.id}">
                                             <c:choose>
                                                 <c:when test="${order.status_id == '2'}">
-                                                    <button type="submit" name="statusId" value="3">Đang đóng gói </button>
+                                                    <button type="submit" name="statusId" value="3">Packing</button>
                                                 </c:when>
                                                 <c:when test="${order.status_id == '3'}">
-                                                    <button type="submit" name="statusId" value="4">Đã đóng gói  </button>
+                                                    <button type="submit" name="statusId" value="4">Packaged</button>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <button type="button" disabled>
                                                         <c:choose>
-                                                            <c:when test="${order.status_id == '4'}">Đã đóng gói </c:when>
+                                                            <c:when test="${order.status_id == '4'}">Packaged</c:when>
                                                         </c:choose>
                                                     </button>
                                                 </c:otherwise>
