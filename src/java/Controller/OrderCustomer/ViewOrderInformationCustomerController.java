@@ -4,10 +4,13 @@
  */
 package Controller.OrderCustomer;
 
+import DAO.CustomerDAO;
 import DAO.OrderCustomerDAO;
 import DAO.ProductDAO;
 import DAO.ProductDAOByPublic;
+import DAO.SendMail;
 import Models.Category;
+import Models.Customer;
 import Models.Order;
 import Models.OrderDetail;
 import Models.Product;
@@ -74,6 +77,22 @@ public class ViewOrderInformationCustomerController extends HttpServlet {
             }
         } else if (complete != null) {
             dao.updateOrderComplete(order_id);
+            CustomerDAO customerdao = new CustomerDAO();
+            SendMail sm = new SendMail();
+            String email = customerdao.getInformationCustomer(customerName).getEmail();
+
+            String subject = "Thank You for Your Purchase from BookHaven!";
+            String content = "Dear Customer,\n\n"
+                    + "We hope this message finds you well.\n\n"
+                    + "Thank you for your recent purchase from BookHaven. We are pleased to inform you that your order has been successfully delivered.\n\n"
+                    + "We hope you are enjoying your new product and that it meets your expectations.\n"
+                    + "Your satisfaction is our priority, and we are always here to assist you with any questions or concerns.\n\n"
+                    + "If you have any feedback or need further assistance, please feel free to reach out to our support team.\n\n"
+                    + "Thank you once again for choosing BookHaven. We look forward to serving you again in the future.\n\n"
+                    + "Best regards,\n"
+                    + "The BookHaven Team";
+            Customer user = new Customer(customerName, email);
+            boolean test = sm.sendEmail(user, subject, content);
         }
         List<OrderDetail> listProductOrder = dao.getProductByOrderId(order_id);
         Map<Integer, Integer> feedbackCounts = new HashMap<>();
