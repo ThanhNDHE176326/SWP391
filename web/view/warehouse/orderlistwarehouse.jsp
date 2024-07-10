@@ -10,6 +10,11 @@
         <meta name="author" content="">
 
         <title>Saler - Dashboard</title>
+         <script>
+        function disableButton(button) {
+            button.disabled = true;
+        }
+    </script>
         <style>
             body {
                 font-family: 'Arial', sans-serif;
@@ -164,7 +169,7 @@
                                     <td>
                                         <form action="${pageContext.request.contextPath}/warehouseorderlist" method="post">
                                             <input type="hidden" name="orderId" value="${order.id}">
-                                            <input type="hidden" name="restocked" value="${order.restocked}">
+                                            
 
                                             <c:choose>
                                                 <c:when test="${order.status_id == '2'}">
@@ -174,7 +179,7 @@
                                                     <button type="submit" name="statusId" value="4">Delivering</button>
                                                 </c:when>
                                                 <c:when test="${order.status_id == '8'}">
-                                                    <button type="submit" name="restock" value="true">Restock</button>
+                                                    <button type="submit" name="restock" value="true" onclick="disableButton(this)">Restock</button>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <button type="button" disabled>

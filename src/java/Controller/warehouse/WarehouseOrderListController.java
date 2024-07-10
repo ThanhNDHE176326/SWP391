@@ -10,6 +10,7 @@ import DAO.OrderDAO;
 import DAO.ProductDAO;
 import DAO.StaffDAO;
 import Models.Order;
+import Models.OrderDetail;
 import Models.OrderStatus;
 import Models.Staff;
 import java.io.IOException;
@@ -128,8 +129,28 @@ OrderDAO orderDAO = new OrderDAO();
     }
 
         response.sendRedirect(request.getContextPath() + "/warehouseorderlist");
+    
+    if (statusId.equals("4")) {
+            List<Integer> orderDetailIds = orderCustomerDAO.getOrderDetailIdsByOrderId(order_id);
+            // dùng for each lặp qua order_detail lấy id, quantity product
+            for (int orderDetailId : orderDetailIds) {
+                OrderDetail orderDetail = orderCustomerDAO.getOrderDetailById(orderDetailId);
+                String id = orderDetail.getId();
+                String productId = orderDetail.getProduct_id();
+                int productID = Integer.parseInt(productId);
+                String quantity = orderDetail.getQuantity();
+                int quantityInOrderProduct = Integer.parseInt(quantity);
+                //lấy ra quantity của product trong kho
+                int quantityInProducts = productDAO.getQuantityByProductID(productID);
+                int currentHold = productDAO.getHoldByProductID(productID);
+                //tình toán lại quantity
+                int quantityChanged = quantityInProducts - quantityInOrderProduct;
+                int newHold = currentHold - quantityInOrderProduct;
+                //update quantity mới vào product
+                productDAO.updateProductQuantityAndHold(productID, quantityChanged, newHold);
+            }
+        }
     }
-
     @Override
     public String getServletInfo() {
         return "Warehouse Order List Controller";
