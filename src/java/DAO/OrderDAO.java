@@ -420,7 +420,30 @@ public class OrderDAO extends DBContext {
             e.printStackTrace();
         }
     }
+    
+   public void updateInventory(int orderId) {
+    String getOrderItemsQuery = "SELECT product_id, quantity FROM OrderDetails WHERE order_id = ?";
+    String updateInventoryQuery = "UPDATE Products SET quantity = quantity + ? WHERE id = ?";
+    try (PreparedStatement getOrderItemsStmt = connection.prepareStatement(getOrderItemsQuery)) {
+        getOrderItemsStmt.setInt(1, orderId);
+        ResultSet rs = getOrderItemsStmt.executeQuery();
+        while (rs.next()) {
+            int productId = rs.getInt("product_id");
+            int quantity = rs.getInt("quantity");
+            
+            try (PreparedStatement updateInventoryStmt = connection.prepareStatement(updateInventoryQuery)) {
+                updateInventoryStmt.setInt(1, quantity);
+                updateInventoryStmt.setInt(2, productId);
+                updateInventoryStmt.executeUpdate();
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 
+   
+   
     public List<Order> getOrdersByStatusWithPagination(String statusId, int offset, int limit) {
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT o.*, s.name AS status_name, c.name AS customer_name "
@@ -775,7 +798,7 @@ public class OrderDAO extends DBContext {
                 + "FROM Orders o "
                 + "INNER JOIN OrderStatus s ON o.status_id = s.id "
                 + "INNER JOIN Customers c ON o.customer_id = c.id "
-                + "WHERE o.isDelete = 1 AND o.status_id IN (2, 3 ,4 ) "
+                + "WHERE o.isDelete = 1 AND o.status_id IN (2, 3 ,4 ,8 ) "
                 + "ORDER BY o.order_date DESC "
                 + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         try (PreparedStatement stm = connection.prepareStatement(sql)) {

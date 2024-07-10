@@ -112,13 +112,20 @@ OrderDAO orderDAO = new OrderDAO();
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+            String restock = request.getParameter("restock");
+
         String orderId = request.getParameter("orderId");
         int order_id = Integer.parseInt(orderId);
         String statusId = request.getParameter("statusId");
         OrderCustomerDAO orderCustomerDAO = new OrderCustomerDAO();
         ProductDAO productDAO = new ProductDAO();
         OrderDAO dao = new OrderDAO();
+        if (restock != null && restock.equals("true")) {
+        dao.updateInventory(order_id);
+        
+    } else {
         dao.updateOrderStatus(orderId, statusId);
+    }
 
         response.sendRedirect(request.getContextPath() + "/warehouseorderlist");
     }
