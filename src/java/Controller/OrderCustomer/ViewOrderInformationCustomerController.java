@@ -68,12 +68,12 @@ public class ViewOrderInformationCustomerController extends HttpServlet {
                 int productID = Integer.parseInt(productId);
                 String quantity = orderDetail.getQuantity();
                 int quantityInOrderProduct = Integer.parseInt(quantity);
-                //lấy ra quantity của product trong kho
-                int quantityInProducts = productDAO.getQuantityByProductID(productID);
-                //tình toán lại quantity
-                int quantityChanged = quantityInProducts + quantityInOrderProduct;
+                //lấy ra hold của product hiện tại
+                int holdInProducts = productDAO.getHoldByProductID(productID);
+                //tình toán lại hold
+                int holdChanged = holdInProducts - quantityInOrderProduct;
                 //update quantity mới vào product
-                productDAO.updateQuantityAfterCart(productID, quantityChanged);
+                productDAO.updateHoldProductAfterCart(productID, holdChanged);
             }
         } else if (complete != null) {
             dao.updateOrderComplete(order_id);

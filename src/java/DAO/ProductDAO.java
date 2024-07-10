@@ -875,20 +875,7 @@ public class ProductDAO extends DBContext {
         }
     }
     
-    public int getHoldByProductID(int productID) {
-        String sql = "SELECT hold FROM Products WHERE id = ?";
-        try {
-            stm = connection.prepareStatement(sql);
-            stm.setInt(1, productID);
-            rs = stm.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            System.out.println("getHoldByProductID: " + e.getMessage());
-        }
-        return 0;
-    }
+    
     
     public void updateProductQuantityAndHold(int productId, int newQuantity, int newHold) {
         String sql = "UPDATE Products SET quantity = ?, hold = ? WHERE id = ?";

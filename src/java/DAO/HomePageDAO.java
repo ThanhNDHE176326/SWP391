@@ -137,11 +137,11 @@ public class HomePageDAO extends dal.DBContext {
     public ArrayList<Product> getPopularProducts() {
         ArrayList<Product> list = new ArrayList<Product>();
         try {
-            String strSQL = "SELECT TOP 6 p.id, p.title, p.image, p.description, p.original_price, p.sale_price, p.quantity, p.status, " +
+            String strSQL = "SELECT TOP 6 p.id, p.title, p.image, p.description, p.original_price, p.sale_price, p.quantity, p.hold, p.status, " +
                 "COALESCE(SUM(od.quantity), 0) AS total_sold " +
                 "FROM Products p " +
                 "LEFT JOIN OrderDetails od ON p.id = od.product_id " +
-                "GROUP BY p.id, p.title, p.image, p.description, p.original_price, p.sale_price, p.quantity, p.status " +
+                "GROUP BY p.id, p.title, p.image, p.description, p.original_price, p.sale_price, p.quantity, p.hold, p.status " +
                 "ORDER BY total_sold DESC;";
 
             stm = connection.prepareStatement(strSQL);
@@ -154,8 +154,9 @@ public class HomePageDAO extends dal.DBContext {
                 String originalPrice = String.valueOf(rs.getInt("original_price"));
                 String salePrice = String.valueOf(rs.getInt("sale_price"));
                 String quantity = String.valueOf(rs.getInt("quantity"));
+                int hold = rs.getInt("hold");
                 String status = String.valueOf(rs.getInt("status"));
-                Product product = new Product(id, title, image, description, originalPrice, salePrice, quantity, status);
+                Product product = new Product(id, title, image, description, originalPrice, salePrice, quantity, hold, status);
                 list.add(product);
             }
             return list;

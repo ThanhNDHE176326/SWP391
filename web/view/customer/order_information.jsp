@@ -484,7 +484,6 @@
                             </div>
                             <div class="recommended_items"><!--recommended_items-->
                                 <h2 class="title text-center">recommended items</h2>
-
                                 <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
                                     <div class="carousel-inner">
                                         <div class="item active">	
@@ -497,16 +496,16 @@
                                                                     <img src="images/${listNewProduct.image}" alt="" />
                                                                     <h2>${listNewProduct.title}</h2>
                                                                     <p>${listNewProduct.description}</p>
-                                                                    <p style="display: none;">${order.id}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <p style="display: none;">${listNewProduct.quantity}</p>
+                                                                    <p style="display: none;">${listNewProduct.hold}</p>
                                                                     <div class="button-container">
-                                                                        <c:if test="${listNewProduct.quantity > 0}">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                        <c:if test="${listNewProduct.quantity - listNewProduct.hold > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart">
                                                                                 <i class="fa fa-shopping-cart"></i>Add to cart
                                                                             </a>
                                                                         </c:if>
-                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                        <c:if test="${listNewProduct.quantity - listNewProduct.hold == 0}">
                                                                             <span class="out-of-stock">Out of stock</span>
                                                                         </c:if>
                                                                     </div>
@@ -516,12 +515,12 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <c:if test="${listNewProduct.quantity > 0}">
-                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                            <c:if test="${listNewProduct.quantity - listNewProduct.hold > 0}">
+                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart">
                                                                                     <i class="fa fa-shopping-cart"></i>Add to cart
                                                                                 </a>
                                                                             </c:if>
-                                                                            <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <c:if test="${listNewProduct.quantity - listNewProduct.hold == 0}">
                                                                                 <span class="out-of-stock">Out of stock</span>
                                                                             </c:if>
                                                                         </div>
@@ -548,16 +547,16 @@
                                                                     <img src="images/${listNewProduct.image}" alt="" />
                                                                     <h2>${listNewProduct.title}</h2>
                                                                     <p>${listNewProduct.description}</p>
-                                                                    <p style="display: none;">${order.id}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <p style="display: none;">${listNewProduct.quantity}</p>
+                                                                    <p style="display: none;">${listNewProduct.hold}</p>
                                                                     <div class="button-container">
-                                                                        <c:if test="${listNewProduct.quantity > 0}">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                        <c:if test="${listNewProduct.quantity - listNewProduct.hold > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart">
                                                                                 <i class="fa fa-shopping-cart"></i>Add to cart
                                                                             </a>
                                                                         </c:if>
-                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                        <c:if test="${listNewProduct.quantity - listNewProduct.hold == 0}">
                                                                             <span class="out-of-stock">Out of stock</span>
                                                                         </c:if>
                                                                     </div>
@@ -567,12 +566,12 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <c:if test="${listNewProduct.quantity > 0}">
-                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                            <c:if test="${listNewProduct.quantity - listNewProduct.hold > 0}">
+                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart">
                                                                                     <i class="fa fa-shopping-cart"></i>Add to cart
                                                                                 </a>
                                                                             </c:if>
-                                                                            <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <c:if test="${listNewProduct.quantity - listNewProduct.hold == 0}">
                                                                                 <span class="out-of-stock">Out of stock</span>
                                                                             </c:if>
                                                                         </div>
@@ -599,16 +598,16 @@
                                                                     <img src="images/${listNewProduct.image}" alt="" />
                                                                     <h2>${listNewProduct.title}</h2>
                                                                     <p>${listNewProduct.description}</p>
-                                                                    <p style="display: none;">${order.id}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <p style="display: none;">${listNewProduct.quantity}</p>
+                                                                    <p style="display: none;">${listNewProduct.hold}</p>
                                                                     <div class="button-container">
-                                                                        <c:if test="${listNewProduct.quantity > 0}">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                        <c:if test="${listNewProduct.quantity - listNewProduct.hold > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart">
                                                                                 <i class="fa fa-shopping-cart"></i>Add to cart
                                                                             </a>
                                                                         </c:if>
-                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                        <c:if test="${listNewProduct.quantity - listNewProduct.hold == 0}">
                                                                             <span class="out-of-stock">Out of stock</span>
                                                                         </c:if>
                                                                     </div>
@@ -618,12 +617,12 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <c:if test="${listNewProduct.quantity > 0}">
-                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                            <c:if test="${listNewProduct.quantity - listNewProduct.hold > 0}">
+                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart">
                                                                                     <i class="fa fa-shopping-cart"></i>Add to cart
                                                                                 </a>
                                                                             </c:if>
-                                                                            <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <c:if test="${listNewProduct.quantity - listNewProduct.hold == 0}">
                                                                                 <span class="out-of-stock">Out of stock</span>
                                                                             </c:if>
                                                                         </div>
@@ -652,16 +651,16 @@
                                                                     <img src="images/${listNewProduct.image}" alt="" />
                                                                     <h2>${listNewProduct.title}</h2>
                                                                     <p>${listNewProduct.description}</p>
-                                                                    <p style="display: none;">${order.id}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <p style="display: none;">${listNewProduct.quantity}</p>
+                                                                    <p style="display: none;">${listNewProduct.hold}</p>
                                                                     <div class="button-container">
-                                                                        <c:if test="${listNewProduct.quantity > 0}">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                        <c:if test="${listNewProduct.quantity - listNewProduct.hold > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart">
                                                                                 <i class="fa fa-shopping-cart"></i>Add to cart
                                                                             </a>
                                                                         </c:if>
-                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                        <c:if test="${listNewProduct.quantity - listNewProduct.hold == 0}">
                                                                             <span class="out-of-stock">Out of stock</span>
                                                                         </c:if>
                                                                     </div>
@@ -671,12 +670,12 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <c:if test="${listNewProduct.quantity > 0}">
-                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                            <c:if test="${listNewProduct.quantity - listNewProduct.hold > 0}">
+                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart">
                                                                                     <i class="fa fa-shopping-cart"></i>Add to cart
                                                                                 </a>
                                                                             </c:if>
-                                                                            <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <c:if test="${listNewProduct.quantity - listNewProduct.hold == 0}">
                                                                                 <span class="out-of-stock">Out of stock</span>
                                                                             </c:if>
                                                                         </div>
@@ -703,16 +702,16 @@
                                                                     <img src="images/${listNewProduct.image}" alt="" />
                                                                     <h2>${listNewProduct.title}</h2>
                                                                     <p>${listNewProduct.description}</p>
-                                                                    <p style="display: none;">${order.id}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <p style="display: none;">${listNewProduct.quantity}</p>
+                                                                    <p style="display: none;">${listNewProduct.hold}</p>
                                                                     <div class="button-container">
-                                                                        <c:if test="${listNewProduct.quantity > 0}">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                        <c:if test="${listNewProduct.quantity - listNewProduct.hold > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart">
                                                                                 <i class="fa fa-shopping-cart"></i>Add to cart
                                                                             </a>
                                                                         </c:if>
-                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                        <c:if test="${listNewProduct.quantity - listNewProduct.hold == 0}">
                                                                             <span class="out-of-stock">Out of stock</span>
                                                                         </c:if>
                                                                     </div>
@@ -722,12 +721,12 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <c:if test="${listNewProduct.quantity > 0}">
-                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                            <c:if test="${listNewProduct.quantity - listNewProduct.hold > 0}">
+                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart">
                                                                                     <i class="fa fa-shopping-cart"></i>Add to cart
                                                                                 </a>
                                                                             </c:if>
-                                                                            <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <c:if test="${listNewProduct.quantity - listNewProduct.hold == 0}">
                                                                                 <span class="out-of-stock">Out of stock</span>
                                                                             </c:if>
                                                                         </div>
@@ -754,16 +753,16 @@
                                                                     <img src="images/${listNewProduct.image}" alt="" />
                                                                     <h2>${listNewProduct.title}</h2>
                                                                     <p>${listNewProduct.description}</p>
-                                                                    <p style="display: none;">${order.id}</p>
                                                                     <p style="display: none;">${listNewProduct.id}</p>
                                                                     <p style="display: none;">${listNewProduct.quantity}</p>
+                                                                    <p style="display: none;">${listNewProduct.hold}</p>
                                                                     <div class="button-container">
-                                                                        <c:if test="${listNewProduct.quantity > 0}">
-                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                        <c:if test="${listNewProduct.quantity - listNewProduct.hold > 0}">
+                                                                            <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart">
                                                                                 <i class="fa fa-shopping-cart"></i>Add to cart
                                                                             </a>
                                                                         </c:if>
-                                                                        <c:if test="${listNewProduct.quantity == 0}">
+                                                                        <c:if test="${listNewProduct.quantity - listNewProduct.hold == 0}">
                                                                             <span class="out-of-stock">Out of stock</span>
                                                                         </c:if>
                                                                     </div>
@@ -773,12 +772,12 @@
                                                                         <h2>${listNewProduct.title}</h2>
                                                                         <p>${listNewProduct.description}</p>
                                                                         <div class="button-container">
-                                                                            <c:if test="${listNewProduct.quantity > 0}">
-                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=orderinfo&orderId=${order.id}" class="btn btn-default add-to-cart">
+                                                                            <c:if test="${listNewProduct.quantity - listNewProduct.hold > 0}">
+                                                                                <a href="addToCart?productID=${listNewProduct.id}&location=myorders" class="btn btn-default add-to-cart">
                                                                                     <i class="fa fa-shopping-cart"></i>Add to cart
                                                                                 </a>
                                                                             </c:if>
-                                                                            <c:if test="${listNewProduct.quantity == 0}">
+                                                                            <c:if test="${listNewProduct.quantity - listNewProduct.hold == 0}">
                                                                                 <span class="out-of-stock">Out of stock</span>
                                                                             </c:if>
                                                                         </div>

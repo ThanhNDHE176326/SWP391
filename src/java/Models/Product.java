@@ -51,7 +51,7 @@ public class Product {
         this.status = status;
     }
 
-    public Product(String id, String title, String image, String description, String originalPrice, String salePrice, String quantity, String status) {
+    public Product(String id, String title, String image, String description, String originalPrice, String salePrice, String quantity, int hold, String status) {
         this.id = id;
         this.title = title;
         this.image = image;
@@ -59,6 +59,7 @@ public class Product {
         this.originalPrice = originalPrice;
         this.salePrice = salePrice;
         this.quantity = quantity;
+        this.hold = hold;
         this.status = status;
     }
 
@@ -89,6 +90,20 @@ public class Product {
         this.salePrice = salePrice;
     }
 
+    public Product(String id, String title, String image, String author, String quantity, String updateDate, String description, int hold, String category, String originalPrice, String salePrice) {
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.author = author;
+        this.quantity = quantity;
+        this.updateDate = updateDate;
+        this.description = description;
+        this.hold = hold;
+        this.category = category;
+        this.originalPrice = originalPrice;
+        this.salePrice = salePrice;
+    }
+    
     public Product(String id, String title, String author, String image,String description, String customer, String order) {
         this.id = id;
         this.title = title;
