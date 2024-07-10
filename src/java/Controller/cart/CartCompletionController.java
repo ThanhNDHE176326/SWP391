@@ -145,9 +145,9 @@ public class CartCompletionController extends HttpServlet {
         for (String productId : productIds) {
             int productID = Integer.parseInt(productId);
             int quatityInCartProduct = cartProductDAO.getQuantityByCartIdAndProductID(cartID, productID);
-            int quantityInProducts = productDAO.getQuantityByProductID(productID);
-            int quantityChanged = quantityInProducts - quatityInCartProduct;
-            productDAO.updateQuantityAfterCart(productID, quantityChanged);
+            int holdInProducts = productDAO.getHoldByProductID(productID);
+            int holdChanged = holdInProducts + quatityInCartProduct;
+            productDAO.updateHoldProductAfterCart(productID, holdChanged);
             orderDAO.insertOrderDetail(orderID, productID, quatityInCartProduct);
             cartProductDAO.deleteProductInCart(cartID, productID);
         }

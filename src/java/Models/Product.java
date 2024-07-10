@@ -13,7 +13,7 @@ public class Product {
     String id, title, image, author, quantity, updateDate,
             description, category, originalPrice, salePrice, status, isDelete, customer, order;
 
-    int stock;
+    int stock, hold;
     float total_cost;
     public Product() {
     }
@@ -106,7 +106,16 @@ public class Product {
         this.salePrice = salePrice;
         this.quantity = cartQuantity;
     }
-
+    
+    public Product(String id, String title, String image, int hold, int stock, String salePrice, String cartQuantity){
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.hold = hold;
+        this.stock = stock;
+        this.salePrice = salePrice;
+        this.quantity = cartQuantity;
+    }
     public Product(String id, String title, String image, String quantity, String salePrice, float total_cost) {
         this.id = id;
         this.title = title;
@@ -242,11 +251,29 @@ public class Product {
         this.customer = customer;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" + "id=" + id + ", title=" + title + ", image=" + image + ", author=" + author + ", quantity=" + quantity + ", updateDate=" + updateDate + ", description=" + description + ", category=" + category + ", originalPrice=" + originalPrice + ", salePrice=" + salePrice +", status=" + status + ", isDelete=" + isDelete + ", customer=" + customer + ", order=" + order + ", stock=" + stock + '}';
+    public int getHold() {
+        return hold;
     }
 
+    public void setHold(int hold) {
+        this.hold = hold;
+    }
+
+    public float getTotal_cost() {
+        return total_cost;
+    }
+
+    public void setTotal_cost(float total_cost) {
+        this.total_cost = total_cost;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" + "id=" + id + ", title=" + title + ", image=" + image + ", author=" + author + ", quantity=" + quantity + ", updateDate=" + updateDate + ", description=" + description + ", category=" + category + ", originalPrice=" + originalPrice + ", salePrice=" + salePrice + ", status=" + status + ", isDelete=" + isDelete + ", customer=" + customer + ", order=" + order + ", stock=" + stock + ", hold=" + hold + ", total_cost=" + total_cost + '}';
+    }
+
+    
+    
     
 
 }
