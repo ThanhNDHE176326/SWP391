@@ -164,17 +164,22 @@
                                     <td>
                                         <form action="${pageContext.request.contextPath}/warehouseorderlist" method="post">
                                             <input type="hidden" name="orderId" value="${order.id}">
+                                            <input type="hidden" name="restocked" value="${order.restocked}">
+
                                             <c:choose>
                                                 <c:when test="${order.status_id == '2'}">
                                                     <button type="submit" name="statusId" value="3">Packing</button>
                                                 </c:when>
                                                 <c:when test="${order.status_id == '3'}">
-                                                    <button type="submit" name="statusId" value="4">Packaged</button>
+                                                    <button type="submit" name="statusId" value="4">Delivering</button>
+                                                </c:when>
+                                                <c:when test="${order.status_id == '8'}">
+                                                    <button type="submit" name="restock" value="true">Restock</button>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <button type="button" disabled>
                                                         <c:choose>
-                                                            <c:when test="${order.status_id == '4'}">Packaged</c:when>
+                                                            <c:when test="${order.status_id == '4'}">Delivering</c:when>
                                                         </c:choose>
                                                     </button>
                                                 </c:otherwise>

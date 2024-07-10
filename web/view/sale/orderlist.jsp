@@ -169,29 +169,18 @@
                                                 <c:choose>
                                                     <c:when test="${order.status_id == '1'}">
                                                         <button type="submit" name="statusId" value="2">Confirm</button>
-                                                        <button type="submit" name="statusId" value="9">Cancel</button>
-                                                    </c:when>
-                                                    <c:when test="${order.status_id == '7'}">
-                                                        <button type="submit" name="statusId" value="9">Cancel</button>
+                                                        <button type="submit" name="statusId" value="7">Order Canceled</button>
                                                     </c:when>
                                                     <c:when test="${order.status_id == '4'}">
-                                                        <button type="submit" name="statusId" value="5">Delivering</button>
+                                                        <button type="submit" name="statusId" value="6">Success</button>
+                                                        <button type="submit" name="statusId" value="8">Canceled</button>
                                                     </c:when>
-                                                    <c:when test="${order.status_id == '5'}">
-                                                        <button type="submit" name="statusId" value="6">Delivered</button>
-                                                        <button type="submit" name="statusId" value="7">Delivery failed</button>
-                                                    </c:when>
-                                                    
-                                                    <c:when test="${order.status_id == '7'}">
-                                                        <button type="submit" name="statusId" value="9">Cancel</button>
-                                                    </c:when>
-
-
                                                     <c:otherwise>
                                                         <button type="button" disabled>
                                                             <c:choose>
+                                                                <c:when test="${order.status_id == '7'}">Cancel</c:when>
 
-                                                                <c:when test="${order.status_id == '9'}">Cancel</c:when>
+                                                                <c:when test="${order.status_id == '8'}">Cancel</c:when>
                                                             </c:choose>
                                                         </button>
                                                     </c:otherwise>
