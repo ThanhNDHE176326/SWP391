@@ -129,7 +129,7 @@ public class OrderListController extends HttpServlet {
         ProductDAO productDAO = new ProductDAO();
         OrderDAO dao = new OrderDAO();
         dao.updateOrderStatus(orderId, statusId);
-        if (statusId.equals("9")) {
+        if (statusId.equals("7")) {
             List<Integer> orderDetailIds = orderCustomerDAO.getOrderDetailIdsByOrderId(order_id);
             // dùng for each lặp qua order_detail lấy id, quantity product
             for (int orderDetailId : orderDetailIds) {
@@ -140,12 +140,34 @@ public class OrderListController extends HttpServlet {
                 String quantity = orderDetail.getQuantity();
                 int quantityInOrderProduct = Integer.parseInt(quantity);
                 //lấy ra quantity của product trong kho
-                int quantityInProducts = productDAO.getQuantityByProductID(productID);
+//                int quantityInProducts = productDAO.getQuantityByProductID(productID);
+                int currentHold = productDAO.getHoldByProductID(productID);
                 //tình toán lại quantity
-                int quantityChanged = quantityInProducts + quantityInOrderProduct;
+//                int quantityChanged = quantityInProducts - quantityInOrderProduct;
+                int newHold = currentHold - quantityInOrderProduct;
                 //update quantity mới vào product
-                productDAO.updateQuantityAfterCart(productID, quantityChanged);
+                productDAO.updateProductHold(productID, newHold);
             }
+        }
+        
+        
+        if (statusId.equals("8")) {
+            List<Integer> orderDetailIds = orderCustomerDAO.getOrderDetailIdsByOrderId(order_id);
+            // dùng for each lặp qua order_detail lấy id, quantity product
+//            for (int orderDetailId : orderDetailIds) {
+//                OrderDetail orderDetail = orderCustomerDAO.getOrderDetailById(orderDetailId);
+//                String id = orderDetail.getId();
+//                String productId = orderDetail.getProduct_id();
+//                int productID = Integer.parseInt(productId);
+//                String quantity = orderDetail.getQuantity();
+//                int quantityInOrderProduct = Integer.parseInt(quantity);
+//                //lấy ra quantity của product trong kho
+//                int quantityInProducts = productDAO.getQuantityByProductID(productID);
+//                //tình toán lại quantity
+//                int quantityChanged = quantityInProducts + quantityInOrderProduct;
+//                //update quantity mới vào product
+//                productDAO.updateQuantityAfterCart(productID, quantityChanged);
+//            }
             String customer_id = dao.getCustomerIdByOrderId(order_id);
             CustomerDAO customerdao = new CustomerDAO();
             String usernamecustomer = customerdao.getUsernameCustomer(customer_id);

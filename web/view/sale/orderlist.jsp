@@ -178,7 +178,7 @@
                                                     <c:otherwise>
                                                         <button type="button" disabled>
                                                             <c:choose>
-                                                                <c:when test="${order.status_id == '7'}">Cancel</c:when>
+                                                                <c:when test="${order.status_id == '7'}">Order Canceled</c:when>
 
                                                                 <c:when test="${order.status_id == '8'}">Cancel</c:when>
                                                             </c:choose>
