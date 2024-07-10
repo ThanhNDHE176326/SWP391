@@ -193,7 +193,7 @@
                                                 <td class="image">Item</td>
                                                 <td class="description">Title</td>
                                                 <td class="price">Price</td>
-                                                <td class="stock">Stock</td>
+                                                <td class="stock">Available</td>
                                                 <td class="quantity">Quantity</td>
                                                 <td class="total">Total</td>
                                                 <td class="delete">Delete</td>
@@ -216,7 +216,7 @@
                                                         <fmt:formatNumber value="${product.salePrice}" type="number" maxFractionDigits="0" />
                                                     </td>
                                                     <td class="cart_stock">
-                                                        <fmt:formatNumber value="${product.stock}" type="number" maxFractionDigits="0" />
+                                                        <fmt:formatNumber value="${product.stock - product.hold}" type="number" maxFractionDigits="0" />
                                                     </td>
                                                     <td class="cart_quantity">
                                                         <div class="cart_quantity_button">

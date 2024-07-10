@@ -694,6 +694,21 @@ public class ProductDAO extends DBContext {
         }
         return 0;
     }
+    
+    public int getHoldByProductID(int productID) {
+        String sql = "SELECT hold FROM Products WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, productID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("getHoldByProductID: " + e.getMessage());
+        }
+        return 0;
+    }
 
     public void updateQuantityAfterCart(int productID, int quantityChanged) {
         String sql = "UPDATE [dbo].[Products]\n"
@@ -706,6 +721,20 @@ public class ProductDAO extends DBContext {
             stm.execute();
         } catch (SQLException e) {
             System.out.println("updateQuantityAfterCart: " + e.getMessage());
+        }
+    }
+    
+    public void updateHoldProductAfterCart(int productID, int holdChanged) {
+        String sql = "UPDATE [dbo].[Products]\n"
+                + "   SET [hold] = ?    \n"
+                + " WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, holdChanged);
+            stm.setInt(2, productID);
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("updateHoldProductAfterCart: " + e.getMessage());
         }
     }
 

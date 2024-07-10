@@ -88,7 +88,7 @@ public class CartProductDAO extends DBContext {
 
     public List<Product> getProductsFromCartByCartID(int cartID) {
         List<Product> listProduct = new ArrayList<>();
-        String sql = "SELECT p.id, p.title, p.image, p.sale_price, p.quantity, cp.quantity AS cart_quantity FROM Products p \n"
+        String sql = "SELECT p.id, p.title, p.image, p.hold, p.sale_price, p.quantity, cp.quantity AS cart_quantity FROM Products p \n"
                 + "JOIN CartProducts cp ON p.id = cp.product_id\n"
                 + "WHERE p.isDelete = 1 AND p.status = 1 and p.quantity > 0 AND cp.cart_id = ? AND cp.isDelete = 1";
         try {
@@ -99,10 +99,11 @@ public class CartProductDAO extends DBContext {
                 String id = String.valueOf(rs.getInt("id"));
                 String title = rs.getString("title");
                 String image = rs.getString("image");
+                int hold = rs.getInt("hold");
                 int stock = rs.getInt("quantity");
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
                 String cartQuantity = String.valueOf(rs.getInt("cart_quantity"));
-                Product productFromCart = new Product(id, title, image, stock, salePrice, cartQuantity);
+                Product productFromCart = new Product(id, title, image, hold, stock, salePrice, cartQuantity);
                 listProduct.add(productFromCart);
             }
         } catch (SQLException e) {
@@ -180,7 +181,9 @@ public class CartProductDAO extends DBContext {
 
     public static void main(String[] args) {
         CartProductDAO dao = new CartProductDAO();
-        int cartid = dao.getCartIdByCustomerID(1);
-        System.out.println(cartid);
+        List<Product> listProduct = dao.getProductsFromCartByCartID(21);
+        for (Product product : listProduct) {
+            System.out.println(product);
+        }
     }
 }
