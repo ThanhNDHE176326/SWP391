@@ -90,7 +90,7 @@ public class CartProductDAO extends DBContext {
         List<Product> listProduct = new ArrayList<>();
         String sql = "SELECT p.id, p.title, p.image, p.hold, p.sale_price, p.quantity, cp.quantity AS cart_quantity FROM Products p \n"
                 + "JOIN CartProducts cp ON p.id = cp.product_id\n"
-                + "WHERE p.isDelete = 1 AND p.status = 1 and p.quantity > 0 AND cp.cart_id = ? AND cp.isDelete = 1";
+                + "WHERE p.isDelete = 1 AND p.status = 1 and (p.quantity - p.hold) > 0 AND cp.cart_id = ? AND cp.isDelete = 1";
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, cartID);

@@ -172,7 +172,7 @@
                                                         <button type="submit" name="statusId" value="7">Order Canceled</button>
                                                     </c:when>
                                                     <c:when test="${order.status_id == '4'}">
-                                                        <button type="submit" name="statusId" value="6">Success</button>
+                                                        <button type="submit" name="statusId" value="5">Success</button>
                                                         <button type="submit" name="statusId" value="8">Canceled</button>
                                                     </c:when>
                                                     <c:otherwise>
