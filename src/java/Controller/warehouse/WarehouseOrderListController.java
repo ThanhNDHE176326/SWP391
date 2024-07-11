@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller.warehouse;
 
 import DAO.OrderCustomerDAO;
@@ -49,7 +48,7 @@ public class WarehouseOrderListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-OrderDAO orderDAO = new OrderDAO();
+        OrderDAO orderDAO = new OrderDAO();
         StaffDAO staffDAO = new StaffDAO();
         int page = 1;
         if (request.getParameter("page") != null) {
@@ -92,14 +91,10 @@ OrderDAO orderDAO = new OrderDAO();
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("staffList", staffList);
 
-        
-
         // Đảm bảo rằng các tham số lọc được truyền tiếp qua request dispatcher
-       
-
         List<OrderStatus> orderStatusList = orderDAO.getAllOrderStatus();
         List<OrderStatus> warehouseOrderStatusList = orderStatusList.stream()
-                .filter(status -> List.of("2","3", "4").contains(status.getId()))
+                .filter(status -> List.of("2", "3", "4").contains(status.getId()))
                 .collect(Collectors.toList());
         request.setAttribute("orderStatusList", warehouseOrderStatusList);
 
@@ -113,44 +108,41 @@ OrderDAO orderDAO = new OrderDAO();
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String restock = request.getParameter("restock");
 
+        String restock = request.getParameter("restock");
         String orderId = request.getParameter("orderId");
         int order_id = Integer.parseInt(orderId);
         String statusId = request.getParameter("statusId");
+
         OrderCustomerDAO orderCustomerDAO = new OrderCustomerDAO();
         ProductDAO productDAO = new ProductDAO();
         OrderDAO dao = new OrderDAO();
-        if (restock != null && restock.equals("true")) {
-        dao.updateInventory(order_id);
-        
-    } else {
-        dao.updateOrderStatus(orderId, statusId);
-    }
 
-        response.sendRedirect(request.getContextPath() + "/warehouseorderlist");
-    
-    if (statusId.equals("4")) {
-            List<Integer> orderDetailIds = orderCustomerDAO.getOrderDetailIdsByOrderId(order_id);
-            // dùng for each lặp qua order_detail lấy id, quantity product
-            for (int orderDetailId : orderDetailIds) {
-                OrderDetail orderDetail = orderCustomerDAO.getOrderDetailById(orderDetailId);
-                String id = orderDetail.getId();
-                String productId = orderDetail.getProduct_id();
-                int productID = Integer.parseInt(productId);
-                String quantity = orderDetail.getQuantity();
-                int quantityInOrderProduct = Integer.parseInt(quantity);
-                //lấy ra quantity của product trong kho
-                int quantityInProducts = productDAO.getQuantityByProductID(productID);
-                int currentHold = productDAO.getHoldByProductID(productID);
-                //tình toán lại quantity
-                int quantityChanged = quantityInProducts - quantityInOrderProduct;
-                int newHold = currentHold - quantityInOrderProduct;
-                //update quantity mới vào product
-                productDAO.updateProductQuantityAndHold(productID, quantityChanged, newHold);
+        if (restock != null && restock.equals("8")) {
+            dao.updateInventory(order_id);
+        } else {
+            dao.updateOrderStatus(orderId, statusId);
+
+            if (statusId != null && statusId.equals("4")) {
+                List<Integer> orderDetailIds = orderCustomerDAO.getOrderDetailIdsByOrderId(order_id);
+                for (int orderDetailId : orderDetailIds) {
+                    OrderDetail orderDetail = orderCustomerDAO.getOrderDetailById(orderDetailId);
+                    int productID = Integer.parseInt(orderDetail.getProduct_id());
+                    int quantityInOrderProduct = Integer.parseInt(orderDetail.getQuantity());
+                    int quantityInProducts = productDAO.getQuantityByProductID(productID);
+                    int currentHold = productDAO.getHoldByProductID(productID);
+
+                    int quantityChanged = quantityInProducts - quantityInOrderProduct;
+                    int newHold = currentHold - quantityInOrderProduct;
+
+                    productDAO.updateProductQuantityAndHold(productID, quantityChanged, newHold);
+                }
             }
         }
+
+        response.sendRedirect(request.getContextPath() + "/warehouseorderlist");
     }
+
     @Override
     public String getServletInfo() {
         return "Warehouse Order List Controller";
