@@ -10,11 +10,11 @@
         <meta name="author" content="">
 
         <title>Saler - Dashboard</title>
-         <script>
-        function disableButton(button) {
-            button.disabled = true;
-        }
-    </script>
+        <script>
+            function disableButton(button) {
+                button.disabled = true;
+            }
+        </script>
         <style>
             body {
                 font-family: 'Arial', sans-serif;
@@ -157,7 +157,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="order" items="${orders}">
+                            <c:forEach var="order" items="${orders}" varStatus="status">
                                 <tr>
                                     <td><a href="warehouseorderdetails?id=${order.id}">${order.id}</a></td>
                                     <td>${order.customer_name}</td>
@@ -167,9 +167,9 @@
 
                                     <td>${order.status_name}</td>
                                     <td>
-                                        <form action="${pageContext.request.contextPath}/warehouseorderlist" method="post">
+                                        <form id="warehouseForm${status.index}" action="${pageContext.request.contextPath}/warehouseorderlist" method="post">
                                             <input type="hidden" name="orderId" value="${order.id}">
-                                            
+                                            <input type="hidden" id="restockInput${status.index}" name="restock" value="">
 
                                             <c:choose>
                                                 <c:when test="${order.status_id == '2'}">
@@ -179,7 +179,7 @@
                                                     <button type="submit" name="statusId" value="4">Delivering</button>
                                                 </c:when>
                                                 <c:when test="${order.status_id == '8'}">
-                                                    <button type="submit" name="restock" value="true" onclick="disableButton(this)">Restock</button>
+                                                    <button type="button" id="restockButton${status.index}" onclick="submitRestockForm(${status.index})">Restock</button>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <button type="button" disabled>
@@ -194,6 +194,17 @@
                                 </tr>
                             </c:forEach>
                         </tbody>
+
+                        <script>
+                            function submitRestockForm(index) {
+                                var restockInput = document.getElementById("restockInput" + index);
+                                restockInput.value = "8"; // Set the value explicitly
+                                var form = document.getElementById("warehouseForm" + index);
+                                form.submit();
+                                document.getElementById("restockButton" + index).disabled = true; // Disable the button
+                            }
+                        </script>
+
                     </table>
 
                     <div>

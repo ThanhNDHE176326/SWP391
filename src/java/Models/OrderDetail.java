@@ -25,6 +25,11 @@ public class OrderDetail {
         this.category_name = category_name;
     }
 
+    public OrderDetail(String quantity, String product_id) {
+        this.quantity = quantity;
+        this.product_id = product_id;
+    }
+
     
     public String getImage() {
         return image;

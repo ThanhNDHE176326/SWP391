@@ -420,30 +420,54 @@ public class OrderDAO extends DBContext {
             e.printStackTrace();
         }
     }
-    
-   public void updateInventory(int orderId) {
-    String getOrderItemsQuery = "SELECT product_id, quantity FROM OrderDetails WHERE order_id = ?";
-    String updateInventoryQuery = "UPDATE Products SET quantity = quantity + ? WHERE id = ?";
-    try (PreparedStatement getOrderItemsStmt = connection.prepareStatement(getOrderItemsQuery)) {
-        getOrderItemsStmt.setInt(1, orderId);
-        ResultSet rs = getOrderItemsStmt.executeQuery();
-        while (rs.next()) {
-            int productId = rs.getInt("product_id");
-            int quantity = rs.getInt("quantity");
-            
-            try (PreparedStatement updateInventoryStmt = connection.prepareStatement(updateInventoryQuery)) {
-                updateInventoryStmt.setInt(1, quantity);
-                updateInventoryStmt.setInt(2, productId);
-                updateInventoryStmt.executeUpdate();
-            }
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-}
 
-   
-   
+    public void updateInventory(int orderId) {
+        try {
+            List<OrderDetail> orderDetails = getOrderDetail(orderId);
+            for (OrderDetail orderDetail : orderDetails) {
+                String productId = orderDetail.getProduct_id();
+                String quantity = orderDetail.getQuantity();
+                updateInventoryForProduct(productId, quantity);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<OrderDetail> getOrderDetail(int orderId) {
+        String getOrderDetailQuery = "SELECT product_id, quantity FROM OrderDetails WHERE order_id = ?";
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        try (PreparedStatement getOrderDetailStmt = connection.prepareStatement(getOrderDetailQuery)) {
+            getOrderDetailStmt.setInt(1, orderId);
+            ResultSet rs = getOrderDetailStmt.executeQuery();
+            while (rs.next()) {
+                String productId = rs.getString("product_id");
+                String quantity = rs.getString("quantity");
+                orderDetails.add(new OrderDetail(quantity, productId));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orderDetails;
+    }
+
+    
+    public static void main(String[] args) {
+        OrderDAO dao = new OrderDAO();
+        dao.updateInventory(34);
+    }
+    
+    private void updateInventoryForProduct(String productId, String quantity) {
+        String updateInventoryQuery = "UPDATE Products SET quantity = quantity + ? WHERE id = ?";
+        try (PreparedStatement updateInventoryStmt = connection.prepareStatement(updateInventoryQuery)) {
+            updateInventoryStmt.setString(1, quantity);
+            updateInventoryStmt.setString(2, productId);
+            updateInventoryStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<Order> getOrdersByStatusWithPagination(String statusId, int offset, int limit) {
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT o.*, s.name AS status_name, c.name AS customer_name "
@@ -678,11 +702,7 @@ public class OrderDAO extends DBContext {
         return order;
     }
 
-    public static void main(String[] args) {
-        OrderDAO dao = new OrderDAO();
-        List<Order> order = dao.getOrdersByStatusWithPagination("1", 0, 5);
-        System.out.println(order);
-    }
+    
 
     // cac method danh cho sale-admin
     public int getTotalOrderCountByStatus(String statusId) {
