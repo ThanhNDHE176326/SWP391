@@ -92,7 +92,7 @@ public class AddToCartController extends HttpServlet {
             int cartID = Integer.parseInt(cartCustomer.getId());
             //check product xem ton tai trong Cart Product chua?
             int productIDFromCart = cartProductDAO.getProductIDFromByCartID(cartID, productID);
-            if (productIDFromCart == 0) {
+            if (productIDFromCart == 0) {//vi int nen k the check bang null
                 //neu chua thi add cart voi quantity = 1
                 cartProductDAO.addToCart(cartID, productID);
 //                response.sendRedirect("ProductListPublic");

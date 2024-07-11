@@ -40,6 +40,46 @@
             .add-product-button:hover {
                 background-color: #036ca0;
             }
+            .search-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 20px 0;
+            }
+
+            .search-container form {
+                display: flex;
+                align-items: center;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                overflow: hidden;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+                max-width: 700px; /* Adjust the max-width as needed */
+                width: 100%;
+            }
+
+            .search-container input[type="text"] {
+                padding: 10px;
+                border: none;
+                outline: none;
+                font-size: 16px;
+                flex-grow: 1; /* Allow input to take the remaining space */
+            }
+
+            .search-container input[type="submit"] {
+                padding: 10px 20px;
+                background-color: #0480be;
+                color: white;
+                border: none;
+                cursor: pointer;
+                font-size: 16px;
+                transition: background-color 0.3s ease;
+            }
+
+            .search-container input[type="submit"]:hover {
+                background-color: #036ca0;
+            }
+            
         </style>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -88,39 +128,41 @@
                             <i class="fas fa-table"></i>
                             Data Products List
                         </div>
-                        <div>
-                            Search Products:
+                        <div class="search-container">
+                            <!--Search Products:-->
                             <form class="form-inline" action="productMarketingSearchByTitle">
-                                <input type="text" name="search" placeholder="search" value="${search}"> 
-                                <input type="submit" value="SEARCH"> 
+                                <input type="text" name="search" placeholder="search product" value="${search}">
+                                <input type="submit" value="SEARCH">
                             </form>
                         </div>
-                        <div>
-                            <form id="categorySearch" action="productMarketingFilterByCategory">
-                                Filter by Category:
-                                <select name="categorySearch" onchange="document.getElementById('categorySearch').submit();">
-                                    <option value="0" ${categorySearch eq "0" ? "selected" : ""}>ALL Category</option>
-                                    <c:forEach items="${listCategory}" var="category">
-                                        <option value="${category.id}" ${category.id == categorySearch ? "selected" : ""}>${category.name}</option>
-                                    </c:forEach>
-                                </select>
-                            </form>
-                        </div>
-                        <div>
-                            <form id="statusSearch" action="productMarketingFilterByStatus">
-                                Filter by Status:
-                                <select name="statusSearch" onchange="document.getElementById('statusSearch').submit();">
-                                    <option value="all" ${statusSearch eq "all"? "selected":""}>All Status</option>
-                                    <option value="show" ${statusSearch eq "show"? "selected":""}>Show</option>
-                                    <option value="hide"${statusSearch eq "hide"? "selected":""}>Hide</option>
-                                </select>  
-                            </form>
-                        </div>
-                        <div>
-                            <button class="add-product-button">
-                                <a href="createNewProductMarketing">ADD NEW PRODUCT</a>
-                            </button>
-                        </div>       
+
+                        <div class="filter-container">
+    <form id="categorySearch" action="productMarketingFilterByCategory">
+        <label for="categorySearch">Filter by Category:</label>
+        <select name="categorySearch" id="categorySearch" onchange="document.getElementById('categorySearch').submit();">
+            <option value="0" ${categorySearch eq "0" ? "selected" : ""}>ALL Category</option>
+            <c:forEach items="${listCategory}" var="category">
+                <option value="${category.id}" ${category.id == categorySearch ? "selected" : ""}>${category.name}</option>
+            </c:forEach>
+        </select>
+    </form>
+    <form id="statusSearch" action="productMarketingFilterByStatus">
+        <label for="statusSearch">Filter by Status:</label>
+        <select name="statusSearch" id="statusSearch" onchange="document.getElementById('statusSearch').submit();">
+            <option value="all" ${statusSearch eq "all"? "selected":""}>All Status</option>
+            <option value="show" ${statusSearch eq "show"? "selected":""}>Show</option>
+            <option value="hide" ${statusSearch eq "hide"? "selected":""}>Hide</option>
+        </select>  
+    </form>
+    <div>
+        <button class="add-product-button">
+            <a href="createNewProductMarketing">ADD NEW PRODUCT</a>
+        </button>
+    </div>  
+</div>
+
+
+                             
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table

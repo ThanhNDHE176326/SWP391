@@ -113,11 +113,34 @@
                 }
             }
 
+            function validateForm(event) {
+                const salePriceInput = document.getElementById('salePrice');
+                const originalPriceInput = document.getElementById('originalPrice');
+                const salePrice = parseInt(salePriceInput.value, 10);
+                const originalPrice = parseInt(originalPriceInput.value, 10);
+
+                if (isNaN(salePrice) || salePrice <= 0) {
+                    alert('Sale price must be a positive integer.');
+                    event.preventDefault(); // Prevent form submission
+                    return;
+                }
+
+                if (salePrice <= originalPrice) {
+                    alert('Sale price must be greater than import price.');
+                    event.preventDefault(); // Prevent form submission
+                    return;
+                }
+            }
+
             document.addEventListener('DOMContentLoaded', () => {
                 const imageInput = document.getElementById('imageFile');
                 imageInput.addEventListener('change', checkFileType);
+
+                const form = document.querySelector('.form-container form');
+                form.addEventListener('submit', validateForm);
             });
         </script>
+
     </head>
     <body>
         <a href="productListMarketing" class="back-button">Back</a>
@@ -134,7 +157,7 @@
                     <input type="text" id="author" name="author" value="${product.author}">
 
                     <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" name="quantity" value="${product.quantity}">
+                    <input type="number" id="quantity" name="quantity" value="${product.quantity}" readonly="">
 
                     <label for="description">Description:</label>
                     <textarea id="description" name="description">${product.description}</textarea>
@@ -146,11 +169,14 @@
                         </c:forEach>
                     </select>
 
-                    <label for="originalPrice">Original Price:</label>
-                    <input type="text" id="originalPrice" name="originalPrice" value="${product.originalPrice}">
+                    <label for="originalPrice">Import Price:</label>
+                    <input type="text" id="originalPrice" name="originalPrice" value="${product.originalPrice}" readonly="">
 
                     <label for="salePrice">Sale Price:</label>
                     <input type="text" id="salePrice" name="salePrice" value="${product.salePrice}">
+
+                    <label for="hold">Hold:</label>
+                    <input type="number" id="hold" name="hold" value="${product.hold}" readonly="">
 
                     <label for="imageFile">Image:</label>
                     <input type="file" id="imageFile" name="imageFile">

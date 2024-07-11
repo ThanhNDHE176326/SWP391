@@ -18,6 +18,22 @@ public class Product {
     public Product() {
     }
 
+    public Product(String id, String title, String image, String author, String quantity, String updateDate, String description, String category, String originalPrice, String salePrice, String status, int hold) {
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.author = author;
+        this.quantity = quantity;
+        this.updateDate = updateDate;
+        this.description = description;
+        this.category = category;
+        this.originalPrice = originalPrice;
+        this.salePrice = salePrice;
+        this.status = status;
+        this.hold = hold;
+    }
+
+    
     public Product(String id, String title, String image, String author,
             String quantity, String updateDate, String description, String category,
             String originalPrice, String salePrice, String status, String isDelete) {

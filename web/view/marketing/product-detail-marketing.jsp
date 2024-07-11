@@ -51,18 +51,73 @@
                 display: inline-block;
                 width: 150px;
             }
+            .update-product-button {
+                display: inline-block;
+                text-align: center; /* Center align content */
+            }
+
+            .update-product-button a {
+                display: inline-block;
+                padding: 12px 24px;
+                background-color: #2196f3; /* Blue background */
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                text-decoration: none;
+                transition: background-color 0.3s ease;
+            }
+
+            .update-product-button a:hover {
+                background-color: #0e7ae6; /* Darker blue on hover */
+            }
+            .change-status-button {
+                display: inline-block;
+                text-align: center; /* Center align content */
+            }
+
+            .change-status-button a {
+                display: inline-block;
+                padding: 8px 16px;
+                background-color: #f9f9f9; /* Light background */
+                color: #333; /* Dark text color */
+                border: 1px solid #ccc; /* Gray border */
+                border-radius: 5px;
+                text-decoration: none;
+                transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            }
+
+            .change-status-button a:hover {
+                background-color: #e0e0e0; /* Light gray background on hover */
+                color: #000; /* Darken text color on hover */
+                border-color: #999; /* Darken border color on hover */
+            }
+
+            .change-status-button a span {
+                font-weight: bold; /* Make text bold */
+            }
+
+            .change-status-button a span.status-active {
+                color: blue; /* Blue color for active status */
+            }
+
+            .change-status-button a span.status-inactive {
+                color: red; /* Red color for inactive status */
+            }
+
         </style>
     </head>
     <body>
         <div class="product-details">
             <h1>Detail of "${product.title}"</h1>
-            <div>
+            <div class="update-product-button">
                 <button type="button">
                     <a href="updateProductDetailMarketing?productID=${product.id}">
                         Update Product
                     </a>
                 </button>
             </div>
+
             <table>
                 <tr>
                     <td><img src="images/${product.image}" width="400px" height="400px" alt="image of ${product.title}"/></td>
@@ -72,23 +127,27 @@
                         <div><strong>Category:</strong> ${product.category}</div>
                         <div><strong>Brief information:</strong> ${product.description}</div>
                         <div><strong>Quantity:</strong> ${product.quantity}</div>
-                        <div><strong>List Price:</strong> ${product.originalPrice}</div>
+                        <div><strong>Import Price:</strong> ${product.originalPrice}</div>
                         <div><strong>Sale Price:</strong> ${product.salePrice}</div>
+                        <div><strong>Hold:</strong> ${product.hold}</div>
                     </td>
                 </tr>
             </table>
-            <div>
+            <div class="change-status-button">
                 <button type="button">
                     <a href="changeStatus?productID=${product.id}&status=${product.status}">
-                        <c:if test="${product.status == 1}">
-                            <span style="color: blue">Change Status</span>
-                        </c:if>
-                        <c:if test="${product.status == 0}">
-                            <span style="color: red">Change Status</span>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${product.status == 1}">
+                                <span class="status-active">Change Status</span>
+                            </c:when>
+                            <c:when test="${product.status == 0}">
+                                <span class="status-inactive">Change Status</span>
+                            </c:when>
+                        </c:choose>
                     </a>
                 </button>
             </div>
+
         </div>
     </body>
 </html>

@@ -570,7 +570,7 @@ public class ProductDAO extends DBContext {
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
                 String status = String.valueOf(rs.getInt("status"));
-
+                
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
                         salePrice, status);
@@ -583,7 +583,7 @@ public class ProductDAO extends DBContext {
     }
 
     public Product getProductDetailByID(int productID) {
-        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
+        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status,p.hold \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
                 + "WHERE p.id = ? AND p.isDelete = 1";
         try {
@@ -602,10 +602,10 @@ public class ProductDAO extends DBContext {
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
                 String status = String.valueOf(rs.getInt("status"));
-
+                int hold = rs.getInt("hold");
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice, status);
+                        salePrice, status, hold);
                 return product;
             }
         } catch (SQLException e) {
@@ -855,9 +855,10 @@ public class ProductDAO extends DBContext {
                 + "           ,[sale_price]\n"
                 + "           ,[status]\n"
                 + "           ,[isDelete]\n"
-                + "           ,[slider_id])\n"
+                + "           ,[slider_id]\n"
+                + "           ,[hold])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?,?,?,1,1,NULL)";
+                + "           (?,?,?,?,?,?,?,?,?,1,1,NULL,0)";
         try {
             stm = connection.prepareStatement(sql);
             stm.setString(1, product.getTitle());
