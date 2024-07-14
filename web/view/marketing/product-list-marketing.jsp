@@ -79,7 +79,11 @@
             .search-container input[type="submit"]:hover {
                 background-color: #036ca0;
             }
-            
+            .err{
+                color: red;
+                font-weight: bold;
+                text-align: center;
+            }
         </style>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -133,36 +137,41 @@
                             <form class="form-inline" action="productMarketingSearchByTitle">
                                 <input type="text" name="search" placeholder="search product" value="${search}">
                                 <input type="submit" value="SEARCH">
+                                
+                                
                             </form>
+                                
+                                
+                        </div>
+                                <h5 class="err">${error}</h5>
+                                
+                        <div class="filter-container">
+                            <form id="categorySearch" action="productMarketingFilterByCategory">
+                                <label for="categorySearch">Filter by Category:</label>
+                                <select name="categorySearch" id="categorySearch" onchange="document.getElementById('categorySearch').submit();">
+                                    <option value="0" ${categorySearch eq "0" ? "selected" : ""}>ALL Category</option>
+                                    <c:forEach items="${listCategory}" var="category">
+                                        <option value="${category.id}" ${category.id == categorySearch ? "selected" : ""}>${category.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </form>
+                            <form id="statusSearch" action="productMarketingFilterByStatus">
+                                <label for="statusSearch">Filter by Status:</label>
+                                <select name="statusSearch" id="statusSearch" onchange="document.getElementById('statusSearch').submit();">
+                                    <option value="all" ${statusSearch eq "all"? "selected":""}>All Status</option>
+                                    <option value="show" ${statusSearch eq "show"? "selected":""}>Show</option>
+                                    <option value="hide" ${statusSearch eq "hide"? "selected":""}>Hide</option>
+                                </select>  
+                            </form>
+                            <div>
+                                <button class="add-product-button">
+                                    <a href="createNewProductMarketing">ADD NEW PRODUCT</a>
+                                </button>
+                            </div>  
                         </div>
 
-                        <div class="filter-container">
-    <form id="categorySearch" action="productMarketingFilterByCategory">
-        <label for="categorySearch">Filter by Category:</label>
-        <select name="categorySearch" id="categorySearch" onchange="document.getElementById('categorySearch').submit();">
-            <option value="0" ${categorySearch eq "0" ? "selected" : ""}>ALL Category</option>
-            <c:forEach items="${listCategory}" var="category">
-                <option value="${category.id}" ${category.id == categorySearch ? "selected" : ""}>${category.name}</option>
-            </c:forEach>
-        </select>
-    </form>
-    <form id="statusSearch" action="productMarketingFilterByStatus">
-        <label for="statusSearch">Filter by Status:</label>
-        <select name="statusSearch" id="statusSearch" onchange="document.getElementById('statusSearch').submit();">
-            <option value="all" ${statusSearch eq "all"? "selected":""}>All Status</option>
-            <option value="show" ${statusSearch eq "show"? "selected":""}>Show</option>
-            <option value="hide" ${statusSearch eq "hide"? "selected":""}>Hide</option>
-        </select>  
-    </form>
-    <div>
-        <button class="add-product-button">
-            <a href="createNewProductMarketing">ADD NEW PRODUCT</a>
-        </button>
-    </div>  
-</div>
 
 
-                             
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table
@@ -247,6 +256,15 @@
                                                     <div>
                                                         <a href="viewProductDetailMarketing?id=${product.id}">View Details</a>
                                                     </div>  
+                                                    <div>
+                                                        <c:if test="${product.quantity == 0}">
+                                                            <button style="width: 120px">
+                                                                <a href="deleteProduct?id=${product.id}">
+                                                                    Delete
+                                                                </a>
+                                                            </button>
+                                                        </c:if>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </c:forEach>
