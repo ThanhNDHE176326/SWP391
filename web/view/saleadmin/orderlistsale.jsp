@@ -326,13 +326,7 @@
                 </div>
             </div>
 
-            <footer class="sticky-footer">
-                <div class="container">
-                    <div class="copyright text-center">
-                        <span>&copy; Your Website 2024</span>
-                    </div>
-                </div>
-            </footer>
+            
 
         </div>
 

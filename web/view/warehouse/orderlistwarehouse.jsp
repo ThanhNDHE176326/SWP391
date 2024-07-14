@@ -10,11 +10,7 @@
         <meta name="author" content="">
 
         <title>Saler - Dashboard</title>
-        <script>
-            function disableButton(button) {
-                button.disabled = true;
-            }
-        </script>
+        
         <style>
             body {
                 font-family: 'Arial', sans-serif;
@@ -157,53 +153,67 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="order" items="${orders}" varStatus="status">
-                                <tr>
-                                    <td><a href="warehouseorderdetails?id=${order.id}">${order.id}</a></td>
-                                    <td>${order.customer_name}</td>
-                                    <td>${order.totalCost}</td>
-                                    <td>${order.orderDate}</td>
-                                    <td><a href="warehouseorderdetails?id=${order.id}" class="btn btn-info">View Details</a></td>
+    <c:forEach var="order" items="${orders}" varStatus="status">
+        <tr>
+            <td><a href="warehouseorderdetails?id=${order.id}">${order.id}</a></td>
+            <td>${order.customer_name}</td>
+            <td>${order.totalCost}</td>
+            <td>${order.orderDate}</td>
+            <td><a href="warehouseorderdetails?id=${order.id}" class="btn btn-info">View Details</a></td>
 
-                                    <td>${order.status_name}</td>
-                                    <td>
-                                        <form id="warehouseForm${status.index}" action="${pageContext.request.contextPath}/warehouseorderlist" method="post">
-                                            <input type="hidden" name="orderId" value="${order.id}">
-                                            <input type="hidden" id="restockInput${status.index}" name="restock" value="">
+            <td>${order.status_name}</td>
+            <td>
+                <form id="warehouseForm${order.id}" action="${pageContext.request.contextPath}/warehouseorderlist" method="post">
+                    <input type="hidden" name="orderId" value="${order.id}">
+                    <input type="hidden" id="restockInput${order.id}" name="restock" value="">
 
-                                            <c:choose>
-                                                <c:when test="${order.status_id == '2'}">
-                                                    <button type="submit" name="statusId" value="3">Packing</button>
-                                                </c:when>
-                                                <c:when test="${order.status_id == '3'}">
-                                                    <button type="submit" name="statusId" value="4">Delivering</button>
-                                                </c:when>
-                                                <c:when test="${order.status_id == '8'}">
-                                                    <button type="button" id="restockButton${status.index}" onclick="submitRestockForm(${status.index})">Restock</button>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <button type="button" disabled>
-                                                        <c:choose>
-                                                            <c:when test="${order.status_id == '4'}">Delivering</c:when>
-                                                        </c:choose>
-                                                    </button>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </form>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
+                    <c:choose>
+                        <c:when test="${order.status_id == '2'}">
+                            <button type="submit" name="statusId" value="3">Packing</button>
+                        </c:when>
+                        <c:when test="${order.status_id == '3'}">
+                            <button type="submit" name="statusId" value="4">Delivering</button>
+                        </c:when>
+                        <c:when test="${order.status_id == '8'}">
+                            <button type="button" id="restockButton${order.id}" onclick="submitRestockForm(${order.id})">Restock</button>
+                        </c:when>
+                        <c:otherwise>
+                            <button type="button" disabled>
+                                <c:choose>
+                                    <c:when test="${order.status_id == '4'}">Delivering</c:when>
+                                </c:choose>
+                            </button>
+                        </c:otherwise>
+                    </c:choose>
+                </form>
+            </td>
+        </tr>
+    </c:forEach>
+</tbody>
 
-                        <script>
-                            function submitRestockForm(index) {
-                                var restockInput = document.getElementById("restockInput" + index);
-                                restockInput.value = "8"; // Set the value explicitly
-                                var form = document.getElementById("warehouseForm" + index);
-                                form.submit();
-                                document.getElementById("restockButton" + index).disabled = true; // Disable the button
-                            }
-                        </script>
+<script>
+    // Kiểm tra trạng thái từ sessionStorage và cập nhật nút "Restock"
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('button[id^="restockButton"]');
+        buttons.forEach(button => {
+            const orderId = button.id.replace('restockButton', '');
+            if (sessionStorage.getItem('restockDisabled' + orderId) === 'true') {
+                button.disabled = true;
+            }
+        });
+    });
+
+    function submitRestockForm(orderId) {
+        var restockInput = document.getElementById("restockInput" + orderId);
+        restockInput.value = "8"; // Set the value explicitly
+        var form = document.getElementById("warehouseForm" + orderId);
+        form.submit();
+
+        // Lưu trạng thái vào sessionStorage
+        sessionStorage.setItem('restockDisabled' + orderId, 'true');
+        document.getElementById("restockButton" + orderId).disabled = true; // Disable the button
+    }
+</script>
 
                     </table>
 
@@ -228,14 +238,7 @@
                         </c:if>
                     </div>
                 </div>
-                <!-- /.container-fluid -->
-                <footer class="sticky-footer">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright © Your Website 2019</span>
-                        </div>
-                    </div>
-                </footer>
+                
 
             </div>
             <!-- /.content-wrapper -->

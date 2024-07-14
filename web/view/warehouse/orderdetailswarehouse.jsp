@@ -19,8 +19,8 @@
             }
 
             .container {
-                max-width: 800px;
-                margin: 20px auto;
+                max-width: 88% !important;
+                margin: 0px 0px;
                 padding: 20px;
                 background-color: #fff;
                 border-radius: 8px;
@@ -100,11 +100,11 @@
     </head>
 
     <body id="page-top">
-        <jsp:include page="headersale.jsp"/>
+        <jsp:include page="headerwarehouse.jsp"/>
 
         <div id="wrapper">
             <!-- Sidebar -->
-            <jsp:include page="navbarsale.jsp"/>
+            <jsp:include page="navbarwarehouse.jsp"/>
 
             <div class="container">
                 <h1>Order Details</h1>
@@ -153,14 +153,7 @@
 
             <!-- /.container-fluid -->
 
-            <!-- Sticky Footer -->
-            <footer class="sticky-footer">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright © Your Website 2019</span>
-                    </div>
-                </div>
-            </footer>
+            
 
         </div>
         <!-- /.content-wrapper -->
