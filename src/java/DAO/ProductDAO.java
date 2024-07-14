@@ -547,11 +547,14 @@ public class ProductDAO extends DBContext {
 
     public List<Product> getProductPagingBySearch(String search, int index) {
         List<Product> listProduct = new ArrayList<>();
-        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
-                + "FROM Products p JOIN Categories c ON p.category_id = c.id \n"
-                + "WHERE  (p.title LIKE ? OR p.description LIKE ?) AND p.isDelete = 1\n"
+        String sql = "SELECT p.id, p.title, p.image, p.author, p.quantity, p.update_date, p.description, c.name AS category, p.original_price, p.sale_price, p.status \n"
+                + "FROM Products p \n"
+                + "JOIN Categories c ON p.category_id = c.id \n"
+                + "WHERE  (p.title COLLATE SQL_Latin1_General_CP1_CI_AS LIKE ? COLLATE SQL_Latin1_General_CP1_CI_AS \n"
+                + "        OR p.description COLLATE SQL_Latin1_General_CP1_CI_AS LIKE ? COLLATE SQL_Latin1_General_CP1_CI_AS) \n"
+                + "        AND p.isDelete = 1\n"
                 + "ORDER BY p.id\n"
-                + "OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
+                + "OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY;";
         try {
             stm = connection.prepareStatement(sql);
             stm.setString(1, "%" + search + "%");
@@ -570,7 +573,7 @@ public class ProductDAO extends DBContext {
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
                 String status = String.valueOf(rs.getInt("status"));
-                
+
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
                         salePrice, status);
@@ -694,7 +697,7 @@ public class ProductDAO extends DBContext {
         }
         return 0;
     }
-    
+
     public int getHoldByProductID(int productID) {
         String sql = "SELECT hold FROM Products WHERE id = ?";
         try {
@@ -723,7 +726,7 @@ public class ProductDAO extends DBContext {
             System.out.println("updateQuantityAfterCart: " + e.getMessage());
         }
     }
-    
+
     public void updateHoldProductAfterCart(int productID, int holdChanged) {
         String sql = "UPDATE [dbo].[Products]\n"
                 + "   SET [hold] = ?    \n"
@@ -875,12 +878,10 @@ public class ProductDAO extends DBContext {
             System.out.println("createNewProduct: " + e.getMessage());
         }
     }
-    
-    
-    
+
     public void updateProductQuantityAndHold(int productId, int newQuantity, int newHold) {
         String sql = "UPDATE Products SET quantity = ?, hold = ? WHERE id = ?";
-        
+
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, newQuantity);
             stmt.setInt(2, newHold);
@@ -890,17 +891,28 @@ public class ProductDAO extends DBContext {
             e.printStackTrace();
         }
     }
-    
+
     public void updateProductHold(int productId, int newHold) {
         String sql = "UPDATE Products SET  hold = ? WHERE id = ?";
-        
+
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            
+
             stmt.setInt(1, newHold);
             stmt.setInt(2, productId);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void deleteProductIfQuantityEqualZero(int productID) {
+        String sql = "UPDATE Products SET isDelete = 0 WHERE id = ?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, productID);
+            stm.execute();
+        } catch (SQLException e) {
+            System.out.println("deleteProductIfQuantityEqualZero: " + e.getMessage());
         }
     }
 }
