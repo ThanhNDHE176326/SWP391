@@ -435,6 +435,10 @@
             .styled-button:hover {
                 background-color: #0056b3;
             }
+            .imgPayment{
+                width: 70px;
+                height: 70px;
+            }
         </style>
     </head><!--/head-->
 
@@ -644,7 +648,7 @@
                                         <div class="payment-option">
                                             <input type="radio" id="payment_gateway" name="paymentMethod" value="3">
                                             <label for="payment_gateway"> 
-                                                <!--<img src="<c:url value='/images/VnPay.jpg'/>" alt="VNPay">-->
+                                                <img class="imgPayment" src="<c:url value='/images/VnPay.jpg'/>" alt="VNPay"> &nbsp;
                                                 <div class="name-pay">
                                                     VNPAY<br>
                                                     VNPAY payment gateway
@@ -654,6 +658,7 @@
                                         <div class="payment-option">
                                             <input type="radio" id="payment_ORcode" name="paymentMethod" value="2">
                                             <label for="payment_ORcode">
+                                                <img class="imgPayment" src="<c:url value='/images/qr_code.jpg'/>" alt="QR Code"> &nbsp;
                                                 <div class="name-pay">
                                                     QR Code<br>
                                                     Pay by QR Code transfer
@@ -663,10 +668,10 @@
                                         <div class="payment-option">
                                             <input type="radio" id="cod" name="paymentMethod" value="1">
                                             <label for="cod">
-                                                <!--<img src="<c:url value='/images/COD.jpg'/>" alt="COD">-->
+                                                <img class="imgPayment" src="<c:url value='/images/COD.jpg'/>" alt="COD"> &nbsp;
                                                 <div class="name-pay">
                                                     COD<br>
-                                                    Payment on delivery
+                                                    Payment when customer receive
                                                 </div>
                                             </label>
                                         </div>
