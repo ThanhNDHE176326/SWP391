@@ -52,6 +52,11 @@
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Order List</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/warehouseProductList">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Product List</span></a>
+            </li>
             <li class="nav-item active">
                 <a class="nav-link" href="${pageContext.request.contextPath}/logoutstaff">
                     <i class="fas fa-sign-out-alt"></i>
