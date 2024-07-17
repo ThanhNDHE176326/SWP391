@@ -325,7 +325,7 @@ public class ProductDAO extends DBContext {
 
     public static void main(String[] args) {
         ProductDAO dao = new ProductDAO();
-        System.out.println(dao.getProductsByPaging(1));
+        System.out.println(dao.getProductPagingByHideStatus(1).size());
     }
 
     public List<Product> getProductsByPaging(int index) {

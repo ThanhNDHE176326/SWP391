@@ -271,7 +271,7 @@
                                     </tbody>
                                 </table>
                                 <c:forEach begin="1" end="${endPage}" var="i">
-                                    <a href="${urlServlet}?index=${i}" class="pagination-button">${i}&nbsp;</a>
+                                    <a href="${urlServlet}?index=${i}&statusSearch=${statusSearch}" class="pagination-button">${i}&nbsp;</a>
                                 </c:forEach>
                             </div>
                         </div>
