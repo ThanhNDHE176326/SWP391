@@ -275,7 +275,7 @@
                                         </div>
                                         <div class="choose">
                                             <ul class="nav nav-pills nav-justified">
-                                                <li><a><i></i><span class="original-price">${product.originalPrice} VNĐ</span></a></li>
+                                                <li><a><i></i><span class="original-price">${product.salePrice + 50000} VNĐ</span></a></li>
                                                 <li><a><i></i><span class="sale-price">${product.salePrice} VNĐ</span></a></li>
                                             </ul>
                                         </div>

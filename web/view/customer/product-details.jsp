@@ -176,7 +176,7 @@
 
                                     <p><b>Description:</b> ${product.description}</p>
                                     <p><b>Publication date:</b> ${product.updateDate}</p>
-                                    <p><b>Original Price:</b> ${product.originalPrice} VNĐ</p>
+                                    <p><b>Original Price:</b> ${product.salePrice + 50000} VNĐ</p>
                                     <a href=""><img src="images/product-details/share.png" class="share img-responsive" alt="" /></a>
                                 </div><!--/product-information-->
 
@@ -283,7 +283,7 @@
                                                         </div>
                                                         <div class="choose">
                                                             <ul class="nav nav-pills nav-justified">
-                                                                <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                <li><a><i></i><span class="original-price">${listNewProduct.salePrice + 50000} VNĐ</span></a></li>
                                                                 <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
                                                             </ul>
                                                         </div>
@@ -334,7 +334,7 @@
                                                         </div>
                                                         <div class="choose">
                                                             <ul class="nav nav-pills nav-justified">
-                                                                <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                <li><a><i></i><span class="original-price">${listNewProduct.salePrice + 50000} VNĐ</span></a></li>
                                                                 <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
                                                             </ul>
                                                         </div>
@@ -385,7 +385,7 @@
                                                         </div>
                                                         <div class="choose">
                                                             <ul class="nav nav-pills nav-justified">
-                                                                <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                <li><a><i></i><span class="original-price">${listNewProduct.salePrice + 50000} VNĐ</span></a></li>
                                                                 <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
                                                             </ul>
                                                         </div>
@@ -438,7 +438,7 @@
                                                         </div>
                                                         <div class="choose">
                                                             <ul class="nav nav-pills nav-justified">
-                                                                <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                <li><a><i></i><span class="original-price">${listNewProduct.salePrice + 50000} VNĐ</span></a></li>
                                                                 <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
                                                             </ul>
                                                         </div>
@@ -489,7 +489,7 @@
                                                         </div>
                                                         <div class="choose">
                                                             <ul class="nav nav-pills nav-justified">
-                                                                <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                <li><a><i></i><span class="original-price">${listNewProduct.salePrice + 50000} VNĐ</span></a></li>
                                                                 <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
                                                             </ul>
                                                         </div>
@@ -540,7 +540,7 @@
                                                         </div>
                                                         <div class="choose">
                                                             <ul class="nav nav-pills nav-justified">
-                                                                <li><a><i></i><span class="original-price">${listNewProduct.originalPrice} VNĐ</span></a></li>
+                                                                <li><a><i></i><span class="original-price">${listNewProduct.salePrice + 50000} VNĐ</span></a></li>
                                                                 <li><a><i></i><span class="sale-price">${listNewProduct.salePrice} VNĐ</span></a></li>
                                                             </ul>
                                                         </div>

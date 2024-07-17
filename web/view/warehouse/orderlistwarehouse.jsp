@@ -9,7 +9,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Saler - Dashboard</title>
+        <title>Warehouse - Dashboard</title>
         
         <style>
             body {
@@ -101,8 +101,8 @@
 
             <div id="content-wrapper">
                 <div class="container-fluid">
-                    <h1>Orders List</h1>
-                    <form action="${pageContext.request.contextPath}/saleorderlist" method="get" style="margin-bottom: 20px;">
+                    <h1>Orders List - Warehouse</h1>
+                    <form action="${pageContext.request.contextPath}/warehouseorderlist" method="get" style="margin-bottom: 20px;">
                         <div class="form-row justify-content-center">
                             <div class="form-group col-md-3">
                                 <label for="orderId">Order ID:</label>

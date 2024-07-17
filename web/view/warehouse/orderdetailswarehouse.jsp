@@ -10,7 +10,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Saler - Order Details</title>
+        <title>Warehouse - Order Details</title>
         <style>
             body {
                 font-family: 'Arial', sans-serif;
@@ -107,7 +107,7 @@
             <jsp:include page="navbarwarehouse.jsp"/>
 
             <div class="container">
-                <h1>Order Details</h1>
+                <h1>Warehouse - Order Details</h1>
                 <div>
                     <p><strong>Order ID:</strong> ${order.id}</p>
                     <p><strong>Customer:</strong> ${order.customer_name}</p>

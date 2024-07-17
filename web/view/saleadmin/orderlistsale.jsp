@@ -194,7 +194,7 @@
 
             <div id="content-wrapper">
                 <div class="container-fluid">
-                    <h1>Orders List</h1>
+                    <h1>Orders List - Sale Admin</h1>
                     <form action="${pageContext.request.contextPath}/saleadminorderlist" method="get" style="margin-bottom: 20px;">
                         <div class="form-row justify-content-center">
                             <div class="form-group col-md-3">
