@@ -66,11 +66,13 @@ public class CheckOutSuccessfully extends HttpServlet {
                 String quantity = orderDetail.getQuantity();
                 int quantityInOrderProduct = Integer.parseInt(quantity);
                 //lấy ra quantity của product trong kho
-                int quantityInProducts = productDAO.getQuantityByProductID(productID);
+//                int quantityInProducts = productDAO.getQuantityByProductID(productID);
+                int currentHold = productDAO.getHoldByProductID(productID);
                 //tình toán lại quantity
-                int quantityChanged = quantityInProducts + quantityInOrderProduct;
+//                int quantityChanged = quantityInProducts - quantityInOrderProduct;
+                int newHold = currentHold - quantityInOrderProduct;
                 //update quantity mới vào product
-                productDAO.updateQuantityAfterCart(productID, quantityChanged);
+                productDAO.updateProductHold(productID, newHold);
             }
             request.setAttribute("message", "Payment failed");
             request.getRequestDispatcher("view/customer/homepage.jsp").forward(request, response);

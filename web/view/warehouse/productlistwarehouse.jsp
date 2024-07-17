@@ -94,7 +94,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
 
-        <title>SB Admin - Products List</title>
+        <title>Warehouse - Products List</title>
 
         <!-- Custom fonts for this template-->
         <link href="<c:url value='/vendor/fontawesome-free/css/all.min.css'/>" rel="stylesheet" type="text/css">
@@ -120,9 +120,7 @@
                 <div class="container-fluid">
                     <!-- Breadcrumbs-->
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="homedashboard.jsp">Dashboard</a>
-                        </li>
+                        
                         <li class="breadcrumb-item active">Products List</li>
                     </ol>
 
@@ -235,7 +233,7 @@
                                                 </c:if>
                                                 <td>
                                                     <div>
-                                                        <a href="productDetailWarehouse?id=${product.id}">View Details</a>
+                                                        <a href="updateProductDetailByWarehouse?productID=${product.id}">View Details</a>
                                                     </div>  
                                                     <div>
                                                         <c:if test="${product.quantity == 0}">

@@ -107,7 +107,7 @@
             <jsp:include page="navbarsaleadmin.jsp"/>
 
             <div class="container">
-                <h1>Order Details</h1>
+                <h1>Order Details - Sale Admin</h1>
                 <div>
                     <p><strong>Order ID:</strong> ${order.id}</p>
                     <p><strong>Customer:</strong> ${order.customer_name}</p>

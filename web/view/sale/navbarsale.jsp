@@ -36,7 +36,7 @@
     <body>
         <!-- Sidebar -->
         <ul class="sidebar navbar-nav">
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Account</span>
@@ -47,7 +47,7 @@
                 </div>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="${pageContext.request.contextPath}/saleorderlist">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Order List</span></a>

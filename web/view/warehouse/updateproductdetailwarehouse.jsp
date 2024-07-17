@@ -143,7 +143,7 @@
 
     </head>
     <body>
-        <a href="productListMarketing" class="back-button">Back</a>
+        <a href="warehouseProductList" class="back-button">Back</a>
         <div class="product-details">
             <h1>Update "${product.title}"</h1>
             <div class="form-container">
@@ -172,7 +172,7 @@
                     <input type="text" id="salePrice" name="salePrice" value="${product.salePrice}" readonly="">
 
                     <label for="hold">Hold:</label>
-                    <input type="number" id="hold" name="hold" value="${product.hold}">
+                    <input type="number" id="hold" name="hold" value="${product.hold}" readonly="">
 
                     
 
