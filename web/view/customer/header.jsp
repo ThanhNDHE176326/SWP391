@@ -91,12 +91,7 @@
                                 <ul class="nav navbar-nav collapse navbar-collapse">
                                     <li><a href="${pageContext.request.contextPath}/view/customer/homepage.jsp" class="active">Home</a></li>
 
-                                    <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
-                                        <ul role="menu" class="sub-menu">
-                                            <li><a href="${pageContext.request.contextPath}/ProductListPublic">Products</a></li>
-                                            <li><a href="${pageContext.request.contextPath}/ProductDetailPublic">Product Details</a></li>
-                                        </ul>
-                                    </li>
+                                            <li><a href="${pageContext.request.contextPath}/ProductListPublic">Products List</a></li>
                                     <li class=""><a href="${pageContext.request.contextPath}/bloglist">Blog List<i></i></a>
 
                                     </li> 
