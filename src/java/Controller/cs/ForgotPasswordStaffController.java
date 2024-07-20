@@ -82,7 +82,7 @@ public class ForgotPasswordStaffController extends HttpServlet {
 
         if (s == null || !s.getEmail().equals(email)) {
             request.setAttribute("error", "Account does not exist");
-            request.getRequestDispatcher("view/staff/forgetpasswordstaff.jsp").forward(request, response);
+            request.getRequestDispatcher("view/staff/forgotpasswordstaff.jsp").forward(request, response);
             return;
         }
 

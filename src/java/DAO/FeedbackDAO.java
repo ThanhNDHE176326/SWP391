@@ -234,7 +234,7 @@ public class FeedbackDAO extends DBContext {
     public ArrayList<Feedback> getFeedBackBy1Star() {
         ArrayList<Feedback> listFeedbackByStar = new ArrayList<Feedback>();
         try {
-            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment from Feedbacks f  join Customers c on f.customer_id = c.id\n"
+            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment,f.status from Feedbacks f  join Customers c on f.customer_id = c.id\n"
                     + "                  join Products p on f.product_id=p.id where f.rated_star = '1'";
             stm = connection.prepareStatement(strSQL);
 
@@ -246,7 +246,9 @@ public class FeedbackDAO extends DBContext {
                 String product = rs.getString("title");
                 String ratedStar = rs.getString("rated_star");
                 String comment = rs.getString("comment");
-                listFeedbackByStar.add(new Feedback(id, customer, product, ratedStar, comment));
+                String status = rs.getString("status");
+                
+                listFeedbackByStar.add(new Feedback(id, customer, product, ratedStar, comment, status));
 
             }
 
@@ -259,7 +261,7 @@ public class FeedbackDAO extends DBContext {
     public ArrayList<Feedback> getFeedBackBy2Star() {
         ArrayList<Feedback> listFeedbackByStar = new ArrayList<Feedback>();
         try {
-            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment from Feedbacks f  join Customers c on f.customer_id = c.id\n"
+            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment,f.status from Feedbacks f  join Customers c on f.customer_id = c.id\n"
                     + "                  join Products p on f.product_id=p.id where f.rated_star = '2'";
             stm = connection.prepareStatement(strSQL);
 
@@ -271,7 +273,9 @@ public class FeedbackDAO extends DBContext {
                 String product = rs.getString("title");
                 String ratedStar = rs.getString("rated_star");
                 String comment = rs.getString("comment");
-                listFeedbackByStar.add(new Feedback(id, customer, product, ratedStar, comment));
+                String status = rs.getString("status");
+                
+                listFeedbackByStar.add(new Feedback(id, customer, product, ratedStar, comment, status));
 
             }
 
@@ -279,13 +283,12 @@ public class FeedbackDAO extends DBContext {
             System.out.println("getFeedBackByShowStatus:" + e.getMessage());
         }
         return listFeedbackByStar;
-
     }
 
     public ArrayList<Feedback> getFeedBackBy3Star() {
         ArrayList<Feedback> listFeedbackByStar = new ArrayList<Feedback>();
         try {
-            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment from Feedbacks f  join Customers c on f.customer_id = c.id\n"
+            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment,f.status from Feedbacks f  join Customers c on f.customer_id = c.id\n"
                     + "                  join Products p on f.product_id=p.id where f.rated_star = '3'";
             stm = connection.prepareStatement(strSQL);
 
@@ -297,7 +300,9 @@ public class FeedbackDAO extends DBContext {
                 String product = rs.getString("title");
                 String ratedStar = rs.getString("rated_star");
                 String comment = rs.getString("comment");
-                listFeedbackByStar.add(new Feedback(id, customer, product, ratedStar, comment));
+                String status = rs.getString("status");
+                
+                listFeedbackByStar.add(new Feedback(id, customer, product, ratedStar, comment, status));
 
             }
 
@@ -305,13 +310,12 @@ public class FeedbackDAO extends DBContext {
             System.out.println("getFeedBackByShowStatus:" + e.getMessage());
         }
         return listFeedbackByStar;
-
     }
 
     public ArrayList<Feedback> getFeedBackBy4Star() {
         ArrayList<Feedback> listFeedbackByStar = new ArrayList<Feedback>();
         try {
-            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment from Feedbacks f  join Customers c on f.customer_id = c.id\n"
+            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment,f.status from Feedbacks f  join Customers c on f.customer_id = c.id\n"
                     + "                  join Products p on f.product_id=p.id where f.rated_star = '4'";
             stm = connection.prepareStatement(strSQL);
 
@@ -323,7 +327,9 @@ public class FeedbackDAO extends DBContext {
                 String product = rs.getString("title");
                 String ratedStar = rs.getString("rated_star");
                 String comment = rs.getString("comment");
-                listFeedbackByStar.add(new Feedback(id, customer, product, ratedStar, comment));
+                String status = rs.getString("status");
+                
+                listFeedbackByStar.add(new Feedback(id, customer, product, ratedStar, comment, status));
 
             }
 
@@ -331,13 +337,12 @@ public class FeedbackDAO extends DBContext {
             System.out.println("getFeedBackByShowStatus:" + e.getMessage());
         }
         return listFeedbackByStar;
-
     }
 
     public ArrayList<Feedback> getFeedBackBy5Star() {
         ArrayList<Feedback> listFeedbackByStar = new ArrayList<Feedback>();
         try {
-            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment from Feedbacks f  join Customers c on f.customer_id = c.id\n"
+            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment,f.status from Feedbacks f  join Customers c on f.customer_id = c.id\n"
                     + "                  join Products p on f.product_id=p.id where f.rated_star = '5'";
             stm = connection.prepareStatement(strSQL);
 
@@ -349,7 +354,9 @@ public class FeedbackDAO extends DBContext {
                 String product = rs.getString("title");
                 String ratedStar = rs.getString("rated_star");
                 String comment = rs.getString("comment");
-                listFeedbackByStar.add(new Feedback(id, customer, product, ratedStar, comment));
+                String status = rs.getString("status");
+                
+                listFeedbackByStar.add(new Feedback(id, customer, product, ratedStar, comment, status));
 
             }
 
@@ -357,7 +364,6 @@ public class FeedbackDAO extends DBContext {
             System.out.println("getFeedBackByShowStatus:" + e.getMessage());
         }
         return listFeedbackByStar;
-
     }
 
     public ArrayList<Category> getCategory() {
@@ -386,7 +392,7 @@ public class FeedbackDAO extends DBContext {
     public ArrayList<Feedback> getFeedBackByCategories1() {
         ArrayList<Feedback> listFeedbackByCategories = new ArrayList<Feedback>();
         try {
-            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment from Feedbacks f  join Customers c on f.customer_id = c.id\n"
+            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment,f.status from Feedbacks f  join Customers c on f.customer_id = c.id\n"
                     + "                  join Products p on f.product_id=p.id\n"
                     + "				  where p.category_id = '1'";
             stm = connection.prepareStatement(strSQL);
@@ -399,7 +405,8 @@ public class FeedbackDAO extends DBContext {
                 String product = rs.getString("title");
                 String ratedStar = rs.getString("rated_star");
                 String comment = rs.getString("comment");
-                listFeedbackByCategories.add(new Feedback(id, customer, product, ratedStar, comment));
+                String status = rs.getString("status");
+                listFeedbackByCategories.add(new Feedback(id, customer, product, ratedStar, comment,status));
 
             }
 
@@ -413,7 +420,7 @@ public class FeedbackDAO extends DBContext {
     public ArrayList<Feedback> getFeedBackByCategories2() {
           ArrayList<Feedback> listFeedbackByCategories = new ArrayList<Feedback>();
         try {
-            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment from Feedbacks f  join Customers c on f.customer_id = c.id\n"
+            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment,f.status from Feedbacks f  join Customers c on f.customer_id = c.id\n"
                     + "                  join Products p on f.product_id=p.id\n"
                     + "				  where p.category_id = '2'";
             stm = connection.prepareStatement(strSQL);
@@ -426,7 +433,8 @@ public class FeedbackDAO extends DBContext {
                 String product = rs.getString("title");
                 String ratedStar = rs.getString("rated_star");
                 String comment = rs.getString("comment");
-                listFeedbackByCategories.add(new Feedback(id, customer, product, ratedStar, comment));
+                String status = rs.getString("status");
+                listFeedbackByCategories.add(new Feedback(id, customer, product, ratedStar, comment,status));
 
             }
 
@@ -434,12 +442,13 @@ public class FeedbackDAO extends DBContext {
             System.out.println("getFeedBackByShowStatus:" + e.getMessage());
         }
         return listFeedbackByCategories;
+
     }
 
     public ArrayList<Feedback> getFeedBackByCategories3() {
           ArrayList<Feedback> listFeedbackByCategories = new ArrayList<Feedback>();
         try {
-            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment from Feedbacks f  join Customers c on f.customer_id = c.id\n"
+            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment,f.status from Feedbacks f  join Customers c on f.customer_id = c.id\n"
                     + "                  join Products p on f.product_id=p.id\n"
                     + "				  where p.category_id = '3'";
             stm = connection.prepareStatement(strSQL);
@@ -452,7 +461,8 @@ public class FeedbackDAO extends DBContext {
                 String product = rs.getString("title");
                 String ratedStar = rs.getString("rated_star");
                 String comment = rs.getString("comment");
-                listFeedbackByCategories.add(new Feedback(id, customer, product, ratedStar, comment));
+                String status = rs.getString("status");
+                listFeedbackByCategories.add(new Feedback(id, customer, product, ratedStar, comment,status));
 
             }
 
@@ -460,12 +470,13 @@ public class FeedbackDAO extends DBContext {
             System.out.println("getFeedBackByShowStatus:" + e.getMessage());
         }
         return listFeedbackByCategories;
+
     }
 
     public ArrayList<Feedback> getFeedBackByCategories4() {
           ArrayList<Feedback> listFeedbackByCategories = new ArrayList<Feedback>();
         try {
-            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment from Feedbacks f  join Customers c on f.customer_id = c.id\n"
+            String strSQL = "select f.id,c.name,p.title,f.rated_star,f.comment,f.status from Feedbacks f  join Customers c on f.customer_id = c.id\n"
                     + "                  join Products p on f.product_id=p.id\n"
                     + "				  where p.category_id = '4'";
             stm = connection.prepareStatement(strSQL);
@@ -478,7 +489,8 @@ public class FeedbackDAO extends DBContext {
                 String product = rs.getString("title");
                 String ratedStar = rs.getString("rated_star");
                 String comment = rs.getString("comment");
-                listFeedbackByCategories.add(new Feedback(id, customer, product, ratedStar, comment));
+                String status = rs.getString("status");
+                listFeedbackByCategories.add(new Feedback(id, customer, product, ratedStar, comment,status));
 
             }
 
@@ -486,6 +498,7 @@ public class FeedbackDAO extends DBContext {
             System.out.println("getFeedBackByShowStatus:" + e.getMessage());
         }
         return listFeedbackByCategories;
+
     }
 
     public void update(String status, String id) {

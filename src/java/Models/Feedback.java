@@ -20,6 +20,7 @@ public class Feedback {
         this.ratedStar = ratedStar;
         this.comment = comment;
     }
+    
     public Feedback(String id, String customer, String product, String ratedStar, String comment) {
         this.id = id;
         this.customer = customer;
@@ -33,6 +34,15 @@ public class Feedback {
         this.customer = customer;
         this.product = product;
         this.date = date;
+        this.ratedStar = ratedStar;
+        this.comment = comment;
+        this.status = status;
+    }
+
+    public Feedback(String id, String customer, String product, String ratedStar, String comment, String status) {
+        this.id = id;
+        this.customer = customer;
+        this.product = product;
         this.ratedStar = ratedStar;
         this.comment = comment;
         this.status = status;
