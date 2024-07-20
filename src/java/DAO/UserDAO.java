@@ -34,6 +34,53 @@ public class UserDAO extends dal.DBContext {
         return 0;
     }
 
+    public boolean isEmailExists(String email) {
+        try {
+            String strSQL = "SELECT COUNT(*) FROM Staffs WHERE email = ?";
+            stm = connection.prepareStatement(strSQL);
+            stm.setString(1, email);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (Exception e) {
+            System.out.println("isEmailExists: " + e.getMessage());
+        }
+        return false;
+    }
+
+    // Check if phone exists
+    public boolean isPhoneExists(String phone) {
+        try {
+            String strSQL = "SELECT COUNT(*) FROM Staffs WHERE phone = ?";
+            stm = connection.prepareStatement(strSQL);
+            stm.setString(1, phone);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (Exception e) {
+            System.out.println("isPhoneExists: " + e.getMessage());
+        }
+        return false;
+    }
+
+    // Check if username exists
+    public boolean isUsernameExists(String username) {
+        try {
+            String strSQL = "SELECT COUNT(*) FROM Staffs WHERE username = ?";
+            stm = connection.prepareStatement(strSQL);
+            stm.setString(1, username);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (Exception e) {
+            System.out.println("isUsernameExists: " + e.getMessage());
+        }
+        return false;
+    }   
+    
     public ArrayList<Staff> getAllStaff() {
         ArrayList<Staff> listuser = new ArrayList<Staff>();
         try {
@@ -546,8 +593,9 @@ public class UserDAO extends dal.DBContext {
         }
 
     }
-
+    
 }
+    
 
 //public void add(String email, String fullname, String username, String password, String gender, String phone, String address, String role) {
 //    try {

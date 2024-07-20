@@ -75,25 +75,54 @@ public class AddUserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {       
-        String email = request.getParameter("email");
-        String fullname = request.getParameter("fullname");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String gender = request.getParameter("gender");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-        String role = request.getParameter("role");
-        String status = request.getParameter("status");
-        
-        
-        UserDAO da = new UserDAO();
-        
-        da.add( email,  fullname,  username,  password,  gender,  phone,  address,  role,status);
-        ArrayList<Staff> listuser = da.getAllStaff();
-        
-        
-        request.getRequestDispatcher("view/admin/listuser.jsp").forward(request, response);
+          
+    String email = request.getParameter("email");
+    String fullname = request.getParameter("fullname");
+    String username = request.getParameter("username");
+    String password = request.getParameter("password");
+    String gender = request.getParameter("gender");
+    String phone = request.getParameter("phone");
+    String address = request.getParameter("address");
+    String role = request.getParameter("role");
+    String status = request.getParameter("status");
+    
+    UserDAO da = new UserDAO();
+    
+    // Check if the email, phone, or username already exists
+    if (da.isEmailExists(email)) {
+        request.setAttribute("error", "Email already exists.");
+        request.getRequestDispatcher("view/admin/addnewuser.jsp").forward(request, response);
+        return;
     }
+    
+    if (da.isPhoneExists(phone)) {
+        request.setAttribute("error", "Phone number already exists.");
+        request.getRequestDispatcher("view/admin/addnewuser.jsp").forward(request, response);
+        return;
+    }
+    
+    if (da.isUsernameExists(username)) {
+        request.setAttribute("error", "Username already exists.");
+        request.getRequestDispatcher("view/admin/addnewuser.jsp").forward(request, response);
+        return;
+    }
+    
+    // Add the new user if no conflicts are found
+    da.add(email, fullname, username, password, gender, phone, address, role, status);
+    
+    // Set success message
+    request.setAttribute("success", "User added successfully.");
+    
+    // Optionally, retrieve updated list of users and forward to list view
+    ArrayList<Staff> listuser = da.getAllStaff();
+    request.setAttribute("userList", listuser);
+    request.getRequestDispatcher("view/admin/listuser.jsp").forward(request, response);
+}
+
+
+
+// Add the following methods to UserDAO
+
 
     /** 
      * Returns a short description of the servlet.
