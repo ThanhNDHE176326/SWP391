@@ -79,7 +79,7 @@ public class WarehouseProductListController extends HttpServlet {
 
         List<Product> listProduct = productDAO.getProductsByPaging(index);
         
-        request.setAttribute("urlServlet", "productListMarketing");
+        request.setAttribute("urlServlet", "warehouseProductList");
         request.setAttribute("endPage", endPage);
         request.setAttribute("listProduct", listProduct);
         request.setAttribute("listTypeFromServlet", "listProduct");

@@ -330,7 +330,7 @@ public class ProductDAO extends DBContext {
 
     public List<Product> getProductsByPaging(int index) {
         List<Product> listProduct = new ArrayList<>();
-        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,c.name AS category, p.original_price,p.sale_price,p.status \n"
+        String sql = "SELECT p.id, p.title, p.image, p.author,p.quantity,p.update_date,p.description,p.hold,c.name AS category, p.original_price,p.sale_price,p.status \n"
                 + "FROM Products p JOIN Categories c ON p.category_id = c.id\n"
                 + "WHERE p.isDelete = 1\n"
                 + "ORDER BY p.id\n"
@@ -351,9 +351,10 @@ public class ProductDAO extends DBContext {
                 String originalPrice = String.valueOf(rs.getDouble("original_price"));
                 String salePrice = String.valueOf(rs.getDouble("sale_price"));
                 String status = String.valueOf(rs.getInt("status"));
+                int hold = rs.getInt("hold");
                 Product product = new Product(id, title, image, author, quantity,
                         updateDate, description, category, originalPrice,
-                        salePrice, status);
+                        salePrice, status, hold);
                 listProduct.add(product);
             }
         } catch (SQLException e) {

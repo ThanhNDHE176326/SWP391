@@ -54,6 +54,12 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>List User</span></a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="${pageContext.request.contextPath}/logoutstaff">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
         </ul>
 
         <!-- Scroll to Top Button-->

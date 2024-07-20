@@ -189,8 +189,8 @@
                                             <th>Category</th>
                                             <th>Original Price</th>
                                             <th>Sale Price</th>
-                                            <th>Stock</th>
-                                            <!--<th>Brief Info</th>-->
+                                           <th>Quantity</th>
+                                            <th>Hold</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -204,8 +204,8 @@
                                             <th>Category</th>
                                             <th>Original Price</th>
                                             <th>Sale Price</th>
-                                            <th>Stock</th>
-                                            <!--<th>Brief Info</th>-->
+                                            <th>Quantity</th>
+                                            <th>Hold</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -225,12 +225,8 @@
                                                 <td>${product.originalPrice}</td>
                                                 <td>${product.salePrice}</td>
 
-                                                <c:if test="${product.quantity > 0}">
-                                                    <td style="color: green">In Stock</td>
-                                                </c:if>
-                                                <c:if test="${product.quantity == 0}">
-                                                    <td style="color: red">Out stock</td>
-                                                </c:if>
+                                                <td>${product.quantity}</td>
+                                                <td>${product.hold}</td>
 
                                                     <!--<td>${product.description}</td>-->
 
