@@ -47,7 +47,7 @@
                                             <li><i class="fa fa-comments"></i> 03</li>
                                         </ul>
                                     </div>
-                                    <a href="">
+                                    <a href="blogdetail?id=${blog.id}">
                                         <img src="images/${blog.image}" alt="">
                                     </a>
                                     <p>${blog.description}</p>
@@ -63,7 +63,12 @@
                                 <c:forEach var="category" items="${categories}">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h4 class="panel-title"><a href="bloglist?category=${category.id}&query=${param.query}">${category.name}</a></h4>
+                                            <h4 class="panel-title">
+                                                <a href="bloglist?category=${category.id}&query=${param.query}" 
+                                                    class="<c:if test='${param.category == category.id}'>active-category</c:if>">
+                                                    ${category.name}
+                                                </a>
+                                            </h4>
                                         </div>
                                     </div>
                                 </c:forEach>
@@ -86,7 +91,7 @@
                 </div>
             </div>
         </section><!--/#blog-->
-        <jsp:include page="header.jsp"/>
+        
         <script src="<c:url value='/js/jquery.js'/>"></script>
         <script src="<c:url value='/js/bootstrap.min.js'/>"></script>
         <script src="<c:url value='/js/jquery.scrollUp.min.js'/>"></script>
@@ -117,5 +122,41 @@
         background-color: #007bff; /* Màu nền cho trang đang được chọn */
         color: #fff; /* Màu chữ cho trang đang được chọn */
         border: 1px solid #007bff; /* Đường viền cho trang đang được chọn */
+    }
+
+    .image-wrapper {
+        width: 100%; /* Đặt chiều rộng của khung ảnh */
+        max-width: 600px; /* Bạn có thể điều chỉnh giá trị này theo yêu cầu của bạn */
+        height: 400px; /* Đặt chiều cao của khung ảnh */
+        overflow: hidden; /* Đảm bảo rằng các phần của hình ảnh vượt quá kích thước khung sẽ bị ẩn đi */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto; /* Căn giữa khung ảnh */
+    }
+
+    .blog-image {
+        width: 100%; /* Đặt chiều rộng của hình ảnh để phù hợp với khung ảnh */
+        height: auto; /* Giữ tỷ lệ khung hình của hình ảnh */
+        object-fit: cover; /* Đảm bảo rằng hình ảnh bao phủ toàn bộ khung mà không bị biến dạng */
+    }
+
+    .categories ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .categories ul li {
+        margin: 5px 0;
+    }
+
+    .categories ul li a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .categories ul li a.active-category {
+        font-weight: bold;
+        color: #007bff;
     }
 </style>
