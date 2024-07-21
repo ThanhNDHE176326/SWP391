@@ -28,8 +28,8 @@ public class SendMail {
         int number = rnd.nextInt(999999);
         return String.format("%06d", number);
     }
-    private final String fromEmail = "dungbd07@gmail.com";
-    private final String password = "uniy bsmq hwgc oaid";
+    private final String fromEmail = "thaodvhe173219@fpt.edu.vn";
+    private final String password = "xxfe ipib unrp uxno";
 
     public boolean sendEmail(Customer user, String subject, String content) {
         boolean test = false;

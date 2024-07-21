@@ -57,8 +57,8 @@ public class InformationUserController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
-        String password = (String) session.getAttribute("password");
+        String username = (String) session.getAttribute("usernamecustomer");
+        String password = (String) session.getAttribute("passwordcustomer");
         CustomerDAO dao = new CustomerDAO();
         Customer user = dao.getInformationCustomer(username);
         request.setAttribute("user", user);

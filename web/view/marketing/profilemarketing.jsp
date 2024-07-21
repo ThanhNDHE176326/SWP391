@@ -152,7 +152,56 @@
                     </ol>
 
                     <!-- Profile Form-->
-                    <jsp:include page="profileForm.jsp"/>
+                    <div id="content-wrapper">
+
+                        <div class="container-fluid">
+                            <div class="modal-body">
+                                <!-- Personal Information Form -->
+                                <form id="profileForm" class="account-info-form" action="${pageContext.request.contextPath}/updatestaff" method="POST">
+                                    <div class="form-group">
+                                        <label for="staffname">Username:</label>
+                                        <input type="text" id="staffname" name="username" placeholder="Username" value="${staffs.username}" readonly="readonly" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email:</label>
+                                        <input type="email" id="email" name="email" placeholder="Email" value="${staffs.email}" readonly="readonly" class="form-control">
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-8">
+                                            <label for="name">Name:</label>
+                                            <input type="text" id="name" name="name" placeholder="Name" value="${staffs.fullname}" class="form-control">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="gender">Gender:</label>
+                                            <select id="gender" name="gender" required class="form-control">
+                                                <option value="" disabled selected>Gender</option>
+                                                <option value="1" ${staffs.gender == 1 ? "selected" : ""}>Male</option>
+                                                <option value="0" ${staffs.gender == 0 ? "selected" : ""}>Female</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Address:</label>
+                                        <input type="text" id="address" name="address" placeholder="Address" value="${staffs.address}" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone">Phone:</label>
+                                        <input type="text" id="phone" name="phone" placeholder="Phone" value="${staffs.phone}" class="form-control">
+                                        <span id="phone-error" class="error-message"></span>
+                                    </div>
+                                    <!-- Error Message -->
+                                    <p class="error-message">${message}</p>
+                                    <div class="row">
+                                        <div class="col-md-12 text-center">
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
 
                 </div>
             </div>

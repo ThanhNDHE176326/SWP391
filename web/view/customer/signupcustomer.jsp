@@ -129,7 +129,7 @@
                 var phone = document.getElementsByName("phone")[0].value;
 
                 var usernameRegex = /^[a-zA-Z0-9_]{4,20}$/;
-                var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
+                var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*]{6,}$/;
                 var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 var phoneRegex = /^\+?\d{10,}$/;
 
