@@ -5,6 +5,7 @@
 //import Utils.MarketingAccessConfig;
 //import Utils.SaleAccessConfig;
 //import Utils.SaleAdminAccessConfig;
+//import Utils.WarehouseAccessConfig;
 //import java.io.IOException;
 //import java.util.List;
 //import java.util.stream.Collectors;
@@ -19,6 +20,7 @@
 //import jakarta.servlet.http.HttpServletRequest;
 //import jakarta.servlet.http.HttpServletResponse;
 //import jakarta.servlet.http.HttpSession;
+//import java.util.Collection;
 //
 //@WebFilter("/*")
 //public class AuthorizationFilter implements Filter {
@@ -28,6 +30,7 @@
 //    private List<String> saleUrls;
 //    private List<String> saleAdminUrls;
 //    private List<String> customerUrls;
+//    private List<String> warehouseUrls;
 //
 //    @Override
 //    public void init(FilterConfig filterConfig) throws ServletException {
@@ -36,6 +39,7 @@
 //        saleUrls = SaleAccessConfig.getSaleUrls();
 //        saleAdminUrls = SaleAdminAccessConfig.getSaleAdminUrls();
 //        customerUrls = CustomerAccessConfig.getCustomerUrls();
+//        warehouseUrls = WarehouseAccessConfig.getWarehouseUrls();
 //    }
 //
 //    @Override
@@ -79,10 +83,13 @@
 //        } else if ("2".equals(userRole)) {
 //            allowedUrls = Stream.concat(customerUrls.stream(), saleAdminUrls.stream())
 //                    .collect(Collectors.toList());
-//        } else if ("1".equals(userRole)) {
-//            allowedUrls = Stream.concat(Stream.concat(customerUrls.stream(), saleUrls.stream()),
-//                    Stream.concat(saleAdminUrls.stream(), Stream.concat(marketingUrls.stream(), adminUrls.stream())))
+//        } else if ("5".equals(userRole)) {
+//            allowedUrls = Stream.concat(customerUrls.stream(), warehouseUrls.stream())
 //                    .collect(Collectors.toList());
+//        } else if ("1".equals(userRole)) {
+//            allowedUrls = Stream.of(customerUrls, saleUrls, warehouseUrls, saleAdminUrls, marketingUrls, adminUrls)
+//            .flatMap(Collection::stream)
+//            .collect(Collectors.toList());
 //        } else {
 //            httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
 //            return;

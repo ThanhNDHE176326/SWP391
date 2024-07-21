@@ -127,16 +127,16 @@
                 <div class="form-group">
                     <label for="newpassword">New Password:</label>
                     <input type="password" name="newpassword" id="newpassword" placeholder="New Password" required>
+                    <span id="newpassword-error" class="error-message"></span>
                 </div>
                 <div class="form-group">
                     <label for="confirmpassword">Confirm New Password:</label>
                     <input type="password" name="confirmpassword" id="confirmpassword" placeholder="Confirm New Password" required>
+                    <span id="confirmpassword-error" class="error-message"></span>
                 </div>
                 <p class="error-message">${error}</p>
-                <span id="newpassword-error" class="error-message"></span>
                 <div class="row">
                     <button type="submit" class="btn btn-default btn-block" style="background-color: #FE980F; color: #fff;">Change Password</button>
-
                     <a href="${pageContext.request.contextPath}/view/customer/homepage.jsp" class="btn btn-default btn-block">Back to Home</a>
                 </div>
             </form>
@@ -153,31 +153,51 @@
 
         <script>
             window.onload = function () {
-                document.getElementById("changePasswordForm").addEventListener("submit", function (event) {
-                    var newPassword = document.getElementById("newpassword").value;
-                    var confirmPassword = document.getElementById("confirmpassword").value;
-                    var newPasswordError = document.getElementById("newpassword-error");
-                    var passwordMatchError = document.getElementById("confirmpassword-error");
-                    var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
-                    newPasswordError.innerText = "";
-                    passwordMatchError.innerText = "";
+                var newPasswordInput = document.getElementById("newpassword");
+                var confirmPasswordInput = document.getElementById("confirmpassword");
+                var newPasswordError = document.getElementById("newpassword-error");
+                var confirmPasswordError = document.getElementById("confirmpassword-error");
+                var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*]{6,}$/;
 
+                // Kiểm tra định dạng mật khẩu mới ngay khi người dùng nhập liệu
+                newPasswordInput.addEventListener("input", function () {
+                    newPasswordError.innerText = "";
+                    if (!passwordRegex.test(newPasswordInput.value)) {
+                        newPasswordError.innerText = "New password must be at least 6 characters long and contain at least one lowercase letter, one uppercase letter, and one number.";
+                    }
+                });
+
+                // Kiểm tra khớp mật khẩu xác nhận ngay khi người dùng nhập liệu
+                confirmPasswordInput.addEventListener("input", function () {
+                    confirmPasswordError.innerText = "";
+                    if (newPasswordInput.value !== confirmPasswordInput.value) {
+                        confirmPasswordError.innerText = "Passwords do not match.";
+                    }
+                });
+
+                // Kiểm tra trước khi gửi biểu mẫu
+                document.getElementById("changePasswordForm").addEventListener("submit", function (event) {
+                    var newPassword = newPasswordInput.value;
+                    var confirmPassword = confirmPasswordInput.value;
                     var isValid = true;
 
-                    // Validate new password format
+                    newPasswordError.innerText = "";
+                    confirmPasswordError.innerText = "";
+
+                    // Kiểm tra định dạng mật khẩu mới
                     if (!passwordRegex.test(newPassword)) {
                         newPasswordError.innerText = "New password must be at least 6 characters long and contain at least one lowercase letter, one uppercase letter, and one number.";
                         isValid = false;
                     }
 
-                    // Validate password match
+                    // Kiểm tra khớp mật khẩu
                     if (newPassword !== confirmPassword) {
-                        passwordMatchError.innerText = "Passwords do not match.";
+                        confirmPasswordError.innerText = "Passwords do not match.";
                         isValid = false;
                     }
 
                     if (!isValid) {
-                        event.preventDefault(); // Prevent form submission
+                        event.preventDefault(); // Ngăn chặn gửi biểu mẫu nếu có lỗi
                     }
                 });
             };

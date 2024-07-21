@@ -48,7 +48,7 @@
                                     <p style="color: #000000; font-weight: bold;">${error}</p>
                                     <div class="form-group d-md-flex">
                                         <div>
-                                            <a href="forgotpasswordstaff.jsp">Forgot Password</a>
+                                            <a href="${pageContext.request.contextPath}/view/staff/forgotpasswordstaff.jsp">Forgot Password</a>
                                         </div>
                                     </div>
                                 </form>
@@ -67,4 +67,3 @@
     </body>
 </html>
 
-z
