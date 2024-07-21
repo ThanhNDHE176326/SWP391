@@ -1,11 +1,4 @@
-<%-- 
-    Document   : addnewuser
-    Created on : 19 June 2024, 11:15:20 am
-    Author     : dat ngo huy
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +6,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Add New User</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .notification {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+        }
+        .notification-error {
+            background-color: #f44336; /* Red background */
+            border: 1px solid #d32f2f; /* Darker red border */
+        }
+        .notification-success {
+            background-color: #4caf50; /* Green background */
+            border: 1px solid #388e3c; /* Darker green border */
+        }
+    </style>
+    <script>
+        function validateForm() {
+            const email = document.forms["userForm"]["email"].value;
+            const phone = document.forms["userForm"]["phone"].value;
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const phonePattern = /^\d{10}$/;
+
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            if (!phonePattern.test(phone)) {
+                alert("Please enter a valid 10-digit phone number.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </head>
 <body id="page-top">
     <jsp:include page="headeradmin.jsp"/>
@@ -34,17 +66,27 @@
                 <!-- Add User Form -->
                 <div class="card mb-3">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                            <div>
-                                <i class="fas fa-user-plus"></i>
-                                Add New User
-                            </div>
+                        <div>
+                            <i class="fas fa-user-plus"></i>
+                            Add New User
                         </div>
+                    </div>
                     <div class="card-body">
-                        <form action="${pageContext.request.contextPath}/adduser" method="post">
-                            <!-- Remove the ID field as it should not be editable for new user -->
-                            
-                            
-                            
+                        <!-- Display error message if there is any -->
+                        <c:if test="${not empty error}">
+                            <div class="notification notification-error">
+                                <c:out value="${error}" />
+                            </div>
+                        </c:if>
+                        
+                        <!-- Display success message if there is any -->
+                        <c:if test="${not empty success}">
+                            <div class="notification notification-success">
+                                <c:out value="${success}" />
+                            </div>
+                        </c:if>
+                        
+                        <form name="userForm" action="${pageContext.request.contextPath}/adduser" method="post" onsubmit="return validateForm()">
                             <div class="form-group row">
                                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                                 <div class="col-sm-10">
@@ -100,11 +142,9 @@
                             <div class="form-group row">
                                 <label for="role" class="col-sm-2 col-form-label">Role</label>
                                 <div class="col-sm-10">
-                                    
                                     <select name="role" class="form-control">
-                                        <c:forEach items="${listrole}" var="role" >
-                                        <option value="${role.id}">${role.name}</option>
-                                        
+                                        <c:forEach items="${listrole}" var="role">
+                                            <option value="${role.id}">${role.name}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -129,13 +169,14 @@
                     </div>
                 </div>
             </div>
+                            
             <!-- /.container-fluid -->
 
             <!-- Sticky Footer -->
             <footer class="sticky-footer">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright Â© Your Website 2019</span>
+                        <span>Copyright © Your Website 2019</span>
                     </div>
                 </div>
             </footer>
@@ -156,7 +197,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">Ã—</span>
+                        <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -167,6 +208,10 @@
             </div>
         </div>
     </div>
+    
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-
