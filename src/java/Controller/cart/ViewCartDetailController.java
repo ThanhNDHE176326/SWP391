@@ -75,8 +75,16 @@ public class ViewCartDetailController extends HttpServlet {
         CartProductDAO cartProductDAO = new CartProductDAO();
         ProductDAOByPublic dao = new ProductDAOByPublic();
 
-        //lay customerName tren session
+        // Lấy customerName từ session
         String customerName = (String) session.getAttribute("usernamecustomer");
+
+        // Kiểm tra nếu session mất
+        if (customerName == null) {
+            // Chuyển hướng người dùng đến trang đăng nhập
+            response.sendRedirect("view/customer/logincustomer.jsp");
+            return;
+        }
+
         int customerID = Integer.parseInt(customerDAO.getInformationCustomer(customerName).getId());
         int cartID = cartDAO.getCartIdByCustomerID(customerID);
         List<Product> listNewProduct = dao.getTop6ProductNew();

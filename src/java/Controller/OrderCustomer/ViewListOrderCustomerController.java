@@ -48,13 +48,21 @@ public class ViewListOrderCustomerController extends HttpServlet {
         ProductDAO productDAO = new ProductDAO();
         ProductDAOByPublic productDAOByPublic = new ProductDAOByPublic();
 
-        String orderId = request.getParameter("orderId");
         String customerName = (String) session.getAttribute("usernamecustomer");
+
+        // Kiểm tra nếu session mất
+        if (customerName == null) {
+            // Chuyển hướng người dùng đến trang đăng nhập
+            response.sendRedirect("view/customer/logincustomer.jsp");
+            return;
+        }
+
+        String orderId = request.getParameter("orderId");
         String customer_id = String.valueOf(dao.getCustomerIdByUsername(customerName));
         if (orderId != null) {
             int order_id = Integer.parseInt(orderId);
             dao.updateOrderStatus(order_id);
-            //từ order_id lấy ra list order_detail
+            // từ order_id lấy ra list order_detail
             List<Integer> orderDetailIds = dao.getOrderDetailIdsByOrderId(order_id);
             // dùng for each lặp qua order_detail lấy id, quantity product
             for (int orderDetailId : orderDetailIds) {
@@ -64,11 +72,11 @@ public class ViewListOrderCustomerController extends HttpServlet {
                 int productID = Integer.parseInt(productId);
                 String quantity = orderDetail.getQuantity();
                 int quantityInOrderProduct = Integer.parseInt(quantity);
-                //lấy ra hold của product hiện tại
+                // lấy ra hold của product hiện tại
                 int holdInProducts = productDAO.getHoldByProductID(productID);
-                //tình toán lại hold
+                // tính toán lại hold
                 int holdChanged = holdInProducts - quantityInOrderProduct;
-                //update quantity mới vào product
+                // update quantity mới vào product
                 productDAO.updateHoldProductAfterCart(productID, holdChanged);
             }
         }
