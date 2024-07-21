@@ -62,7 +62,7 @@
                     <aside class="col-sm-3">
                         <!-- Categories list -->
                         <div class="sidebar">
-                            <h2>Categories</h2>
+                            <h2><a href="bloglist">Categories </a></h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                                 <c:forEach var="category" items="${categories}">
                                     <div class="panel panel-default">
