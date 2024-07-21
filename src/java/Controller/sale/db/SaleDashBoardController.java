@@ -5,21 +5,24 @@
 package Controller.sale.db;
 
 import DAO.OrderDAO;
-import com.google.gson.Gson;
-
 import Models.Order;
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.OutputStream;
+import java.time.LocalDate;
+import java.sql.Date;
+import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
-import java.sql.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.PrintWriter;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtils;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -28,14 +31,15 @@ import java.util.Map;
 @WebServlet(name = "SaleDashBoardController", urlPatterns = {"/saledashboard"})
 public class SaleDashBoardController extends HttpServlet {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
      * @param request servlet request
      * @param response servlet response
-     * @throws ServletException if a servlet-specific error 
-     * occurs
+     * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -66,62 +70,63 @@ public class SaleDashBoardController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        LocalDate endDate = LocalDate.now();
-    LocalDate startDate = endDate.minusDays(6); // Adjusted to cover 7 days including endDate
+        throws ServletException, IOException {
 
-    // Assuming you have a way to get the database connection
-    // Connection connection = Database.getConnection();
+    LocalDate endDate = LocalDate.now();
+        LocalDate startDate = endDate.minusDays(6);
 
-    OrderDAO orderDAO = new OrderDAO(/*connection*/); // Pass the connection object here
-    List<Order> orders = orderDAO.getOrdersByDateRange(Date.valueOf(startDate), Date.valueOf(endDate));
+        OrderDAO orderDAO = new OrderDAO();
+        List<Order> orders = orderDAO.getOrdersByDateRange(Date.valueOf(startDate), Date.valueOf(endDate));
 
-    int[] successOrders = new int[7];
-    int[] totalOrders = new int[7];
-    float[] revenues = new float[7];
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-    for (Order order : orders) {
-        LocalDate orderLocalDate = Date.valueOf(order.getOrderDate()).toLocalDate();
-        int dayIndex = (int) (orderLocalDate.toEpochDay() - startDate.toEpochDay());
-        
-        // Ensure dayIndex is within bounds
-        if (dayIndex >= 0 && dayIndex < 7) {
-            totalOrders[dayIndex]++;
-            if (Integer.parseInt(order.getStatus_id()) == 1) { // Assuming status 1 means success
-                successOrders[dayIndex]++;
-                revenues[dayIndex] += Float.parseFloat(order.getTotalCost());
+        for (Order order : orders) {
+            LocalDate orderLocalDate = Date.valueOf(order.getOrderDate()).toLocalDate();
+            int dayIndex = (int) (orderLocalDate.toEpochDay() - startDate.toEpochDay());
+
+            if (dayIndex >= 0 && dayIndex < 7) {
+                dataset.addValue(1, "Total Orders", "Day " + (dayIndex + 1));
+                if (Integer.parseInt(order.getStatus_id()) == 6) {
+                    dataset.addValue(1, "Success Orders", "Day " + (dayIndex + 1));
+                    dataset.addValue(Float.parseFloat(order.getTotalCost()), "Revenues", "Day " + (dayIndex + 1));
+                }
             }
-        } else {
-            // Handle the case where the order date is outside the 7-day range
-            // This can occur if there are orders outside the expected date range
-            // You can choose to log this or handle it differently based on your application logic.
-            System.out.println("Order date outside expected range: " + order.getOrderDate());
         }
+
+        JFreeChart barChart = ChartFactory.createBarChart(
+                "Bar Chart Example",
+                "Days",
+                "Count",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true, true, false);
+
+        int width = 640;    // Width of the image
+        int height = 480;   // Height of the image
+
+        // Create a temporary file to save the chart image
+        File barChartFile = new File(request.getServletContext().getRealPath("/") + "chart.png");
+    ChartUtils.saveChartAsPNG(barChartFile, barChart, width, height);
+
+    // Redirect to JSP to display the chart image
+    request.setAttribute("chartFileName", "chart.png");
+    request.getRequestDispatcher("view/saleadmin/saleadmindashboard.jsp").forward(request, response);
+
+        // Flush and close the output stream
+        
     }
 
-    Map<String, Object> data = new HashMap<>();
-    data.put("successOrders", successOrders);
-    data.put("totalOrders", totalOrders);
-    data.put("revenues", revenues);
 
-    String json = new Gson().toJson(data);
-    response.setContentType("application/json");
-    response.getWriter().write(json);
-    
-    }
-
-
-
-/**
- * Handles the HTTP <code>POST</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
-@Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -132,7 +137,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
      * @return a String containing servlet description
      */
     @Override
-public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

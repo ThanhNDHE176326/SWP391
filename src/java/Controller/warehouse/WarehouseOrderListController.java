@@ -93,10 +93,16 @@ public class WarehouseOrderListController extends HttpServlet {
 
         // Đảm bảo rằng các tham số lọc được truyền tiếp qua request dispatcher
         List<OrderStatus> orderStatusList = orderDAO.getAllOrderStatus();
-        List<OrderStatus> warehouseOrderStatusList = orderStatusList.stream()
-                .filter(status -> List.of("2", "3", "4").contains(status.getId()))
-                .collect(Collectors.toList());
-        request.setAttribute("orderStatusList", warehouseOrderStatusList);
+        List<OrderStatus> warehouseOrderStatusList = new ArrayList<>();
+        for (OrderStatus status : orderStatusList) {
+            if (status.getId().equals("2") || status.getId().equals("3") || status.getId().equals("8")
+                    || status.getId().equals("4")) {
+                warehouseOrderStatusList.add(status);
+            }
+        }
+        request.setAttribute("orderStatusList", orderStatusList);
+
+        request.setAttribute("warehouseOrderStatusList", warehouseOrderStatusList);
 
         request.setAttribute("statusId", statusId);
         request.setAttribute("orderId", orderId);

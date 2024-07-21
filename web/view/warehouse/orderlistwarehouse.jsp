@@ -112,7 +112,7 @@
                                 <label for="statusId">Status:</label>
                                 <select class="form-control" id="statusId" name="statusId">
                                     <option value="">All</option>
-                                    <c:forEach var="status" items="${orderStatusList}">
+                                    <c:forEach var="status" items="${warehouseOrderStatusList}">
                                         <option value="${status.id}" ${param.statusId == status.id ? 'selected' : ''}>${status.name}</option>
                                     </c:forEach>
                                 </select>
