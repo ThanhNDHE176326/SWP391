@@ -36,17 +36,7 @@
     <body>
         <!-- Sidebar -->
         <ul class="sidebar navbar-nav">
-            <li class="nav-item dropdown active">
-                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Account</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-                    <a class="dropdown-item" href="${pageContext.request.contextPath}/informationstaff">Personal Information</a>
-                    <a class="dropdown-item" href="${pageContext.request.contextPath}/view/saleadmin/changepasswordsaleadmin.jsp">Password</a>
-                </div>
-            </li>
-
+            
             <li class="nav-item active">
                 <a class="nav-link" href="${pageContext.request.contextPath}/warehouseorderlist">
                     <i class="fas fa-fw fa-chart-area"></i>

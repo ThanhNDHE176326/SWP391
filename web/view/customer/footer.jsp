@@ -32,9 +32,9 @@
                     <div class="col-sm-12">
                         <div class="contactinfo">
                             <ul class="nav nav-pills">
-                                <li><a href=""><i class="fa fa-phone"></i> 0367526769</a></li>
-                                <li><a href=""><i class="fa fa-envelope"></i> thaodvhe173219@fpt.edu.vn</a></li>
-                                <li><a href=""><i class="fa fa-map-marker"></i> 505 S Atlantic Ave, Virginia Beach, VA</a></li>
+                                <li><a><i class="fa fa-phone"></i> 0367526769</a></li>
+                                <li><a><i class="fa fa-envelope"></i> thaodvhe173219@fpt.edu.vn</a></li>
+                                <li><a><i class="fa fa-map-marker"></i> 505 S Atlantic Ave, Virginia Beach, VA</a></li>
                             </ul>
                         </div>
                     </div>

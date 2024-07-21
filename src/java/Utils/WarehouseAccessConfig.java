@@ -17,7 +17,7 @@ public class WarehouseAccessConfig {
             "/view/warehouse/headerwarehouse.jsp", "/view/warehouse/navbarwarehouse.jsp", "/view/warehouse/orderdetailswarehouse.jsp", "/view/warehouse/orderlistwarehouse.jsp",
             "/view/warehouse/productlistwarehouse.jsp","/view/warehouse/updateproductdetailwarehouse.jsp", 
             // Servlet
-            "/filterCategoryProduct", "/filterStatusProductWH", "/searchProductList", "/updateProductDetailByWarehouse", "/warehouseorderdetails", "/warehouseorderlist","/warehouseorderlist"
+            "/filterCategoryProduct", "/filterStatusProductWH", "/searchProductList", "/updateProductDetailByWarehouse", "/warehouseorderdetails", "/warehouseorderlist","/warehouseProductList", "/logoutstaff"
     );
 
     public static List<String> getWarehouseUrls() {

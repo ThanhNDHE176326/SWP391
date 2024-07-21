@@ -35,8 +35,8 @@
                         <div class="col-sm-6">
                             <div class="contactinfo">
                                 <ul class="nav nav-pills">
-                                    <li><a href=""><i class="fa fa-phone"></i> 0367526769</a></li>
-                                    <li><a href=""><i class="fa fa-envelope"></i> dvthao2k3@gmail.com</a></li>
+                                    <li><a ><i class="fa fa-phone"></i> 0367526769</a></li>
+                                    <li><a ><i class="fa fa-envelope"></i> dvthao2k3@gmail.com</a></li>
                                 </ul>
                             </div>
                         </div>
