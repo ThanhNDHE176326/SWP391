@@ -198,12 +198,12 @@
                             <h2 class="title text-center">Latest From Our Blog</h2>
                             <div class="single-blog-post row">
                                 <div class="col-sm-4">
-                                    <a href="blogdetail?id=${t.top1Blog.id}">
+                                    
                                         <img src="${pageContext.request.contextPath}/images/${t.top1Blog.image}" alt="" class="img-responsive">
-                                    </a>
+                                    
                                 </div>
                                 <div class="col-sm-8">
-                                    <h3><a href="blogdetail?id=${t.top1Blog.id}">${t.top1Blog.title}</a></h3>
+                                    <h3><a >${t.top1Blog.title}</a></h3>
                                     <div class="post-meta">
                                         <ul>
                                             <li><i class="fa fa-calendar"></i> ${t.top1Blog.updateDate}</li>
