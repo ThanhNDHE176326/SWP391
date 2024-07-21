@@ -34,7 +34,7 @@
         <!-- Sidebar -->
         <ul class="sidebar navbar-nav">
             
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Account</span>

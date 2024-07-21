@@ -206,10 +206,10 @@
                                                         <input type="checkbox" name="selectedProducts" value="${product.id}" data-price="${product.salePrice}" data-quantity="${product.quantity}" data-stock="${product.stock - product.hold}" class="product-checkbox">
                                                     </td>
                                                     <td class="cart_product">
-                                                        <a href=""><img src="<c:url value='/images/${product.image}'/>" alt=""></a>
+                                                        <a><img src="<c:url value='/images/${product.image}'/>" alt=""></a>
                                                     </td>
                                                     <td class="cart_description">
-                                                        <h4><a href="">${product.title}</a></h4>
+                                                        <h4><a>${product.title}</a></h4>
                                                         <p>ID: ${product.id}</p>
                                                     </td>
                                                     <td class="cart_price">
