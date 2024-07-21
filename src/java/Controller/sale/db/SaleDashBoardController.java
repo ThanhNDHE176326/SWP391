@@ -28,7 +28,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  *
  * @author Acer
  */
-@WebServlet(name = "SaleDashBoardController", urlPatterns = {"/saledashboard"})
+    @WebServlet(name = "SaleDashBoardController", urlPatterns = {"/saledashboard"})
 public class SaleDashBoardController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

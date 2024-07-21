@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Blog List | E-Shopper</title>
+        <title>Blog Detail | E-Shopper</title>
         <link href="<c:url value='/css/bootstrap.min.css'/>" rel="stylesheet">
         <link href="<c:url value='/css/font-awesome.min.css'/>" rel="stylesheet">
         <link href="<c:url value='/css/prettyPhoto.css'/>" rel="stylesheet">
@@ -26,57 +26,58 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<c:url value='/images/ico/apple-touch-icon-114-precomposed.png'/>">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<c:url value='/images/ico/apple-touch-icon-72-precomposed.png'/>">
         <link rel="apple-touch-icon-precomposed" href="<c:url value='/images/ico/apple-touch-icon-57-precomposed.png'/>">
-
-
     </head>
 
     <body>
         <jsp:include page="header.jsp"/>
+        <section id="blog"><!--/#blog-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <article>
+                            <p class="update-date">Ngày cập nhật: ${blog.updateDate}</p>
+                            <p class="category">Danh mục: ${blog.categoryBlog}</p>
+                            <div class="image-wrapper">
+                                <img src="images/${blog.image}" alt="${blog.title}" class="blog-image" />
+                            </div>
+                            <div class="blog-description">${blog.description}</div>
+                            <div class="blog-content">${blog.content}</div>
+                        </article>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-9">
-                    <!-- Search bar -->
-                    <div class="search-bar">
-                        <form action="bloglist" method="get">
-                            <input type="text" name="query" placeholder="Tìm kiếm bài viết..." value="${param.query}">
-                            <button type="submit">Tìm kiếm</button>
-                        </form>
-                    </div>
-
-                    <!-- Blog content -->
-                    <article>
-                        <p class="update-date">Ngày cập nhật: ${blog.updateDate}</p>
-                        <p class="category">Danh mục: ${blog.categoryBlog}</p>
-                        <img src="images/${blog.image}" alt="${blog.title}" class="blog-image" />
-                        <div class="blog-description">${blog.description}</div>
-                        <div class="blog-content">${blog.content}</div>
-                    </article>
-
-                    <!-- Pagination -->
-                    <div class="pagination-wrapper">
-                        <div class="pagination">
-                            <c:forEach begin="1" end="${noOfPages}" var="i">
-                                <a href="bloglist?page=${i}" class="${i == currentPage ? 'active' : ''}">${i}</a>
-                            </c:forEach>
+                        <!-- Pagination -->
+                        <div class="pagination-wrapper">
+                            <div class="pagination">
+                                <c:forEach begin="1" end="${noOfPages}" var="i">
+                                    <a href="blogdetail?page=${i}<c:if test='${not empty param.query}'>&query=${param.query}</c:if><c:if test='${not empty param.category}'>&category=${param.category}</c:if>" class="${i == currentPage ? 'active' : ''}">${i}</a>
+                                </c:forEach>
+                            </div>
+                        </div>
+                        
+                        <!-- Back button -->
+                        <div class="back-button-wrapper">
+                            <button onclick="history.back()">Back</button>
                         </div>
                     </div>
-                </div>
-                <aside class="col-sm-3">
-                    <!-- Categories list -->
-                    <div class="categories">
-                        <h2>Danh mục</h2>
-                        <ul>
-                            <li><a href="bloglist">Tất cả</a></li>
+
+                    <aside class="col-sm-3">
+                        <!-- Categories list -->
+                        <div class="sidebar">
+                            <h2>Categories</h2>
+                            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                                 <c:forEach var="category" items="${categories}">
-                                <li><a href="bloglist?category=${category.id}" class="${param.category == category.id ? 'active' : ''}">${category.name}</a></li>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title"><a href="bloglist?category=${category.id}&query=${param.query}">${category.name}</a></h4>
+                                        </div>
+                                    </div>
                                 </c:forEach>
-                        </ul>
-                    </div>
-                </aside>
+                            </div><!--/category-products-->
+                        </div>
+                    </aside>
+                </div>
             </div>
-        </div>
-        <jsp:include page="footer.jsp"/>
+        </section><!--/#blog-->
+
         <script src="<c:url value='/js/jquery.js'/>"></script>
         <script src="<c:url value='/js/bootstrap.min.js'/>"></script>
         <script src="<c:url value='/js/jquery.scrollUp.min.js'/>"></script>
@@ -107,5 +108,58 @@
         background-color: #007bff; /* Màu nền cho trang đang được chọn */
         color: #fff; /* Màu chữ cho trang đang được chọn */
         border: 1px solid #007bff; /* Đường viền cho trang đang được chọn */
+    }
+
+    .image-wrapper {
+        width: 100%; /* Đặt chiều rộng của khung ảnh */
+        max-width: 600px; /* Bạn có thể điều chỉnh giá trị này theo yêu cầu của bạn */
+        height: 400px; /* Đặt chiều cao của khung ảnh */
+        overflow: hidden; /* Đảm bảo rằng các phần của hình ảnh vượt quá kích thước khung sẽ bị ẩn đi */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto; /* Căn giữa khung ảnh */
+    }
+
+    .blog-image {
+        width: 100%; /* Đặt chiều rộng của hình ảnh để phù hợp với khung ảnh */
+        height: auto; /* Giữ tỷ lệ khung hình của hình ảnh */
+        object-fit: cover; /* Đảm bảo rằng hình ảnh bao phủ toàn bộ khung mà không bị biến dạng */
+    }
+
+    .categories ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .categories ul li {
+        margin: 5px 0;
+    }
+
+    .categories ul li a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .categories ul li a.active {
+        font-weight: bold;
+        color: #007bff;
+    }
+
+    .back-button-wrapper {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .back-button-wrapper button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .back-button-wrapper button:hover {
+        background-color: #0056b3;
     }
 </style>
