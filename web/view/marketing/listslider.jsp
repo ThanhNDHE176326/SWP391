@@ -10,6 +10,13 @@
     <title>Slider List</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .fixed-size-img {
+            width: 150px; /* Set your desired width */
+            height: 100px; /* Set your desired height */
+            object-fit: cover; /* Ensure the image covers the entire area */
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -69,7 +76,7 @@
                                     <c:forEach items="${listslider}" var="q">
                                         <tr>
                                             <td>${q.getTitle()}</td>
-                                            <td><img src="${pageContext.request.contextPath}/images/${q.getImage()}" alt="${q.getTitle()}" width="100"></td>
+                                            <td><img class="fixed-size-img" src="${pageContext.request.contextPath}/images/${q.getImage()}" alt="${q.getTitle()}"></td>
                                             <td>${q.getNote()}</td>
                                             <td>${q.getStartDate()}</td>
                                             <td>${q.getEndDate()}</td>

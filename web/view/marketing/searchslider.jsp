@@ -14,6 +14,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Search Slider</title>
+        <style>
+            .fixed-size-img {
+                width: 300px;  /* Set your desired width */
+                height: 200px; /* Set your desired height */
+                object-fit: cover; /* Ensure the image covers the entire area */
+            }
+        </style>
     </head>
 
     <body id="page-top">
@@ -49,7 +56,7 @@
                                 <c:forEach items="${list}" var="q">
                                     <div class="col-lg-4 col-md-6 mb-4">
                                         <div class="card h-100">
-                                            <img class="card-img-top" src="${pageContext.request.contextPath}/images/${q.getImage()}" alt="${q.getTitle()}">
+                                            <img class="card-img-top fixed-size-img" src="${pageContext.request.contextPath}/images/${q.getImage()}" alt="${q.getTitle()}">
                                             <div class="card-body">
                                                 <h4 class="card-title">${q.getTitle()}</h4>
                                                 <p class="card-text"><strong>Notes:</strong> ${q.getNote()}</p>
