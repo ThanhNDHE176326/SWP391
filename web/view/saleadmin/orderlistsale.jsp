@@ -263,7 +263,7 @@
                                         </td>
                                         <td>${order.status_name}</td>
                                         <td>
-                                            <<form action="${pageContext.request.contextPath}/saleorderlist" method="post">
+                                            <form action="${pageContext.request.contextPath}/saleadminorderlist" method="post">
                                                 <input type="hidden" name="orderId" value="${order.id}">
                                                 <c:choose>
                                                     <c:when test="${order.status_id == '1'}">
