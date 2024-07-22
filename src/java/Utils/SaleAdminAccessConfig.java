@@ -19,7 +19,7 @@ public class SaleAdminAccessConfig {
             "/view/saleadmin/changepasswordsaleadmin.jsp","/view/saleadmin/profilesaleadmin.jsp","/view/saleadmin/orderdetailssaleadmin.jsp",
             //Servlet
             "/saledashboard", "/saleadminorderlist","/saleorderlist","/logoutstaff","/updatestaff","/resetpasswordstaff","/informationstaff","/forgotpasswordstaff","/confirmresetpwdstaff",
-            "/changepasswordstaff"
+            "/changepasswordstaff", "/saleadminorderdetails"
     );
 
     public static List<String> getSaleAdminUrls() {

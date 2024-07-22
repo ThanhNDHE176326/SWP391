@@ -16,7 +16,7 @@ public class SaleAccessConfig {
     private static final List<String> saleUrls = Arrays.asList(
             //jsp
             "/view/sale/headersale.jsp", "/view/sale/homedashboardsale.jsp", "/view/sale/navbarsale.jsp", "/view/sale/orderdetails.jsp", "/view/sale/orderlist.jsp",
-            "/view/sale/saledashboard.jsp",
+            "/view/sale/saledashboard.jsp", "/view/sale/changepasswordsale.jsp",
             //
             //Servlet
             "/saleorderdetails", "/saleorderlist","/logoutstaff","/updatestaff","/resetpasswordstaff","/informationstaff","/forgotpasswordstaff","/confirmresetpwdstaff",

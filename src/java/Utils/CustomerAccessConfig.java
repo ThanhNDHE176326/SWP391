@@ -24,8 +24,8 @@ public class CustomerAccessConfig {
             //Servlet           
             "/logincustomer", "/marketingDashboard", "/listOrderCustomer", "/orderInformationCustomer", "/ProductPublicByCategory",
             "/ProductPublicByPrice", "/ProductDetailPublic", "/ProductListPublic", "/ProductListPublicByUpdateDate", "/SeachPopularProductPublic",
-            "/SearchProductPulbic", "/addToCart", "/viewCartDetail", "/updateQuantityCartProduct", "/deleteCart", "/cartCompletion", "/addDeliveryAddress",
-            "/deleteDeliveryAddress", "/pushToCartContact", "/viewCartDetail", "/addfeedbackpublic", "/logout"
+            "/SearchProductPulbic", "/addToCart", "/viewCartDetail", "/updateQuantityCartProduct", "/deleteCart", "/cartCompletion", "/addDeliveryAddress","/bloglist","/blogdetail",
+            "/deleteDeliveryAddress", "/pushToCartContact", "/viewCartDetail", "/addfeedbackpublic", "/logout", "/informationuser", "/updateAddressDefault", "/checkOutSuccessfully"
     );
 
     public static List<String> getCustomerUrls() {
