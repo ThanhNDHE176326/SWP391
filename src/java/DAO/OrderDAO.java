@@ -319,7 +319,7 @@ public class OrderDAO extends DBContext {
                 + "INNER JOIN OrderStatus s ON o.status_id = s.id "
                 + "INNER JOIN Customers c ON o.customer_id = c.id "
                 + "WHERE o.isDelete = 1 AND o.staff_id = ? "
-                + "ORDER BY o.order_date DESC "
+                + "ORDER BY o.id DESC "
                 + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
             stm.setString(1, staffId);
@@ -759,7 +759,7 @@ public class OrderDAO extends DBContext {
                 + "INNER JOIN Customers c ON o.customer_id = c.id "
                 + "INNER JOIN Staffs st ON o.staff_id = st.id "
                 + "WHERE o.isDelete = 1 "
-                + "ORDER BY o.order_date DESC "
+                + "ORDER BY o.id DESC "
                 + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, offset);
@@ -819,7 +819,7 @@ public class OrderDAO extends DBContext {
                 + "INNER JOIN OrderStatus s ON o.status_id = s.id "
                 + "INNER JOIN Customers c ON o.customer_id = c.id "
                 + "WHERE o.isDelete = 1 AND o.status_id IN (2, 3 ,4 ,8 ) "
-                + "ORDER BY o.order_date DESC "
+                + "ORDER BY o.id DESC "
                 + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
             stm.setInt(1, offset);

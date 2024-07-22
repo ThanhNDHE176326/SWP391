@@ -153,84 +153,82 @@
                             </tr>
                         </thead>
                         <tbody>
-    <c:forEach var="order" items="${orders}" varStatus="status">
-    <tr>
-        <td><a href="warehouseorderdetails?id=${order.id}">${order.id}</a></td>
-        <td>${order.customer_name}</td>
-        <td>${order.totalCost}</td>
-        <td>${order.orderDate}</td>
-        <td><a href="warehouseorderdetails?id=${order.id}" class="btn btn-info">View Details</a></td>
-        <td>${order.status_name}</td>
-        <td>
-            <form id="warehouseForm${order.id}" action="${pageContext.request.contextPath}/warehouseorderlist" method="post">
-                <input type="hidden" name="orderId" value="${order.id}">
-                <input type="hidden" id="restockInput${order.id}" name="restock" value="">
-
-                <c:choose>
-                    <c:when test="${order.status_id == '2'}">
-                        <button type="submit" name="statusId" value="3">Packing</button>
-                    </c:when>
-                    <c:when test="${order.status_id == '3'}">
-                        <button type="submit" name="statusId" value="4">Delivering</button>
-                    </c:when>
-                    <c:when test="${order.status_id == '8'}">
-                        <button type="button" id="restockButton${order.id}" onclick="submitRestockForm(${order.id})">Restock</button>
-                    </c:when>
-                    <c:otherwise>
-                        <button type="button" disabled>
+<c:forEach var="order" items="${orders}" varStatus="status">
+                <tr>
+                    <td><a href="warehouseorderdetails?id=${order.id}">${order.id}</a></td>
+                    <td>${order.customer_name}</td>
+                    <td>${order.totalCost}</td>
+                    <td>${order.orderDate}</td>
+                    <td><a href="warehouseorderdetails?id=${order.id}" class="btn btn-info">View Details</a></td>
+                    <td>${order.status_name}</td>
+                    <td>
+                        <form id="warehouseForm${order.id}" action="${pageContext.request.contextPath}/warehouseorderlist" method="post">
+                            <input type="hidden" name="orderId" value="${order.id}">
+                            <input type="hidden" id="restockInput${order.id}" name="restock" value="">
                             <c:choose>
-                                <c:when test="${order.status_id == '4'}">Delivering</c:when>
+                                <c:when test="${order.status_id == '2'}">
+                                    <button type="submit" name="statusId" value="3">Packing</button>
+                                </c:when>
+                                <c:when test="${order.status_id == '3'}">
+                                    <button type="submit" name="statusId" value="4">Delivering</button>
+                                </c:when>
+                                <c:when test="${order.status_id == '8'}">
+                                    <button type="button" id="restockButton${order.id}" onclick="submitRestockForm(${order.id})">Restock</button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button type="button" disabled>
+                                        <c:choose>
+                                            <c:when test="${order.status_id == '4'}">Delivering</c:when>
+                                        </c:choose>
+                                    </button>
+                                </c:otherwise>
                             </c:choose>
-                        </button>
-                    </c:otherwise>
-                </c:choose>
-            </form>
-        </td>
-    </tr>
-</c:forEach>
+                        </form>
+                    </td>
+                </tr>
+            </c:forEach>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const buttons = document.querySelectorAll('button[id^="restockButton"]');
-        buttons.forEach(button => {
-            const orderId = button.id.replace('restockButton', '');
-            if (getCookie('restockDisabled' + orderId) === 'true') {
-                button.disabled = true;
-            }
+        document.addEventListener('DOMContentLoaded', function () {
+            const buttons = document.querySelectorAll('button[id^="restockButton"]');
+            buttons.forEach(button => {
+                const orderId = button.id.replace('restockButton', '');
+                if (getCookie('restockDisabled' + orderId) === 'true') {
+                    button.disabled = true;
+                }
+            });
         });
-    });
 
-    function submitRestockForm(orderId) {
-        var restockInput = document.getElementById("restockInput" + orderId);
-        restockInput.value = "8"; // Set the value explicitly
-        var form = document.getElementById("warehouseForm" + orderId);
-        form.submit();
-        setCookie('restockDisabled' + orderId, 'true', 365);
-        document.getElementById("restockButton" + orderId).disabled = true; // Disable the button
-    }
-
-    function setCookie(name, value, days) {
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days*24*60*60*1000));
-            expires = "; expires=" + date.toUTCString();
+        function submitRestockForm(orderId) {
+            var restockInput = document.getElementById("restockInput" + orderId);
+            restockInput.value = "8"; // Set the value explicitly
+            setCookie('restockDisabled' + orderId, 'true', 3650); // 10 years
+            document.getElementById("restockButton" + orderId).disabled = true; // Disable the button
+            var form = document.getElementById("warehouseForm" + orderId);
+            form.submit();
         }
-        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
-    }
 
-    function getCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for(var i=0;i < ca.length;i++) {
-            var c = ca[i];
-            while (c.charAt(0)==' ') c = c.substring(1,c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
         }
-        return null;
-    }
-</script>
 
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+    </script>
 
                     </table>
 
