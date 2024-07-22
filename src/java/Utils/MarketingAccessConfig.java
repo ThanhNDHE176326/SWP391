@@ -19,7 +19,7 @@ public class MarketingAccessConfig {
             "/view/marketing/detailslider.jsp", "/view/marketing/editslider.jsp", "/view/marketing/feedbackdetail.jsp", "/view/marketing/headermarketing.jsp", "/view/marketing/homedashboardmarketing.jsp",
             "/view/marketing/listfeedback.jsp", "/view/marketing/listslider.jsp", "/view/marketing/navbarmarketing.jsp", "/view/marketing/postlist.jsp", "/view/marketing/product-detail-marketing.jsp",
             "/view/marketing/product-list-marketing.jsp", "/view/marketing/profilemarketing.jsp", "/view/marketing/searchfeedback.jsp", "/view/marketing/searchslider.jsp", "/view/marketing/update-product-detail-marketing.jsp",
-            "/view/marketing/updatepost.jsp", "/view/marketing/viewpost.jsp", "/view/marketing/addslider.jsp",
+            "/view/marketing/updatepost.jsp", "/view/marketing/viewpost.jsp", "/view/marketing/addslider.jsp", "/view/marketing/changepasswordmarketing.jsp",
             //Servlet
             "/marketingDashboard", "/detail", "/edit", "/filter", "/search", "/slider", "/FilterFeedbackByCategories", "/FilterFeedbackByStar",
             "/FilterFeedbackByStatus", "/listfeedback", "/searchfeedback", "/updatefeedback", "/CustomerList", "/StatusCustomer", "/AddCustomer", "/EditCustomer", "/UpdateCustomer",
