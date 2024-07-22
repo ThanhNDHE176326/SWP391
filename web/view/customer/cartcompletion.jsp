@@ -15,7 +15,7 @@
         <meta name="description" content="Cart Completion Details">
         <meta name="author" content="Your Name">
 
-        <title>Cart Completion | E-Shopper</title>
+        <title>Cart Completion | BookHaven</title>
 
         <!-- Local Stylesheets -->
         <link href="<c:url value='/css/bootstrap.min.css'/>" rel="stylesheet">

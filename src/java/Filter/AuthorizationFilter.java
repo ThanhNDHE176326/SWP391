@@ -61,7 +61,7 @@ public class AuthorizationFilter implements Filter {
 
         // Allow access to login pages without authentication
         if (requestURI.startsWith("/view/customer/logincustomer.jsp")
-                || requestURI.startsWith("/view/staff/loginstaff.jsp") || requestURI.startsWith("/loginstaff")
+                || requestURI.startsWith("/view/staff/loginstaff.jsp") || requestURI.startsWith("/loginstaff") || requestURI.startsWith("/logoutcustomer")
                 || requestURI.startsWith("/view/staff/forgotpasswordstaff.jsp") || requestURI.startsWith("/forgotpasswordstaff")
                 || requestURI.startsWith("/view/staff/verifyresetpasswordstaff.jsp") || requestURI.startsWith("/confirmresetpwdstaff")
                 || requestURI.startsWith("/view/staff/resetpasswordstaff.jsp") || requestURI.startsWith("/resetpasswordstaff")) {
