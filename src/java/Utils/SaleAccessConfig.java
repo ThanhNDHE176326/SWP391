@@ -19,7 +19,8 @@ public class SaleAccessConfig {
             "/view/sale/saledashboard.jsp",
             //
             //Servlet
-            "/saleorderdetails", "/saleorderlist","/logoutstaff"
+            "/saleorderdetails", "/saleorderlist","/logoutstaff","/updatestaff","/resetpasswordstaff","/informationstaff","/forgotpasswordstaff","/confirmresetpwdstaff",
+            "/changepasswordstaff"
     );
 
     public static List<String> getSaleUrls() {
