@@ -13,7 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Home | E-Shopper</title>
+        <title>Home | BookHaven</title>
         <link href="<c:url value='/css/bootstrap.min.css'/>" rel="stylesheet">
         <link href="<c:url value='/css/font-awesome.min.css'/>" rel="stylesheet">
         <link href="<c:url value='/css/prettyPhoto.css'/>" rel="stylesheet">
