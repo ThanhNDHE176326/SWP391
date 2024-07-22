@@ -173,7 +173,7 @@
                                     <button type="submit" name="statusId" value="4">Delivering</button>
                                 </c:when>
                                 <c:when test="${order.status_id == '8'}">
-                                    <button type="button">Restock</button>
+                                    <button type="submit" name="statusId" value="9">Restock</button>
                                 </c:when>
                                 <c:otherwise>
                                     <button type="button" disabled>
