@@ -16,8 +16,10 @@ public class SaleAdminAccessConfig {
     private static final List<String> saleAdminUrls = Arrays.asList(
             //jsp
             "/view/saleadmin/headersaleadmin.jsp", "/view/saleadmin/homedashboardsaleadmin.jsp", "/view/saleadmin/navbarsaleadmin.jsp", "/view/saleadmin/orderlistsale.jsp", "/view/saleadmin/saledashboard.jsp",
+            "/view/saleadmin/changepasswordsaleadmin.jsp","/view/saleadmin/profilesaleadmin.jsp","/view/saleadmin/orderdetailssaleadmin.jsp",
             //Servlet
-            "/saledashboard", "/saleadminorderlist","/saleorderlist","/logoutstaff"
+            "/saledashboard", "/saleadminorderlist","/saleorderlist","/logoutstaff","/updatestaff","/resetpasswordstaff","/informationstaff","/forgotpasswordstaff","/confirmresetpwdstaff",
+            "/changepasswordstaff"
     );
 
     public static List<String> getSaleAdminUrls() {

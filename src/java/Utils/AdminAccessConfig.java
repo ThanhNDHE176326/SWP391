@@ -19,7 +19,7 @@ public class AdminAccessConfig {
             "/view/admin/navbaradmin.jsp", "/view/admin/searchuser.jsp", "/view/admin/signupstaff.jsp", "/view/admin/userdetail.jsp","/view/admin/profileadmin.jsp","/view/admin/changepasswordadmin.jsp",
             // Servlet
             "/listuser", "/adduser", "/edituser", "/FilterUserByGender", "/FilterUserByRole", "/FilterUserByStatus", "/searchuser", "/addfeedbackpublic",
-            "/logoutstaff"
+            "/logoutstaff","/updatestaff","/resetpasswordstaff","/informationstaff","/forgotpasswordstaff","/confirmresetpwdstaff","/changepasswordstaff"
     );
 
     public static List<String> getAdminUrls() {
