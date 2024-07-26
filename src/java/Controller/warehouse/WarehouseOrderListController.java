@@ -115,7 +115,6 @@ public class WarehouseOrderListController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String restock = request.getParameter("restock");
         String orderId = request.getParameter("orderId");
         int order_id = Integer.parseInt(orderId);
         String statusId = request.getParameter("statusId");
@@ -124,8 +123,9 @@ public class WarehouseOrderListController extends HttpServlet {
         ProductDAO productDAO = new ProductDAO();
         OrderDAO dao = new OrderDAO();
 
-        if (restock != null && restock.equals("8")) {
+        if (statusId != null && statusId.equals("9")) {
             dao.updateInventory(order_id);
+            dao.updateOrderStatus(orderId, statusId);
         } else {
             dao.updateOrderStatus(orderId, statusId);
 
