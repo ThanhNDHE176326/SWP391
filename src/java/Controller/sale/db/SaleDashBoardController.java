@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.time.format.DateTimeFormatter;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
@@ -29,7 +30,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  *
  * @author Acer
  */
-    @WebServlet(name = "SaleDashBoardController", urlPatterns = {"/saledashboard"})
+@WebServlet(name = "SaleDashBoardController", urlPatterns = {"/saledashboard"})
 public class SaleDashBoardController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -74,49 +75,66 @@ public class SaleDashBoardController extends HttpServlet {
         throws ServletException, IOException {
 
     LocalDate endDate = LocalDate.now();
-        LocalDate startDate = endDate.minusDays(6);
+    LocalDate startDate = endDate.minusDays(6);
 
-        OrderDAO orderDAO = new OrderDAO();
-        List<Order> orders = orderDAO.getOrdersByDateRange(Date.valueOf(startDate), Date.valueOf(endDate));
+    OrderDAO orderDAO = new OrderDAO();
+    List<Order> orders = orderDAO.getOrdersByDateRange(Date.valueOf(startDate), Date.valueOf(endDate));
 
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+    StringBuilder dateLabels = new StringBuilder("[");
 
-        for (Order order : orders) {
-            LocalDate orderLocalDate = Date.valueOf(order.getOrderDate()).toLocalDate();
-            int dayIndex = (int) (orderLocalDate.toEpochDay() - startDate.toEpochDay());
+    for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+        String dateString = date.format(DateTimeFormatter.ofPattern("dd/MM"));
+        dateLabels.append("\"").append(dateString).append("\",");
+    }
+    dateLabels.setLength(dateLabels.length() - 1); // Remove the last comma
+    dateLabels.append("]");
 
-            if (dayIndex >= 0 && dayIndex < 7) {
-                dataset.addValue(1, "Total Orders", "Day " + (dayIndex + 1));
-                if (Integer.parseInt(order.getStatus_id()) == 6) {
-                    dataset.addValue(1, "Success Orders", "Day " + (dayIndex + 1));
-                    dataset.addValue(Float.parseFloat(order.getTotalCost()), "Revenues", "Day " + (dayIndex + 1));
-                }
+    for (Order order : orders) {
+        LocalDate orderLocalDate = Date.valueOf(order.getOrderDate()).toLocalDate();
+        int dayIndex = (int) (orderLocalDate.toEpochDay() - startDate.toEpochDay());
+
+        if (dayIndex >= 0 && dayIndex < 7) {
+            String dateString = orderLocalDate.format(DateTimeFormatter.ofPattern("dd/MM"));
+            dataset.addValue(1, "Total Orders", dateString);
+            if (Integer.parseInt(order.getStatus_id()) == 6) {
+                dataset.addValue(1, "Success Orders", dateString);
+                dataset.addValue(Float.parseFloat(order.getTotalCost()), "Revenues", dateString);
             }
         }
-
-        JFreeChart barChart = ChartFactory.createBarChart(
-                "Bar Chart Example",
-                "Days",
-                "Count",
-                dataset,
-                PlotOrientation.VERTICAL,
-                true, true, false);
-
-        int width = 640;    // Width of the image
-        int height = 480;   // Height of the image
-
-        // Create a temporary file to save the chart image
-        File barChartFile = new File(request.getServletContext().getRealPath("/") + "chart.png");
-    ChartUtils.saveChartAsPNG(barChartFile, barChart, width, height);
-
-    // Redirect to JSP to display the chart image
-    request.setAttribute("chartFileName", "chart.png");
-    request.getRequestDispatcher("view/saleadmin/saleadmindashboard.jsp").forward(request, response);
-
-        // Flush and close the output stream
-        
     }
 
+    JFreeChart barChart = ChartFactory.createBarChart(
+            "Bar Chart Example",
+            "Days",
+            "Count",
+            dataset,
+            PlotOrientation.VERTICAL,
+            true, true, false);
+
+    int width = 640;    // Width of the image
+    int height = 480;   // Height of the image
+
+    // Create a temporary file to save the chart image
+    File barChartFile = new File(request.getServletContext().getRealPath("/") + "chart.png");
+    System.out.println("Chart file path: " + barChartFile.getAbsolutePath());
+    ChartUtils.saveChartAsPNG(barChartFile, barChart, width, height);
+
+    // Check if the file was created successfully
+    if (barChartFile.exists()) {
+        System.out.println("Chart image created successfully.");
+    } else {
+        System.out.println("Failed to create chart image.");
+    }
+
+    // Set the date labels as a request attribute
+    request.setAttribute("dateLabels", dateLabels.toString());
+    request.setAttribute("chartFileName", "chart.png");
+    request.getRequestDispatcher("view/saleadmin/saleadmindashboard.jsp").forward(request, response);
+}
+
+        // Flush and close the output stream
+    
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -143,4 +161,3 @@ public class SaleDashBoardController extends HttpServlet {
     }// </editor-fold>
 
 }
-
