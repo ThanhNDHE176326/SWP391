@@ -818,7 +818,7 @@ public class OrderDAO extends DBContext {
                 + "FROM Orders o "
                 + "INNER JOIN OrderStatus s ON o.status_id = s.id "
                 + "INNER JOIN Customers c ON o.customer_id = c.id "
-                + "WHERE o.isDelete = 1 AND o.status_id IN (2, 3 ,4 ,8 ) "
+                + "WHERE o.isDelete = 1 AND o.status_id IN (2, 3 ,4 ,8 , 9 ) "
                 + "ORDER BY o.id DESC "
                 + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         try (PreparedStatement stm = connection.prepareStatement(sql)) {

@@ -164,7 +164,7 @@
                     <td>
                         <form id="warehouseForm${order.id}" action="${pageContext.request.contextPath}/warehouseorderlist" method="post">
                             <input type="hidden" name="orderId" value="${order.id}">
-                            <input type="hidden" id="restockInput${order.id}" name="restock" value="">
+<!--                            <input type="hidden" id="restockInput${order.id}" name="restock" value="">-->
                             <c:choose>
                                 <c:when test="${order.status_id == '2'}">
                                     <button type="submit" name="statusId" value="3">Packing</button>
@@ -179,6 +179,7 @@
                                     <button type="button" disabled>
                                         <c:choose>
                                             <c:when test="${order.status_id == '4'}">Delivering</c:when>
+                                            <c:when test="${order.status_id == '9'}">Restock</c:when>
                                         </c:choose>
                                     </button>
                                 </c:otherwise>
