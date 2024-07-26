@@ -36,6 +36,11 @@
     <body>
         <!-- Sidebar -->
         <ul class="sidebar navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="${pageContext.request.contextPath}/saledashboard">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>DashBoard</span></a>
+            </li>
 
             
             <li class="nav-item dropdown active">

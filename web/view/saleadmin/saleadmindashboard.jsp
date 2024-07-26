@@ -1,4 +1,4 @@
-<<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,6 +21,8 @@
 
         <!-- Custom styles for this template-->
         <link href="css/sb-admin.css" rel="stylesheet">
+       
+
 
     </head>
 
@@ -53,6 +55,7 @@
                     </div>
                     <div class="card-body">
                         <img src="${pageContext.request.contextPath}/chart.png" alt="Bar Chart"/>
+
                     </div>
                 </div>
             </div>
@@ -125,7 +128,7 @@
                     var myBarChart = new Chart(ctx, {
                         type: 'bar',
                         data: {
-                            labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"],
+                            labels: [${dateLabels}]
                             datasets: [{
                                     label: 'Success Orders',
                                     backgroundColor: "rgba(2,117,216,1)",
@@ -165,7 +168,7 @@
                                         gridLines: {
                                             display: true
                                         }
-                                    }],
+                                    }]
                             },
                             legend: {
                                 display: true
@@ -178,7 +181,7 @@
             },
             error: function (xhr, status, error) {
                 console.error('AJAX error:', status, error);
-            }
+            }   
         });
     });
 </script>
