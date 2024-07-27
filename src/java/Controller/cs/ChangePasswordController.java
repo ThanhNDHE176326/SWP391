@@ -72,12 +72,12 @@ public class ChangePasswordController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
+        String username = (String) session.getAttribute("usernamecustomer");
         String oldpassword = request.getParameter("oldpassword");
         String newpassword = request.getParameter("newpassword");
         String confirmpassword = request.getParameter("confirmpassword");
 
-        if (!oldpassword.equals((String) session.getAttribute("password"))) {
+        if (!oldpassword.equals((String) session.getAttribute("passwordcustomer"))) {
             request.setAttribute("error", "Incorrect old password.");
             request.getRequestDispatcher("view/customer/changepasswordcustomer.jsp").forward(request, response);
             return;
@@ -89,7 +89,7 @@ public class ChangePasswordController extends HttpServlet {
         }
         CustomerDAO dao = new CustomerDAO();
         dao.changePassword(newpassword, username);
-        session.setAttribute("password", newpassword);
+        session.setAttribute("passwordcustomer", newpassword);
         request.setAttribute("error", "Password changed successfully");
         request.getRequestDispatcher("view/customer/changepasswordcustomer.jsp").forward(request, response);
     }

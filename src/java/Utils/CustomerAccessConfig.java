@@ -22,9 +22,9 @@ public class CustomerAccessConfig {
             "/view/customer/resetpasswordcustomer.jsp", "/view/customer/shop.jsp", "/view/customer/signupcustomer.jsp",
             "/view/customer/verifyresetpasswordcustomer.jsp", "/view/customer/verifysignupcustomer.jsp",
             //Servlet           
-            "/logincustomer", "/marketingDashboard", "/listOrderCustomer", "/orderInformationCustomer", "/ProductPublicByCategory",
-            "/ProductPublicByPrice", "/ProductDetailPublic", "/ProductListPublic", "/ProductListPublicByUpdateDate", "/SeachPopularProductPublic",
-            "/SearchProductPulbic", "/addToCart", "/viewCartDetail", "/updateQuantityCartProduct", "/deleteCart", "/cartCompletion", "/addDeliveryAddress","/bloglist","/blogdetail",
+            "/logincustomer", "/marketingDashboard", "/listOrderCustomer", "/orderInformationCustomer", "/ProductPublicByCategory", "/signupcustomer","/confirmsignupcus","/updateuser",
+            "/ProductPublicByPrice", "/ProductDetailPublic", "/ProductListPublic", "/ProductListPublicByUpdateDate", "/SeachPopularProductPublic","/changepassword",
+            "/SearchProductPulbic", "/addToCart", "/viewCartDetail", "/updateQuantityCartProduct", "/deleteCart", "/cartCompletion", "/addDeliveryAddress", "/bloglist", "/blogdetail",
             "/deleteDeliveryAddress", "/pushToCartContact", "/viewCartDetail", "/addfeedbackpublic", "/logout", "/informationuser", "/updateAddressDefault", "/checkOutSuccessfully"
     );
 
