@@ -11,42 +11,86 @@ public class postDAO extends DBContext {
     private int noOfRecords;
 
     public List<Blog> getFilteredAndSortedPosts(String searchTitle, String filterCategory, String filterStatus, String sortField, int page, int recordsPerPage) {
-        List<Blog> posts = new ArrayList<>();
-        int start = (page - 1) * recordsPerPage;
+    List<Blog> posts = new ArrayList<>();
+    int start = (page - 1) * recordsPerPage;
 
-        String query = "SELECT * FROM Blogs WHERE title LIKE ? AND category_blog_id LIKE ? AND isDelete LIKE ? ORDER BY "
-                + (sortField != null ? sortField : "id") + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+    // Build the query
+    StringBuilder queryBuilder = new StringBuilder();
+    queryBuilder.append("SELECT b.id, b.title, b.image, b.update_date, b.description, b.content, b.status, ")
+                .append("s.fullname AS staff_name, c.name AS category_name ")
+                .append("FROM Blogs b ")
+                .append("JOIN Staffs s ON b.staff_id = s.id ")
+                .append("JOIN CategoryBlogs c ON b.category_blog_id = c.id ")
+                .append("WHERE b.title LIKE ? ")
+                .append("AND (c.name LIKE ? OR ? = '') ") // Handle filtering by category
+                .append("AND (b.status = ? OR ? = '') ") // Handle filtering by status
+                .append("AND b.isDelete = 1 ") // Assuming you want to exclude deleted posts
+                .append("ORDER BY ").append(sortField != null ? sortField : "b.id")
+                .append(" OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
 
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, searchTitle != null ? "%" + searchTitle + "%" : "%");
-            ps.setString(2, filterCategory != null && !filterCategory.isEmpty() ? filterCategory : "%");
-            ps.setString(3, filterStatus != null && !filterStatus.isEmpty() ? filterStatus : "%");
-            ps.setInt(4, start);
-            ps.setInt(5, recordsPerPage);
+    String query = queryBuilder.toString();
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    posts.add(mapResultSetToBlog(rs));
-                }
+    try (PreparedStatement ps = connection.prepareStatement(query)) {
+        ps.setString(1, searchTitle != null ? "%" + searchTitle + "%" : "%");
+        ps.setString(2, filterCategory != null && !filterCategory.isEmpty() ? "%" + filterCategory + "%" : "%");
+        ps.setString(3, filterCategory != null && !filterCategory.isEmpty() ? "%" + filterCategory + "%" : "");
+        ps.setString(4, filterStatus != null && !filterStatus.isEmpty() ? filterStatus : "");
+        ps.setString(5, filterStatus != null && !filterStatus.isEmpty() ? filterStatus : "");
+        ps.setInt(6, start);
+        ps.setInt(7, recordsPerPage);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Blog blog = new Blog();
+                    blog.setId(rs.getString("id"));
+                blog.setTitle(rs.getString("title"));
+                blog.setImage(rs.getString("image"));
+                    blog.setUpdateDate(rs.getString("update_date"));
+                blog.setDescription(rs.getString("description"));
+                blog.setContent(rs.getString("content"));
+                    blog.setStatus(rs.getString("status"));
+                blog.setStaffName(rs.getString("staff_name"));
+                blog.setCategoryBlogName(rs.getString("category_name"));
+                posts.add(blog);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return posts;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return posts;
+}
+
 
     public List<Blog> getAllPosts(int pageNumber, int pageSize) {
         List<Blog> posts = new ArrayList<>();
         int offset = (pageNumber - 1) * pageSize;
-        try {
-            String query = "SELECT * FROM Blogs ORDER BY update_date DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-            try (PreparedStatement ps = connection.prepareStatement(query)) {
-                ps.setInt(1, offset);
-                ps.setInt(2, pageSize);
-                try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) {
-                        posts.add(mapResultSetToBlog(rs));
-                    }
+        String query = "SELECT b.id, b.title, b.image, b.update_date, b.description, b.content, b.status, "
+                + "s.fullname AS staff_name, c.name AS category_name "
+                + "FROM Blogs b "
+                + "JOIN Staffs s ON b.staff_id = s.id "
+                + "JOIN CategoryBlogs c ON b.category_blog_id = c.id "
+                + "WHERE b.isDelete = 1 "
+                + // Optional: Filter out deleted blogs
+                "ORDER BY b.id DESC "
+                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, offset);
+            ps.setInt(2, pageSize);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Blog blog = new Blog();
+                    blog.setId(rs.getString("id"));
+                    blog.setTitle(rs.getString("title"));
+                    blog.setImage(rs.getString("image"));
+                    blog.setUpdateDate(rs.getString("update_date"));
+                    blog.setDescription(rs.getString("description"));
+                    blog.setContent(rs.getString("content"));
+                    blog.setStatus(rs.getString("status"));
+                    blog.setStaffName(rs.getString("staff_name"));
+                    blog.setCategoryBlogName(rs.getString("category_name"));
+                    posts.add(blog);
                 }
             }
         } catch (SQLException e) {

@@ -129,6 +129,32 @@
             .scroll-to-top:hover {
                 background-color: #2e59d9;
             }
+            /* Styles for pagination */
+            .pagination {
+                text-align: center;
+                margin: 20px 0;
+            }
+
+            .pagination {
+                margin-top: 20px;
+                text-align: center;
+            }
+
+            .pagination a {
+                display: inline-block;
+                margin: 0 5px;
+                padding: 8px 12px;
+                text-decoration: none;
+                background-color: #4e73df;
+                color: white;
+                border-radius: 3px;
+                font-size: 0.9rem;
+            }
+
+            .pagination a:hover {
+                background-color: #2e59d9;
+            }
+
 
         </style>
     </head>
@@ -147,7 +173,7 @@
                     <!-- Breadcrumbs-->
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="homedashboard.jsp">Dashboard</a>
+                            <a href="">Dashboard</a>
                         </li>
                         <li class="breadcrumb-item active">Post List</li>
                     </ol>
@@ -166,8 +192,8 @@
                                     <input type="text" name="filterCategory" placeholder="Filter by category" value="${param.filterCategory}">
                                     <select name="filterStatus">
                                         <option value="">Filter by status</option>
-                                        <option value="true" ${param.filterStatus == 'true' ? 'selected' : ''}>Show</option>
-                                        <option value="false" ${param.filterStatus == 'false' ? 'selected' : ''}>Hide</option>
+                                        <option value="true" ${param.filterStatus == 'true' ? 'selected' : ''}>Hide</option>
+                                        <option value="false" ${param.filterStatus == 'false' ? 'selected' : ''}>Show</option>
                                     </select>
                                     <button type="submit">Search</button>
                                 </form>
@@ -175,14 +201,14 @@
 
                             <a href="${pageContext.request.contextPath}/CreatePost" class="btn btn-primary">Create New Post</a>
 
-<!--                            <aside>
-                                <h2>Categories</h2>
-                                <ul>
-                                    <c:forEach var="category" items="${categories}">
-                                        <li>${category.name}</li>
-                                        </c:forEach>
-                                </ul>
-                            </aside>-->
+                            <!--                            <aside>
+                                                            <h2>Categories</h2>
+                                                            <ul>
+                            <c:forEach var="category" items="${categories}">
+                                <li>${category.name}</li>
+                            </c:forEach>
+                    </ul>
+                </aside>-->
 
                             <!-- Post list -->
                             <table>
@@ -206,8 +232,8 @@
                                             <td>${post.id}</td>
                                             <td><img src="images/${post.image}" alt="${post.title}"></td>
                                             <td>${post.title}</td>
-                                            <td>${post.categoryBlog}</td>
-                                            <td>${post.staff}</td>
+                                            <td>${post.categoryBlogName}</td>
+                                            <td>${post.staffName}</td>
                                             <td>${post.status == '0' ? 'Show' : 'Hide'}</td>
                                             <td>${post.description}</td>
                                             <td>${post.content}</td>
@@ -224,10 +250,37 @@
 
                             <!-- Pagination -->
                             <div class="pagination">
-                                <c:forEach begin="1" end="${noOfPages}" var="pageNum">
-                                    <a href="postlist?page=${pageNum}" ${currentPage == pageNum ? 'class="active"' : ''}>${pageNum}</a>
+                                <!-- Previous page link -->
+                                <c:if test="${currentPage > 1}">
+                                    <a href="${pageContext.request.contextPath}/postlist?page=${currentPage - 1}&searchTitle=${searchTitle}&filterCategory=${filterCategory}&filterStatus=${filterStatus}&sortField=${sortField}">Previous</a>
+                                </c:if>
+
+                                <!-- Page number links -->
+                                <c:forEach var="i" begin="1" end="${totalPages}">
+                                    <c:url var="pageUrl" value="/postlist">
+                                        <c:param name="page" value="${i}" />
+                                        <c:if test="${not empty searchTitle}">
+                                            <c:param name="searchTitle" value="${searchTitle}" />
+                                        </c:if>
+                                        <c:if test="${not empty filterCategory}">
+                                            <c:param name="filterCategory" value="${filterCategory}" />
+                                        </c:if>
+                                        <c:if test="${not empty filterStatus}">
+                                            <c:param name="filterStatus" value="${filterStatus}" />
+                                        </c:if>
+                                        <c:if test="${not empty sortField}">
+                                            <c:param name="sortField" value="${sortField}" />
+                                        </c:if>
+                                    </c:url>
+                                    <a href="${pageUrl}" class="${currentPage == i ? 'active' : ''}">${i}</a>
                                 </c:forEach>
+
+                                <!-- Next page link -->
+                                <c:if test="${currentPage < totalPages}">
+                                    <a href="${pageContext.request.contextPath}/postlist?page=${currentPage + 1}&searchTitle=${searchTitle}&filterCategory=${filterCategory}&filterStatus=${filterStatus}&sortField=${sortField}">Next</a>
+                                </c:if>
                             </div>
+
                         </div>
 
                         <!-- Sidebar -->

@@ -207,6 +207,25 @@ public class OrderListController extends HttpServlet {
             Customer user = new Customer(usernamecustomer, email);
             boolean test = sm.sendEmail(user, subject, content);
         }
+        if (statusId.equals("4")) {
+            String customer_id = dao.getCustomerIdByOrderId(order_id);
+            CustomerDAO customerdao = new CustomerDAO();
+            String usernamecustomer = customerdao.getUsernameCustomer(customer_id);
+            SendMail sm = new SendMail();
+            String email = customerdao.getInformationCustomer(usernamecustomer).getEmail();
+
+            String subject = "Order Cancellation from BookHaven";
+            String content = "Dear Customer,\n\n"
+                    + "We regret to inform you that your order with ID: " + orderId + " has been cancelled.\n\n"
+                    + "Thank you for choosing our product.\n"
+                    + "We apologize for any inconvenience this may have caused.\n"
+                    + "If you have any questions or need further assistance, please feel free to contact our support team.\n\n"
+                    + "Best regards,\n"
+                    + "The BookHaven Team";
+
+            Customer user = new Customer(usernamecustomer, email);
+            boolean test = sm.sendEmail(user, subject, content);
+        }
 
         response.sendRedirect(request.getContextPath() + "/saleorderlist");
     }
