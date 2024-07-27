@@ -55,6 +55,7 @@
                                 <div class="form-group mb-3">
                                     <label class="label" for="name">Name</label>
                                     <input name="name" type="text" class="form-control" placeholder="Name" required>
+                                    <span id="name-error" style="color:red;"></span> 
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="label" for="username">Username</label>
@@ -87,6 +88,7 @@
                                     <div class="ml-md-2 mb-3 flex-grow-1">
                                         <label class="label" for="address">Address</label>
                                         <input name="address" type="text" class="form-control" placeholder="Address" required>
+                                        <span id="address-error" style="color: red; font-style: italic;"></span>
                                     </div>
                                 </div>
                                 <div class="form-group mb-3">
@@ -122,30 +124,49 @@
     <script>
         window.onload = function () {
             document.getElementById("signupForm").addEventListener("submit", function (event) {
+                // Lấy giá trị từ các trường trong form
+                var name = document.getElementsByName("name")[0].value;
                 var username = document.getElementsByName("username1")[0].value;
                 var password = document.getElementsByName("password1")[0].value;
                 var repassword = document.getElementsByName("repassword")[0].value;
                 var email = document.getElementsByName("email")[0].value;
                 var phone = document.getElementsByName("phone")[0].value;
+                var address = document.getElementsByName("address")[0].value;
 
+                // Các biểu thức chính quy để kiểm tra định dạng
                 var usernameRegex = /^[a-zA-Z0-9_]{4,20}$/;
                 var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*]{6,}$/;
                 var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 var phoneRegex = /^\+?\d{10,}$/;
+                var nameRegex = /^(?=.*\s).+$/; // Đảm bảo có ít nhất một khoảng trắng
+                var addressRegex = /[a-zA-Z0-9\s,.#-]+/; // Đảm bảo địa chỉ không chỉ là khoảng trắng
 
+                // Các phần tử hiển thị lỗi
                 var usernameError = document.getElementById("username-error");
                 var passwordError = document.getElementById("password-error");
                 var emailError = document.getElementById("email-error");
                 var phoneError = document.getElementById("phone-error");
-                var repasswordError = document.getElementById("repassword-error"); // Sửa đổi đây
+                var repasswordError = document.getElementById("repassword-error");
+                var nameError = document.getElementById("name-error");
+                var addressError = document.getElementById("address-error");
 
+                // Xóa thông báo lỗi trước đó
                 usernameError.innerText = "";
                 passwordError.innerText = "";
                 emailError.innerText = "";
                 phoneError.innerText = "";
                 repasswordError.innerText = "";
+                nameError.innerText = "";
+                addressError.innerText = "";
 
+                // Biến để kiểm tra tính hợp lệ của form
                 var isValid = true;
+
+                // Kiểm tra các điều kiện và cập nhật thông báo lỗi
+                if (!nameRegex.test(name)) {
+                    nameError.innerText = "Name must contain at least one space.";
+                    isValid = false;
+                }
 
                 if (!usernameRegex.test(username)) {
                     usernameError.innerText = "Username must be between 4 and 20 characters long and contain no special characters.";
@@ -153,7 +174,7 @@
                 }
 
                 if (!passwordRegex.test(password)) {
-                    passwordError.innerText = "Password is at least 6 characters long and contains at least one lowercase letter, one uppercase letter, and number.";
+                    passwordError.innerText = "Password is at least 6 characters long and contains at least one lowercase letter, one uppercase letter, and one number.";
                     isValid = false;
                 }
 
@@ -172,12 +193,19 @@
                     isValid = false;
                 }
 
+                if (!addressRegex.test(address) || address.trim() === "") {
+                    addressError.innerText = "Address cannot be empty and must contain valid characters.";
+                    isValid = false;
+                }
+
+                // Nếu có lỗi, ngăn việc gửi form
                 if (!isValid) {
-                    event.preventDefault(); // Prevent form submission
+                    event.preventDefault();
                 }
             });
         };
     </script>
+
 
     <style>
         #form{

@@ -10,7 +10,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Saler - Order Details</title>
+        <title>Sale Admin - Order Details</title>
         <style>
             body {
                 font-family: 'Arial', sans-serif;

@@ -120,7 +120,7 @@ public class LoginStaffController extends HttpServlet {
         session.setAttribute("userRole", s.getRole());
         session.setMaxInactiveInterval(1800); // 30'
         if (s.getRole().equals("1")) {
-            response.sendRedirect("view/admin/homedashboardadmin.jsp");
+            response.sendRedirect("listuser");
         }
         if (s.getRole().equals("2")) {
             response.sendRedirect("saleorderlist");//sale
@@ -129,7 +129,7 @@ public class LoginStaffController extends HttpServlet {
             response.sendRedirect("saleadminorderlist");//saleadmin
         }
         if (s.getRole().equals("4")) {
-            response.sendRedirect("view/marketing/homedashboardmarketing.jsp");
+            response.sendRedirect("productListMarketing");
         }
         if (s.getRole().equals("5")) {
             response.sendRedirect("warehouseorderlist");

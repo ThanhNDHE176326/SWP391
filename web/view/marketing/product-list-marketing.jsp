@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <title>Marketing - Product List</title>
         <style>
             .pagination-button {
                 display: inline-block;

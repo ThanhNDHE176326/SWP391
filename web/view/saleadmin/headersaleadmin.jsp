@@ -15,7 +15,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Sale Manager - Dashboard</title>
+        <title>Sale Admin - Dashboard</title>
 
         <!-- Bootstrap CSS -->
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">

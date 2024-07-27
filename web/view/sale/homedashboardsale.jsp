@@ -16,7 +16,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Saler - Dashboard</title>
+        <title>Sale - Dashboard</title>
 
         <style>
             body {

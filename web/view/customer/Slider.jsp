@@ -9,7 +9,7 @@
 <html>
 <head>
     <jsp:useBean id="t" class="DAO.HomePageDAO" scope="request" />
-<title>Slider in CSS| BookHaven</title>
+<title>Slider | BookHaven</title>
 <style>
 
 body{

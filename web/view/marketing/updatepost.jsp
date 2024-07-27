@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Update Post</title>
+    <title>Marketing - Update Post</title>
     <style>
         body {
             font-family: Arial, sans-serif;

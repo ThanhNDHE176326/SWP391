@@ -11,7 +11,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>SB Admin - Tables</title>
+        <title>Marketing-Customer List</title>
     </head>
 
     <body id="page-top">

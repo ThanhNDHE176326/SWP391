@@ -10,151 +10,80 @@
 <html lang="en">
 
     <head>
-
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-
-        <title>Marketing - Change Password</title>
-        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-        <!-- Custom fonts for this template-->
-        <link href="<c:url value='/vendor/fontawesome-free/css/all.min.css' />" rel="stylesheet" type="text/css">
-
-        <!-- Custom styles for this template-->
-        <link href="<c:url value='/css/sb-admin.css' />" rel="stylesheet">
-
-        <!-- Custom CSS for form border -->
-        <style>
-            .account-info-form {
-                border: 1px solid #ddd;
-                padding: 15px;
-                border-radius: 8px;
-                margin: 20px auto; /* Center the form horizontally */
-                max-width: 400px; /* Limit the width of the form */
-                background-color: #f9f9f9; /* Light background color */
-                box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Soft shadow for depth */
-            }
-
-            .account-info-form label {
-                font-weight: bold;
-                margin-bottom: 5px;
-            }
-
-            .account-info-form input[type="text"],
-            .account-info-form input[type="email"],
-            .account-info-form select,
-            .account-info-form textarea {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 10px;
-                border: 1px solid #ccc;
-                border-radius: 3px;
-                box-sizing: border-box;
-                font-size: 14px;
-            }
-
-            .account-info-form button {
-                padding: 10px 20px;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 16px;
-            }
-
-            .account-info-form button:hover {
-                background-color: #0056b3;
-            }
-        </style>
-
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sale Admin - Change Password</title>
+        <link rel="stylesheet" href="<c:url value='css/bootstrap.min.css'/>">
+        <link rel="stylesheet" href="<c:url value='css/style.css'/>">
     </head>
 
-    <body id="page-top">
-
+    <body>
         <jsp:include page="headersaleadmin.jsp" />
-
         <div id="wrapper">
-
             <!-- Sidebar -->
             <jsp:include page="navbarsaleadmin.jsp" />
 
             <div id="content-wrapper">
-
                 <div class="container-fluid">
-                    <div class="modal-body">
-                        <!-- Change Password Form -->
-                        <form id="changePasswordForm" class="account-info-form" action="${pageContext.request.contextPath}/changepasswordstaff" method="POST">
-                            <div class="form-group">
-                                <label for="currentPassword">Current Password:</label>
-                                <input type="password" id="currentPassword" name="currentPassword" placeholder="Current Password" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="newPassword">New Password:</label>
-                                <input type="password" id="newPassword" name="newPassword" placeholder="New Password" class="form-control" required>
-                                <span id="newpassword-error" class="error-message"></span> <!-- Thêm phần tử span cho thông báo lỗi -->
-                            </div>
-                            <div class="form-group">
-                                <label for="confirmPassword">Confirm Password:</label>
-                                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" class="form-control" required>
-                                <span id="confirmpassword-error" class="error-message"></span> <!-- Thêm phần tử span cho thông báo lỗi -->
-                            </div>
-                            <!-- Error Message -->
-                            <p class="error-message">${message}</p>
-                            <div class="row">
-                                <div class="col-md-12 text-center">
-                                    <button type="submit" class="btn btn-primary">Change Password</button>
+                    <!-- Breadcrumbs-->
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="">Sale Admin</a>
+                        </li>
+                        <li class="breadcrumb-item active">Change Password</li>
+                    </ol>
+                    <section id="form" class="ftco-section">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-md-12 col-lg-8">
+                                    <div class="wrap p-4 p-md-5 form-border">
+                                        <h2 class="heading-section">Change Password</h2>
+                                        <form id="changePasswordForm" action="${pageContext.request.contextPath}/changepasswordstaff" method="POST" class="signin-form">
+                                            <div class="form-group mb-3">
+                                                <label class="label" for="currentPassword">Current Password:</label>
+                                                <input type="password" id="currentPassword" name="currentPassword" class="form-control" placeholder="Current Password" required>
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="label" for="newPassword">New Password:</label>
+                                                <input type="password" id="newPassword" name="newPassword" class="form-control" placeholder="New Password" required>
+                                                <span id="newpassword-error" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="label" for="confirmPassword">Confirm Password:</label>
+                                                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm Password" required>
+                                                <span id="confirmpassword-error" class="text-danger"></span>
+                                            </div>
+                                            <!-- Error Message -->
+                                            <p style="color: #000000; font-weight: bold;">${message}</p>
+                                            <div class="form-group">
+                                                <button type="submit" class="form-control btn btn-primary rounded submit px-3">Change Password</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </form>
-
-                    </div>
+                        </div>
+                    </section>
                 </div>
+                <!-- /.container-fluid -->
 
+                <!-- Sticky Footer -->
+                <footer class="sticky-footer">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Book Haven</span>
+                        </div>
+                    </div>
+                </footer>
             </div>
-            <!-- /.container-fluid -->
-
-            <!-- Sticky Footer -->
-            <footer class="sticky-footer">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright © Your Website 2019</span>
-                    </div>
-                </div>
-            </footer>
-
+            <!-- /.content-wrapper -->
         </div>
-        <!-- /.content-wrapper -->
-
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
-
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <script src="<c:url value='js/jquery.min.js'/>"></script>
+        <script src="<c:url value='js/popper.js'/>"></script>
+        <script src="<c:url value='js/bootstrap.min.js'/>"></script>
+        <script src="<c:url value='js/main.js'/>"></script>
     </body>
+
     <script>
         window.onload = function () {
             document.getElementById("changePasswordForm").addEventListener("submit", function (event) {
@@ -187,4 +116,37 @@
         };
     </script>
 
+    <style>
+        .form-border {
+            border: 2px solid #000;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .signin-form .form-control {
+            border-radius: 20px;
+        }
+
+        .signin-form .btn {
+            border-radius: 20px;
+        }
+
+        .signin-form .label {
+            font-weight: bold;
+            color: #000;
+        }
+
+        .heading-section {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .text-danger {
+            font-size: 0.875rem;
+        }
+    </style>
 </html>

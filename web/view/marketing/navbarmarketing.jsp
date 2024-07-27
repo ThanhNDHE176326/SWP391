@@ -41,7 +41,7 @@
             </li>
             <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-folder"></i>
+                    <i class="fas fa-fw fa-user-circle"></i>
                     <span>Account</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="pagesDropdown">
@@ -49,30 +49,29 @@
                     <a class="dropdown-item" href="${pageContext.request.contextPath}/view/marketing/changepasswordmarketing.jsp">Password</a>
                 </div>
             </li>
-            
             <li class="nav-item active">
                 <a class="nav-link" href="${pageContext.request.contextPath}/Pagination">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-users"></i>
                     <span>Customers List</span></a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="${pageContext.request.contextPath}/productListMarketing">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-box"></i>
                     <span>Product List</span></a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="${pageContext.request.contextPath}/postlist">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-edit"></i>
                     <span>Post</span></a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="${pageContext.request.contextPath}/slider">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-image"></i>
                     <span>Slider</span></a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="${pageContext.request.contextPath}/listfeedback">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-comments"></i>
                     <span>Feedback</span></a>
             </li>
             <li class="nav-item active">
@@ -84,33 +83,33 @@
         </ul>
     </body>
     <!-- Bootstrap core JavaScript-->
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="<c:url value='/vendor/jquery/jquery.min.js' />"></script>
-        <script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js' />"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="<c:url value='/vendor/jquery/jquery.min.js' />"></script>
+    <script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js' />"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="<c:url value='/vendor/jquery-easing/jquery.easing.min.js' />"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="<c:url value='/vendor/jquery-easing/jquery.easing.min.js' />"></script>
 
-        <!-- Page level plugin JavaScript-->
-        <script src="<c:url value='/vendor/chart.js/Chart.min.js' />"></script>
-        <script src="<c:url value='/vendor/datatables/jquery.dataTables.js' />"></script>
-        <script src="<c:url value='/vendor/datatables/dataTables.bootstrap4.js' />"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="<c:url value='/vendor/chart.js/Chart.min.js' />"></script>
+    <script src="<c:url value='/vendor/datatables/jquery.dataTables.js' />"></script>
+    <script src="<c:url value='/vendor/datatables/dataTables.bootstrap4.js' />"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="<c:url value='/js/sb-admin.min.js' />"></script>
-        <script src="<c:url value='/js/colReorder-bootstrap4-min.js' />"></script>
-        <script src="<c:url value='/js/colReorder-dataTables-min.js' />"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="<c:url value='/js/sb-admin.min.js' />"></script>
+    <script src="<c:url value='/js/colReorder-bootstrap4-min.js' />"></script>
+    <script src="<c:url value='/js/colReorder-dataTables-min.js' />"></script>
 
-        <!-- Demo scripts for this page-->
-        <script src="<c:url value='/js/demo/datatables-demo.js' />"></script>
-        <script src="<c:url value='/js/demo/chart-area-demo.js' />"></script>
+    <!-- Demo scripts for this page-->
+    <script src="<c:url value='/js/demo/datatables-demo.js' />"></script>
+    <script src="<c:url value='/js/demo/chart-area-demo.js' />"></script>
 
-        <!-- Initialize Bootstrap's dropdown -->
-        <script>
-            $(document).ready(function () {
-                $('.dropdown-toggle').dropdown();
-            });
-        </script>
+    <!-- Initialize Bootstrap's dropdown -->
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-toggle').dropdown();
+        });
+    </script>
 </html>
