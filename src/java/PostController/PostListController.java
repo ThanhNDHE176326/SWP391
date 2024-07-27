@@ -51,53 +51,52 @@ public class PostListController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
 
-    BlogDAO blogDAO = new BlogDAO();
-    postDAO postDAO = new postDAO();
-    CategoryBlogDAO categoryBlogDAO = new CategoryBlogDAO();
+        BlogDAO blogDAO = new BlogDAO();
+        postDAO postDAO = new postDAO();
+        CategoryBlogDAO categoryBlogDAO = new CategoryBlogDAO();
 
-    // Fetch query parameters
-    String searchTitle = request.getParameter("searchTitle");
-    String filterCategory = request.getParameter("filterCategory");
-    String filterStatus = request.getParameter("filterStatus");
-    String sortField = request.getParameter("sortField");
+        // Fetch query parameters
+        String searchTitle = request.getParameter("searchTitle");
+        String filterCategory = request.getParameter("filterCategory");
+        String filterStatus = request.getParameter("filterStatus");
+        String sortField = request.getParameter("sortField");
 
-    // Pagination
-    int page = 1;
-    int recordsPerPage = 10;
-    if (request.getParameter("page") != null) {
-        page = Integer.parseInt(request.getParameter("page"));
+        // Pagination
+        int page = 1;
+        int recordsPerPage = 10;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+
+        List<Blog> posts;
+        int totalPosts;
+
+        // Apply filters and sorting
+        if ((searchTitle == null || searchTitle.isEmpty())
+                && (filterCategory == null || filterCategory.isEmpty())
+                && (filterStatus == null || filterStatus.isEmpty())) {
+            posts = postDAO.getAllPosts(page, recordsPerPage);
+            totalPosts = postDAO.getTotalPosts();
+        } else {
+            posts = postDAO.getFilteredAndSortedPosts(searchTitle, filterCategory, filterStatus, sortField, page, recordsPerPage);
+            totalPosts = postDAO.getNoOfRecords();
+        }
+
+        int noOfPages = (int) Math.ceil(totalPosts * 1.0 / recordsPerPage);
+
+        List<CategoryBlog> categories = categoryBlogDAO.getAllCategories();
+        List<Blog> recentPosts = blogDAO.getRecentBlogs();
+
+        request.setAttribute("posts", posts);
+        request.setAttribute("categories", categories);
+        request.setAttribute("recentPosts", recentPosts);
+        request.setAttribute("noOfPages", noOfPages);
+        request.setAttribute("currentPage", page);
+
+        request.getRequestDispatcher("view/marketing/postlist.jsp").forward(request, response);
     }
-
-    List<Blog> posts;
-    int totalPosts;
-
-    // Apply filters and sorting
-    if ((searchTitle == null || searchTitle.isEmpty()) &&
-            (filterCategory == null || filterCategory.isEmpty()) &&
-            (filterStatus == null || filterStatus.isEmpty())) {
-        posts = postDAO.getAllPosts(page, recordsPerPage);
-        totalPosts = postDAO.getTotalPosts();
-    } else {
-        posts = postDAO.getFilteredAndSortedPosts(searchTitle, filterCategory, filterStatus, sortField, page, recordsPerPage);
-        totalPosts = postDAO.getNoOfRecords();
-    }
-
-    int noOfPages = (int) Math.ceil(totalPosts * 1.0 / recordsPerPage);
-
-    List<CategoryBlog> categories = categoryBlogDAO.getAllCategories();
-    List<Blog> recentPosts = blogDAO.getRecentBlogs();
-
-    request.setAttribute("posts", posts);
-    request.setAttribute("categories", categories);
-    request.setAttribute("recentPosts", recentPosts);
-    request.setAttribute("noOfPages", noOfPages);
-    request.setAttribute("currentPage", page);
-
-    request.getRequestDispatcher("view/marketing/postlist.jsp").forward(request, response);
-}
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
