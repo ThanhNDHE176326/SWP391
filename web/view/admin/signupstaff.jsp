@@ -6,99 +6,118 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Sign Up</title>
+        <link rel="stylesheet" href="<c:url value='css/bootstrap.min.css'/>">
+        <link rel="stylesheet" href="<c:url value='css/style.css'/>">
     </head>
     <body>
         <jsp:include page="headeradmin.jsp"/>
-        <jsp:include page="navbaradmin.jsp"/>
-        <section id="form" class="ftco-section">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-6 text-center mb-5">
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <jsp:include page="navbaradmin.jsp"/>
 
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-12 col-lg-8">
-                        <div class="wrap p-4 p-md-5">
-                            <div class="d-flex">
-                                <div class="w-100">
-                                    <h3 class="mb-4">Create an Account</h3>
-                                </div>      
+            <div id="content-wrapper">
+                <div class="container-fluid">
+                    <!-- Breadcrumbs-->
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="homedashboardadmin.jsp">Admin</a>
+                        </li>
+                        <li class="breadcrumb-item active">User List</li>
+                    </ol>
+                    <section id="form" class="ftco-section">
+                        <div class="container">
+
+                            <div class="row justify-content-center">
+                                <div class="col-md-12 col-lg-8">
+                                    <div class="wrap p-4 p-md-5 form-border">
+                                        <h2 class="heading-section">Sign Up</h2>
+                                        <form id="signupForm" action="${pageContext.request.contextPath}/signupstaff" method="POST" class="signin-form">
+                                            <div class="form-group mb-3">
+                                                <label class="label" for="fullname">Full Name</label>
+                                                <input name="fullname" type="text" class="form-control" placeholder="Full Name" required>
+                                            </div>
+                                            <div class="form-group d-md-flex">
+                                                <div class="mr-md-2 mb-3 flex-grow-1">
+                                                    <label class="label" for="username">Username</label>
+                                                    <input name="username" type="text" class="form-control" placeholder="Username" required>
+                                                    <span id="username-error" class="text-danger"></span>
+                                                </div>
+                                                <div class="ml-md-2 mb-3 flex-grow-1">
+                                                    <label class="label" for="email">Email</label>
+                                                    <input name="email" type="email" class="form-control" placeholder="Email" required>
+                                                    <span id="email-error" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group d-md-flex">
+                                                <div class="mr-md-2 mb-3 flex-grow-1">
+                                                    <label class="label" for="password">Password</label>
+                                                    <input name="password" type="password" class="form-control" placeholder="Password" required>
+                                                    <span id="password-error" class="text-danger"></span>
+                                                </div>
+                                                <div class="ml-md-2 mb-3 flex-grow-1">
+                                                    <label class="label" for="re-password">Re-Password</label>
+                                                    <input name="repassword" type="password" class="form-control" placeholder="Re-Password" required>
+                                                    <span id="repassword-error" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group d-md-flex">
+                                                <div class="mr-md-2 mb-3 flex-grow-1">
+                                                    <label class="label" for="phone">Phone</label>
+                                                    <input name="phone" type="text" class="form-control" placeholder="Phone" required>
+                                                    <span id="phone-error" class="text-danger"></span>
+                                                </div>
+                                                <div class="ml-md-2 mb-3 flex-grow-1">
+                                                    <label class="label" for="address">Address</label>
+                                                    <input name="address" type="text" class="form-control" placeholder="Address" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group d-md-flex">
+                                                <div class="mr-md-2 mb-3 flex-grow-1">
+                                                    <label class="label" for="gender">Gender</label>
+                                                    <select name="gender" class="form-control" required>
+                                                        <option value="1">Male</option>
+                                                        <option value="0">Female</option>
+                                                    </select>
+                                                </div>
+                                                <div class="ml-md-2 mb-3 flex-grow-1">
+                                                    <label class="label" for="role">Role</label>
+                                                    <select name="role" class="form-control" required>
+                                                        <option value="1">Admin</option>
+                                                        <option value="2">Sale</option>
+                                                        <option value="3">Sale Admin</option>
+                                                        <option value="4">Marketing</option>
+                                                        <option value="5">Store Staff</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <p style="color: #000000; font-weight: bold;">${mess}</p>
+                                            <div class="form-group">
+                                                <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign Up</button>
+                                            </div>
+                                            <div class="form-group d-md-flex"></div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-                            <form id="signupForm" action="${pageContext.request.contextPath}/signupstaff" method="POST" class="signin-form">
-                                <div class="form-group mb-3">
-                                    <label class="label" for="fullname">Full Name</label>
-                                    <input name="fullname" type="text" class="form-control" placeholder="Full Name" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="label" for="username">Username</label>
-                                    <input name="username" type="text" class="form-control" placeholder="Username" required>
-                                    <span id="username-error" style="color:red;"></span>
-                                </div>
-                                <div class="form-group d-md-flex">
-                                    <div class="mr-md-2 mb-3 flex-grow-1">
-                                        <label class="label" for="password">Password</label>
-                                        <input name="password" type="password" class="form-control" placeholder="Password" required>
-                                        <span id="password-error" style="color:red;"></span>
-                                    </div>
-                                    <div class="ml-md-2 mb-3 flex-grow-1">
-                                        <label class="label" for="re-password">Re-Password</label>
-                                        <input name="repassword" type="password" class="form-control" placeholder="Re-Password" required>
-                                        <span id="repassword-error" style="color:red;"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="label" for="email">Email</label>
-                                    <input name="email" type="email" class="form-control" placeholder="Email" required>
-                                    <span id="email-error" style="color:red;"></span>
-                                </div>
-                                <div class="form-group d-md-flex">
-                                    <div class="mr-md-2 mb-3 flex-grow-1">
-                                        <label class="label" for="phone">Phone</label>
-                                        <input name="phone" type="text" class="form-control" placeholder="Phone" required>
-                                        <span id="phone-error" style="color:red;"></span>
-                                    </div>
-                                    <div class="ml-md-2 mb-3 flex-grow-1">
-                                        <label class="label" for="address">Address</label>
-                                        <input name="address" type="text" class="form-control" placeholder="Address" required>
-                                    </div>
-                                </div>
-                                <div class="form-group d-md-flex">
-                                    <div class="mr-md-2 mb-3 flex-grow-1">
-                                        <label class="label" for="gender">Gender</label>
-                                        <select name="gender" class="form-control" required>
-                                            <option value="1">Male</option>
-                                            <option value="0">Female</option>
-                                        </select>
-                                    </div>
-                                    <div class="ml-md-2 mb-3 flex-grow-1">
-                                        <label class="label" for="role">Role</label>
-                                        <select name="role" class="form-control" required>
-                                            <option value="1">Admin</option>
-                                            <option value="2">Sale</option>
-                                            <option value="3">Sale Admin</option>
-                                            <option value="4">Marketing</option>
-                                            <option value="5">Store Staff</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <p style="color: #000000; font-weight: bold;">${mess}</p>
-                                <div class="form-group">
-                                    <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign Up</button>
-                                </div>
-                                <div class="form-group d-md-flex"></div>
-                            </form>
+                        </div>
+                    </section>
+                </div>
+                <!-- /.container-fluid -->
+                <!-- Sticky Footer -->
+                <footer class="sticky-footer">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>BookHaven</span>
                         </div>
                     </div>
-                </div>
+                </footer>
             </div>
-        </section>
-
+            <!-- /.content-wrapper -->
+        </div>
         <script src="<c:url value='js/jquery.min.js'/>"></script>
         <script src="<c:url value='js/popper.js'/>"></script>
         <script src="<c:url value='js/bootstrap.min.js'/>"></script>
         <script src="<c:url value='js/main.js'/>"></script>
-
     </body>
     <script>
         window.onload = function () {
@@ -160,10 +179,36 @@
         };
     </script>
     <style>
-        #form{
-            margin-top: -900px !important;
-            margin-left: 300px !important;
+        .form-border {
+            border: 2px solid #000;
+            border-radius: 10px;
+            padding: 20px;
         }
 
+        .signin-form .form-control {
+            border-radius: 20px;
+        }
+
+        .signin-form .btn {
+            border-radius: 20px;
+        }
+
+        .signin-form .label {
+            font-weight: bold;
+            color: #000;
+        }
+
+        .heading-section {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff; /* Primary color */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .text-danger {
+            font-size: 0.875rem;
+        }
     </style>
 </html>

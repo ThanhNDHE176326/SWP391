@@ -36,7 +36,7 @@
                             <div class="contactinfo">
                                 <ul class="nav nav-pills">
                                     <li><a ><i class="fa fa-phone"></i> 0367526769</a></li>
-                                    <li><a ><i class="fa fa-envelope"></i> dvthao2k3@gmail.com</a></li>
+                                    <li><a ><i class="fa fa-envelope"></i> thaodvhe173219@fpt.edu.vn</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                                 <ul class="nav navbar-nav collapse navbar-collapse">
                                     <li><a href="${pageContext.request.contextPath}/view/customer/homepage.jsp" class="active">Home</a></li>
 
-                                            <li><a href="${pageContext.request.contextPath}/ProductListPublic">Products List</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/ProductListPublic">Products List</a></li>
                                     <li class=""><a href="${pageContext.request.contextPath}/bloglist">Blog List<i></i></a>
 
                                     </li> 
