@@ -20,7 +20,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Shop | BookHaven</title>
+        <title>Product List | BookHaven</title>
         <link href="<c:url value='/css/bootstrap.min.css'/>" rel="stylesheet">
         <link href="<c:url value='/css/font-awesome.min.css'/>" rel="stylesheet">
         <link href="<c:url value='/css/prettyPhoto.css'/>" rel="stylesheet">
@@ -39,7 +39,8 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<c:url value='/images/ico/apple-touch-icon-114-precomposed.png'/>">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<c:url value='/images/ico/apple-touch-icon-72-precomposed.png'/>">
         <link rel="apple-touch-icon-precomposed" href="<c:url value='/images/ico/apple-touch-icon-57-precomposed.png'/>">
-
+        <!-- Link to Font Awesome CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     </head><!--/head-->
 
     <body>
