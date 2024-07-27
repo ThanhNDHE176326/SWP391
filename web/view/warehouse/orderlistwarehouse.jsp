@@ -9,7 +9,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Warehouse - Dashboard</title>
+        <title>Ware House - Order List</title>
         
         <style>
             body {

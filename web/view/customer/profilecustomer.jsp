@@ -41,7 +41,7 @@
         <div class="account-info-container">
             <h2>THÔNG TIN TÀI KHOẢN</h2>
             <form id="profileForm" class="account-info-form" action="${pageContext.request.contextPath}/updateuser" method="POST">
-               
+
                 <div class="form-group">
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" placeholder="Username" value="${user.username}" readonly="readonly">
@@ -53,10 +53,12 @@
                 <div class="form-group">
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" placeholder="Name" value="${user.name}">
+                    <span id="name-error" style="color: red; font-style: italic;"></span>
                 </div>
                 <div class="form-group">
                     <label for="address">Address:</label>
                     <input type="text" id="address" name="address" placeholder="Address" value="${user.address}">
+                    <span id="address-error" style="color: red; font-style: italic;"></span>
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone:</label>
@@ -71,7 +73,7 @@
                     </select>
                 </div>
                 <!-- Thêm phần hiển thị thông báo lỗi -->
-                <p style="color: red; font-style: italic;">${message}</p>
+                <p id="message" style="color: red; font-style: italic;">${message}</p>
                 <span id="phone-error" style="color: red; font-style: italic;"></span><br>
                 <div class="row">
                     <button type="submit" class="btn btn-default btn-block" style="background-color: #FE980F; color: #fff;">Edit Profile</button>
@@ -89,32 +91,62 @@
         <script src="<c:url value='/js/price-range.js'/>"></script>
         <script src="<c:url value='/js/jquery.prettyPhoto.js'/>"></script>
         <script src="<c:url value='/js/main.js'/>"></script>
- 
+
     </body>
     <script>
         window.onload = function () {
             document.getElementById("profileForm").addEventListener("submit", function (event) {
                 var phone = document.getElementsByName("phone")[0].value;
+                var name = document.getElementsByName("name")[0].value;
+                var address = document.getElementsByName("address")[0].value;
                 var phoneRegex = /^\+?\d{10,}$/;
+                var nameRegex = /^(?=.*\s).+$/; // Đảm bảo có ít nhất một khoảng trắng
+                var addressRegex = /^.{5,}$/; // Địa chỉ phải có ít nhất 5 ký tự
 
                 var phoneError = document.getElementById("phone-error");
+                var nameError = document.getElementById("name-error");
+                var addressError = document.getElementById("address-error");
 
-                // Clear previous error message
+                // Xóa thông báo lỗi trước đó
                 phoneError.innerText = "";
+                nameError.innerText = "";
+                addressError.innerText = "";
 
                 var isValid = true;
 
+                // Kiểm tra các điều kiện và cập nhật thông báo lỗi
                 if (!phoneRegex.test(phone)) {
                     phoneError.innerText = "Please enter a valid phone number.";
                     isValid = false;
                 }
 
+                if (!nameRegex.test(name)) {
+                    nameError.innerText = "Name must contain at least one space.";
+                    isValid = false;
+                }
+
+                if (!addressRegex.test(address)) {
+                    addressError.innerText = "Address must be at least 5 characters long.";
+                    isValid = false;
+                }
+
                 if (!isValid) {
-                    event.preventDefault(); // Prevent form submission
+                    event.preventDefault(); // Ngăn không cho gửi form
                 }
             });
+
+            // Hide the message after 2 seconds
+            setTimeout(function () {
+                var messageElement = document.getElementById("message");
+                if (messageElement) {
+                    messageElement.style.display = 'none';
+                }
+            }, 2000);
         };
     </script>
+
+
+
 </html>
 <style>
     body {

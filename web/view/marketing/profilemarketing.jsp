@@ -25,189 +25,145 @@
         <link href="${pageContext.request.contextPath}/css/custom.css" rel="stylesheet">
 
         <style>
-            body {
-                font-family: 'Roboto', sans-serif;
-                background-color: #f8f9fa;
-                color: #343a40;
+            .form-border {
+                border: 2px solid #000;
+                border-radius: 10px;
+                padding: 20px;
             }
 
-            .breadcrumb {
-                background-color: #e9ecef;
-                border-radius: 0.25rem;
+            .signin-form .form-control {
+                border-radius: 20px;
             }
 
-            .account-info-container {
-                background-color: #ffffff;
-                border-radius: 0.25rem;
-                padding: 2rem;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                margin-top: 1rem;
+            .signin-form .btn {
+                border-radius: 20px;
             }
 
-            .account-info-container h2 {
-                margin-bottom: 1.5rem;
-                font-weight: 500;
-                color: #007bff;
+            .signin-form .label {
+                font-weight: bold;
+                color: #000;
             }
 
-            .form-group {
-                margin-bottom: 1rem;
-            }
-
-            .form-group label {
-                display: block;
-                margin-bottom: 0.5rem;
-                font-weight: 500;
-            }
-
-            .form-group input,
-            .form-group select {
-                width: 100%;
-                padding: 0.25rem 0.5rem;
-                border: 1px solid #ced4da;
-                border-radius: 0.25rem;
-                box-sizing: border-box;
-                font-size: 0.9rem;
-                height: 1.75rem;
-            }
-
-            .form-group input:read-only {
-                background-color: #e9ecef;
-            }
-
-            .form-group select {
-                height: 1.75rem;
-            }
-
-            .btn {
-                padding: 0.5rem;
-                border: none;
-                border-radius: 0.25rem;
+            .heading-section {
+                font-size: 2.5rem;
+                font-weight: bold;
                 text-align: center;
-                cursor: pointer;
+                margin-bottom: 20px;
+                color: #007bff; /* Primary color */
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
             }
 
-            .btn-block {
-                display: block;
-                width: 100%;
-                margin-top: 0.5rem;
-            }
-
-            .btn-default {
-                background-color: #007bff;
-                color: #ffffff;
-            }
-
-            .btn-default:hover {
-                background-color: #0056b3;
-            }
-
-            .btn-secondary {
-                background-color: #6c757d;
-                color: #ffffff;
-            }
-
-            .btn-secondary:hover {
-                background-color: #5a6268;
-            }
-
-            .error-message {
-                color: red;
-                font-style: italic;
-                margin-top: 1rem;
-            }
-
-            .row {
-                display: flex;
-                justify-content: space-between;
-                gap: 1rem;
-            }
-
-            .col-half {
-                width: 48%;
+            .text-danger {
+                font-size: 0.875rem;
             }
         </style>
 
     </head>
 
     <body id="page-top">
-
         <jsp:include page="headermarketing.jsp"/>
 
         <div id="wrapper">
-
             <!-- Sidebar -->
             <jsp:include page="navbarmarketing.jsp"/>
 
             <div id="content-wrapper">
-
                 <div class="container-fluid">
-
                     <!-- Breadcrumbs-->
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="#">Profile</a>
+                            <a href="${pageContext.request.contextPath}/view/marketing/homedashboardmarketing.jsp">Marketing</a>
                         </li>
-                        <li class="breadcrumb-item active">Overview</li>
+                        <li class="breadcrumb-item active">Profile</li>
                     </ol>
-
-                    <!-- Profile Form-->
-                    <div id="content-wrapper">
-
-                        <div class="container-fluid">
-                            <div class="modal-body">
-                                <!-- Personal Information Form -->
-                                <form id="profileForm" class="account-info-form" action="${pageContext.request.contextPath}/updatestaff" method="POST">
-                                    <div class="form-group">
-                                        <label for="staffname">Username:</label>
-                                        <input type="text" id="staffname" name="username" placeholder="Username" value="${staffs.username}" readonly="readonly" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Email:</label>
-                                        <input type="email" id="email" name="email" placeholder="Email" value="${staffs.email}" readonly="readonly" class="form-control">
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-8">
-                                            <label for="name">Name:</label>
-                                            <input type="text" id="name" name="name" placeholder="Name" value="${staffs.fullname}" class="form-control">
+                    <div class="modal-body">
+                        <section id="form" class="ftco-section">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-12 col-lg-8">
+                                        <div class="wrap p-4 p-md-5 form-border">
+                                            <h2 class="heading-section">Profile Information</h2>
+                                            <form id="profileForm" action="${pageContext.request.contextPath}/updatestaff" method="POST" class="signin-form">
+                                                <div class="form-group mb-3">
+                                                    <label class="label" for="staffname">Username</label>
+                                                    <input type="text" id="staffname" name="username" placeholder="Username" value="${staffs.username}" readonly="readonly" class="form-control">
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label class="label" for="email">Email</label>
+                                                    <input type="email" id="email" name="email" placeholder="Email" value="${staffs.email}" readonly="readonly" class="form-control">
+                                                </div>
+                                                <div class="form-group d-md-flex">
+                                                    <div class="mr-md-2 mb-3 flex-grow-1">
+                                                        <label class="label" for="name">Name</label>
+                                                        <input type="text" id="name" name="name" placeholder="Name" value="${staffs.fullname}" class="form-control">
+                                                    </div>
+                                                    <div class="ml-md-2 mb-3 flex-grow-1">
+                                                        <label class="label" for="gender">Gender</label>
+                                                        <select id="gender" name="gender" required class="form-control">
+                                                            <option value="" disabled selected>Gender</option>
+                                                            <option value="1" ${staffs.gender == 1 ? "selected" : ""}>Male</option>
+                                                            <option value="0" ${staffs.gender == 0 ? "selected" : ""}>Female</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label class="label" for="address">Address</label>
+                                                    <input type="text" id="address" name="address" placeholder="Address" value="${staffs.address}" class="form-control">
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label class="label" for="phone">Phone</label>
+                                                    <input type="text" id="phone" name="phone" placeholder="Phone" value="${staffs.phone}" class="form-control">
+                                                    <span id="phone-error" class="text-danger"></span>
+                                                </div>
+                                                <!-- Error Message -->
+                                                <p id="message" style="color: red; font-style: italic;">${message}</p>
+                                                <div class="form-group">
+                                                    <button type="submit" class="form-control btn btn-primary rounded submit px-3">Save Changes</button>
+                                                </div>
+                                                <div class="form-group d-md-flex"></div>
+                                            </form>
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="gender">Gender:</label>
-                                            <select id="gender" name="gender" required class="form-control">
-                                                <option value="" disabled selected>Gender</option>
-                                                <option value="1" ${staffs.gender == 1 ? "selected" : ""}>Male</option>
-                                                <option value="0" ${staffs.gender == 0 ? "selected" : ""}>Female</option>
-                                            </select>
-                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="address">Address:</label>
-                                        <input type="text" id="address" name="address" placeholder="Address" value="${staffs.address}" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="phone">Phone:</label>
-                                        <input type="text" id="phone" name="phone" placeholder="Phone" value="${staffs.phone}" class="form-control">
-                                        <span id="phone-error" class="error-message"></span>
-                                    </div>
-                                    <!-- Error Message -->
-                                    <p class="error-message">${message}</p>
-                                    <div class="row">
-                                        <div class="col-md-12 text-center">
-                                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                                        </div>
-                                    </div>
-                                </form>
-
+                                </div>
                             </div>
-                        </div>
-
+                        </section>
                     </div>
-
                 </div>
+                <!-- /.container-fluid -->
+
+                <!-- Sticky Footer -->
+                <footer class="sticky-footer">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Book Haven</span>
+                        </div>
+                    </div>
+                </footer>
             </div>
+            <!-- /.content-wrapper -->
 
         </div>
+        <!-- /#wrapper -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <script src="<c:url value='js/jquery.min.js'/>"></script>
+        <script src="<c:url value='js/popper.js'/>"></script>
+        <script src="<c:url value='js/bootstrap.min.js'/>"></script>
+        <script src="<c:url value='js/main.js'/>"></script>
 
     </body>
+    <script>
+        window.onload = function () {
+            setTimeout(function () {
+                var messageElement = document.getElementById("message");
+                if (messageElement) {
+                    messageElement.style.display = 'none';
+                }
+            }, 2000);
+        };
+    </script>
 
 </html>

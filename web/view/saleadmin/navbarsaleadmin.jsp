@@ -30,8 +30,6 @@
         <link href="<c:url value='/css/sb-admin.css' />" rel="stylesheet">
 
         <link rel="stylesheet" href="<c:url value='/css/colReorder-bootstrap4.css' />">
-
-
     </head>
     <body>
         <!-- Sidebar -->
@@ -39,13 +37,11 @@
             <li class="nav-item active">
                 <a class="nav-link" href="${pageContext.request.contextPath}/saledashboard">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>DashBoard</span></a>
+                    <span>Dashboard</span></a>
             </li>
-
-            
             <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-folder"></i>
+                    <i class="fas fa-fw fa-user-circle"></i>
                     <span>Account</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="pagesDropdown">
@@ -55,7 +51,7 @@
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="${pageContext.request.contextPath}/saleadminorderlist">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    <i class="fas fa-fw fa-list"></i>
                     <span>Order List</span></a>
             </li>
             <li class="nav-item active">
@@ -64,38 +60,42 @@
                     <span>Logout</span>
                 </a>
             </li>
-
-
         </ul>
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Bootstrap core JavaScript-->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="<c:url value='/vendor/jquery/jquery.min.js' />"></script>
+        <script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js' />"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script src="<c:url value='/vendor/jquery-easing/jquery.easing.min.js' />"></script>
+
+        <!-- Page level plugin JavaScript-->
+        <script src="<c:url value='/vendor/chart.js/Chart.min.js' />"></script>
+        <script src="<c:url value='/vendor/datatables/jquery.dataTables.js' />"></script>
+        <script src="<c:url value='/vendor/datatables/dataTables.bootstrap4.js' />"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script src="<c:url value='/js/sb-admin.min.js' />"></script>
+        <script src="<c:url value='/js/colReorder-bootstrap4-min.js' />"></script>
+        <script src="<c:url value='/js/colReorder-dataTables-min.js' />"></script>
+
+        <!-- Demo scripts for this page-->
+        <script src="<c:url value='/js/demo/datatables-demo.js' />"></script>
+        <script src="<c:url value='/js/demo/chart-area-demo.js' />"></script>
+
+        <!-- Initialize Bootstrap's dropdown -->
+        <script>
+            $(document).ready(function () {
+                $('.dropdown-toggle').dropdown();
+            });
+        </script>
     </body>
-    <!-- Bootstrap core JavaScript-->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="<c:url value='/vendor/jquery/jquery.min.js' />"></script>
-    <script src="<c:url value='/vendor/bootstrap/js/bootstrap.bundle.min.js' />"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="<c:url value='/vendor/jquery-easing/jquery.easing.min.js' />"></script>
-
-    <!-- Page level plugin JavaScript-->
-    <script src="<c:url value='/vendor/chart.js/Chart.min.js' />"></script>
-    <script src="<c:url value='/vendor/datatables/jquery.dataTables.js' />"></script>
-    <script src="<c:url value='/vendor/datatables/dataTables.bootstrap4.js' />"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="<c:url value='/js/sb-admin.min.js' />"></script>
-    <script src="<c:url value='/js/colReorder-bootstrap4-min.js' />"></script>
-    <script src="<c:url value='/js/colReorder-dataTables-min.js' />"></script>
-
-    <!-- Demo scripts for this page-->
-    <script src="<c:url value='/js/demo/datatables-demo.js' />"></script>
-    <script src="<c:url value='/js/demo/chart-area-demo.js' />"></script>
-
-    <!-- Initialize Bootstrap's dropdown -->
-    <script>
-        $(document).ready(function () {
-            $('.dropdown-toggle').dropdown();
-        });
-    </script>
 </html>

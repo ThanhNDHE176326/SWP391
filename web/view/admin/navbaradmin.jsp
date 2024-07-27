@@ -33,10 +33,9 @@
     <body>
         <!-- Sidebar -->
         <ul class="sidebar navbar-nav">
-            
             <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-folder"></i>
+                    <i class="fas fa-fw fa-user-circle"></i>
                     <span>Account</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="pagesDropdown">
@@ -46,13 +45,13 @@
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="${pageContext.request.contextPath}/view/admin/signupstaff.jsp">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>SignUp Staff</span></a>
+                    <i class="fas fa-user-plus"></i>
+                    <span>Sign Up Staff</span></a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="${pageContext.request.contextPath}/listuser">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>List User</span></a>
+                    <i class="fas fa-users"></i>
+                    <span>User List</span></a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="${pageContext.request.contextPath}/logoutstaff">

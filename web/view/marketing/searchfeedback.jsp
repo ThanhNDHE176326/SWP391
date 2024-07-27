@@ -16,7 +16,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>SB Admin - Feedbacks</title>
+        <title>Marketing - Feedbacks</title>
 
     </head>
 

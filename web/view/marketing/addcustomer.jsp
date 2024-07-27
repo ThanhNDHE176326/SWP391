@@ -11,7 +11,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Marketing - Tables</title>
+        <title>Marketing - Add Customer</title>
     </head>
 
     <body id="page-top">

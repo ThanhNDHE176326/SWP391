@@ -12,7 +12,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Edit Slider</title>
+        <title>Marketing - Edit Slider</title>
         <script>
             function validateDates() {
                 var startDate = document.getElementById("startDate").value;

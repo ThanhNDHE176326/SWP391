@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sign Up</title>
+        <title>Admin - Sign Up</title>
         <link rel="stylesheet" href="<c:url value='css/bootstrap.min.css'/>">
         <link rel="stylesheet" href="<c:url value='css/style.css'/>">
     </head>
@@ -35,6 +35,7 @@
                                             <div class="form-group mb-3">
                                                 <label class="label" for="fullname">Full Name</label>
                                                 <input name="fullname" type="text" class="form-control" placeholder="Full Name" required>
+                                                <span id="fullname-error" class="text-danger"></span>
                                             </div>
                                             <div class="form-group d-md-flex">
                                                 <div class="mr-md-2 mb-3 flex-grow-1">
@@ -69,6 +70,7 @@
                                                 <div class="ml-md-2 mb-3 flex-grow-1">
                                                     <label class="label" for="address">Address</label>
                                                     <input name="address" type="text" class="form-control" placeholder="Address" required>
+                                                    <span id="address-error" class="text-danger"></span>
                                                 </div>
                                             </div>
                                             <div class="form-group d-md-flex">
@@ -107,7 +109,7 @@
                 <footer class="sticky-footer">
                     <div class="container my-auto">
                         <div class="copyright text-center my-auto">
-                            <span>BookHaven</span>
+                            <span>Book Haven</span>
                         </div>
                     </div>
                 </footer>
@@ -127,48 +129,74 @@
                 var repassword = document.getElementsByName("repassword")[0].value;
                 var email = document.getElementsByName("email")[0].value;
                 var phone = document.getElementsByName("phone")[0].value;
+                var fullname = document.getElementsByName("fullname")[0].value;
+                var address = document.getElementsByName("address")[0].value;
 
                 var usernameRegex = /^[a-zA-Z0-9_]{4,20}$/;
                 var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
                 var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 var phoneRegex = /^\+?\d{10,}$/;
+                var fullnameRegex = /^.{2,}$/; // Full Name must be at least 2 characters
+                var addressRegex = /^.{5,}$/; // Address must be at least 5 characters
 
                 var usernameError = document.getElementById("username-error");
                 var passwordError = document.getElementById("password-error");
                 var emailError = document.getElementById("email-error");
                 var phoneError = document.getElementById("phone-error");
                 var repasswordError = document.getElementById("repassword-error");
+                var fullnameError = document.getElementById("fullname-error");
+                var addressError = document.getElementById("address-error");
 
+                // Xóa thông báo lỗi trước đó
                 usernameError.innerText = "";
                 passwordError.innerText = "";
                 emailError.innerText = "";
                 phoneError.innerText = "";
                 repasswordError.innerText = "";
+                fullnameError.innerText = "";
+                addressError.innerText = "";
 
                 var isValid = true;
 
+                // Kiểm tra username
                 if (!usernameRegex.test(username)) {
                     usernameError.innerText = "Username must be between 4 and 20 characters long and contain no special characters.";
                     isValid = false;
                 }
 
+                // Kiểm tra password
                 if (!passwordRegex.test(password)) {
                     passwordError.innerText = "Password must be at least 6 characters long and contain at least one lowercase letter, one uppercase letter, and one number.";
                     isValid = false;
                 }
 
+                // Kiểm tra password match
                 if (password !== repassword) {
                     repasswordError.innerText = "Passwords do not match.";
                     isValid = false;
                 }
 
+                // Kiểm tra email
                 if (!emailRegex.test(email)) {
                     emailError.innerText = "Please enter a valid email address.";
                     isValid = false;
                 }
 
+                // Kiểm tra phone
                 if (!phoneRegex.test(phone)) {
                     phoneError.innerText = "Please enter a valid phone number.";
+                    isValid = false;
+                }
+
+                // Kiểm tra fullname
+                if (!fullnameRegex.test(fullname)) {
+                    fullnameError.innerText = "Full Name must be at least 2 characters long.";
+                    isValid = false;
+                }
+
+                // Kiểm tra address
+                if (!addressRegex.test(address)) {
+                    addressError.innerText = "Address must be at least 5 characters long.";
                     isValid = false;
                 }
 
@@ -178,6 +206,7 @@
             });
         };
     </script>
+
     <style>
         .form-border {
             border: 2px solid #000;

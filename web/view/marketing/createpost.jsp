@@ -10,7 +10,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>SB Admin - Add New Post</title>
+        <title>Marketing - Add New Post</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
