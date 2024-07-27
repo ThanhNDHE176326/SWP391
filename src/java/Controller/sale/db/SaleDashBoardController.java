@@ -112,8 +112,8 @@ public class SaleDashBoardController extends HttpServlet {
             PlotOrientation.VERTICAL,
             true, true, false);
 
-    int width = 640;    // Width of the image
-    int height = 480;   // Height of the image
+    int width = 840;    // Width of the image
+    int height = 580;   // Height of the image
 
     // Create a temporary file to save the chart image
     File barChartFile = new File(request.getServletContext().getRealPath("/") + "chart.png");

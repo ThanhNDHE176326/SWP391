@@ -154,6 +154,7 @@
             .form-group select,
             .form-group button {
                 width: 100%;
+                
             }
 
             button {
@@ -215,7 +216,7 @@
                                 <input type="text" class="form-control" id="customerName" name="customerName"
                                        value="${param.customer_name}">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="margin-top:30px"> 
                                 <button type="submit" class="btn btn-primary">Filter</button>
                             </div>
                         </div>

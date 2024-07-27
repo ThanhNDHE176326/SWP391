@@ -40,12 +40,7 @@
                         <div class="container-fluid">
             
             <!-- Breadcrumbs-->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="#">Dashboard</a>
-                </li>
-                <li class="breadcrumb-item active">Charts</li>
-            </ol>
+            
 
             <div class="col-lg-12">
                 <div class="card mb-3">

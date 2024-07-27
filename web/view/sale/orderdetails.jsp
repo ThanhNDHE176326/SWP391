@@ -50,7 +50,7 @@
 
             th {
                 background-color: #4e73df;
-                color: white;
+                color: blue;
             }
 
             tr:nth-child(even) {
