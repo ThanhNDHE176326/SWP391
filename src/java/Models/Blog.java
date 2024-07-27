@@ -10,9 +10,40 @@ package Models;
  */
 public class Blog {
 
-    String id, staff, title, categoryBlog, image, updateDate, description, content, isDelete,status;
+    String id, staff, title, categoryBlog, image, updateDate, description, content, isDelete, status, staffName, categoryBlogName;
 
     public Blog() {
+    }
+
+    public String getStaffName() {
+        return staffName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
+    }
+
+    public String getCategoryBlogName() {
+        return categoryBlogName;
+    }
+
+    public void setCategoryBlogName(String categoryBlogName) {
+        this.categoryBlogName = categoryBlogName;
+    }
+
+    public Blog(String id, String staff, String title, String categoryBlog, String image, String updateDate, String description, String content, String isDelete, String status, String staffName, String categoryBlogName) {
+        this.id = id;
+        this.staff = staff;
+        this.title = title;
+        this.categoryBlog = categoryBlog;
+        this.image = image;
+        this.updateDate = updateDate;
+        this.description = description;
+        this.content = content;
+        this.isDelete = isDelete;
+        this.status = status;
+        this.staffName = staffName;
+        this.categoryBlogName = categoryBlogName;
     }
 
     public Blog(String title, String categoryBlog, String image, String description, String content, String status) {
