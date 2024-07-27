@@ -48,7 +48,7 @@
 
         <section id="advertisement">
             <div class="container">
-                <img src="images/shop/advertisement.jpg" alt="" />
+                <img src="images/bookhaven.jpg" alt="" />
             </div>
         </section>
 
