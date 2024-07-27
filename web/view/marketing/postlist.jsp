@@ -129,31 +129,26 @@
             .scroll-to-top:hover {
                 background-color: #2e59d9;
             }
-            /* Styles for pagination */
-            .pagination {
-                text-align: center;
-                margin: 20px 0;
-            }
-
-            .pagination {
-                margin-top: 20px;
-                text-align: center;
-            }
-
             .pagination a {
-                display: inline-block;
                 margin: 0 5px;
-                padding: 8px 12px;
+                padding: 10px 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
                 text-decoration: none;
+                color: #4e73df;
+                transition: background-color 0.3s, color 0.3s;
+            }
+
+            .pagination a.active {
                 background-color: #4e73df;
                 color: white;
-                border-radius: 3px;
-                font-size: 0.9rem;
             }
 
             .pagination a:hover {
                 background-color: #2e59d9;
+                color: white;
             }
+
 
 
         </style>
@@ -252,34 +247,21 @@
                             <div class="pagination">
                                 <!-- Previous page link -->
                                 <c:if test="${currentPage > 1}">
-                                    <a href="${pageContext.request.contextPath}/postlist?page=${currentPage - 1}&searchTitle=${searchTitle}&filterCategory=${filterCategory}&filterStatus=${filterStatus}&sortField=${sortField}">Previous</a>
+                                    <a href="postlist?page=${currentPage - 1}">&laquo; Previous</a>
                                 </c:if>
 
                                 <!-- Page number links -->
-                                <c:forEach var="i" begin="1" end="${totalPages}">
-                                    <c:url var="pageUrl" value="/postlist">
-                                        <c:param name="page" value="${i}" />
-                                        <c:if test="${not empty searchTitle}">
-                                            <c:param name="searchTitle" value="${searchTitle}" />
-                                        </c:if>
-                                        <c:if test="${not empty filterCategory}">
-                                            <c:param name="filterCategory" value="${filterCategory}" />
-                                        </c:if>
-                                        <c:if test="${not empty filterStatus}">
-                                            <c:param name="filterStatus" value="${filterStatus}" />
-                                        </c:if>
-                                        <c:if test="${not empty sortField}">
-                                            <c:param name="sortField" value="${sortField}" />
-                                        </c:if>
-                                    </c:url>
-                                    <a href="${pageUrl}" class="${currentPage == i ? 'active' : ''}">${i}</a>
+                                <c:forEach begin="1" end="${noOfPages}" var="pageNum">
+                                    <a href="postlist?page=${pageNum}" class="${currentPage == pageNum ? 'active' : ''}">${pageNum}</a>
                                 </c:forEach>
 
                                 <!-- Next page link -->
-                                <c:if test="${currentPage < totalPages}">
-                                    <a href="${pageContext.request.contextPath}/postlist?page=${currentPage + 1}&searchTitle=${searchTitle}&filterCategory=${filterCategory}&filterStatus=${filterStatus}&sortField=${sortField}">Next</a>
+                                <c:if test="${currentPage < noOfPages}">
+                                    <a href="postlist?page=${currentPage + 1}">Next &raquo;</a>
                                 </c:if>
+
                             </div>
+
 
                         </div>
 

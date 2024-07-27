@@ -100,7 +100,7 @@ public class postDAO extends DBContext {
     }
 
     public int getTotalPosts() {
-        String query = "SELECT COUNT(*) FROM Blogs WHERE isDelete = 0";
+        String query = "SELECT COUNT(*) FROM Blogs WHERE isDelete = 1";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -114,7 +114,7 @@ public class postDAO extends DBContext {
     }
 
     public int getNoOfRecords() {
-        String query = "SELECT COUNT(*) AS total FROM Blogs WHERE isDelete = 0";
+        String query = "SELECT COUNT(*) AS total FROM Blogs WHERE isDelete = 1";
         try (PreparedStatement ps = connection.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 noOfRecords = rs.getInt("total");
