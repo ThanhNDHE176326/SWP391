@@ -23,9 +23,9 @@ public class CustomerAccessConfig {
             "/view/customer/verifyresetpasswordcustomer.jsp", "/view/customer/verifysignupcustomer.jsp",
             //Servlet           
             "/logincustomer", "/marketingDashboard", "/listOrderCustomer", "/orderInformationCustomer", "/ProductPublicByCategory", "/signupcustomer","/confirmsignupcus","/updateuser",
-            "/ProductPublicByPrice", "/ProductDetailPublic", "/ProductListPublic", "/ProductListPublicByUpdateDate", "/SeachPopularProductPublic","/changepassword",
+            "/ProductPublicByPrice", "/ProductDetailPublic", "/ProductListPublic", "/ProductListPublicByUpdateDate", "/SeachPopularProductPublic","/changepassword","/forgetpassword","/confirmresetpwdcustomer",
             "/SearchProductPulbic", "/addToCart", "/viewCartDetail", "/updateQuantityCartProduct", "/deleteCart", "/cartCompletion", "/addDeliveryAddress", "/bloglist", "/blogdetail",
-            "/deleteDeliveryAddress", "/pushToCartContact", "/viewCartDetail", "/addfeedbackpublic", "/logout", "/informationuser", "/updateAddressDefault", "/checkOutSuccessfully"
+            "/deleteDeliveryAddress", "/pushToCartContact", "/viewCartDetail", "/addfeedbackpublic", "/logout", "/informationuser", "/updateAddressDefault", "/checkOutSuccessfully","/resetpassword"
     );
 
     public static List<String> getCustomerUrls() {
